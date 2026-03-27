@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Player {
+  id          String           @id @default(cuid())
+  name        String
+  level       Int              @default(1)
+  xp          Int              @default(0)
+  energy      Int              @default(100)
+  energyMax   Int              @default(100)
+  credits     Int              @default(250)
+  astralite   Int              @default(40)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  inventory   InventoryEntry[]
+  buildings   BuildingState[]
+  expeditions ExpeditionRun[]
+}
+
+model InventoryEntry {
+  id          String   @id @default(cuid())
+  playerId    String
+  resourceKey String
+  quantity    Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  player      Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@unique([playerId, resourceKey])
+}
+
+model BuildingState {
+  id          String   @id @default(cuid())
+  playerId    String
+  buildingKey String
+  level       Int      @default(1)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  player      Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@unique([playerId, buildingKey])
+}
+
+model ExpeditionRun {
+  id            String   @id @default(cuid())
+  playerId      String
+  expeditionKey String
+  status        String
+  rewardPayload Json
+  startedAt     DateTime
+  endsAt        DateTime
+  claimedAt     DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  player        Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+}
