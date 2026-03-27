@@ -1,0 +1,11 @@
+node_modules
+dist
+.env
+.env.local
+.DS_Store
+coverage
+apps/api/prisma/dev.db
+apps/api/prisma/dev.db-journal
+apps/api/generated
+apps/web/.vite
+

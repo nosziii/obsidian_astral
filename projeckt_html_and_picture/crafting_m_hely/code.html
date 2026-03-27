@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed": "#ff85e4",
+              "on-secondary-container": "#f8f1ff",
+              "primary": "#8ff5ff",
+              "tertiary-dim": "#ff59e3",
+              "error": "#ff716c",
+              "tertiary-fixed-dim": "#ff68e3",
+              "on-primary-fixed": "#003f43",
+              "inverse-primary": "#006a71",
+              "secondary-container": "#7000ff",
+              "surface-container-highest": "#262627",
+              "outline-variant": "#484849",
+              "on-surface-variant": "#adaaab",
+              "primary-container": "#00eefc",
+              "background": "#0e0e0f",
+              "tertiary-container": "#ff05e5",
+              "on-error-container": "#ffa8a3",
+              "secondary-dim": "#874cff",
+              "surface-container-low": "#131314",
+              "secondary": "#ac89ff",
+              "surface-dim": "#0e0e0f",
+              "inverse-on-surface": "#565556",
+              "surface-container-lowest": "#000000",
+              "primary-fixed-dim": "#00deec",
+              "on-primary-container": "#005359",
+              "inverse-surface": "#fcf8f9",
+              "error-container": "#9f0519",
+              "error-dim": "#d7383b",
+              "on-error": "#490006",
+              "primary-fixed": "#00eefc",
+              "surface-bright": "#2c2c2d",
+              "secondary-fixed": "#dac9ff",
+              "on-tertiary-fixed": "#33002d",
+              "outline": "#767576",
+              "surface-container": "#1a191b",
+              "on-primary-fixed-variant": "#005e64",
+              "surface-container-high": "#201f21",
+              "primary-dim": "#00deec",
+              "on-surface": "#ffffff",
+              "on-secondary-fixed-variant": "#6300e2",
+              "on-secondary": "#290067",
+              "on-background": "#ffffff",
+              "on-secondary-fixed": "#41009a",
+              "on-primary": "#005d63",
+              "on-tertiary-container": "#1b0017",
+              "secondary-fixed-dim": "#ceb9ff",
+              "surface-variant": "#262627",
+              "tertiary": "#ff59e3",
+              "surface": "#0e0e0f",
+              "surface-tint": "#8ff5ff",
+              "on-tertiary": "#42003a",
+              "on-tertiary-fixed-variant": "#6d0061"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Manrope"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .blueprint-grid {
+            background-image: radial-gradient(circle, #201f21 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary/30">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#0e0e0f]/80 backdrop-blur-xl shadow-[0_0_20px_rgba(143,245,255,0.08)] flex justify-between items-center px-6 h-16 w-full">
+<div class="flex items-center gap-4">
+<span class="text-xl font-bold tracking-tighter text-[#8ff5ff]">Obsidian Astral</span>
+<div class="bg-gradient-to-b from-[#201f21] to-transparent h-px w-full absolute bottom-0 left-0"></div>
+</div>
+<nav class="hidden md:flex gap-8 items-center">
+<div class="font-['Space_Grotesk'] tracking-wider uppercase text-[0.6875rem] text-[#adaaab] hover:text-[#8ff5ff] transition-all cursor-pointer">Fleet</div>
+<div class="font-['Space_Grotesk'] tracking-wider uppercase text-[0.6875rem] text-[#8ff5ff] drop-shadow-[0_0_8px_rgba(143,245,255,0.5)] cursor-pointer">Workshop</div>
+<div class="font-['Space_Grotesk'] tracking-wider uppercase text-[0.6875rem] text-[#adaaab] hover:text-[#8ff5ff] transition-all cursor-pointer">Nexus</div>
+</nav>
+<div class="flex items-center gap-4">
+<div class="flex gap-3 text-[#8ff5ff]">
+<span class="material-symbols-outlined hover:bg-[#131314] p-2 rounded transition-all cursor-pointer">payments</span>
+<span class="material-symbols-outlined hover:bg-[#131314] p-2 rounded transition-all cursor-pointer">diamond</span>
+<span class="material-symbols-outlined hover:bg-[#131314] p-2 rounded transition-all cursor-pointer">bolt</span>
+<span class="material-symbols-outlined hover:bg-[#131314] p-2 rounded transition-all cursor-pointer">person</span>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-64 z-40 bg-[#0e0e0f] border-r border-[#201f21] flex flex-col pt-20 pb-6 hidden lg:flex">
+<div class="px-6 mb-8 flex items-center gap-4">
+<div class="w-12 h-12 rounded bg-surface-container-highest border border-primary/20 overflow-hidden">
+<img alt="Strategic Commander" data-alt="Stylized sci-fi commander avatar with glowing cybernetic eye and sleek obsidian armor, cinematic portrait lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC--cKHgcj06D3vM2dsTg2bMIPwSRjBZG13RClsc_D387c3WErH9Ec5XO7abGvO2OSU56-MJHPX8h3z08inqob_SbVF6UoZG42O9dpJFkCkW5eGhrbqQ4mIC7THK_dQlqvsGRrlGLbP1XVv91TE8c5oFizgn0i1mh6LHGXsSiPnZsLxPXjwmlmeDPkg5yZfIs9wHIZU4PdhEXul1p4HVZSEymhmFEV0gyIRNrivQl0avbt0JG9o_D0y72yUlLrtHFhTQnOSW2hhYQGu"/>
+</div>
+<div>
+<div class="font-headline font-medium text-sm text-primary">Commander</div>
+<div class="text-[10px] text-on-surface-variant uppercase tracking-widest">Level 42</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<div class="text-[#adaaab] py-3 px-6 hover:bg-[#131314] hover:text-white transition-colors flex items-center gap-3 cursor-pointer font-['Space_Grotesk'] font-medium text-sm">
+<span class="material-symbols-outlined">dashboard</span> Dashboard
+            </div>
+<div class="text-[#adaaab] py-3 px-6 hover:bg-[#131314] hover:text-white transition-colors flex items-center gap-3 cursor-pointer font-['Space_Grotesk'] font-medium text-sm">
+<span class="material-symbols-outlined">inventory_2</span> Resources
+            </div>
+<div class="text-[#8ff5ff] bg-gradient-to-r from-[#8ff5ff]/10 to-transparent border-l-2 border-[#8ff5ff] py-3 px-6 flex items-center gap-3 cursor-pointer font-['Space_Grotesk'] font-medium text-sm">
+<span class="material-symbols-outlined">handyman</span> Crafting
+            </div>
+<div class="text-[#adaaab] py-3 px-6 hover:bg-[#131314] hover:text-white transition-colors flex items-center gap-3 cursor-pointer font-['Space_Grotesk'] font-medium text-sm">
+<span class="material-symbols-outlined">person_filled</span> Character
+            </div>
+<div class="text-[#adaaab] py-3 px-6 hover:bg-[#131314] hover:text-white transition-colors flex items-center gap-3 cursor-pointer font-['Space_Grotesk'] font-medium text-sm">
+<span class="material-symbols-outlined">map</span> Map
+            </div>
+<div class="text-[#adaaab] py-3 px-6 hover:bg-[#131314] hover:text-white transition-colors flex items-center gap-3 cursor-pointer font-['Space_Grotesk'] font-medium text-sm">
+<span class="material-symbols-outlined">group</span> Clan
+            </div>
+<div class="text-[#adaaab] py-3 px-6 hover:bg-[#131314] hover:text-white transition-colors flex items-center gap-3 cursor-pointer font-['Space_Grotesk'] font-medium text-sm">
+<span class="material-symbols-outlined">storefront</span> Marketplace
+            </div>
+</nav>
+<div class="mt-auto space-y-1 pt-4 border-t border-outline-variant/10">
+<div class="text-[#adaaab] py-3 px-6 hover:bg-[#131314] transition-colors flex items-center gap-3 cursor-pointer font-['Space_Grotesk'] font-medium text-sm">
+<span class="material-symbols-outlined">settings</span> Settings
+            </div>
+<div class="text-[#adaaab] py-3 px-6 hover:bg-[#131314] transition-colors flex items-center gap-3 cursor-pointer font-['Space_Grotesk'] font-medium text-sm">
+<span class="material-symbols-outlined">help</span> Support
+            </div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="lg:ml-64 pt-16 min-h-screen relative overflow-hidden">
+<!-- Ambient Background Glows -->
+<div class="absolute top-20 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] -z-10"></div>
+<div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-secondary/5 rounded-full blur-[100px] -z-10"></div>
+<div class="p-8 max-w-7xl mx-auto">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-10">
+<div>
+<h1 class="font-headline text-4xl font-bold tracking-tight text-on-surface mb-2 uppercase">Astral Forge</h1>
+<p class="text-on-surface-variant font-body max-w-md">Transform raw stellar energy and refined alloys into high-frequency armaments.</p>
+</div>
+<div class="flex gap-4">
+<div class="bg-surface-container-high px-4 py-2 rounded-lg border-b border-primary/20 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<div>
+<div class="text-[10px] text-on-surface-variant uppercase font-headline tracking-widest">Forge Energy</div>
+<div class="font-headline font-bold text-on-surface">2,450 / 5,000</div>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-8">
+<!-- Crafting Categories & List -->
+<div class="col-span-12 lg:col-span-7 space-y-6">
+<!-- Category Tabs -->
+<div class="flex gap-2 p-1 bg-surface-container-lowest rounded-xl border border-outline-variant/20 w-max">
+<button class="px-5 py-2 rounded-lg bg-surface-container-highest text-primary font-headline text-xs uppercase tracking-wider transition-all">Weapons</button>
+<button class="px-5 py-2 rounded-lg hover:bg-surface-container-low text-on-surface-variant font-headline text-xs uppercase tracking-wider transition-all">Armor</button>
+<button class="px-5 py-2 rounded-lg hover:bg-surface-container-low text-on-surface-variant font-headline text-xs uppercase tracking-wider transition-all">Consumables</button>
+<button class="px-5 py-2 rounded-lg hover:bg-surface-container-low text-on-surface-variant font-headline text-xs uppercase tracking-wider transition-all">Materials</button>
+</div>
+<!-- Bento-ish Grid of Craftables -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Item Card: Active Selection -->
+<div class="group relative bg-surface-container-high rounded-xl p-4 border-2 border-primary/40 shadow-[0_0_15px_rgba(143,245,255,0.1)] transition-all cursor-pointer overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent pointer-events-none"></div>
+<div class="relative flex gap-4">
+<div class="w-20 h-20 bg-surface-container rounded-lg border border-primary/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-primary" style="font-variation-settings: 'FILL' 1;">swords</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h3 class="font-headline font-bold text-on-surface text-lg">Phaseshift Blade</h3>
+<span class="text-[10px] bg-primary/20 text-primary px-2 py-0.5 rounded-full font-headline tracking-tighter uppercase">Epic</span>
+</div>
+<p class="text-xs text-on-surface-variant line-clamp-2 mt-1 font-body">Dual-frequency edge capable of slicing through energy shields.</p>
+<div class="mt-3 flex items-center gap-2">
+<div class="h-1 flex-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-full shadow-[0_0_8px_#8ff5ff]"></div>
+</div>
+<span class="text-[10px] text-primary font-headline">READY</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Item Card: Legendary Glow -->
+<div class="group relative bg-surface-container-low rounded-xl p-4 border border-outline-variant/30 hover:border-tertiary/50 transition-all cursor-pointer overflow-hidden">
+<div class="absolute inset-0 bg-tertiary/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="relative flex gap-4">
+<div class="w-20 h-20 bg-surface-container rounded-lg border border-tertiary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-tertiary" style="font-variation-settings: 'FILL' 1;">shield_with_heart</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h3 class="font-headline font-bold text-on-surface text-lg">Aegis of Void</h3>
+<span class="text-[10px] bg-tertiary/20 text-tertiary px-2 py-0.5 rounded-full font-headline tracking-tighter uppercase">Legendary</span>
+</div>
+<p class="text-xs text-on-surface-variant line-clamp-2 mt-1 font-body">Forged in the heart of a dying star. Absorbs 90% of kinetic impact.</p>
+<div class="mt-3 flex items-center gap-2">
+<div class="h-1 flex-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-[30%] shadow-[0_0_8px_#ff59e3]"></div>
+</div>
+<span class="text-[10px] text-on-surface-variant font-headline">LACKING CORE</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Item Card: Common -->
+<div class="group relative bg-surface-container-low rounded-xl p-4 border border-outline-variant/30 hover:bg-surface-container-high transition-all cursor-pointer">
+<div class="relative flex gap-4">
+<div class="w-20 h-20 bg-surface-container rounded-lg border border-outline-variant/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant">healing</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h3 class="font-headline font-bold text-on-surface text-lg">Nano-Stitch Kit</h3>
+<span class="text-[10px] bg-on-surface-variant/20 text-on-surface-variant px-2 py-0.5 rounded-full font-headline tracking-tighter uppercase">Common</span>
+</div>
+<p class="text-xs text-on-surface-variant line-clamp-2 mt-1 font-body">Standard issue medical nanites for field repairs.</p>
+<div class="mt-3 flex items-center gap-2">
+<div class="h-1 flex-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-on-surface-variant w-full"></div>
+</div>
+<span class="text-[10px] text-on-surface-variant font-headline">READY</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Item Card: Rare -->
+<div class="group relative bg-surface-container-low rounded-xl p-4 border border-outline-variant/30 hover:border-secondary/50 transition-all cursor-pointer overflow-hidden">
+<div class="relative flex gap-4">
+<div class="w-20 h-20 bg-surface-container rounded-lg border border-secondary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-secondary" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h3 class="font-headline font-bold text-on-surface text-lg">Hyper-Fuel Cell</h3>
+<span class="text-[10px] bg-secondary/20 text-secondary px-2 py-0.5 rounded-full font-headline tracking-tighter uppercase">Rare</span>
+</div>
+<p class="text-xs text-on-surface-variant line-clamp-2 mt-1 font-body">Refined dark matter for deep space propulsion systems.</p>
+<div class="mt-3 flex items-center gap-2">
+<div class="h-1 flex-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-full shadow-[0_0_8px_#ac89ff]"></div>
+</div>
+<span class="text-[10px] text-secondary font-headline">READY</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Recipe Detail Panel (Right) -->
+<div class="col-span-12 lg:col-span-5">
+<div class="sticky top-24 bg-surface-container rounded-2xl border border-outline-variant/20 overflow-hidden blueprint-grid flex flex-col min-h-[600px] shadow-2xl">
+<!-- Header / Image -->
+<div class="relative h-56 bg-surface-container-highest flex items-center justify-center p-8 overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container to-transparent z-10"></div>
+<div class="absolute top-4 left-4 z-20">
+<span class="bg-primary/20 text-primary text-[10px] px-3 py-1 rounded font-headline uppercase tracking-widest border border-primary/20">Schematic Loaded</span>
+</div>
+<img alt="Phaseshift Blade Schematic" class="relative z-0 max-h-full transition-transform hover:scale-110 duration-700 object-contain" data-alt="Holographic blueprint of a futuristic cyan plasma sword, glowing wireframe technical drawing on dark obsidian background, high-tech interface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwioWCxDmZk7tuF0BRDQEtUNOZE7mGN1vNIJsJfn9mR82pv0EJtuk9kWZ6iMbo2ZDYeJCMEvz3b4LY8duxh8fXieoEYVbhsOhxmL_Qe_Obsd9emmPxwihHd9Hi0uDZ3mFqSK_7inHm9mysMJeGw58xlMR9Gfl1HMCTANcXnA8zsrHHKizF-sD7mudREA9-6aMS_carVAcKOEYP-A0DHNaoMXhU10sUvsQsqzQuUIBml9PgjFc-6QO375SdqrJyvi9xzddA-NuSzEmL"/>
+<!-- Success Prob Overlay -->
+<div class="absolute bottom-6 right-6 z-20 text-right">
+<div class="text-[10px] text-on-surface-variant uppercase font-headline tracking-widest">Success Probability</div>
+<div class="text-3xl font-headline font-bold text-primary">94.2%</div>
+</div>
+</div>
+<!-- Recipe Details -->
+<div class="p-6 flex-1 space-y-8">
+<div>
+<h2 class="font-headline font-bold text-2xl text-on-surface">Phaseshift Blade</h2>
+<p class="text-on-surface-variant text-sm mt-2 font-body leading-relaxed">Required for Tier 4 Dreadnought infiltration. Features a vibratory core that resonates at high frequencies to bypass electromagnetic armor plating.</p>
+</div>
+<!-- Materials List -->
+<div class="space-y-4">
+<h4 class="font-headline text-[10px] text-primary uppercase tracking-[0.2em]">Required Components</h4>
+<div class="space-y-3">
+<!-- Owned Material -->
+<div class="flex items-center justify-between p-3 bg-surface-container-high/50 rounded-lg border border-outline-variant/20">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-surface-container rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">diamond</span>
+</div>
+<div>
+<div class="text-sm font-headline font-medium">Refined Obsidian Crystals</div>
+<div class="text-[10px] text-on-surface-variant">Inventory: 12 / 8</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<!-- Missing Material -->
+<div class="flex items-center justify-between p-3 bg-surface-container-high/30 rounded-lg border border-outline-variant/10 opacity-70">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-surface-container rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">memory</span>
+</div>
+<div>
+<div class="text-sm font-headline font-medium">Neural Logic Core</div>
+<div class="text-[10px] text-on-surface-variant">Inventory: 1 / 1</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<!-- Owned -->
+<div class="flex items-center justify-between p-3 bg-surface-container-high/50 rounded-lg border border-outline-variant/20">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-surface-container rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">filter_hdr</span>
+</div>
+<div>
+<div class="text-sm font-headline font-medium">Star-Iron Ingot</div>
+<div class="text-[10px] text-on-surface-variant">Inventory: 45 / 20</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+</div>
+<!-- Metrics -->
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-low p-4 rounded-lg border border-outline-variant/10">
+<div class="text-[10px] text-on-surface-variant uppercase font-headline tracking-widest mb-1">Crafting Time</div>
+<div class="flex items-center gap-2 text-on-surface">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span class="font-headline font-bold">12m 45s</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg border border-outline-variant/10">
+<div class="text-[10px] text-on-surface-variant uppercase font-headline tracking-widest mb-1">Gold Cost</div>
+<div class="flex items-center gap-2 text-on-surface">
+<span class="material-symbols-outlined text-sm text-primary">payments</span>
+<span class="font-headline font-bold">4,500</span>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<button class="w-full bg-primary hover:bg-primary-fixed text-on-primary font-headline font-bold py-4 rounded-xl flex items-center justify-center gap-3 transition-all active:scale-[0.98] shadow-[0_10px_30px_rgba(143,245,255,0.2)]">
+<span class="material-symbols-outlined">bolt</span>
+                                START CRAFTING
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Chat Overlay) -->
+<div class="fixed bottom-0 right-8 w-72 z-50 flex flex-col items-stretch">
+<div class="bg-[#131314]/90 backdrop-blur-md rounded-t-lg border-t border-[#ac89ff]/20 shadow-[0_-4px_24px_rgba(0,0,0,0.5)] flex flex-col">
+<div class="flex p-2">
+<div class="flex-1 py-2 text-center font-['Space_Grotesk'] text-[10px] uppercase tracking-widest text-[#ac89ff] font-bold border-b-2 border-[#ac89ff] cursor-pointer">Global Chat</div>
+<div class="flex-1 py-2 text-center font-['Space_Grotesk'] text-[10px] uppercase tracking-widest text-[#adaaab] hover:text-white cursor-pointer transition-colors">Clan Chat</div>
+</div>
+<div class="h-48 overflow-y-auto p-4 space-y-3">
+<div class="text-[11px]">
+<span class="text-secondary font-bold">Xenon:</span> <span class="text-on-surface-variant">Anyone got spare Star-Iron? Trading logic cores.</span>
+</div>
+<div class="text-[11px]">
+<span class="text-primary font-bold">Nova_01:</span> <span class="text-on-surface-variant">The new raid is insane. Need more healing kits.</span>
+</div>
+<div class="text-[11px]">
+<span class="text-tertiary font-bold">Shadow:</span> <span class="text-on-surface-variant">Selling Tier 5 Shields at Sector 7.</span>
+</div>
+</div>
+<div class="p-3 border-t border-outline-variant/10 flex gap-2">
+<input class="flex-1 bg-surface-container-highest border-none text-[11px] rounded p-2 focus:ring-1 focus:ring-secondary/50 placeholder:text-on-surface-variant/50" placeholder="Type message..." type="text"/>
+<button class="bg-secondary/20 p-2 rounded text-secondary hover:bg-secondary/30 transition-colors">
+<span class="material-symbols-outlined text-sm">send</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

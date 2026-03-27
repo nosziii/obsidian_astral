@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary-fixed": "#003f43",
+              "outline": "#767576",
+              "on-background": "#ffffff",
+              "on-error-container": "#ffa8a3",
+              "error-container": "#9f0519",
+              "surface": "#0e0e0f",
+              "on-tertiary-container": "#1b0017",
+              "secondary-container": "#7000ff",
+              "on-tertiary": "#42003a",
+              "surface-dim": "#0e0e0f",
+              "secondary-fixed": "#dac9ff",
+              "inverse-primary": "#006a71",
+              "on-error": "#490006",
+              "on-primary-container": "#005359",
+              "surface-container-highest": "#262627",
+              "error": "#ff716c",
+              "inverse-surface": "#fcf8f9",
+              "on-tertiary-fixed-variant": "#6d0061",
+              "error-dim": "#d7383b",
+              "on-secondary-fixed": "#41009a",
+              "secondary-fixed-dim": "#ceb9ff",
+              "on-surface": "#ffffff",
+              "outline-variant": "#484849",
+              "tertiary-dim": "#ff59e3",
+              "background": "#0e0e0f",
+              "on-secondary-container": "#f8f1ff",
+              "surface-container": "#1a191b",
+              "secondary-dim": "#874cff",
+              "primary-fixed-dim": "#00deec",
+              "primary-dim": "#00deec",
+              "on-tertiary-fixed": "#33002d",
+              "surface-container-low": "#131314",
+              "on-secondary-fixed-variant": "#6300e2",
+              "surface-bright": "#2c2c2d",
+              "tertiary-fixed-dim": "#ff68e3",
+              "surface-variant": "#262627",
+              "tertiary-container": "#ff05e5",
+              "surface-tint": "#8ff5ff",
+              "surface-container-high": "#201f21",
+              "primary-container": "#00eefc",
+              "secondary": "#ac89ff",
+              "on-secondary": "#290067",
+              "inverse-on-surface": "#565556",
+              "primary": "#8ff5ff",
+              "on-surface-variant": "#adaaab",
+              "tertiary-fixed": "#ff85e4",
+              "on-primary": "#005d63",
+              "surface-container-lowest": "#000000",
+              "on-primary-fixed-variant": "#005e64",
+              "tertiary": "#ff59e3",
+              "primary-fixed": "#00eefc"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Manrope"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #484849; border-radius: 2px; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30 overflow-hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full flex justify-between items-center px-6 h-16 bg-[#0e0e0f]/80 backdrop-blur-xl z-50 bg-gradient-to-b from-[#131314] to-transparent shadow-[0_0_32px_rgba(143,245,255,0.08)]">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-black text-[#8ff5ff] tracking-tighter font-headline">OBSIDIAN ASTRAL</span>
+<nav class="hidden md:flex items-center gap-6">
+<a class="font-['Space_Grotesk'] uppercase tracking-[0.1em] text-[0.6875rem] text-[#adaaab] hover:text-[#8ff5ff] transition-colors" href="#">Command</a>
+<a class="font-['Space_Grotesk'] uppercase tracking-[0.1em] text-[0.6875rem] text-[#8ff5ff] border-b-2 border-[#8ff5ff] pb-1" href="#">Neural Link</a>
+<a class="font-['Space_Grotesk'] uppercase tracking-[0.1em] text-[0.6875rem] text-[#adaaab] hover:text-[#8ff5ff] transition-colors" href="#">Data Vault</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center bg-surface-container-high px-3 py-1.5 rounded-lg border border-outline-variant/20">
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-[0.6875rem] font-headline tracking-widest uppercase placeholder:text-on-surface-variant/50 ml-2 w-48" placeholder="SEARCH COMM-LINKS..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="mail" style="font-variation-settings: 'FILL' 1;">mail</span></button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="notifications">notifications</span></button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="settings">settings</span></button>
+<img alt="Player holographic avatar" class="w-8 h-8 rounded-full border border-primary/40 p-0.5" data-alt="Holographic neon avatar profile of a futuristic space commander in a dark environment with blue lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLQv0H0nnFCCRqxjxnnNEWDLNKYli8K6l554ocFvTWvvzcML22cQU_9DxLHafRIs7EtLHJy5G8gNlJmUB0bxV1Q8LbcP6TOrBiZlB6WvyT4WKo19baJj8LbbC5BIw-7psJwwjS-K3ABimwsDU75UROIRzCSVUPvkiz58d-sCXGk8qdbnWcXGfaplXtX_S1qqgtzw30nSb-S6W7gJNu5lIURcSGwc86hQIrAm3R8jIEI4b70WiMX_LGQYMvXkNRIiA2RtmkFAaUdoUB"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col border-r border-[#201f21]/30 bg-[#0e0e0f]/90 backdrop-blur-2xl w-64 pt-16 z-40">
+<div class="p-6 border-b border-outline-variant/10">
+<div class="flex items-center gap-3">
+<img alt="Commander Identity" class="w-10 h-10 rounded-lg bg-surface-container" data-alt="Digital identity portrait of a fleet admiral with glowing purple tactical interface overlays" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkSGCzWVHMhWITkQCriu-0FoNa6Hel6dT8iaHK34GXfGMIN-tP9_Z1zdmxvwIp3IUkDhmVI3CC3_C1EkVOXmMeEvFWhRN-qdUvUg_Tzflw14yYHTm8KurBAKxEGgzMuCLl0TmhWUUnyqhii89Fb_YErI-mPEDqJG_T5w-roF7V4apRZhv_PE1ihJsLC-oIELsTekIxdOU-rdaazb_SnrHIZB4mg7H_g_VlGbmK0H2fKPh0oKF7X1OFPv5VzK2sxivZfykeX0T_8VqT"/>
+<div>
+<h3 class="font-headline font-bold text-sm tracking-tight">ADM. KALE</h3>
+<p class="text-[0.6rem] text-on-surface-variant uppercase tracking-tighter">Level 48 Fleet Lead</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 py-4 overflow-y-auto custom-scrollbar">
+<div class="space-y-1">
+<a class="flex items-center gap-4 text-[#adaaab] px-4 py-3 hover:text-white transition-all font-headline font-medium hover:bg-[#201f21]" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="text-xs uppercase tracking-widest">Command</span>
+</a>
+<a class="flex items-center gap-4 bg-gradient-to-r from-[#8ff5ff]/20 to-transparent text-[#8ff5ff] border-l-4 border-[#8ff5ff] px-4 py-3 font-headline font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="forum" style="font-variation-settings: 'FILL' 1;">forum</span>
+<span class="text-xs uppercase tracking-widest">Neural Link</span>
+</a>
+<a class="flex items-center gap-4 text-[#adaaab] px-4 py-3 hover:text-white transition-all font-headline font-medium hover:bg-[#201f21]" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="text-xs uppercase tracking-widest">Data Vault</span>
+</a>
+<a class="flex items-center gap-4 text-[#adaaab] px-4 py-3 hover:text-white transition-all font-headline font-medium hover:bg-[#201f21]" href="#">
+<span class="material-symbols-outlined" data-icon="build">build</span>
+<span class="text-xs uppercase tracking-widest">Fabricator</span>
+</a>
+<a class="flex items-center gap-4 text-[#adaaab] px-4 py-3 hover:text-white transition-all font-headline font-medium hover:bg-[#201f21]" href="#">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+<span class="text-xs uppercase tracking-widest">Overseer</span>
+</a>
+</div>
+</nav>
+<div class="p-4 space-y-2 border-t border-outline-variant/10">
+<button class="w-full bg-primary text-on-primary py-3 rounded-md font-headline font-bold text-[0.6875rem] uppercase tracking-widest shadow-[0_0_20px_rgba(143,245,255,0.2)] hover:scale-[1.02] active:scale-95 transition-transform">
+                DEPLOY MISSION
+            </button>
+<div class="pt-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-white px-4 py-2 text-xs font-headline tracking-widest uppercase" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="help">help</span> Support
+                </a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-error px-4 py-2 text-xs font-headline tracking-widest uppercase" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="logout">logout</span> Log Out
+                </a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-16 h-screen flex flex-col">
+<!-- Messaging Interface -->
+<div class="flex flex-1 overflow-hidden">
+<!-- Message List (Left Pane) -->
+<div class="w-1/3 flex flex-col border-r border-outline-variant/20 bg-surface-container-low">
+<div class="p-6 space-y-4">
+<div class="flex justify-between items-center">
+<h1 class="font-headline font-bold text-lg tracking-tight text-primary">COMM-LINKS</h1>
+<div class="flex gap-2">
+<button class="p-2 rounded-lg bg-surface-container-high text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="filter_list">filter_list</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-md bg-secondary text-on-secondary font-headline font-bold text-xs uppercase tracking-widest hover:shadow-[0_0_15px_rgba(172,137,255,0.3)] transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="add" style="font-variation-settings: 'wght' 700;">add</span>
+                                NEW MESSAGE
+                            </button>
+</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar">
+<!-- Unread Message -->
+<div class="group relative px-6 py-5 border-l-4 border-primary bg-primary/5 hover:bg-primary/10 transition-all cursor-pointer">
+<div class="flex gap-4">
+<div class="relative">
+<img class="w-12 h-12 rounded-lg" data-alt="Cybernetic military officer portrait with glowing red optics and metallic jaw component" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYhuEHkgsstiEauI7OfGl-mseipaZ54o_rkyr2SJHhdt-b-f_Hx0bfC7I77C3jKN4P1LRLoQCV-Q1HKz_dntEWnMyMuEvu8FojlcY_cgG31lZ9mo-AlOGvAw0Y_j2vEL5id4Zc2if0XM7GeQbXZCJJ7KURPgfnu-CnaV5yN3t-EJE4ZCcFttRBP2h_lyTn0gis-na5HVLv5bnGzV4eFEXauZ9_c1kV_3XFJCqNNdSWRs8kLQasl3u6yqUwuuZYwZ6brfZ_cDUvZIcV"/>
+<div class="absolute -top-1 -right-1 w-3 h-3 bg-primary rounded-full border-2 border-surface animate-pulse"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-headline font-bold text-sm tracking-tight text-primary">ADMIN</h4>
+<span class="text-[0.6rem] font-headline text-on-surface-variant/70 uppercase">04:21 UTC</span>
+</div>
+<h5 class="text-sm font-semibold truncate text-on-surface">Urgent: Patch 0.4.8 Deployment</h5>
+<p class="text-xs text-on-surface-variant truncate font-light mt-1">Commander, please be advised that the neural stabilizers...</p>
+</div>
+</div>
+</div>
+<!-- Read Message -->
+<div class="group relative px-6 py-5 border-l-4 border-transparent hover:bg-surface-container-high transition-all cursor-pointer">
+<div class="flex gap-4 opacity-80 group-hover:opacity-100">
+<img class="w-12 h-12 rounded-lg grayscale group-hover:grayscale-0 transition-all" data-alt="High-tech clan leader avatar with intricate face tattoos and a purple crystalline eyepiece" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlXpeDEeoxbOoXBy94JwFUyCqT6-5VuLjq1OuKUWoimvtGf9L6_FMbcsGr-inCFxPmuk4iZNxbnMHRdjKAA2rnj47dIYjKHr_ztUX0xj4JSfwnS4SvFYEXUWYfpV4aYNXpEa3BTXtfJ8AUhP2vjDEAhwhzwVtW1xsTZ7qmfFPqeSnI274sVZyrl-qCtXvYPxMZyt64RKMk9Pi24lWKny_AZj7DIoHtU3BDq79eDkOEB6j2glseIJ2hga1VsQMNFHiGpkcOfkf5Fp6_"/>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-headline font-bold text-sm tracking-tight text-secondary">CLAN LEADER</h4>
+<span class="text-[0.6rem] font-headline text-on-surface-variant/70 uppercase">Yesterday</span>
+</div>
+<h5 class="text-sm font-semibold truncate text-on-surface">Raid Strategy: Sector 7G</h5>
+<p class="text-xs text-on-surface-variant truncate font-light mt-1">The logistics for the upcoming resource grab are finalized...</p>
+</div>
+</div>
+</div>
+<!-- Market Bot -->
+<div class="group relative px-6 py-5 border-l-4 border-transparent hover:bg-surface-container-high transition-all cursor-pointer">
+<div class="flex gap-4 opacity-80 group-hover:opacity-100">
+<div class="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-3xl" data-icon="smart_toy">smart_toy</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-headline font-bold text-sm tracking-tight text-tertiary">MARKET BOT</h4>
+<span class="text-[0.6rem] font-headline text-on-surface-variant/70 uppercase">12 Oct</span>
+</div>
+<h5 class="text-sm font-semibold truncate text-on-surface">Trade Confirmation: #8892</h5>
+<p class="text-xs text-on-surface-variant truncate font-light mt-1">Your listing for 400x Iridium Shards has been sold...</p>
+</div>
+</div>
+</div>
+<!-- Regular Message -->
+<div class="group relative px-6 py-5 border-l-4 border-transparent hover:bg-surface-container-high transition-all cursor-pointer">
+<div class="flex gap-4 opacity-80 group-hover:opacity-100">
+<img class="w-12 h-12 rounded-lg" data-alt="Female space pilot avatar with sleek silver hair and a yellow tactical headset" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKg8CUePYl83win8OGef1h9WLDN4G-MikE9qdedAhA_igt82pi2qd6gBqyKuwgW8PNGVISTtJq0gxeL1ykQKsjGCrIKUZen4Gv2DOwxza2Djxh6D0aQaizK5u3MUvvxAzI_6AFIQOIw3-3oFxNs3b9x7SbFsERPyt7eu1w1ymQeeS8RKSe_l1R-jZtAGIFSrdo_CV1wkacABxGH3ozzWZirFVPizFll5_h-6k9TGk0_Hk50fxrJjqn70XQE22vbyl_IIicNexXaMPq"/>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-headline font-bold text-sm tracking-tight text-on-surface">LT. VANCE</h4>
+<span class="text-[0.6rem] font-headline text-on-surface-variant/70 uppercase">11 Oct</span>
+</div>
+<h5 class="text-sm font-semibold truncate text-on-surface">Scout Report: Dark Nebula</h5>
+<p class="text-xs text-on-surface-variant truncate font-light mt-1">Found something unusual during the routine sweep of...</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Reading Pane (Right Pane) -->
+<div class="flex-1 flex flex-col bg-surface relative">
+<!-- Message Detail Header -->
+<div class="px-8 py-6 flex justify-between items-center border-b border-outline-variant/10">
+<div class="flex items-center gap-4">
+<img class="w-10 h-10 rounded-lg" data-alt="Close up of a cybernetic officer with red glowing eye indicators" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAr7JcFPMyIlhIRkACbvpawniOu8JrlkhtF6_T_KzQpsU1Oc58iaJUj--FMR0sghQX5jECyrTmMI1k7bmE9G3D4-0ABnmDUDDFUuDqmNw4ytCz0jh4k24qxh_kabPZSlDXROIjDZUOymMWj3T_OtTVxhAu0Zj7bf_ip2yPyKMAa5-tCs9ctL1RZkGWXm6nDigXBAZ7GmT_Jas8FBeZJ_7g9hmWVnc95r1DeHVvvo48orgMFaZh0kHR7Rp8ThLaFrw1VJa4gjA9G_rj8"/>
+<div>
+<h2 class="font-headline font-bold text-base tracking-tight text-on-surface">Urgent: Patch 0.4.8 Deployment</h2>
+<p class="text-[0.65rem] font-headline text-on-surface-variant uppercase tracking-widest flex items-center gap-2">
+                                FROM: <span class="text-primary">ADMIN (SYSTEM)</span>
+<span class="w-1 h-1 bg-outline-variant rounded-full"></span>
+                                RECEIVED: 04:21:09 UTC
+                            </p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2.5 rounded-lg bg-surface-container-low text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined text-xl" data-icon="reply">reply</span>
+</button>
+<button class="p-2.5 rounded-lg bg-surface-container-low text-on-surface-variant hover:text-tertiary transition-all">
+<span class="material-symbols-outlined text-xl" data-icon="archive">archive</span>
+</button>
+<button class="p-2.5 rounded-lg bg-surface-container-low text-on-surface-variant hover:text-error transition-all">
+<span class="material-symbols-outlined text-xl" data-icon="delete">delete</span>
+</button>
+<div class="h-6 w-[1px] bg-outline-variant/30 mx-2"></div>
+<button class="p-2.5 rounded-lg bg-surface-container-low text-on-surface-variant hover:text-white transition-all">
+<span class="material-symbols-outlined text-xl" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Message Content Body -->
+<div class="flex-1 overflow-y-auto custom-scrollbar p-8">
+<div class="max-w-3xl mx-auto space-y-6">
+<div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/10 shadow-xl">
+<div class="flex items-center gap-2 text-primary font-headline text-[0.65rem] uppercase tracking-[0.2em] mb-4">
+<span class="material-symbols-outlined text-sm" data-icon="verified">verified</span> Secure Transmission Encrypted
+                            </div>
+<div class="space-y-4 text-on-surface-variant leading-relaxed">
+<p>Greetings Commander,</p>
+<p>This is an automated priority dispatch regarding the upcoming <span class="text-primary font-bold">Maintenance Cycle 0.4.8</span>. Central Command has identified several critical instabilities in the astral-bridge relays that require immediate patching.</p>
+<p>The following changes will take effect at 12:00 UTC:</p>
+<ul class="list-none space-y-2 pl-4 border-l-2 border-primary/20">
+<li class="flex items-start gap-2">
+<span class="text-primary mt-1 text-[8px]">●</span>
+<span>Recalibration of FTL drive cooldowns across all fleet-class vessels.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="text-primary mt-1 text-[8px]">●</span>
+<span>Correction of trade-terminal latency in the Outer Rim sectors.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="text-primary mt-1 text-[8px]">●</span>
+<span>Security enhancement for neural-link channels against Clan-based interception.</span>
+</li>
+</ul>
+<p>Expected downtime is 45 minutes. Please ensure your fleet is docked at a secure outpost before the deployment window begins to prevent data fragmentation.</p>
+<p>Clear skies,</p>
+<p class="font-headline font-bold text-on-surface">OBSIDIAN CENTRAL ADMINISTRATION</p>
+</div>
+<div class="mt-8 pt-6 border-t border-outline-variant/10 flex items-center justify-between">
+<div class="flex gap-4">
+<div class="flex flex-col gap-1">
+<span class="text-[0.6rem] font-headline uppercase tracking-widest text-on-surface-variant">Attachments</span>
+<div class="flex gap-2">
+<div class="flex items-center gap-2 bg-surface-container-high px-3 py-2 rounded-lg border border-outline-variant/30 hover:border-primary/50 cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="description">description</span>
+<span class="text-[0.65rem] font-headline tracking-tighter">patch_notes_0.4.8.pdf</span>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-high px-3 py-2 rounded-lg border border-outline-variant/30 hover:border-primary/50 cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="map">map</span>
+<span class="text-[0.65rem] font-headline tracking-tighter">downtime_sectors.dat</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Reply Bar -->
+<div class="relative mt-8">
+<div class="flex items-end gap-3 bg-surface-container p-3 rounded-xl border border-outline-variant/20 focus-within:border-primary/50 transition-all shadow-inner">
+<textarea class="flex-1 bg-transparent border-none focus:ring-0 text-sm font-body resize-none py-2 px-1 min-h-[44px] placeholder:text-on-surface-variant/30" placeholder="COMPOSE NEURAL RESPONSE..."></textarea>
+<div class="flex items-center gap-2 pb-1">
+<button class="p-2 text-on-surface-variant hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="attach_file">attach_file</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="mood">mood</span>
+</button>
+<button class="bg-primary text-on-primary p-2 rounded-lg hover:shadow-[0_0_15px_rgba(143,245,255,0.4)] transition-all">
+<span class="material-symbols-outlined" data-icon="send" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Background Ambient Gradient -->
+<div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full pointer-events-none -mr-48 -mb-48"></div>
+</div>
+</div>
+</main>
+<!-- Floating Action Button (Only for specific primary intent) -->
+<!-- Suppressed for messaging focus flow as per logic rules -->
+</body></html>

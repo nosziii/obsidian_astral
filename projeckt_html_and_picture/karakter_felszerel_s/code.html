@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Obsidian Astral - Character Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #0e0e0f;
+            color: #ffffff;
+            font-family: 'Manrope', sans-serif;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(26, 25, 27, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .rarity-common { border-color: #484849; }
+        .rarity-uncommon { border-color: #4ade80; box-shadow: 0 0 10px rgba(74, 222, 128, 0.1); }
+        .rarity-rare { border-color: #8ff5ff; box-shadow: 0 0 10px rgba(143, 245, 255, 0.1); }
+        .rarity-epic { border-color: #ac89ff; box-shadow: 0 0 10px rgba(172, 137, 255, 0.1); }
+        .rarity-legendary { border-color: #ff59e3; box-shadow: 0 0 15px rgba(255, 89, 227, 0.2); }
+        
+        .hex-grid {
+            background-image: radial-gradient(#201f21 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed": "#ff85e4",
+              "on-secondary-container": "#f8f1ff",
+              "primary": "#8ff5ff",
+              "tertiary-dim": "#ff59e3",
+              "error": "#ff716c",
+              "tertiary-fixed-dim": "#ff68e3",
+              "on-primary-fixed": "#003f43",
+              "inverse-primary": "#006a71",
+              "secondary-container": "#7000ff",
+              "surface-container-highest": "#262627",
+              "outline-variant": "#484849",
+              "on-surface-variant": "#adaaab",
+              "primary-container": "#00eefc",
+              "background": "#0e0e0f",
+              "tertiary-container": "#ff05e5",
+              "on-error-container": "#ffa8a3",
+              "secondary-dim": "#874cff",
+              "surface-container-low": "#131314",
+              "secondary": "#ac89ff",
+              "surface-dim": "#0e0e0f",
+              "inverse-on-surface": "#565556",
+              "surface-container-lowest": "#000000",
+              "primary-fixed-dim": "#00deec",
+              "on-primary-container": "#005359",
+              "inverse-surface": "#fcf8f9",
+              "error-container": "#9f0519",
+              "error-dim": "#d7383b",
+              "on-error": "#490006",
+              "primary-fixed": "#00eefc",
+              "surface-bright": "#2c2c2d",
+              "secondary-fixed": "#dac9ff",
+              "on-tertiary-fixed": "#33002d",
+              "outline": "#767576",
+              "surface-container": "#1a191b",
+              "on-primary-fixed-variant": "#005e64",
+              "surface-container-high": "#201f21",
+              "primary-dim": "#00deec",
+              "on-surface": "#ffffff",
+              "on-secondary-fixed-variant": "#6300e2",
+              "on-secondary": "#290067",
+              "on-background": "#ffffff",
+              "on-secondary-fixed": "#41009a",
+              "on-primary": "#005d63",
+              "on-tertiary-container": "#1b0017",
+              "secondary-fixed-dim": "#ceb9ff",
+              "surface-variant": "#262627",
+              "tertiary": "#ff59e3",
+              "surface": "#0e0e0f",
+              "surface-tint": "#8ff5ff",
+              "on-tertiary": "#42003a",
+              "on-tertiary-fixed-variant": "#6d0061"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Manrope"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#0e0e0f]/80 backdrop-blur-xl shadow-[0_0_20px_rgba(143,245,255,0.08)]">
+<div class="flex justify-between items-center px-6 h-16 w-full">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tighter text-[#8ff5ff] font-headline">Obsidian Astral</span>
+<nav class="hidden md:flex gap-6">
+<a class="font-['Space_Grotesk'] tracking-wider uppercase text-[0.6875rem] text-[#adaaab] hover:text-[#8ff5ff] transition-all" href="#">Missions</a>
+<a class="font-['Space_Grotesk'] tracking-wider uppercase text-[0.6875rem] text-[#8ff5ff] drop-shadow-[0_0_8px_rgba(143,245,255,0.5)]" href="#">Character</a>
+<a class="font-['Space_Grotesk'] tracking-wider uppercase text-[0.6875rem] text-[#adaaab] hover:text-[#8ff5ff] transition-all" href="#">Nexus</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex gap-4 px-4 py-1.5 rounded-full bg-surface-container-low border border-outline-variant/30">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="diamond">diamond</span>
+<span class="text-xs font-headline font-bold">1,240</span>
+</div>
+<div class="flex items-center gap-1.5 border-l border-outline-variant/30 pl-4">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="bolt">bolt</span>
+<span class="text-xs font-headline font-bold">85/100</span>
+</div>
+</div>
+<div class="w-8 h-8 rounded-full border border-primary/50 overflow-hidden active:scale-95 transition-transform cursor-pointer">
+<img alt="Player Avatar" class="w-full h-full object-cover" data-alt="Cyberpunk commander avatar with glowing blue cybernetic eyes and futuristic armor plating" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUl4gapMP5j3I6KZ4XSPw5fSyCJAwb5sxiT2CFZbYAVJ3718RQ7e1UasXx8kXHzFar7TodHZyhFcJZAX0VPUpe_dU8xLYXFCTedHpyFfE4Duh3Njl0Jj9ytfN5p97-umY8k_-2iF56sK2X2-wDhdISqJVnWaVylgWswgOOXIEEPEn3gyVVfhiFntWG9KnW8YwrHV4ltJIJtpjoZEiG3LB1yAAq--ynL_VRiWCIWcaiCAsKkp8peHEmOH1I27sJH-0M7TgoHrlGOecm"/>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-b from-[#201f21] to-transparent h-px w-full"></div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-64 z-40 bg-[#0e0e0f] border-r border-[#201f21] hidden md:flex flex-col pt-20 pb-6">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3 p-3 rounded-lg bg-surface-container-low">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20">
+<span class="material-symbols-outlined text-primary" data-icon="person_filled" style="font-variation-settings: 'FILL' 1;">person_filled</span>
+</div>
+<div>
+<div class="font-headline font-medium text-sm text-on-surface">Commander</div>
+<div class="text-[10px] text-on-surface-variant uppercase tracking-widest">Level 42</div>
+</div>
+</div>
+</div>
+<nav class="flex-1 flex flex-col">
+<a class="text-[#adaaab] py-3 px-6 font-['Space_Grotesk'] font-medium text-sm hover:bg-[#131314] hover:text-white transition-colors" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</div>
+</a>
+<a class="text-[#8ff5ff] bg-gradient-to-r from-[#8ff5ff]/10 to-transparent border-l-2 border-[#8ff5ff] py-3 px-6 font-['Space_Grotesk'] font-medium text-sm" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined" data-icon="person_filled" style="font-variation-settings: 'FILL' 1;">person_filled</span>
+<span>Character</span>
+</div>
+</a>
+<a class="text-[#adaaab] py-3 px-6 font-['Space_Grotesk'] font-medium text-sm hover:bg-[#131314] hover:text-white transition-colors" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span>Resources</span>
+</div>
+</a>
+<a class="text-[#adaaab] py-3 px-6 font-['Space_Grotesk'] font-medium text-sm hover:bg-[#131314] hover:text-white transition-colors" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined" data-icon="handyman">handyman</span>
+<span>Crafting</span>
+</div>
+</a>
+<a class="text-[#adaaab] py-3 px-6 font-['Space_Grotesk'] font-medium text-sm hover:bg-[#131314] hover:text-white transition-colors" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span>Map</span>
+</div>
+</a>
+</nav>
+<div class="mt-auto px-6 border-t border-[#201f21] pt-4 space-y-1">
+<a class="flex items-center gap-4 py-2 text-[#adaaab] hover:text-white transition-colors text-sm font-headline" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+<a class="flex items-center gap-4 py-2 text-[#adaaab] hover:text-white transition-colors text-sm font-headline" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="help">help</span>
+<span>Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="md:pl-64 pt-20 pb-24 px-6 min-h-screen">
+<div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Character Paperdoll & Stats -->
+<div class="lg:col-span-7 flex flex-col gap-6">
+<div class="relative bg-surface-container-low rounded-xl overflow-hidden min-h-[600px] border border-outline-variant/10 flex items-center justify-center hex-grid">
+<!-- Background Ambient Glow -->
+<div class="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-secondary/5 pointer-events-none"></div>
+<!-- Character Silhouette/Avatar -->
+<div class="relative z-10 w-full max-w-sm h-full flex flex-col items-center justify-center py-12">
+<img alt="Character Silhouette" class="h-full object-contain mix-blend-lighten opacity-80 filter drop-shadow-[0_0_15px_rgba(143,245,255,0.3)]" data-alt="Futuristic holographic character silhouette standing in a tactical pose with glowing blue circuit lines on a dark obsidian background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIT0AmduEj8EqjpsZdHdXfh5EZ7RvJ15ynH2igsBwWv5G2vpx9K0cBDrB-jstFoRCShrFPUPeIzGYE0TCea80EINMnkOpPv8-OGdJOt0NVBKp_mZbvSA5DIcBZsUoqfhm0ZmVsZdACmTJsoDps3KGArdCktPHOc-bTMxoyT71DO1jazL-3OjM9wUviHvl7LI6c7gq8FrwZy9PXrLI2wK_NLwvxycqjVYNuIXSUvajmN4GEJ4JNzlwUqA09Sm7aQBeXaHvuGhcALXn1"/>
+<!-- Equipment Slots Overlay -->
+<div class="absolute inset-0 grid grid-cols-3 gap-y-20 p-8">
+<!-- Left Column -->
+<div class="flex flex-col gap-6 items-start">
+<div class="w-14 h-14 rounded-lg bg-surface-container-high border-2 rarity-epic flex items-center justify-center group cursor-pointer transition-all hover:scale-110">
+<span class="material-symbols-outlined text-secondary" data-icon="swords">swords</span>
+<div class="absolute -top-1 -right-1 w-3 h-3 bg-secondary rounded-full animate-pulse"></div>
+</div>
+<div class="w-14 h-14 rounded-lg bg-surface-container-high border-2 rarity-rare flex items-center justify-center group cursor-pointer transition-all hover:scale-110">
+<span class="material-symbols-outlined text-primary" data-icon="shield">shield</span>
+</div>
+<div class="w-14 h-14 rounded-lg bg-surface-container-high border-2 rarity-legendary flex items-center justify-center group cursor-pointer transition-all hover:scale-110">
+<span class="material-symbols-outlined text-tertiary" data-icon="ring_volume">ring_volume</span>
+</div>
+</div>
+<!-- Center Column -->
+<div class="flex flex-col items-center justify-between">
+<div class="w-14 h-14 rounded-lg bg-surface-container-high border-2 rarity-rare flex items-center justify-center group cursor-pointer transition-all hover:scale-110">
+<span class="material-symbols-outlined text-primary" data-icon="helmet">skull</span>
+</div>
+<div class="w-14 h-14 rounded-lg bg-surface-container-high border-2 rarity-epic flex items-center justify-center group cursor-pointer transition-all hover:scale-110">
+<span class="material-symbols-outlined text-secondary" data-icon="apparel">apparel</span>
+</div>
+<div class="w-14 h-14 rounded-lg bg-surface-container-high border-2 rarity-uncommon flex items-center justify-center group cursor-pointer transition-all hover:scale-110">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="footprint">footprint</span>
+</div>
+</div>
+<!-- Right Column -->
+<div class="flex flex-col gap-6 items-end">
+<div class="w-14 h-14 rounded-lg bg-surface-container-high border-2 rarity-epic flex items-center justify-center group cursor-pointer transition-all hover:scale-110">
+<span class="material-symbols-outlined text-secondary" data-icon="front_hand">front_hand</span>
+</div>
+<div class="w-14 h-14 rounded-lg bg-surface-container-high border-2 border-outline-variant/30 flex items-center justify-center group cursor-pointer opacity-40">
+<span class="material-symbols-outlined text-outline" data-icon="lock">lock</span>
+</div>
+<div class="w-14 h-14 rounded-lg bg-surface-container-high border-2 border-outline-variant/30 flex items-center justify-center group cursor-pointer opacity-40">
+<span class="material-symbols-outlined text-outline" data-icon="lock">lock</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Level Badge -->
+<div class="absolute bottom-6 left-6 flex items-center gap-3">
+<div class="px-4 py-2 bg-primary/10 border border-primary/30 rounded-lg backdrop-blur-md">
+<span class="text-xs font-headline uppercase tracking-widest text-primary block">Level</span>
+<span class="text-2xl font-headline font-bold text-on-surface">42</span>
+</div>
+<div class="w-48 h-2 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-primary-dim w-[72%]"></div>
+</div>
+</div>
+</div>
+<!-- Attributes Bento Grid -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="p-4 bg-surface-container-low rounded-xl border border-outline-variant/10">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-error text-lg" data-icon="favorite">favorite</span>
+<span class="text-[10px] font-headline uppercase tracking-widest text-on-surface-variant">Health</span>
+</div>
+<div class="text-xl font-headline font-bold">14,250</div>
+</div>
+<div class="p-4 bg-surface-container-low rounded-xl border border-outline-variant/10">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="bolt">bolt</span>
+<span class="text-[10px] font-headline uppercase tracking-widest text-on-surface-variant">Attack</span>
+</div>
+<div class="text-xl font-headline font-bold">3,842</div>
+</div>
+<div class="p-4 bg-surface-container-low rounded-xl border border-outline-variant/10">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-secondary text-lg" data-icon="shield">shield</span>
+<span class="text-[10px] font-headline uppercase tracking-widest text-on-surface-variant">Defense</span>
+</div>
+<div class="text-xl font-headline font-bold">2,110</div>
+</div>
+<div class="p-4 bg-surface-container-low rounded-xl border border-outline-variant/10">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-tertiary text-lg" data-icon="flare">flare</span>
+<span class="text-[10px] font-headline uppercase tracking-widest text-on-surface-variant">Critical</span>
+</div>
+<div class="text-xl font-headline font-bold">18.5%</div>
+</div>
+</div>
+</div>
+<!-- Inventory Grid -->
+<div class="lg:col-span-5 flex flex-col gap-6">
+<div class="bg-surface-container-low rounded-xl border border-outline-variant/10 h-full flex flex-col overflow-hidden">
+<div class="p-6 border-b border-outline-variant/10 flex justify-between items-center">
+<h2 class="font-headline font-bold text-xl tracking-tight">Inventory</h2>
+<div class="flex gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded bg-surface-container-high hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-surface-container-high hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="grid_view" style="font-variation-settings: 'FILL' 1;">grid_view</span>
+</button>
+</div>
+</div>
+<div class="p-6 grid grid-cols-4 sm:grid-cols-5 gap-3 overflow-y-auto max-h-[700px]">
+<!-- Item Slots -->
+<div class="aspect-square rounded-lg bg-surface-container-high border-2 rarity-legendary p-2 cursor-pointer group hover:bg-surface-container-highest transition-all relative">
+<div class="w-full h-full bg-tertiary/5 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary text-2xl" data-icon="magic_button">magic_button</span>
+</div>
+<span class="absolute bottom-1 right-1 text-[8px] font-headline text-tertiary">LV.40</span>
+</div>
+<div class="aspect-square rounded-lg bg-surface-container-high border-2 rarity-epic p-2 cursor-pointer group hover:bg-surface-container-highest transition-all">
+<div class="w-full h-full bg-secondary/5 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-2xl" data-icon="swords">swords</span>
+</div>
+</div>
+<div class="aspect-square rounded-lg bg-surface-container-high border-2 rarity-rare p-2 cursor-pointer group hover:bg-surface-container-highest transition-all">
+<div class="w-full h-full bg-primary/5 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="apparel">apparel</span>
+</div>
+</div>
+<!-- Fill more slots with dummy items -->
+<div class="aspect-square rounded-lg bg-surface-container-high border-2 rarity-uncommon p-2 cursor-pointer group hover:bg-surface-container-highest transition-all">
+<div class="w-full h-full bg-green-400/5 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-green-400 text-2xl" data-icon="healing">healing</span>
+</div>
+</div>
+<div class="aspect-square rounded-lg bg-surface-container-high border-2 rarity-epic p-2 cursor-pointer group hover:bg-surface-container-highest transition-all">
+<div class="w-full h-full bg-secondary/5 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-2xl" data-icon="shield">shield</span>
+</div>
+</div>
+<!-- Empty Slots -->
+<div class="aspect-square rounded-lg bg-surface-container-highest/20 border-2 border-dashed border-outline-variant/30 transition-all hover:border-outline-variant/60"></div>
+<div class="aspect-square rounded-lg bg-surface-container-highest/20 border-2 border-dashed border-outline-variant/30"></div>
+<div class="aspect-square rounded-lg bg-surface-container-highest/20 border-2 border-dashed border-outline-variant/30"></div>
+<div class="aspect-square rounded-lg bg-surface-container-highest/20 border-2 border-dashed border-outline-variant/30"></div>
+<div class="aspect-square rounded-lg bg-surface-container-highest/20 border-2 border-dashed border-outline-variant/30"></div>
+<div class="aspect-square rounded-lg bg-surface-container-highest/20 border-2 border-dashed border-outline-variant/30"></div>
+<div class="aspect-square rounded-lg bg-surface-container-highest/20 border-2 border-dashed border-outline-variant/30"></div>
+<div class="aspect-square rounded-lg bg-surface-container-highest/20 border-2 border-dashed border-outline-variant/30"></div>
+<div class="aspect-square rounded-lg bg-surface-container-highest/20 border-2 border-dashed border-outline-variant/30"></div>
+<div class="aspect-square rounded-lg bg-surface-container-highest/20 border-2 border-dashed border-outline-variant/30"></div>
+<div class="aspect-square rounded-lg bg-surface-container-highest/20 border-2 border-dashed border-outline-variant/30"></div>
+<div class="aspect-square rounded-lg bg-surface-container-highest/20 border-2 border-dashed border-outline-variant/30"></div>
+<div class="aspect-square rounded-lg bg-surface-container-highest/20 border-2 border-dashed border-outline-variant/30"></div>
+<div class="aspect-square rounded-lg bg-surface-container-highest/20 border-2 border-dashed border-outline-variant/30"></div>
+<div class="aspect-square rounded-lg bg-surface-container-highest/20 border-2 border-dashed border-outline-variant/30"></div>
+</div>
+<!-- Item Tooltip (Floating Preview Simulation) -->
+<div class="mt-auto p-4 bg-surface-container-high border-t border-outline-variant/30">
+<div class="flex gap-4">
+<div class="w-16 h-16 rounded-lg bg-surface-container-highest border-2 rarity-epic flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-3xl" data-icon="swords">swords</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h3 class="font-headline font-bold text-secondary">Aether Blade</h3>
+<span class="text-[10px] font-headline text-secondary uppercase tracking-widest border border-secondary/30 px-2 py-0.5 rounded">Epic</span>
+</div>
+<div class="text-xs text-on-surface-variant mt-1">+120 Attack | +5% Critical Chance</div>
+<button class="mt-3 w-full py-2 bg-primary text-on-primary font-headline font-bold text-xs uppercase tracking-widest rounded transition-transform active:scale-95">Equip Item</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Chat Bubble Style) -->
+<div class="fixed bottom-0 right-8 w-72 z-50 flex flex-col items-stretch group">
+<div class="bg-[#131314]/90 backdrop-blur-md rounded-t-xl border-t border-x border-[#ac89ff]/20 shadow-[0_-4px_24px_rgba(0,0,0,0.5)] overflow-hidden transition-all h-10 group-hover:h-80">
+<div class="flex justify-between items-center px-4 h-10 border-b border-[#ac89ff]/10">
+<div class="flex gap-4">
+<button class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest text-[#ac89ff] font-bold border-b-2 border-[#ac89ff] h-10 flex items-center">Global Chat</button>
+<button class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest text-[#adaaab] h-10 flex items-center hover:text-white">Clan Chat</button>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="expand_less">expand_less</span>
+</div>
+<div class="p-4 space-y-3 overflow-y-auto h-64 scrollbar-hide">
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-bold text-secondary">Xenon_Hunter</span>
+<span class="text-[8px] text-outline">12:44</span>
+</div>
+<p class="text-[11px] text-on-surface/80 bg-surface-container p-2 rounded-r-lg rounded-bl-lg">Anyone raiding the Obsidian Vault in 10 mins?</p>
+</div>
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-bold text-primary">Star_Drifter</span>
+<span class="text-[8px] text-outline">12:45</span>
+</div>
+<p class="text-[11px] text-on-surface/80 bg-surface-container p-2 rounded-r-lg rounded-bl-lg">I'm down. Just need to upgrade my boots first.</p>
+</div>
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-bold text-tertiary">Void_Reaper</span>
+<span class="text-[8px] text-outline">12:45</span>
+</div>
+<p class="text-[11px] text-on-surface/80 bg-surface-container p-2 rounded-r-lg rounded-bl-lg">Selling Rare Aether shards in Marketplace. Check it out.</p>
+</div>
+</div>
+<div class="p-3 bg-surface-container-highest/50">
+<div class="flex items-center gap-2 bg-background/50 rounded-lg px-3 py-1.5 border border-outline-variant/30">
+<input class="bg-transparent border-none text-[11px] p-0 focus:ring-0 w-full text-on-surface" placeholder="Type a message..." type="text"/>
+<span class="material-symbols-outlined text-sm text-primary" data-icon="send">send</span>
+</div>
+</div>
+</div>
+</div>
+</body></html>

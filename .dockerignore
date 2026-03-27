@@ -1,0 +1,10 @@
+.git
+.gitignore
+node_modules
+**/node_modules
+**/dist
+**/.vite
+**/.tmp
+.env
+stitch.zip
+stitch (1).zip

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "inverse-primary": "#006a71",
+            "tertiary": "#ff59e3",
+            "inverse-surface": "#fcf8f9",
+            "surface-container-high": "#201f21",
+            "error-container": "#9f0519",
+            "on-primary-fixed": "#003f43",
+            "error": "#ff716c",
+            "secondary-dim": "#874cff",
+            "surface-container-lowest": "#000000",
+            "secondary-fixed": "#dac9ff",
+            "on-primary-fixed-variant": "#005e64",
+            "inverse-on-surface": "#565556",
+            "surface-container": "#1a191b",
+            "on-primary-container": "#005359",
+            "on-error": "#490006",
+            "outline": "#767576",
+            "tertiary-fixed-dim": "#ff68e3",
+            "on-tertiary": "#42003a",
+            "on-surface": "#ffffff",
+            "tertiary-container": "#ff05e5",
+            "surface-dim": "#0e0e0f",
+            "secondary-fixed-dim": "#ceb9ff",
+            "on-tertiary-container": "#1b0017",
+            "primary-fixed-dim": "#00deec",
+            "secondary-container": "#7000ff",
+            "on-surface-variant": "#adaaab",
+            "on-tertiary-fixed": "#33002d",
+            "surface-variant": "#262627",
+            "on-tertiary-fixed-variant": "#6d0061",
+            "on-secondary-fixed-variant": "#6300e2",
+            "on-secondary-fixed": "#41009a",
+            "primary-fixed": "#00eefc",
+            "secondary": "#ac89ff",
+            "on-secondary-container": "#f8f1ff",
+            "on-secondary": "#290067",
+            "on-error-container": "#ffa8a3",
+            "on-background": "#ffffff",
+            "surface": "#0e0e0f",
+            "surface-tint": "#8ff5ff",
+            "outline-variant": "#484849",
+            "on-primary": "#005d63",
+            "tertiary-dim": "#ff59e3",
+            "primary": "#8ff5ff",
+            "surface-container-highest": "#262627",
+            "surface-bright": "#2c2c2d",
+            "primary-dim": "#00deec",
+            "error-dim": "#d7383b",
+            "background": "#0e0e0f",
+            "primary-container": "#00eefc",
+            "surface-container-low": "#131314",
+            "tertiary-fixed": "#ff85e4"
+          },
+          fontFamily: {
+            "headline": ["Space Grotesk"],
+            "body": ["Manrope"],
+            "label": ["Space Grotesk"]
+          },
+          borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+    }
+    .glass-panel {
+      background: rgba(26, 25, 27, 0.4);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .grid-lines {
+      background-image: linear-gradient(to right, rgba(143, 245, 255, 0.05) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(143, 245, 255, 0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .hex-glow {
+      filter: drop-shadow(0 0 8px rgba(143, 245, 255, 0.3));
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary/30 overflow-hidden">
+<!-- TopAppBar Shell -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-8 h-16 bg-[#0e0e0f]/90 backdrop-blur-md border-b border-[#201f21] shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+<div class="flex items-center gap-4">
+<span class="text-2xl font-bold tracking-tighter text-[#8ff5ff] drop-shadow-[0_0_8px_rgba(143,245,255,0.5)] font-headline">OBSIDIAN ASTRAL</span>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<div class="flex items-center gap-6">
+<span class="font-['Space_Grotesk'] uppercase tracking-[0.1em] text-[0.6875rem] text-[#adaaab] hover:text-[#8ff5ff] transition-colors cursor-pointer">Fleet</span>
+<span class="font-['Space_Grotesk'] uppercase tracking-[0.1em] text-[0.6875rem] text-[#8ff5ff] font-bold cursor-pointer">Cartography</span>
+<span class="font-['Space_Grotesk'] uppercase tracking-[0.1em] text-[0.6875rem] text-[#adaaab] hover:text-[#8ff5ff] transition-colors cursor-pointer">Archive</span>
+</div>
+</nav>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-3 bg-surface-container-high px-3 py-1 rounded-lg">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="monetization_on">monetization_on</span>
+<span class="font-label text-xs font-bold">12.4K</span>
+<span class="material-symbols-outlined text-tertiary text-sm" data-icon="diamond">diamond</span>
+<span class="font-label text-xs font-bold">450</span>
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="bolt">bolt</span>
+<span class="font-label text-xs font-bold">88%</span>
+</div>
+<div class="w-8 h-8 rounded-full border border-primary/30 overflow-hidden">
+<img alt="Player Avatar" class="w-full h-full object-cover" data-alt="Cyberpunk style character portrait with glowing visor and dark metallic armor plating" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrp1KqleSHPWnVs3-crnkqmoKDwGC1Ca2Y13AfRdv52FLaNTWIR3EMpds9RZLlVSpSemXAicV0UConlE2oaFpt9u1k1C2UQO22StCCU0cc2giZ9-holMEM1n7JQBs1Mryir3T8N5LjagRFDaKGTPN1GUgw6NFb66_KST7wEhihQAO6BeXkOoOedUMdDf_WGg8jA3w4Sj66Pu8LVVI5NnUym5-vAh5gelIHjV8p42uCK03bvph5zoAY_NuDt1qZXDwdy-A5CPs2mt5U"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 flex flex-col py-6 bg-[#0e0e0f]/40 backdrop-blur-2xl border-r border-[#201f21] shadow-[10px_0_30px_rgba(0,0,0,0.8)] z-40">
+<div class="px-6 mb-8">
+<h2 class="font-headline text-sm tracking-widest uppercase text-[#ac89ff]">COMMANDER</h2>
+<p class="font-label text-[0.6rem] text-on-surface-variant tracking-widest opacity-70">Level 42 Elite</p>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<div class="flex items-center gap-4 px-6 py-3 text-[#adaaab] opacity-70 hover:bg-[#201f21] hover:opacity-100 transition-all duration-300 hover:translate-x-1 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-headline text-sm tracking-widest uppercase">Dashboard</span>
+</div>
+<div class="flex items-center gap-4 px-6 py-3 text-[#adaaab] opacity-70 hover:bg-[#201f21] hover:opacity-100 transition-all duration-300 hover:translate-x-1 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-headline text-sm tracking-widest uppercase">Resources</span>
+</div>
+<div class="flex items-center gap-4 px-6 py-3 text-[#adaaab] opacity-70 hover:bg-[#201f21] hover:opacity-100 transition-all duration-300 hover:translate-x-1 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="handyman">handyman</span>
+<span class="font-headline text-sm tracking-widest uppercase">Crafting</span>
+</div>
+<div class="flex items-center gap-4 px-6 py-3 text-[#adaaab] opacity-70 hover:bg-[#201f21] hover:opacity-100 transition-all duration-300 hover:translate-x-1 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-headline text-sm tracking-widest uppercase">Character</span>
+</div>
+<div class="flex items-center gap-4 px-6 py-3 bg-[#8ff5ff]/10 text-[#8ff5ff] border-r-2 border-[#8ff5ff] shadow-[inset_-10px_0_20px_rgba(143,245,255,0.05)] cursor-default">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="font-headline text-sm tracking-widest uppercase">Map</span>
+</div>
+<div class="flex items-center gap-4 px-6 py-3 text-[#adaaab] opacity-70 hover:bg-[#201f21] hover:opacity-100 transition-all duration-300 hover:translate-x-1 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-headline text-sm tracking-widest uppercase">Clan</span>
+</div>
+<div class="flex items-center gap-4 px-6 py-3 text-[#adaaab] opacity-70 hover:bg-[#201f21] hover:opacity-100 transition-all duration-300 hover:translate-x-1 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span class="font-headline text-sm tracking-widest uppercase">Marketplace</span>
+</div>
+</nav>
+<div class="mt-auto px-6 border-t border-[#201f21] pt-6">
+<button class="w-full flex items-center justify-center gap-2 bg-secondary/20 text-secondary py-3 rounded hover:bg-secondary/30 transition-all active:scale-95">
+<span class="material-symbols-outlined text-xl" data-icon="rocket_launch">rocket_launch</span>
+<span class="font-headline text-[0.7rem] font-bold tracking-widest">DEPLOY FLEET</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 mt-16 h-[calc(100vh-4rem)] grid grid-cols-12 overflow-hidden relative">
+<!-- Holographic Map Section (Col 1-9) -->
+<section class="col-span-9 relative overflow-hidden bg-surface-container-lowest grid-lines p-8">
+<!-- Background Map Texture -->
+<div class="absolute inset-0 opacity-40 mix-blend-screen pointer-events-none">
+<div class="w-full h-full bg-[radial-gradient(circle_at_center,rgba(143,245,255,0.1)_0%,transparent_70%)]"></div>
+</div>
+<!-- Map Interface Header -->
+<div class="relative z-10 flex justify-between items-start mb-12">
+<div class="space-y-1">
+<h1 class="text-4xl font-headline font-bold text-primary drop-shadow-md">ASTRAL SECTOR VII</h1>
+<p class="text-on-surface-variant font-label text-xs tracking-widest uppercase">Status: Fracture Stabilization In Progress</p>
+</div>
+<div class="flex gap-4">
+<div class="glass-panel px-4 py-2 border-l border-primary/40 flex flex-col">
+<span class="text-[0.6rem] font-label text-primary/70 uppercase">Total Discovery</span>
+<span class="text-xl font-headline text-primary">64%</span>
+</div>
+<div class="glass-panel px-4 py-2 border-l border-tertiary/40 flex flex-col">
+<span class="text-[0.6rem] font-label text-tertiary/70 uppercase">Hostility Level</span>
+<span class="text-xl font-headline text-tertiary">HIGH</span>
+</div>
+</div>
+</div>
+<!-- Holographic Elements (Absolute Positioned) -->
+<div class="relative h-[716px] w-full flex items-center justify-center">
+<!-- Floating Biome Nodes -->
+<!-- Iron Mountains (Active) -->
+<div class="absolute top-[20%] left-[25%] group cursor-pointer">
+<div class="relative">
+<div class="w-16 h-16 bg-primary/20 border border-primary/60 rounded-xl rotate-45 flex items-center justify-center hex-glow group-hover:bg-primary/40 transition-all duration-500">
+<span class="material-symbols-outlined text-primary -rotate-45 text-3xl" data-icon="landscape">landscape</span>
+</div>
+<div class="absolute -bottom-16 left-1/2 -translate-x-1/2 text-center whitespace-nowrap">
+<span class="block font-headline text-xs text-primary font-bold tracking-widest">IRON MOUNTAINS</span>
+<span class="block font-label text-[0.6rem] text-primary-dim uppercase">Discovered</span>
+</div>
+<!-- Connection Lines (SVG) -->
+<svg class="absolute top-1/2 left-full w-48 h-32 -z-10 opacity-30 pointer-events-none">
+<path d="M0,0 Q100,0 200,80" fill="transparent" stroke="#8ff5ff" stroke-dasharray="5,5" stroke-width="1"></path>
+</svg>
+</div>
+</div>
+<!-- Crystal Fields (Active) -->
+<div class="absolute bottom-[20%] left-[45%] group cursor-pointer">
+<div class="relative">
+<div class="w-20 h-20 bg-primary/20 border border-primary/60 rounded-xl rotate-45 flex items-center justify-center hex-glow group-hover:bg-primary/40 transition-all duration-500">
+<span class="material-symbols-outlined text-primary -rotate-45 text-4xl" data-icon="diamond">diamond</span>
+</div>
+<div class="absolute -bottom-20 left-1/2 -translate-x-1/2 text-center whitespace-nowrap">
+<span class="block font-headline text-xs text-primary font-bold tracking-widest">CRYSTAL FIELDS</span>
+<span class="block font-label text-[0.6rem] text-primary-dim uppercase">Active Expedition</span>
+</div>
+</div>
+</div>
+<!-- Volcanic Zone (Locked) -->
+<div class="absolute top-[40%] right-[15%] group cursor-pointer">
+<div class="relative">
+<div class="w-16 h-16 bg-error/10 border border-error/40 rounded-xl rotate-45 flex items-center justify-center group-hover:bg-error/20 transition-all duration-500">
+<span class="material-symbols-outlined text-error -rotate-45 text-3xl" data-icon="lock">lock</span>
+</div>
+<div class="absolute -bottom-16 left-1/2 -translate-x-1/2 text-center whitespace-nowrap">
+<span class="block font-headline text-xs text-error font-bold tracking-widest">VOLCANIC ZONE</span>
+<span class="block font-label text-[0.6rem] text-error-dim uppercase">Locked • Reach LVL 50</span>
+</div>
+</div>
+</div>
+<!-- Void Rift (Discovery Site) -->
+<div class="absolute top-[10%] right-[40%] group cursor-pointer">
+<div class="relative">
+<div class="w-12 h-12 bg-secondary/20 border border-secondary/60 rounded-xl rotate-45 flex items-center justify-center group-hover:bg-secondary/40 transition-all duration-500">
+<span class="material-symbols-outlined text-secondary -rotate-45 text-2xl" data-icon="vortex">vertex_cluster</span>
+</div>
+<div class="absolute -top-12 left-1/2 -translate-x-1/2 text-center whitespace-nowrap">
+<span class="block font-headline text-xs text-secondary font-bold tracking-widest">VOID RIFT</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Map Footer Controls -->
+<div class="absolute bottom-8 left-8 right-8 flex justify-between items-end">
+<div class="glass-panel p-4 flex gap-6 items-center">
+<div class="flex flex-col">
+<span class="font-label text-[0.6rem] text-on-surface-variant uppercase">Coordinates</span>
+<span class="font-headline text-sm tracking-widest text-primary">A-24 // Z-992</span>
+</div>
+<div class="w-px h-8 bg-outline-variant/30"></div>
+<div class="flex flex-col">
+<span class="font-label text-[0.6rem] text-on-surface-variant uppercase">Signal Strength</span>
+<div class="flex gap-1 items-end h-4">
+<div class="w-1 h-2 bg-primary"></div>
+<div class="w-1 h-3 bg-primary"></div>
+<div class="w-1 h-4 bg-primary"></div>
+<div class="w-1 h-1 bg-outline-variant"></div>
+</div>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="w-10 h-10 glass-panel border border-outline-variant/30 flex items-center justify-center hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+<button class="w-10 h-10 glass-panel border border-outline-variant/30 flex items-center justify-center hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="remove">remove</span>
+</button>
+<button class="w-10 h-10 glass-panel border border-outline-variant/30 flex items-center justify-center hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="filter_center_focus">filter_center_focus</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Right Sidebar: Current Expeditions (Col 10-12) -->
+<aside class="col-span-3 bg-surface-container-low border-l border-[#201f21] p-6 flex flex-col gap-6 overflow-y-auto">
+<div class="flex items-center justify-between">
+<h3 class="font-headline text-lg font-bold tracking-wide">EXPEDITIONS</h3>
+<span class="bg-primary/20 text-primary px-2 py-0.5 rounded text-[0.65rem] font-bold font-label uppercase">2 / 3 Active</span>
+</div>
+<!-- Active Expedition Card 1 -->
+<div class="bg-surface-container p-4 rounded-xl border-l-2 border-primary relative overflow-hidden group">
+<div class="flex justify-between items-start mb-4">
+<div>
+<span class="text-[0.6rem] font-label text-on-surface-variant uppercase tracking-widest">Destination</span>
+<h4 class="font-headline text-sm font-bold text-on-surface">CRYSTAL FIELDS</h4>
+</div>
+<span class="material-symbols-outlined text-primary text-xl" data-icon="autorenew">autorenew</span>
+</div>
+<div class="space-y-3 mb-4">
+<div class="flex justify-between text-[0.65rem] font-label">
+<span class="text-on-surface-variant uppercase">Excavation Progress</span>
+<span class="text-primary">78%</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-primary-dim w-[78%]"></div>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex -space-x-2">
+<img alt="Unit 1" class="w-6 h-6 rounded-full border border-surface-container bg-surface-container-highest" data-alt="Futuristic soldier with sleek white helmet and glowing blue accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZnB4-ye4Eo26H6DFcAJELFakNKg9zbJHUFQyA2Fh-vDf1WQPFtWbHsCprK5dPot35VdUSaa0mdGCRHEAzxF5OWsch1_b-fxiavgH90tkmi3kya8W5-cUzrOIYmz4qAJnpbbo73_JoozyBbogNHYFQ2wBpxZ0ogRd0fuLr4DSYSuhjn68xI-2amgx-3cX5U5mB6nZraAnCGiML-Lom95eo8eIJb4hjXXLZtidHk1QQFURqshZ6AuPbIroHCbhfUR1YqT2QJQ-FswPy"/>
+<img alt="Unit 2" class="w-6 h-6 rounded-full border border-surface-container bg-surface-container-highest" data-alt="Mechanical drone unit with multiple optical sensors and tactical plating" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBamqx463e1dZCCuJNTZE4Qd1xRpZ-6qqWlkxZNrt-tnTPFJaSMxSUF7LQXMQwPKnLMQAmgaqgKQ2qRbygThpGjhagM-2ze3l_Xrnhf-3fA1NVVd18mpniexKPKqSnEyzUh1ws9jpmwbFR34zEiEMnid1oc1-00R0mriqk_ogEvKhx9ttUAwF0uo3nCbdV23En7zQrcE32cB7SbRCqxettR23TJ63I8I5zg_vygttCtQD8IBAwIa97wrowuW0QJzvdL0K__ndObX5P9"/>
+<div class="w-6 h-6 rounded-full border border-surface-container bg-surface-container-highest flex items-center justify-center text-[0.5rem] font-bold">+3</div>
+</div>
+<span class="font-headline text-xs text-primary-dim font-bold">02:14:55</span>
+</div>
+</div>
+<div class="flex gap-2">
+<div class="w-8 h-8 bg-surface-container-high rounded flex items-center justify-center" title="Loot: Rare Shard">
+<span class="material-symbols-outlined text-xs text-tertiary" data-icon="inventory_2">inventory_2</span>
+</div>
+<div class="w-8 h-8 bg-surface-container-high rounded flex items-center justify-center" title="Loot: Astral Energy">
+<span class="material-symbols-outlined text-xs text-secondary" data-icon="bolt">bolt</span>
+</div>
+</div>
+</div>
+<!-- Active Expedition Card 2 -->
+<div class="bg-surface-container p-4 rounded-xl border-l-2 border-primary relative overflow-hidden">
+<div class="flex justify-between items-start mb-4">
+<div>
+<span class="text-[0.6rem] font-label text-on-surface-variant uppercase tracking-widest">Destination</span>
+<h4 class="font-headline text-sm font-bold text-on-surface">IRON MOUNTAINS</h4>
+</div>
+<span class="material-symbols-outlined text-primary text-xl" data-icon="autorenew">autorenew</span>
+</div>
+<div class="space-y-3 mb-4">
+<div class="flex justify-between text-[0.65rem] font-label">
+<span class="text-on-surface-variant uppercase">Travel Progress</span>
+<span class="text-primary">22%</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-primary-dim w-[22%]"></div>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex -space-x-2">
+<img alt="Unit 3" class="w-6 h-6 rounded-full border border-surface-container bg-surface-container-highest" data-alt="Cybernetic scout unit with a long tactical rifle and desert camouflage patterns" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5poq7nMlCuWkRf1-U8sgNNdUlwQTeBWc7j0WLvGvN8RSz8-SFB-t-8E9U3fmqpzh_P_PXxI8AeQ0vHnW7Be5VUVIH8dUCm9gahvGt3wFqN37VNCLgsIzTkQyI9Ox7-FpMXWVHOy3FW32SlYMrfspWGQxo7F9E6Z_mlWskBhmcOuKwYuKVPzHpnI6f8FcwBL-RRfIlBdTRIOh5MeZDxGC9xt72iIJRNDEbGOpqYDj1QMm6Ws_LUpFKyWdMBgGA436WjlrxjrqXO8Cb"/>
+</div>
+<span class="font-headline text-xs text-primary-dim font-bold">08:42:10</span>
+</div>
+</div>
+</div>
+<!-- Empty Slot / New Expedition Button -->
+<div class="mt-auto pt-6 border-t border-outline-variant/20">
+<button class="w-full group relative overflow-hidden bg-primary text-on-primary font-headline font-bold py-4 rounded-xl flex items-center justify-center gap-3 active:scale-95 transition-all shadow-[0_0_20px_rgba(143,245,255,0.2)]">
+<span class="material-symbols-outlined" data-icon="add_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+<span class="tracking-widest uppercase text-sm">Send Expedition</span>
+<div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+</button>
+</div>
+<!-- Mini-Log / Notifications -->
+<div class="space-y-3 mt-6">
+<span class="text-[0.6rem] font-label text-on-surface-variant uppercase tracking-[0.2em] block mb-2">Operation Logs</span>
+<div class="flex items-start gap-3 opacity-60">
+<div class="w-1.5 h-1.5 rounded-full bg-secondary mt-1"></div>
+<p class="text-[0.7rem] leading-tight">Unit 4-Delta completed survey of Iron Peak.</p>
+</div>
+<div class="flex items-start gap-3 opacity-60">
+<div class="w-1.5 h-1.5 rounded-full bg-primary mt-1"></div>
+<p class="text-[0.7rem] leading-tight">New deposit found in Crystal Fields sector B.</p>
+</div>
+</div>
+</aside>
+</main>
+<!-- Navigation Pager (Mobile Only Mockup) -->
+<div class="md:hidden fixed bottom-0 left-0 w-full h-16 bg-surface-container flex justify-around items-center border-t border-outline-variant/20 z-50">
+<div class="flex flex-col items-center text-primary">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="text-[0.6rem] font-label font-bold uppercase">Map</span>
+</div>
+<div class="flex flex-col items-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="rocket_launch">rocket_launch</span>
+<span class="text-[0.6rem] font-label font-bold uppercase">Fleet</span>
+</div>
+<div class="flex flex-col items-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-[0.6rem] font-label font-bold uppercase">Profile</span>
+</div>
+</div>
+</body></html>

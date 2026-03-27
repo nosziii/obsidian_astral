@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Obsidian Astral | Terminal Access</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-lowest": "#000000",
+              "surface-bright": "#2c2c2d",
+              "error-container": "#9f0519",
+              "on-tertiary-container": "#1b0017",
+              "on-tertiary": "#42003a",
+              "on-primary": "#005d63",
+              "on-error": "#490006",
+              "primary-container": "#00eefc",
+              "on-tertiary-fixed": "#33002d",
+              "secondary-fixed-dim": "#ceb9ff",
+              "on-secondary": "#290067",
+              "inverse-surface": "#fcf8f9",
+              "on-background": "#ffffff",
+              "primary-fixed": "#00eefc",
+              "tertiary-fixed-dim": "#ff68e3",
+              "primary": "#8ff5ff",
+              "surface": "#0e0e0f",
+              "tertiary-fixed": "#ff85e4",
+              "tertiary-container": "#ff05e5",
+              "secondary-dim": "#874cff",
+              "outline-variant": "#484849",
+              "surface-variant": "#262627",
+              "secondary-fixed": "#dac9ff",
+              "inverse-primary": "#006a71",
+              "surface-dim": "#0e0e0f",
+              "surface-container-highest": "#262627",
+              "on-primary-container": "#005359",
+              "on-primary-fixed": "#003f43",
+              "on-secondary-fixed-variant": "#6300e2",
+              "on-tertiary-fixed-variant": "#6d0061",
+              "on-surface-variant": "#adaaab",
+              "surface-container": "#1a191b",
+              "secondary-container": "#7000ff",
+              "on-surface": "#ffffff",
+              "inverse-on-surface": "#565556",
+              "outline": "#767576",
+              "surface-container-high": "#201f21",
+              "on-primary-fixed-variant": "#005e64",
+              "error": "#ff716c",
+              "background": "#0e0e0f",
+              "tertiary": "#ff59e3",
+              "primary-fixed-dim": "#00deec",
+              "surface-container-low": "#131314",
+              "tertiary-dim": "#ff59e3",
+              "surface-tint": "#8ff5ff",
+              "on-secondary-fixed": "#41009a",
+              "on-secondary-container": "#f8f1ff",
+              "secondary": "#ac89ff",
+              "error-dim": "#d7383b",
+              "on-error-container": "#ffa8a3",
+              "primary-dim": "#00deec"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Manrope"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(26, 25, 27, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .obsidian-shard {
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body min-h-screen flex flex-col items-center justify-center overflow-hidden selection:bg-primary/30">
+<!-- Cinematic Background -->
+<div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+<!-- Deep Space Base -->
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#1a191b] via-[#0e0e0f] to-black"></div>
+<!-- Nebula Image (Placeholder logic applied) -->
+<img class="absolute inset-0 w-full h-full object-cover mix-blend-screen opacity-40 scale-110" data-alt="deep space nebula with swirling ethereal clouds of purple and cyan cosmic gas and distant glowing stars" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDq4l9XuiHoLp3JsYJWIRaEdlccbkAHyc7hsi4USfa8wNoGWpOtW8OSZr9JHkJvO6GFxp5JwT4T-CRmaoI2Al7HNf4m0WOGix9wtv8mm5wgVjRl9M0FxCFJEQXHlwnWj-t6Jf7_W9VYzxuwvAp_0_axJEpC3SL-F_CtbiQ6Bjv4DJv51KjlMBqM8-ilfYxilv8fTeaDVOZPKqTCMNBVUMfUwP6_PotD9riEDpkF-QmoLzPiug54v6_UVKWe_KAXUe0W24R5Fa5ZgkhU"/>
+<!-- Obsidian Shards Decorations -->
+<div class="absolute top-1/4 -left-20 w-64 h-96 bg-surface-container-highest/20 rotate-12 obsidian-shard blur-sm"></div>
+<div class="absolute bottom-1/4 -right-20 w-80 h-[30rem] bg-secondary/5 -rotate-12 obsidian-shard blur-md"></div>
+<div class="absolute top-10 right-1/4 w-32 h-32 bg-primary/10 rotate-45 obsidian-shard blur-sm"></div>
+<!-- Animated Particles Fallback (Static Grid Pattern for depth) -->
+<div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20"></div>
+</div>
+<!-- Main Content Container -->
+<main class="relative z-10 w-full max-w-lg px-6 flex flex-col items-center gap-8">
+<!-- Logo/Brand Anchor -->
+<div class="flex flex-col items-center text-center">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+<h1 class="font-headline text-3xl font-bold tracking-tighter text-primary uppercase">Obsidian Astral</h1>
+</div>
+<p class="font-label text-[0.6875rem] uppercase tracking-[0.3em] text-on-surface-variant">System Intelligence v21.44.0</p>
+</div>
+<!-- Login Form Panel (The Canvas) -->
+<div class="glass-panel w-full p-10 rounded-xl shadow-[0_0_64px_rgba(143,245,255,0.05)] border border-outline-variant/20 relative overflow-hidden group">
+<!-- Decorative Accent Line -->
+<div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-50"></div>
+<div class="mb-8 text-center">
+<h2 class="font-headline text-xl font-medium tracking-wide text-on-surface mb-2">Terminal Access</h2>
+<p class="text-xs text-on-surface-variant font-light">Establish a secure link with Sector 7 Command</p>
+</div>
+<form class="space-y-6">
+<!-- Username Field -->
+<div class="space-y-2">
+<label class="font-label text-[0.625rem] uppercase tracking-widest text-primary ml-1">Commander Name</label>
+<div class="relative group/input">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg transition-colors group-focus-within/input:text-primary">account_circle</span>
+<input class="w-full bg-surface-container-low/50 border-0 border-b border-outline-variant/30 text-on-surface text-sm py-3 pl-11 pr-4 focus:ring-0 focus:border-primary transition-all placeholder:text-outline/50" placeholder="ID-4829-ALPHA" type="text"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-2">
+<label class="font-label text-[0.625rem] uppercase tracking-widest text-primary ml-1">Access Code</label>
+<div class="relative group/input">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg transition-colors group-focus-within/input:text-primary">key</span>
+<input class="w-full bg-surface-container-low/50 border-0 border-b border-outline-variant/30 text-on-surface text-sm py-3 pl-11 pr-12 focus:ring-0 focus:border-primary transition-all placeholder:text-outline/50" placeholder="••••••••••••" type="password"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface" type="button">
+<span class="material-symbols-outlined text-lg">visibility_off</span>
+</button>
+</div>
+</div>
+<!-- Form Meta Actions -->
+<div class="flex items-center justify-between">
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="w-4 h-4 rounded-sm border-outline-variant bg-surface-container-low text-primary focus:ring-primary focus:ring-offset-surface" type="checkbox"/>
+<span class="text-[0.7rem] text-on-surface-variant group-hover:text-on-surface transition-colors">Stay Connected</span>
+</label>
+<a class="text-[0.7rem] text-secondary hover:text-secondary-fixed transition-colors" href="#">Frequency Lost?</a>
+</div>
+<!-- Main CTA -->
+<button class="w-full bg-primary hover:bg-primary-container text-on-primary font-headline font-bold py-4 rounded-lg flex items-center justify-center gap-2 transition-all active:scale-95 shadow-[0_0_24px_rgba(143,245,255,0.2)]" type="submit">
+<span>Enter the Void</span>
+<span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</form>
+<!-- Divider -->
+<div class="flex items-center gap-4 my-8">
+<div class="h-[1px] flex-1 bg-outline-variant/20"></div>
+<span class="font-label text-[0.6rem] text-on-surface-variant uppercase tracking-widest">External Uplinks</span>
+<div class="h-[1px] flex-1 bg-outline-variant/20"></div>
+</div>
+<!-- Social Logins -->
+<div class="grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-surface-container-high border border-outline-variant/20 hover:border-primary/50 transition-all text-sm font-medium hover:bg-surface-container-highest group">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">chat</span>
+<span class="text-on-surface-variant group-hover:text-on-surface">Discord</span>
+</button>
+<button class="flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-surface-container-high border border-outline-variant/20 hover:border-secondary/50 transition-all text-sm font-medium hover:bg-surface-container-highest group">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">cloud</span>
+<span class="text-on-surface-variant group-hover:text-on-surface">Google</span>
+</button>
+</div>
+</div>
+<!-- Secondary CTA/Registration -->
+<div class="text-center">
+<p class="text-sm text-on-surface-variant mb-4">New to the Sector?</p>
+<button class="font-headline text-sm font-semibold text-secondary hover:text-white flex items-center gap-2 mx-auto py-2 px-6 rounded-full border border-secondary/20 hover:border-secondary/60 transition-all">
+<span>Join the Fleet</span>
+<span class="material-symbols-outlined text-sm">person_add</span>
+</button>
+</div>
+</main>
+<!-- Footer Utility (Inspired by Shared Component) -->
+<footer class="fixed bottom-0 left-0 w-full p-8 z-10 flex flex-col md:flex-row items-center justify-between gap-4 pointer-events-none">
+<div class="flex gap-6 pointer-events-auto">
+<a class="font-label text-[0.625rem] text-on-surface-variant hover:text-primary tracking-widest uppercase transition-colors" href="#">Privacy Protocol</a>
+<a class="font-label text-[0.625rem] text-on-surface-variant hover:text-primary tracking-widest uppercase transition-colors" href="#">Terms of Engagement</a>
+</div>
+<div class="text-on-surface-variant font-label text-[0.625rem] tracking-widest uppercase opacity-40">
+            © 2144 Obsidian Astral Holdings. All frequencies encrypted.
+        </div>
+<div class="hidden md:flex gap-4 pointer-events-auto">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">language</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">contact_support</span>
+</button>
+</div>
+</footer>
+<!-- Overlay Vignette -->
+<div class="fixed inset-0 pointer-events-none shadow-[inset_0_0_150px_rgba(0,0,0,0.8)] z-0"></div>
+</body></html>

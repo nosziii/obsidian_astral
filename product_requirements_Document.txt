@@ -1,0 +1,150 @@
+web application/stitch/projects/16860825100313261871/screens/fe72bfd6e02c4d8f86374a34e03e6548
+You've asked for a project PRD or brief, but it seems the "following context" wasn't provided!
+
+Without the context, I can't generate specific content for your project. However, I can provide you with a **comprehensive template for a Product Brief (which can be expanded into a full PRD)**. This template includes all the essential sections a product manager would typically fill out.
+
+Please provide the context you had in mind, and I'll be happy to fill in this template with your specific project details!
+
+---
+
+## **PRODUCT BRIEF / HIGH-LEVEL PRD TEMPLATE**
+
+**Document Title:** [Project Name] Product Brief
+**Version:** 1.0
+**Date:** [Current Date]
+**Author:** [Your Name/Team]
+**Status:** Draft / Review / Approved
+
+---
+
+### **1. Executive Summary**
+
+*   **What is this project?**
+    *   A concise, high-level overview of the project, its purpose, and the primary problem it solves.
+    *   *Example:* "This project aims to develop a new mobile application that allows users to track their daily water intake and receive personalized hydration reminders, addressing the common issue of insufficient daily water consumption."
+*   **Why are we doing this now?**
+    *   Briefly state the market opportunity, strategic importance, or critical need driving this project.
+    *   *Example:* "With increasing awareness of health and wellness, and a competitive landscape that lacks truly personalized hydration solutions, now is the opportune time to capture market share."
+
+---
+
+### **2. Problem Statement**
+
+*   **What specific problem are we trying to solve for whom?**
+    *   Clearly articulate the pain point(s) or unmet need(s) of the target user or business. Use data or user quotes if available.
+    *   *Example:* "Many individuals struggle to consistently drink enough water throughout the day (problem), leading to fatigue, reduced cognitive function, and other health issues (impact). Existing solutions are often generic and fail to adapt to individual needs and schedules (current limitations)."
+
+---
+
+### **3. Vision & Solution Overview**
+
+*   **Vision:**
+    *   What does success look like in the long term (1-3 years)? What ultimate impact will this product have?
+    *   *Example:* "To empower individuals worldwide to achieve optimal hydration effortlessly, leading to improved health, energy, and overall well-being."
+*   **Solution Overview:**
+    *   Describe the proposed product or feature at a high level. What is it? How does it generally work? What's its core value proposition?
+    *   *Example:* "We will develop a smart hydration tracking mobile app that integrates with wearables, offers customizable reminders based on user activity and climate, and provides insightful analytics on hydration patterns over time."
+
+---
+
+### **4. Goals & Objectives (SMART)**
+
+*   **Business Goals:** (High-level, strategic)
+    *   *Example:* "Increase customer retention by 15% within the next 12 months."
+*   **Product Objectives:** (Specific, measurable, achievable, relevant, time-bound)
+    *   *Example 1:* "Achieve a 4.5-star average rating on app stores within 3 months of launch."
+    *   *Example 2:* "Onboard 50,000 active users (defined as logging water intake 3+ times a week) within 6 months of launch."
+    *   *Example 3:* "Increase user engagement with personalized reminders by 20% compared to generic reminders, measured by reminder tap-through rate."
+
+---
+
+### **5. Target Audience**
+
+*   **Who are the primary users?** (Demographics, psychographics, behaviors, needs)
+    *   *Example:* "Health-conscious adults (25-45) who own smartphones/wearables, work desk jobs or are active, and are motivated to improve their well-being but often forget to drink water. They value convenience and personalized insights."
+*   **Who are secondary users/stakeholders?**
+    *   *Example:* "Fitness coaches or wellness professionals who might recommend the app to their clients."
+
+---
+
+### **6. Key Features (High-Level)**
+
+*   List the core functionalities the product will offer. (This will be expanded into detailed user stories and functional requirements in a full PRD).
+    *   **User Profile & Goal Setting:** Input personal data, set daily hydration goals.
+    *   **Water Logging:** Easy entry for various fluid types and quantities.
+    *   **Smart Reminders:** Customizable, context-aware reminders (time, location, activity).
+    *   **Wearable Integration:** Sync with popular fitness trackers for activity-based adjustments.
+    *   **Progress Tracking & Analytics:** Dashboards, charts, and historical data.
+    *   **Gamification/Rewards (Optional):** Badges for streaks, challenges.
+
+---
+
+### **7. Success Metrics / KPIs**
+
+*   How will we measure the success of this product, aligning with the objectives above?
+    *   **User Acquisition:** Downloads, new user registrations.
+    *   **Engagement:** Daily/Weekly Active Users (DAU/WAU), session length, feature usage rate, reminder tap-through rate.
+    *   **Retention:** 7-day, 30-day retention rates.
+    *   **Satisfaction:** App store ratings, NPS (Net Promoter Score).
+    *   **Business Impact:** Revenue (if applicable), cost savings, market share.
+
+---
+
+### **8. Out of Scope**
+
+*   What will *not* be part of this initial project/MVP? This is crucial for managing expectations.
+    *   *Example:* "Integration with smart home devices for hydration (e.g., smart water bottles), advanced dietary tracking beyond fluids, social sharing features for water intake."
+
+---
+
+### **9. Assumptions & Dependencies**
+
+*   **Assumptions:** What do we believe to be true that, if false, would impact the project?
+    *   *Example:* "Users are willing to manually log water intake if automatic tracking isn't always available. Wearable APIs will remain stable and accessible."
+*   **Dependencies:** What external factors or internal projects does this project rely on?
+    *   *Example:* "Availability of backend infrastructure team for API development. Successful negotiation with wearable manufacturers for API access."
+
+---
+
+### **10. Risks & Mitigation**
+
+*   **Risks:** What could go wrong?
+    *   *Example:* "Low user adoption, strong competition, technical challenges with real-time data syncing, privacy concerns."
+*   **Mitigation:** How will we address these risks?
+    *   *Example:* "A/B test onboarding flows, conduct competitive analysis & differentiate, allocate buffer time for technical complexity, ensure robust data encryption & clear privacy policy."
+
+---
+
+### **11. Key Stakeholders**
+
+*   Who needs to be involved, informed, or approve decisions?
+    *   **Product:** [Your Name], Product Lead
+    *   **Engineering:** [Engineering Manager Name]
+    *   **Design:** [Design Lead Name]
+    *   **Marketing:** [Marketing Lead Name]
+    *   **Sales:** [Sales Lead Name - if applicable]
+    *   **Leadership:** [CEO/VP Product Name]
+
+---
+
+### **12. High-Level Timeline / Phases (Initial Estimate)**
+
+*   **Phase 1: Discovery & Planning** (e.g., 2 weeks)
+*   **Phase 2: Design & Prototyping** (e.g., 4 weeks)
+*   **Phase 3: Development (MVP)** (e.g., 8-10 weeks)
+*   **Phase 4: QA & User Acceptance Testing** (e.g., 2 weeks)
+*   **Phase 5: Launch** (e.g., [Target Launch Date])
+*   **Phase 6: Post-Launch & Iteration** (Ongoing)
+
+---
+
+### **13. Open Questions / Next Steps**
+
+*   What still needs to be decided or clarified?
+    *   *Example:* "Finalize pricing model (if applicable). Research specific wearable device integration priorities. Conduct further user interviews on personalized reminder preferences."
+*   What are the immediate next actions after this brief?
+    *   *Example:* "Schedule design kickoff meeting. Begin user story mapping. Draft initial technical architecture proposal."
+
+---
+
+**Once you provide the context for your project, I can help you fill in the details for each of these sections!**

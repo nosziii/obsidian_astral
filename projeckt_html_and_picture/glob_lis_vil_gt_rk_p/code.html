@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OBSIDIAN ASTRAL | Global World Map</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-secondary-fixed": "#41009a",
+                        "surface-variant": "#262627",
+                        "on-error-container": "#ffa8a3",
+                        "on-error": "#490006",
+                        "on-primary-fixed-variant": "#005e64",
+                        "on-background": "#ffffff",
+                        "surface-dim": "#0e0e0f",
+                        "surface-container-highest": "#262627",
+                        "error-dim": "#d7383b",
+                        "error": "#ff716c",
+                        "primary-fixed": "#00eefc",
+                        "surface": "#0e0e0f",
+                        "surface-container-lowest": "#000000",
+                        "tertiary-container": "#ff05e5",
+                        "primary-container": "#00eefc",
+                        "outline-variant": "#484849",
+                        "tertiary-dim": "#ff59e3",
+                        "on-primary": "#005d63",
+                        "inverse-surface": "#fcf8f9",
+                        "on-tertiary-fixed": "#33002d",
+                        "tertiary": "#ff59e3",
+                        "secondary-fixed-dim": "#ceb9ff",
+                        "on-secondary": "#290067",
+                        "on-surface": "#ffffff",
+                        "on-tertiary": "#42003a",
+                        "inverse-primary": "#006a71",
+                        "inverse-on-surface": "#565556",
+                        "on-surface-variant": "#adaaab",
+                        "on-tertiary-container": "#1b0017",
+                        "surface-tint": "#8ff5ff",
+                        "primary-fixed-dim": "#00deec",
+                        "primary": "#8ff5ff",
+                        "tertiary-fixed-dim": "#ff68e3",
+                        "on-secondary-fixed-variant": "#6300e2",
+                        "on-primary-fixed": "#003f43",
+                        "on-tertiary-fixed-variant": "#6d0061",
+                        "surface-bright": "#2c2c2d",
+                        "tertiary-fixed": "#ff85e4",
+                        "on-primary-container": "#005359",
+                        "secondary": "#ac89ff",
+                        "on-secondary-container": "#f8f1ff",
+                        "surface-container-low": "#131314",
+                        "surface-container": "#1a191b",
+                        "surface-container-high": "#201f21",
+                        "outline": "#767576",
+                        "secondary-fixed": "#dac9ff",
+                        "background": "#0e0e0f",
+                        "secondary-container": "#7000ff",
+                        "error-container": "#9f0519",
+                        "secondary-dim": "#874cff",
+                        "primary-dim": "#00deec"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Manrope"],
+                        "label": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hex-grid {
+            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+        }
+        .map-canvas {
+            background-image: radial-gradient(circle at 2px 2px, rgba(143, 245, 255, 0.05) 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary selection:text-on-primary">
+<!-- TOP APP BAR -->
+<header class="fixed top-0 w-full flex justify-between items-center px-6 h-16 bg-[#0e0e0f]/80 backdrop-blur-xl z-50 shadow-[0_0_20px_rgba(143,245,255,0.1)]">
+<div class="text-2xl font-black text-[#8ff5ff] tracking-tighter font-headline">OBSIDIAN ASTRAL</div>
+<nav class="hidden md:flex gap-8 font-['Space_Grotesk'] tracking-tight text-sm">
+<a class="text-[#adaaab] hover:text-white transition-colors" href="#">MAP</a>
+<a class="text-[#adaaab] hover:text-white transition-colors" href="#">CLAN</a>
+<a class="text-[#adaaab] hover:text-white transition-colors" href="#">MARKET</a>
+<a class="text-[#adaaab] hover:text-white transition-colors" href="#">STAREX</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-[#201f21]/50 transition-all duration-300 rounded text-[#adaaab]">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 hover:bg-[#201f21]/50 transition-all duration-300 rounded text-[#adaaab]">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="p-2 hover:bg-[#201f21]/50 transition-all duration-300 rounded text-[#8ff5ff]">
+<span class="material-symbols-outlined">bolt</span>
+</button>
+<div class="flex items-center gap-2 ml-2 pl-4 border-l border-outline-variant">
+<span class="text-xs font-headline font-bold text-[#8ff5ff]">PROFILE</span>
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-primary/30 overflow-hidden">
+<img alt="Commander Avatar" data-alt="futuristic military commander avatar with cybernetic eye and sleek dark armor" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHoBVhNul8wygZPVwV7bBV--PtCfJb5Gf9NxZk7NxAyzFV27aYTvJ-etkXoMKaeAq7qzWnqMdK7T93Jdc7R3hV2NATqCESRuVke4Hbfk4KzgBZ9u3Vn4GIHrBB2_tJop_F-Qi9kZPb3wfS_4eYtqzUn00kumbXPHZtjhsQj1aRs4lpqMIZrGXx_eYaclaB5E-BWUWrgKxWzW-7RwUlPR2cXFnEvDS-7ObUGaCYSKQmhjUg_i7bPvpav1jMQT8FH24P16wiZqXCunPk"/>
+</div>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 w-full bg-gradient-to-b from-[#201f21] to-transparent h-[1px]"></div>
+</header>
+<!-- SIDE NAV BAR -->
+<aside class="hidden md:flex fixed left-0 top-16 h-[calc(100vh-64px)] w-64 bg-[#000000]/60 backdrop-blur-2xl border-r border-[#201f21] flex-col py-8 px-4 z-40">
+<div class="flex items-center gap-3 mb-10 px-2">
+<div class="w-10 h-10 bg-secondary/20 rounded-lg flex items-center justify-center border border-secondary/40">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">shield</span>
+</div>
+<div>
+<h3 class="font-headline font-black text-white text-sm tracking-widest">ARCHON-7</h3>
+<p class="text-[10px] text-secondary font-headline tracking-tighter">LVL 99 LEGENDARY</p>
+</div>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="group flex items-center gap-3 py-3 px-4 text-[#adaaab] hover:bg-[#131314] hover:text-[#ac89ff] transition-all font-label uppercase tracking-[0.1em] text-[10px]" href="#">
+<span class="material-symbols-outlined text-sm">dashboard</span>
+                DASHBOARD
+            </a>
+<a class="group flex items-center gap-3 py-3 px-4 text-[#8ff5ff] font-bold border-l-4 border-[#8ff5ff] bg-gradient-to-r from-[#8ff5ff]/10 to-transparent transition-all font-label uppercase tracking-[0.1em] text-[10px]" href="#">
+<span class="material-symbols-outlined text-sm">explore</span>
+                WORLD MAP
+            </a>
+<a class="group flex items-center gap-3 py-3 px-4 text-[#adaaab] hover:bg-[#131314] hover:text-[#ac89ff] transition-all font-label uppercase tracking-[0.1em] text-[10px]" href="#">
+<span class="material-symbols-outlined text-sm">groups</span>
+                WAR ROOM
+            </a>
+<a class="group flex items-center gap-3 py-3 px-4 text-[#adaaab] hover:bg-[#131314] hover:text-[#ac89ff] transition-all font-label uppercase tracking-[0.1em] text-[10px]" href="#">
+<span class="material-symbols-outlined text-sm">shield</span>
+                ARMORY
+            </a>
+<a class="group flex items-center gap-3 py-3 px-4 text-[#adaaab] hover:bg-[#131314] hover:text-[#ac89ff] transition-all font-label uppercase tracking-[0.1em] text-[10px]" href="#">
+<span class="material-symbols-outlined text-sm">military_tech</span>
+                QUESTS
+            </a>
+</nav>
+<div class="mt-auto space-y-2">
+<button class="w-full bg-secondary text-on-secondary font-headline font-bold py-3 text-[10px] tracking-widest rounded-md hover:shadow-[0_0_15px_rgba(172,137,255,0.4)] transition-all mb-6">
+                RECRUIT UNIT
+            </button>
+<a class="flex items-center gap-3 py-2 px-4 text-[#adaaab] hover:text-[#ac89ff] transition-colors font-label uppercase tracking-[0.1em] text-[10px]" href="#">
+<span class="material-symbols-outlined text-sm">settings</span>
+                SETTINGS
+            </a>
+<a class="flex items-center gap-3 py-2 px-4 text-[#adaaab] hover:text-[#ac89ff] transition-colors font-label uppercase tracking-[0.1em] text-[10px]" href="#">
+<span class="material-symbols-outlined text-sm">logout</span>
+                LOGOUT
+            </a>
+</div>
+</aside>
+<!-- MAIN CONTENT AREA (THE MAP) -->
+<main class="pt-16 md:pl-64 h-screen w-full relative overflow-hidden bg-surface-container-lowest">
+<!-- Interactive Map Background -->
+<div class="absolute inset-0 map-canvas flex items-center justify-center overflow-auto p-20 cursor-grab active:cursor-grabbing">
+<div class="relative w-[1400px] h-[900px]">
+<!-- Hexagonal Biome Clusters -->
+<!-- Dark Forest -->
+<div class="absolute top-[10%] left-[15%] w-64 h-72 hex-grid bg-surface-container-high border border-outline-variant group hover:border-primary/50 transition-all duration-500 overflow-hidden">
+<img alt="Dark Forest Zone" class="w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-700" data-alt="eerie dark forest with obsidian trees and glowing bioluminescent cyan mushrooms in thick fog" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0YX_ieuTOkX2tszVicqEawlH0NJNIAXTwDEhYoqsbwmiY0evwWr8OrIZ0MgsbblzovM1NcgxtqSD4kqOU93wFIbdAq_PShgjF0IHX5rFLcPckzeANOwUfVde5nsopiZZyTEZXLyiNZ5GMD1hs6A4tysMPiLJ_6Pt7Sd1fZ8Se9VQmkCS_g5_j3ytHzu-lhSAJNYCc55qPsPG5t8ubU6Iot2fhiuZRvpPutrgg80Ptm2pal8qIy1xllaZt-V8-kyjW2_WWlkOKzdgK"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent flex flex-col justify-end p-6">
+<span class="text-[10px] font-headline font-bold text-primary tracking-widest">ZONE 04-A</span>
+<h4 class="text-white font-headline font-bold text-lg">DARK FOREST</h4>
+</div>
+</div>
+<!-- Volcanic Zone (Clan Controlled) -->
+<div class="absolute top-[40%] left-[40%] w-80 h-96 hex-grid bg-surface-container-high border-4 border-secondary shadow-[0_0_30px_rgba(172,137,255,0.3)] z-10 group transition-all duration-500 overflow-hidden">
+<img alt="Volcanic Zone" class="w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-700" data-alt="active volcano with glowing purple lava flows and jagged black basalt cliffs under a dark storm sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8Zfhi22OBKFrNxuXwK61vbmf3S14jpKL2lA9kUZTYqExVO6hMxqpy3bBg6a6LMXZkbVLU38NF4cwfMZgTl4qBMPfDJ_adcEoZC_VAzcuTm6EpQnjkedsDp57U24u46LxqDS20PnvkxqYBdwPVcMKnjggA2d9Wvb9FrCz5JoJyisy8ESBG_J-8cc_5NyrkILvU8NMwrssKx7Avyzu5RA3vaFueNlqDCEj36_ru3p--FuUCHOD5C8QP3mo0LjsEgkbvaagYE4z12Pdw"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-secondary/20 flex flex-col justify-end p-8">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-secondary text-xs" style="font-variation-settings: 'FILL' 1;">security</span>
+<span class="text-[10px] font-headline font-black text-secondary tracking-[0.2em]">CLAN CONTROLLED</span>
+</div>
+<h4 class="text-white font-headline font-bold text-2xl tracking-tight">CRYSTAL PEAKS</h4>
+</div>
+<!-- Tactical Pulse Overlay -->
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(172,137,255,0.1)_0%,transparent_70%)] animate-pulse"></div>
+</div>
+<!-- Crystal Fields -->
+<div class="absolute bottom-[10%] right-[15%] w-72 h-80 hex-grid bg-surface-container-high border border-outline-variant group hover:border-primary/50 transition-all duration-500 overflow-hidden">
+<img alt="Crystal Fields" class="w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-700" data-alt="vast field of towering translucent cyan crystals rising from a cracked obsidian ground in moonlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRmlbJi6Mi_ZVT0qLSSX03Y7otRpboLJrO65gLEnJfxbfcYqGei-vBtQqS2jH6acHoJ9pmishjDU9YlstDs7nFd1UhDBQ_hFqm96O6FaW_TRdsVMUP9Xb5ShFsrVBP_tj9R5Pypky-kbX-ToGoykRhYiHNqQ26QMTnuK2OTWL9CVDkdlnrznzDju28GpuMbxWuX_z8e92aBV7wStckcwI_jtYpBIgNABlmOblIaro55t-R5sm_xnOXcu_Z5jIc-3TbT5QytxNwnOg_"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent flex flex-col justify-end p-6">
+<span class="text-[10px] font-headline font-bold text-primary tracking-widest">ZONE 12-X</span>
+<h4 class="text-white font-headline font-bold text-xl">THE LUMINANCE</h4>
+</div>
+</div>
+<!-- Floating Fleet/Scanner Overlays -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none opacity-40">
+<path d="M 350,280 Q 550,450 750,480" fill="none" stroke="#8ff5ff" stroke-dasharray="10 10" stroke-width="2"></path>
+<circle cx="350" cy="280" fill="#8ff5ff" r="4"></circle>
+<circle cx="750" cy="480" fill="#8ff5ff" r="4"></circle>
+<text fill="#8ff5ff" font-family="Space Grotesk" font-size="10" font-weight="bold" letter-spacing="0.1em" x="500" y="380">SCANNING TRANSIT...</text>
+</svg>
+</div>
+</div>
+<!-- ZONE DETAILS PANEL (FLOATING UI) -->
+<div class="absolute top-8 left-8 w-80 bg-[#131314]/90 backdrop-blur-xl border border-outline-variant/30 p-6 rounded-xl shadow-2xl z-20">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h2 class="font-headline font-black text-xl text-white">OBSIDIAN SECTOR</h2>
+<p class="text-[10px] font-label text-on-surface-variant tracking-[0.1em]">COORDINATES: 42.99 / 18.04</p>
+</div>
+<span class="px-2 py-1 bg-error-container/20 text-error-dim border border-error-container/40 text-[9px] font-headline font-bold rounded">HIGH ALERT</span>
+</div>
+<div class="space-y-4">
+<div class="p-3 bg-surface-container-high rounded-lg border border-outline-variant/20">
+<p class="text-[10px] font-label text-primary mb-2 tracking-widest">RESOURCES</p>
+<div class="flex justify-between items-center text-xs mb-1">
+<span>ASTRAL SHARDS</span>
+<span class="text-white font-bold">88%</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="w-[88%] h-full bg-gradient-to-r from-primary to-primary-dim"></div>
+</div>
+</div>
+<div class="p-3 bg-surface-container-high rounded-lg border border-outline-variant/20">
+<p class="text-[10px] font-label text-secondary mb-2 tracking-widest">THREAT LEVEL</p>
+<div class="flex justify-between items-center text-xs mb-1 text-on-error-container">
+<span>VOID PHAGE</span>
+<span class="font-bold">CRITICAL</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="w-[95%] h-full bg-gradient-to-r from-error to-error-dim"></div>
+</div>
+</div>
+</div>
+<div class="mt-6">
+<p class="text-[10px] font-label text-on-surface-variant mb-3 tracking-widest uppercase">Active Expeditions</p>
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-surface-container bg-surface-container-high overflow-hidden">
+<img alt="Unit" data-alt="pixel art style futuristic soldier profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvs378wNS7Wh328kG81o2hD0FBQsIavKvVwnK3ImcnPdVQygZv7NUOclD6MAJTqo-PeRSgZE5_kPD9juX9LG_ZqH7SLcJNOR3P0EqowJdBPY3Tyo86vw79KuYFC3WFkNA0Kuw92DUkQcGa9OKcKD4AoPB5GkBqLHiAi-DwhFIs72qbIps3K8p5S7vEGejZIgIDCYrWXoG5bQI-6MlZecD9QZesq0k-QBlE6FZjV-0vlDbGCQ6WtjR5Dl2e5ZhWO_8H_G6-b1Aiumbn"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-surface-container bg-surface-container-high overflow-hidden">
+<img alt="Unit" data-alt="pixel art style futuristic cybernetic scout profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlxTLLaGfoTOGpVFyJ84PRehLwN36oBhtdbTmwk5S1ZCzn9lC3mj0SfofsqDKxDdNenxFDJ7O6UnMcjJyEzDx55z_if9Jcim6RtTrigOxOWR5Xaj6Yq0Jk_jXhnb2iPhTBfDMBgnwaRfiBl3nYln0nA-JPR-MWzw1VeIeGuoQWgGhBu00MygZsXcqgYnp1uijyQRaoJBlSJo3t6gM4RJsxLuo9L6NLd-uWB1XOwLN-Fn8stGYzmol07HHHX9FF7TeH6_eYn91xT5gi"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-surface-container bg-surface-container-high flex items-center justify-center text-[10px] font-bold text-primary">
+                        +3
+                    </div>
+</div>
+</div>
+</div>
+<!-- WORLD OVERVIEW OVERLAY (RIGHT) -->
+<div class="absolute bottom-12 right-8 flex flex-col gap-4 z-20">
+<div class="bg-[#131314]/80 backdrop-blur-md p-4 rounded-lg border border-outline-variant/30 w-56">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(143,245,255,1)]"></div>
+<span class="text-[10px] font-headline font-bold text-white tracking-widest">LIVE FEED: SECTOR-7</span>
+</div>
+<p class="text-[11px] leading-relaxed text-on-surface-variant mb-4 font-body">
+                    Movement detected in <span class="text-primary">Volcanic Zone</span>. Fleet Alpha has secured the crystal bridge.
+                </p>
+<button class="w-full py-2 bg-surface-container-highest border border-outline-variant/50 rounded text-[9px] font-headline font-bold text-white hover:bg-surface-bright transition-colors tracking-widest uppercase">
+                    Open Tactical Log
+                </button>
+</div>
+<!-- Map Controls -->
+<div class="flex flex-col gap-2 self-end">
+<button class="w-10 h-10 bg-[#131314]/90 backdrop-blur-md border border-outline-variant/30 flex items-center justify-center text-primary rounded-lg hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="w-10 h-10 bg-[#131314]/90 backdrop-blur-md border border-outline-variant/30 flex items-center justify-center text-primary rounded-lg hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<button class="w-10 h-10 bg-primary text-on-primary flex items-center justify-center rounded-lg shadow-[0_0_20px_rgba(143,245,255,0.4)]">
+<span class="material-symbols-outlined">my_location</span>
+</button>
+</div>
+</div>
+</main>
+<!-- BOTTOM NAV BAR (MOBILE FOCUS) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-center items-center gap-8 bg-[#131314]/90 backdrop-blur-md z-50 h-12 border-t border-[#201f21] md:hidden">
+<a class="text-[#adaaab] flex items-center gap-2 px-4 hover:text-white transition-colors font-['Manrope'] text-xs" href="#">
+<span class="material-symbols-outlined text-lg">public</span>
+            GLOBAL
+        </a>
+<a class="text-[#8ff5ff] flex items-center gap-2 bg-[#201f21] px-4 py-1 rounded-full font-['Manrope'] text-xs" href="#">
+<span class="material-symbols-outlined text-lg">explore</span>
+            MAP
+        </a>
+<a class="text-[#adaaab] flex items-center gap-2 px-4 hover:text-white transition-colors font-['Manrope'] text-xs" href="#">
+<span class="material-symbols-outlined text-lg">security</span>
+            CLAN
+        </a>
+<a class="text-[#adaaab] flex items-center gap-2 px-4 hover:text-white transition-colors font-['Manrope'] text-xs" href="#">
+<span class="material-symbols-outlined text-lg">diversity_3</span>
+            PARTY
+        </a>
+</nav>
+<!-- FLOATING CHAT / SYSTEM PANEL -->
+<div class="hidden lg:flex fixed bottom-4 left-72 w-96 h-10 bg-[#131314]/80 backdrop-blur-md border border-[#201f21] rounded-full px-6 items-center gap-4 z-40">
+<span class="material-symbols-outlined text-[#8ff5ff] text-sm">terminal</span>
+<span class="text-[10px] font-headline font-bold text-[#8ff5ff] tracking-widest uppercase">System</span>
+<div class="h-4 w-[1px] bg-outline-variant/30"></div>
+<p class="text-[10px] text-on-surface-variant truncate font-body">Satellite uplink established. Scanning Obsidian Astral continental drift...</p>
+<span class="ml-auto flex gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary/40"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary/40"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary/40"></span>
+</span>
+</div>
+</body></html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OBSIDIAN ASTRAL | Neural Link</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary-fixed": "#003f43",
+              "outline": "#767576",
+              "on-background": "#ffffff",
+              "on-error-container": "#ffa8a3",
+              "error-container": "#9f0519",
+              "surface": "#0e0e0f",
+              "on-tertiary-container": "#1b0017",
+              "secondary-container": "#7000ff",
+              "on-tertiary": "#42003a",
+              "surface-dim": "#0e0e0f",
+              "secondary-fixed": "#dac9ff",
+              "inverse-primary": "#006a71",
+              "on-error": "#490006",
+              "on-primary-container": "#005359",
+              "surface-container-highest": "#262627",
+              "error": "#ff716c",
+              "inverse-surface": "#fcf8f9",
+              "on-tertiary-fixed-variant": "#6d0061",
+              "error-dim": "#d7383b",
+              "on-secondary-fixed": "#41009a",
+              "secondary-fixed-dim": "#ceb9ff",
+              "on-surface": "#ffffff",
+              "outline-variant": "#484849",
+              "tertiary-dim": "#ff59e3",
+              "background": "#0e0e0f",
+              "on-secondary-container": "#f8f1ff",
+              "surface-container": "#1a191b",
+              "secondary-dim": "#874cff",
+              "primary-fixed-dim": "#00deec",
+              "primary-dim": "#00deec",
+              "on-tertiary-fixed": "#33002d",
+              "surface-container-low": "#131314",
+              "on-secondary-fixed-variant": "#6300e2",
+              "surface-bright": "#2c2c2d",
+              "tertiary-fixed-dim": "#ff68e3",
+              "surface-variant": "#262627",
+              "tertiary-container": "#ff05e5",
+              "surface-tint": "#8ff5ff",
+              "surface-container-high": "#201f21",
+              "primary-container": "#00eefc",
+              "secondary": "#ac89ff",
+              "on-secondary": "#290067",
+              "inverse-on-surface": "#565556",
+              "primary": "#8ff5ff",
+              "on-surface-variant": "#adaaab",
+              "tertiary-fixed": "#ff85e4",
+              "on-primary": "#005d63",
+              "surface-container-lowest": "#000000",
+              "on-primary-fixed-variant": "#005e64",
+              "tertiary": "#ff59e3",
+              "primary-fixed": "#00eefc"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Manrope"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-panel {
+            background: rgba(14, 14, 15, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0e0e0f;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #201f21;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #8ff5ff;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary-fixed">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full flex justify-between items-center px-6 h-16 bg-[#0e0e0f]/80 backdrop-blur-xl z-50 shadow-[0_0_32px_rgba(143,245,255,0.08)]">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-black text-[#8ff5ff] tracking-tighter font-headline">OBSIDIAN ASTRAL</span>
+<nav class="hidden md:flex gap-6">
+<a class="font-['Space_Grotesk'] uppercase tracking-[0.1em] text-[0.6875rem] text-[#adaaab] hover:text-[#8ff5ff] transition-colors" href="#">Command</a>
+<a class="font-['Space_Grotesk'] uppercase tracking-[0.1em] text-[0.6875rem] text-[#8ff5ff] border-b-2 border-[#8ff5ff] pb-1" href="#">Neural Link</a>
+<a class="font-['Space_Grotesk'] uppercase tracking-[0.1em] text-[0.6875rem] text-[#adaaab] hover:text-[#8ff5ff] transition-colors" href="#">Data Vault</a>
+<a class="font-['Space_Grotesk'] uppercase tracking-[0.1em] text-[0.6875rem] text-[#adaaab] hover:text-[#8ff5ff] transition-colors" href="#">Fabricator</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 bg-surface-container-high px-3 py-1.5 rounded-lg border border-outline-variant/20">
+<span class="material-symbols-outlined text-[#8ff5ff] text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-xs font-label uppercase tracking-wider w-32 placeholder:text-on-surface-variant/40" placeholder="Search data..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">mail</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">settings</button>
+<img alt="Player holographic avatar" class="w-8 h-8 rounded-full border border-primary/30" data-alt="Futuristic holographic portrait of a sci-fi commander with glowing neon blue cybernetic details and dark metallic armor" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_O7hf1XtwOppbx5gVwEj0Kaj7BsiUAWhE8Zgv_sXuPM3nGxJX_WKWfFI4q63_0-8qGFKXgMQsU7RBohVox1RGiNuhohKOjN6hOLEwbliGWPZrDOnTGUS32XUlv0UP7eF8elJdTD9hibVSj1i1L27nQZADZgj0Pic_cz5otoEuxYMwzM8ikBYUWpcs4xQp9k1ftLQaqWKCu1W3WNqjQ-zTo22DfZ8txarV3qiVlpjUWjZ18lkpEqUFF700sjPddL8xM_YFof0bhkZ-"/>
+</div>
+</div>
+</header>
+<!-- SideNav -->
+<aside class="fixed left-0 top-0 h-full flex flex-col border-r border-[#201f21]/30 bg-[#0e0e0f]/90 backdrop-blur-2xl w-64 z-40 hidden md:flex">
+<div class="p-6 mt-16 flex items-center gap-4">
+<img alt="Commander Identity" class="w-10 h-10 rounded-lg border-2 border-secondary/40 shadow-[0_0_15px_rgba(172,137,255,0.2)]" data-alt="A rugged high-tech soldier with glowing purple visor and tactical interface reflections on facial features" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhHAbMZMCMLUMNLMm3_IWMYQnhO_raziAl69_6sbuwDQ1jKTXChqey0zyaw6Nvb1YieTE3xRb3_CP1HGVuvUoyg7OPe59fq1I7EP2NiWXPkO3SeShE8WmklYFGe30aInTwmELgpHLSP7PdFWirOsNsS9z4YGMqZD29FZkzIe9uXBTiNMhvqG6nChtoJK9qAXy3fRKvrI31MxGoAO9w93SWFqUVzKOpIxblqTx7-5o_hfhTZzl1pbPAQusuTleF28mMiOTC1p2eC198"/>
+<div>
+<h3 class="font-headline font-bold text-sm tracking-tight">ADM. KALE</h3>
+<p class="font-label text-[0.6rem] text-secondary tracking-widest uppercase">Level 48 Fleet Lead</p>
+</div>
+</div>
+<nav class="flex-1 mt-4">
+<div class="space-y-1">
+<a class="flex items-center gap-3 text-[#adaaab] px-4 py-3 hover:text-white hover:bg-[#201f21] transition-all font-['Space_Grotesk'] font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="text-sm">Command</span>
+</a>
+<a class="flex items-center gap-3 bg-gradient-to-r from-[#8ff5ff]/20 to-transparent text-[#8ff5ff] border-l-4 border-[#8ff5ff] px-4 py-3 font-['Space_Grotesk'] font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+<span class="text-sm">Neural Link</span>
+</a>
+<a class="flex items-center gap-3 text-[#adaaab] px-4 py-3 hover:text-white hover:bg-[#201f21] transition-all font-['Space_Grotesk'] font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="text-sm">Data Vault</span>
+</a>
+<a class="flex items-center gap-3 text-[#adaaab] px-4 py-3 hover:text-white hover:bg-[#201f21] transition-all font-['Space_Grotesk'] font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="build">build</span>
+<span class="text-sm">Fabricator</span>
+</a>
+<a class="flex items-center gap-3 text-[#adaaab] px-4 py-3 hover:text-white hover:bg-[#201f21] transition-all font-['Space_Grotesk'] font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+<span class="text-sm">Overseer</span>
+</a>
+</div>
+<div class="px-6 mt-8">
+<button class="w-full bg-secondary text-on-secondary font-headline font-bold py-3 rounded-md text-xs tracking-widest hover:shadow-[0_0_20px_rgba(172,137,255,0.4)] transition-all">
+                    DEPLOY MISSION
+                </button>
+</div>
+</nav>
+<div class="p-4 space-y-1">
+<a class="flex items-center gap-3 text-[#adaaab] px-4 py-2 hover:text-white transition-all text-sm font-label uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="help">help</span> Support
+            </a>
+<a class="flex items-center gap-3 text-[#adaaab] px-4 py-2 hover:text-white transition-all text-sm font-label uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="logout">logout</span> Log Out
+            </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 pt-16 h-screen flex flex-col md:flex-row bg-surface overflow-hidden">
+<!-- Chat Hub Section -->
+<section class="flex-1 flex flex-col bg-surface-container-low min-w-0">
+<!-- Channel Tabs -->
+<div class="px-6 py-4 flex gap-4 overflow-x-auto no-scrollbar border-b border-outline-variant/10">
+<button class="px-4 py-2 bg-primary/10 border-b-2 border-primary text-primary font-label text-[0.7rem] uppercase tracking-[0.15em] flex items-center gap-2 flex-shrink-0">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                    Global
+                </button>
+<button class="px-4 py-2 text-on-surface-variant hover:text-secondary hover:bg-secondary/5 transition-all font-label text-[0.7rem] uppercase tracking-[0.15em] flex items-center gap-2 flex-shrink-0">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary opacity-50"></span>
+                    Clan: Void Walkers
+                </button>
+<button class="px-4 py-2 text-on-surface-variant hover:text-tertiary hover:bg-tertiary/5 transition-all font-label text-[0.7rem] uppercase tracking-[0.15em] flex items-center gap-2 flex-shrink-0">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary opacity-50"></span>
+                    Party [3/4]
+                </button>
+<button class="px-4 py-2 text-on-surface-variant hover:text-white hover:bg-white/5 transition-all font-label text-[0.7rem] uppercase tracking-[0.15em] flex items-center gap-2 flex-shrink-0">
+                    Direct Messages
+                </button>
+</div>
+<!-- Chat Message Window -->
+<div class="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar">
+<!-- System Message -->
+<div class="flex flex-col items-center">
+<div class="px-4 py-1.5 rounded-full bg-surface-container-highest border border-outline-variant/30 text-[0.6rem] font-label text-on-surface-variant uppercase tracking-[0.2em]">
+                        Neural Link Established - Sector 7G
+                    </div>
+</div>
+<!-- Received Message (Other Player) -->
+<div class="flex gap-4 max-w-2xl">
+<img alt="Avatar" class="w-10 h-10 rounded-lg flex-shrink-0" data-alt="Sci-fi character portrait with orange bio-luminescent marks and sleek black armor in a misty environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAK3jKCMmZsA-90gG6ZnwdhY_emNW4itx21W_GiJ70sssCuh_vBm6g9aye0if1lyMV4QIR6JIv6Yt0AVLi_ArqjC85h1MGO7Yp4OVyDvkydnzzdj-YNSGMivnCcZqffCIskUDg2oPO4YGhhZRa-PC70O6EkdlypohGwHj1fe9YCA4Q-fyEZUvhZ3xarglWbRpvbSno7cMwSRjTp8whc1SI62oi1w8NrOsmDNUvl4cBKNViwDGPnFLXwxLxGFQfhCeM8SiXszCOWadlr"/>
+<div class="space-y-1">
+<div class="flex items-baseline gap-3">
+<span class="font-headline font-bold text-primary text-xs tracking-tight">XENON_404</span>
+<span class="text-[0.65rem] text-on-surface-variant/60 font-label">14:02</span>
+</div>
+<div class="p-4 rounded-xl rounded-tl-none bg-surface-container-high border border-outline-variant/10 text-sm leading-relaxed text-on-surface-variant">
+                            Anyone heading to the <span class="text-primary font-medium hover:underline cursor-pointer">Obsidian Spire</span> for the raid? I've got the data core ready for deployment. 
+                        </div>
+</div>
+</div>
+<!-- Item Link Message -->
+<div class="flex gap-4 max-w-2xl">
+<img alt="Avatar" class="w-10 h-10 rounded-lg flex-shrink-0" data-alt="Ethereal alien soldier with floating crystal elements and glowing teal armor accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVreGk5DAX8OS82hmCGamsEFK-P5OA07QRqELv2yPPIbruLuD8siYIPEYLG7awi1UGNUemFkJdIrenIIrdD8LlbqSAgCrsv9OCUbndEcsvvFt0Eu7fj5QUi_Q4jHb5iEjY2WCYTLu1YUl0dfWdgJynV-DPZRny5OIAU_wY_Ae7-XQqXzB7w0-td-VlCtkcob9YTCtBectA_lS4E0MHeYpXxhNfpGdeRt5LXXCUarVGc4MXR_Ee_TW2hmqAa6VzCz7EDIEb1JmSqwAt"/>
+<div class="space-y-1">
+<div class="flex items-baseline gap-3">
+<span class="font-headline font-bold text-secondary text-xs tracking-tight">VOID_RUNNER</span>
+<span class="text-[0.65rem] text-on-surface-variant/60 font-label">14:05</span>
+</div>
+<div class="p-4 rounded-xl rounded-tl-none bg-surface-container-high border border-outline-variant/10 text-sm leading-relaxed text-on-surface-variant">
+                            Just dropped this from a Titan-class Overseer: 
+                            <div class="mt-3 p-3 rounded-lg bg-tertiary/10 border border-tertiary/30 flex items-center gap-3 cursor-pointer group hover:bg-tertiary/20 transition-all">
+<div class="w-10 h-10 rounded bg-tertiary/20 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">auto_fix_high</span>
+</div>
+<div>
+<p class="text-xs font-bold text-tertiary uppercase tracking-wider">[ASTRA-SHARD CORE]</p>
+<p class="text-[0.6rem] text-tertiary/70 font-label uppercase">Legendary Enhancement Module</p>
+</div>
+<span class="material-symbols-outlined ml-auto text-tertiary/40 group-hover:translate-x-1 transition-transform">arrow_forward_ios</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Your Message -->
+<div class="flex flex-row-reverse gap-4 max-w-2xl ml-auto">
+<img alt="Avatar" class="w-10 h-10 rounded-lg flex-shrink-0" data-alt="User commander avatar with purple neon visor" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgGz-K62Wdi5ejvOZirpL_fWlELu_tZzvJIrKLP5ccNcx8c23s_oJE6eupaVd34UZjyBnd71My24jn0n-6c_FltovcNzfMKEPDV8sq-hQuG37CqD1o37PA2_3uQDimTTcaq-2OYAZOuozVCvCNFzzsgECFU8-tO4eiQpf4vq9JZYxxwgwLjxQ7tMAT1OxK_opRoX9_MfhwK__dBACbixm6LYfFnjJNZAwPxUXLt8fUoxqRIXmSFfSjM4zgHjDXewZKKr4VQ8oE4DTr"/>
+<div class="space-y-1 text-right">
+<div class="flex flex-row-reverse items-baseline gap-3">
+<span class="font-headline font-bold text-secondary-dim text-xs tracking-tight">ADM. KALE</span>
+<span class="text-[0.65rem] text-on-surface-variant/60 font-label">14:10</span>
+</div>
+<div class="p-4 rounded-xl rounded-tr-none bg-secondary/10 border border-secondary/30 text-sm leading-relaxed text-secondary-fixed text-left">
+                            Count me in. Checking coords now. Is the squad full yet?
+                        </div>
+</div>
+</div>
+<!-- System Alert -->
+<div class="flex flex-col items-center">
+<div class="px-4 py-2 rounded border border-secondary/20 bg-secondary/5 flex items-center gap-3 text-[0.7rem] font-label text-secondary uppercase tracking-[0.1em]">
+<span class="material-symbols-outlined text-sm">bolt</span>
+                        Mission Event: Solar Flare detected in Zone 4. Comm-link reliability at 82%.
+                    </div>
+</div>
+</div>
+<!-- Input Bar -->
+<div class="p-6 bg-surface-container border-t border-outline-variant/10">
+<div class="flex items-end gap-3 glass-panel p-2 rounded-xl border border-outline-variant/20 shadow-lg">
+<div class="flex gap-1 pb-1">
+<button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-surface-container-highest text-on-surface-variant transition-colors material-symbols-outlined">add_circle</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-surface-container-highest text-on-surface-variant transition-colors material-symbols-outlined">sentiment_satisfied</button>
+</div>
+<div class="flex-1 relative">
+<textarea class="w-full bg-transparent border-none focus:ring-0 text-sm py-2 px-1 text-on-surface placeholder:text-on-surface-variant/40 resize-none min-h-[40px]" placeholder="Transmit neural message..." rows="1"></textarea>
+</div>
+<div class="flex gap-2 pb-1 pr-1">
+<button class="px-3 py-2 rounded-lg bg-surface-container-highest text-[0.6rem] font-label font-bold text-primary uppercase tracking-widest border border-primary/20 hover:bg-primary/10 transition-colors">
+                            Coords
+                        </button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary text-on-primary-fixed hover:shadow-[0_0_15px_rgba(143,245,255,0.4)] transition-all">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Sidebar: Friends/Clan -->
+<aside class="w-full md:w-80 bg-surface flex flex-col border-l border-[#201f21]/30">
+<div class="p-6">
+<div class="flex items-center justify-between mb-6">
+<h2 class="font-headline font-bold text-sm tracking-[0.15em] uppercase text-on-surface">Neural Roster</h2>
+<span class="text-[0.6rem] font-label font-bold text-primary bg-primary/10 px-2 py-0.5 rounded">ONLINE: 42</span>
+</div>
+<!-- Online Status List -->
+<div class="space-y-8">
+<!-- Section: Favorites -->
+<div>
+<p class="text-[0.6rem] font-label text-on-surface-variant/60 uppercase tracking-[0.2em] mb-4">Elite Wing</p>
+<div class="space-y-4">
+<!-- Friend 1 -->
+<div class="flex items-center gap-4 group cursor-pointer">
+<div class="relative">
+<img alt="Friend" class="w-11 h-11 rounded-lg border border-primary/20 grayscale-[0.5] group-hover:grayscale-0 transition-all" data-alt="Portrait of a female scout with glowing cyan tactical goggles and a high-tech headpiece" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMuvbw8_Zsu04ykvpzqbJo03uMxvm4b9rE_VAbXwva3Pd2EQr0WbgT8ufsbRtgbp8X-BJ2cjQXJUz0yu3zkMu8t_uB2tHUAvbbH5NhK0zXY7SCSnqPuncsnqRZn-OCHEt4f4XovevQyzKvIW7uuOMZaSaOuZ43pOBFx5w4Hl7c5ODucVGahTiBuNiU1LsRrCif7Q8fzSHldB32Cin5y9c2x1oMN2zIoCRrpeHjAYHfiLijWoYlkX8Lkz2sNwQblZQPS3yynQOtW5wV"/>
+<div class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-primary border-2 border-surface rounded-full shadow-[0_0_8px_rgba(143,245,255,0.6)]"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h4 class="text-sm font-headline font-semibold text-on-surface truncate group-hover:text-primary transition-colors">Nova_Prime</h4>
+<span class="text-[0.6rem] text-on-surface-variant font-label">Lvl 52</span>
+</div>
+<p class="text-[0.65rem] text-primary/80 font-label truncate italic">Exploring Sector 09</p>
+</div>
+</div>
+<!-- Friend 2 -->
+<div class="flex items-center gap-4 group cursor-pointer">
+<div class="relative">
+<img alt="Friend" class="w-11 h-11 rounded-lg border border-primary/20 grayscale-[0.5] group-hover:grayscale-0 transition-all" data-alt="A robotic soldier with a central glowing eye and weathered metallic plating" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPFBkPd_4LsU9jwaury8MhoicHseFa5CS93oWP3xhhYNBGHkO0Qdsa7bTc-YuMjGM2dnCidM4m4MGIAhVokayMTXBRBQujMRcAFolpyfIrtCRvYSC5m-GDQKxmVz3ygqTpUH69NQn7fQgT9NIZlIMKXzWjwLV1pBUDGHpBhsdggpguFVSN5B8QGe-G2n3piaWMZLSEzlDs3FBI6R0KkoygRHeSub-m_gibX43l_SsXisCicsDd0V-k5SUUbqoXMRKv1sbiRCUa968Z"/>
+<div class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-primary border-2 border-surface rounded-full shadow-[0_0_8px_rgba(143,245,255,0.6)]"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h4 class="text-sm font-headline font-semibold text-on-surface truncate group-hover:text-primary transition-colors">Unit_Theta</h4>
+<span class="text-[0.6rem] text-on-surface-variant font-label">Lvl 44</span>
+</div>
+<p class="text-[0.65rem] text-primary/80 font-label truncate italic">Main Menu</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Section: Clan Members -->
+<div>
+<div class="flex items-center justify-between mb-4">
+<p class="text-[0.6rem] font-label text-on-surface-variant/60 uppercase tracking-[0.2em]">Clan: Void Walkers</p>
+<span class="material-symbols-outlined text-xs text-on-surface-variant cursor-pointer hover:text-white">expand_more</span>
+</div>
+<div class="space-y-4">
+<!-- Clan Member 1 -->
+<div class="flex items-center gap-4 group cursor-pointer">
+<div class="relative">
+<img alt="Clan Member" class="w-9 h-9 rounded-lg border border-outline-variant/30 grayscale transition-all group-hover:grayscale-0" data-alt="High-tech medic character with white armor and green cross symbols glowing on the shoulder pads" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcgoQuStuQNt7r7ixCQ2ACWXZJ9j6nwIx3WdlzCJPrpbPVdByFbnddDYQ2Pxyy-HpgkLeSXU1C5ZDNbYkS08np3wu7q4XC1ElqGLq4HFjtPjwgP6KszZCiYIxPohM5QXbT4v5sh9DtnnAIArzad4z1cuU4M3yf-1Vr7KsL7Lvym7qQth-asevwe8xerAFsYPu_E6rhadbThqMm2fpHUs0wpMl9TtX5OFQJhKFPsZt644X9e9RFCc__SvBc2GYWswCiRDY_-GOY78d-"/>
+<div class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-outline border border-surface rounded-full"></div>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="text-xs font-headline font-semibold text-on-surface-variant group-hover:text-on-surface truncate">CyberMender</h4>
+<p class="text-[0.6rem] text-on-surface-variant/40 font-label uppercase">Away (Neural Sleep)</p>
+</div>
+</div>
+<!-- Clan Member 2 -->
+<div class="flex items-center gap-4 group cursor-pointer opacity-50">
+<div class="relative">
+<img alt="Clan Member" class="w-9 h-9 rounded-lg border border-outline-variant/10 grayscale" data-alt="Stealth operative with dark hooded armor and glowing red optics" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqPdBH5wMAbmyRHH-Njn4yY2gdPEfO14HzKjh21qaPp6LfUHwxZ227a0cZVtih1BOr3rCepGCa_P2cj1l6ojkOFe9xK7nQTHhKyYBDYD4jMTzxdT1agNWkCjQ7ZgA0UW7C_lmHXnmgQiKbWUMqt7YuHmd-Y6CXgKrXOxFwMTm03mpGB6yDw6bIRIzG-FMDV7FZZPy4f9-_jkX3y5Fd49iiGkp2u57dvFioN9DK4StOBos58aRl9i523FnUc700iMMBJkRGZAHUvmlM"/>
+<div class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-surface-container border border-outline-variant rounded-full"></div>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="text-xs font-headline font-semibold text-on-surface-variant truncate">Ghost_X</h4>
+<p class="text-[0.6rem] text-on-surface-variant/40 font-label uppercase">Offline (4h)</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Side Footer Info -->
+<div class="mt-auto p-6 border-t border-outline-variant/10 bg-surface-container-low">
+<div class="flex items-center justify-between text-[0.6rem] font-label uppercase tracking-widest text-on-surface-variant/60 mb-3">
+<span>Recent Activity</span>
+<span class="material-symbols-outlined text-xs">history</span>
+</div>
+<div class="p-3 rounded-lg bg-surface-container-highest/40 border border-outline-variant/10">
+<p class="text-[0.65rem] text-on-surface-variant leading-relaxed">
+<span class="text-secondary font-bold">Void_Runner</span> completed [Titan Trial] in 12:44.
+                    </p>
+</div>
+</div>
+</aside>
+</main>
+<!-- FAB (Suppressed on Chat page per rules, but included if needed as floating context) -->
+<button class="fixed bottom-24 right-6 md:right-8 w-14 h-14 bg-secondary text-on-secondary rounded-full flex items-center justify-center shadow-[0_0_32px_rgba(172,137,255,0.3)] hover:scale-110 active:scale-95 transition-all md:hidden">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+</button>
+</body></html>

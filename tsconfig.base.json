@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "verbatimModuleSyntax": true,
+    "baseUrl": ".",
+    "paths": {
+      "@obsidian-astral/shared": [
+        "packages/shared/src/index.ts"
+      ],
+      "@obsidian-astral/shared/*": [
+        "packages/shared/src/*"
+      ]
+    }
+  }
+}

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OBSIDIAN ASTRAL | Marketplace</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "inverse-primary": "#006a71",
+              "tertiary": "#ff59e3",
+              "inverse-surface": "#fcf8f9",
+              "surface-container-high": "#201f21",
+              "error-container": "#9f0519",
+              "on-primary-fixed": "#003f43",
+              "error": "#ff716c",
+              "secondary-dim": "#874cff",
+              "surface-container-lowest": "#000000",
+              "secondary-fixed": "#dac9ff",
+              "on-primary-fixed-variant": "#005e64",
+              "inverse-on-surface": "#565556",
+              "surface-container": "#1a191b",
+              "on-primary-container": "#005359",
+              "on-error": "#490006",
+              "outline": "#767576",
+              "tertiary-fixed-dim": "#ff68e3",
+              "on-tertiary": "#42003a",
+              "on-surface": "#ffffff",
+              "tertiary-container": "#ff05e5",
+              "surface-dim": "#0e0e0f",
+              "secondary-fixed-dim": "#ceb9ff",
+              "on-tertiary-container": "#1b0017",
+              "primary-fixed-dim": "#00deec",
+              "secondary-container": "#7000ff",
+              "on-surface-variant": "#adaaab",
+              "on-tertiary-fixed": "#33002d",
+              "surface-variant": "#262627",
+              "on-tertiary-fixed-variant": "#6d0061",
+              "on-secondary-fixed-variant": "#6300e2",
+              "on-secondary-fixed": "#41009a",
+              "primary-fixed": "#00eefc",
+              "secondary": "#ac89ff",
+              "on-secondary-container": "#f8f1ff",
+              "on-secondary": "#290067",
+              "on-error-container": "#ffa8a3",
+              "on-background": "#ffffff",
+              "surface": "#0e0e0f",
+              "surface-tint": "#8ff5ff",
+              "outline-variant": "#484849",
+              "on-primary": "#005d63",
+              "tertiary-dim": "#ff59e3",
+              "primary": "#8ff5ff",
+              "surface-container-highest": "#262627",
+              "surface-bright": "#2c2c2d",
+              "primary-dim": "#00deec",
+              "error-dim": "#d7383b",
+              "background": "#0e0e0f",
+              "primary-container": "#00eefc",
+              "surface-container-low": "#131314",
+              "tertiary-fixed": "#ff85e4"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Manrope"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-panel {
+            background: rgba(26, 25, 27, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary selection:text-on-primary-container overflow-hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-8 h-16 bg-[#0e0e0f]/90 backdrop-blur-md border-b border-[#201f21] shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+<div class="flex items-center gap-6">
+<span class="text-2xl font-bold tracking-tighter text-[#8ff5ff] drop-shadow-[0_0_8px_rgba(143,245,255,0.5)] font-headline">OBSIDIAN ASTRAL</span>
+<nav class="hidden md:flex gap-8 font-label uppercase tracking-[0.1em] text-[0.6875rem]">
+<a class="text-[#adaaab] hover:text-[#8ff5ff] transition-colors" href="#">DASHBOARD</a>
+<a class="text-[#adaaab] hover:text-[#8ff5ff] transition-colors" href="#">ARMORY</a>
+<a class="text-[#8ff5ff] font-bold" href="#">MARKETPLACE</a>
+<a class="text-[#adaaab] hover:text-[#8ff5ff] transition-colors" href="#">RESOURCES</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex gap-4 items-center">
+<div class="flex items-center gap-1.5 px-3 py-1 bg-surface-container-high rounded-full">
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">monetization_on</span>
+<span class="font-label text-xs font-bold text-on-surface">1,240,500</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 bg-surface-container-high rounded-full">
+<span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings: 'FILL' 1;">diamond</span>
+<span class="font-label text-xs font-bold text-on-surface">450</span>
+</div>
+</div>
+<img alt="Player Avatar" class="w-10 h-10 rounded-full border border-primary/30 active:scale-95 transition-transform duration-200 cursor-pointer" data-alt="Cyberpunk character portrait with glowing neon implants and sleek obsidian visor" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFPlrdfUFZRdpPdjGTakqTQuq_NWP4ecQLsvb7BWUTYbRDV836bmXtxKvl28qDFGo0h9zYehKF4njOx87IYFWsDTYT0CsiZIgtIJYxV1Po9xD7pXw9tAJt4_D2E8wE_45VFSLuD-YDPXWNnhkw-D1j7mIu2Wcz91dCb69bEDHw-ISTKgQmcihp7Q2yBJSVggcruUBpQgsDewxNu-1iDXcTy0U4IKen4TUsMINAoMPi_WdpZUC3ag9Gqe63FdqSpdlZU1yXLg1ufm1s"/>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 flex flex-col py-6 bg-[#0e0e0f]/40 backdrop-blur-2xl border-r border-[#201f21] shadow-[10px_0_30px_rgba(0,0,0,0.8)] z-40">
+<div class="px-6 mb-8">
+<p class="font-label text-sm tracking-widest uppercase text-[#ac89ff]">COMMANDER</p>
+<p class="font-label text-[0.65rem] tracking-[0.2em] text-[#adaaab] opacity-70">LEVEL 42 ELITE</p>
+</div>
+<nav class="flex-1 space-y-1">
+<div class="px-3">
+<a class="flex items-center gap-4 px-4 py-3 text-[#adaaab] opacity-70 hover:bg-[#201f21] hover:opacity-100 transition-all duration-300 font-label text-sm tracking-widest uppercase hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">dashboard</span> Dashboard
+                </a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#adaaab] opacity-70 hover:bg-[#201f21] hover:opacity-100 transition-all duration-300 font-label text-sm tracking-widest uppercase hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">inventory_2</span> Resources
+                </a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#adaaab] opacity-70 hover:bg-[#201f21] hover:opacity-100 transition-all duration-300 font-label text-sm tracking-widest uppercase hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">handyman</span> Crafting
+                </a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#adaaab] opacity-70 hover:bg-[#201f21] hover:opacity-100 transition-all duration-300 font-label text-sm tracking-widest uppercase hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">person</span> Character
+                </a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#adaaab] opacity-70 hover:bg-[#201f21] hover:opacity-100 transition-all duration-300 font-label text-sm tracking-widest uppercase hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">explore</span> Map
+                </a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#adaaab] opacity-70 hover:bg-[#201f21] hover:opacity-100 transition-all duration-300 font-label text-sm tracking-widest uppercase hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">groups</span> Clan
+                </a>
+<a class="flex items-center gap-4 px-4 py-3 bg-[#8ff5ff]/10 text-[#8ff5ff] border-r-2 border-[#8ff5ff] shadow-[inset_-10px_0_20px_rgba(143,245,255,0.05)] font-label text-sm tracking-widest uppercase hover:translate-x-1 transition-all duration-300" href="#">
+<span class="material-symbols-outlined">storefront</span> Marketplace
+                </a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#adaaab] opacity-70 hover:bg-[#201f21] hover:opacity-100 transition-all duration-300 font-label text-sm tracking-widest uppercase hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">security</span> Admin
+                </a>
+</div>
+</nav>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 mt-16 p-8 h-[calc(100vh-4rem)] overflow-hidden flex flex-col gap-8 bg-surface">
+<!-- Header & Search -->
+<div class="flex flex-col md:flex-row justify-between items-end gap-6">
+<div class="space-y-1">
+<h1 class="text-4xl font-headline font-bold tracking-tight text-on-surface">PLAYER EXCHANGE</h1>
+<p class="text-on-surface-variant font-body">Browse 14,204 active listings in the Astral sector.</p>
+</div>
+<div class="flex gap-4 w-full md:w-auto">
+<!-- Tabs -->
+<div class="flex bg-surface-container-low p-1 rounded-lg">
+<button class="px-6 py-2 bg-surface-container-highest text-primary font-label text-xs tracking-widest uppercase rounded">Buy Items</button>
+<button class="px-6 py-2 text-on-surface-variant hover:text-on-surface font-label text-xs tracking-widest uppercase transition-colors">Sell Items</button>
+</div>
+<!-- Search -->
+<div class="relative flex-1 md:w-96">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-low border-b-2 border-outline-variant focus:border-primary px-12 py-3 text-sm focus:outline-none focus:ring-0 transition-all placeholder:text-on-surface-variant/50" placeholder="Search items, sellers, or traits..." type="text"/>
+</div>
+</div>
+</div>
+<div class="flex-1 flex gap-8 overflow-hidden">
+<!-- Filters Sidebar -->
+<aside class="w-72 flex flex-col gap-6 overflow-y-auto no-scrollbar pr-2">
+<div class="space-y-6">
+<!-- Categories -->
+<div class="space-y-3">
+<h3 class="font-label text-[0.7rem] uppercase tracking-[0.2em] text-on-surface-variant">Category</h3>
+<div class="flex flex-col gap-2">
+<label class="flex items-center gap-3 cursor-pointer group">
+<div class="w-4 h-4 rounded-sm border-2 border-outline group-hover:border-primary transition-colors"></div>
+<span class="text-sm text-on-surface group-hover:text-primary transition-colors">All Categories</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<div class="w-4 h-4 rounded-sm border-2 border-primary bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-on-primary-container font-bold">check</span>
+</div>
+<span class="text-sm text-primary transition-colors font-medium">Weapons</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<div class="w-4 h-4 rounded-sm border-2 border-outline group-hover:border-primary transition-colors"></div>
+<span class="text-sm text-on-surface group-hover:text-primary transition-colors">Materials</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<div class="w-4 h-4 rounded-sm border-2 border-outline group-hover:border-primary transition-colors"></div>
+<span class="text-sm text-on-surface group-hover:text-primary transition-colors">Relics</span>
+</label>
+</div>
+</div>
+<!-- Rarity -->
+<div class="space-y-3">
+<h3 class="font-label text-[0.7rem] uppercase tracking-[0.2em] text-on-surface-variant">Rarity</h3>
+<div class="grid grid-cols-2 gap-2">
+<button class="px-3 py-2 bg-surface-container text-xs font-label uppercase border border-outline-variant/30 hover:border-primary transition-all">Common</button>
+<button class="px-3 py-2 bg-surface-container text-xs font-label uppercase border border-outline-variant/30 hover:border-primary transition-all">Rare</button>
+<button class="px-3 py-2 bg-surface-container text-xs font-label uppercase border-2 border-secondary/50 text-secondary bg-secondary/5">Epic</button>
+<button class="px-3 py-2 bg-surface-container text-xs font-label uppercase border border-tertiary/20 text-tertiary/60 hover:border-tertiary transition-all">Legendary</button>
+</div>
+</div>
+<!-- Price Range -->
+<div class="space-y-3">
+<h3 class="font-label text-[0.7rem] uppercase tracking-[0.2em] text-on-surface-variant">Price Range (Gold)</h3>
+<div class="space-y-4">
+<div class="h-1 w-full bg-surface-container-highest rounded-full relative">
+<div class="absolute left-1/4 right-1/4 h-full bg-primary shadow-[0_0_10px_rgba(143,245,255,0.5)]"></div>
+<div class="absolute left-1/4 top-1/2 -translate-y-1/2 w-3 h-3 bg-on-surface rounded-full shadow-lg"></div>
+<div class="absolute right-1/4 top-1/2 -translate-y-1/2 w-3 h-3 bg-on-surface rounded-full shadow-lg"></div>
+</div>
+<div class="flex justify-between text-[10px] font-label text-on-surface-variant">
+<span>100G</span>
+<span>500,000G</span>
+</div>
+</div>
+</div>
+<!-- Quick Toggles -->
+<div class="p-4 bg-surface-container-low rounded-xl border border-outline-variant/10 space-y-4">
+<div class="flex justify-between items-center">
+<span class="text-xs text-on-surface">Buyout Only</span>
+<div class="w-8 h-4 bg-primary rounded-full relative">
+<div class="absolute right-0.5 top-0.5 w-3 h-3 bg-on-primary-container rounded-full"></div>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-xs text-on-surface">Verified Sellers</span>
+<div class="w-8 h-4 bg-surface-container-highest rounded-full relative">
+<div class="absolute left-0.5 top-0.5 w-3 h-3 bg-outline rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Listings Grid -->
+<section class="flex-1 overflow-y-auto no-scrollbar pb-12">
+<div class="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
+<!-- Item Card 1 (Legendary) -->
+<div class="group relative p-[1px] rounded-xl overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-tertiary/40 via-transparent to-tertiary/10 opacity-50"></div>
+<div class="relative bg-surface-container rounded-[11px] p-5 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div class="w-16 h-16 bg-surface-container-high rounded-lg flex items-center justify-center relative overflow-hidden group-hover:shadow-[0_0_20px_rgba(255,89,227,0.3)] transition-all">
+<div class="absolute inset-0 bg-gradient-to-tr from-tertiary/20 to-transparent"></div>
+<span class="material-symbols-outlined text-4xl text-tertiary" style="font-variation-settings: 'FILL' 1;">temp_preferences_eco</span>
+</div>
+<div class="text-right">
+<span class="px-2 py-0.5 bg-tertiary/10 text-tertiary font-label text-[10px] tracking-widest uppercase border border-tertiary/20 rounded">Legendary</span>
+<div class="mt-2 flex items-center justify-end gap-1">
+<span class="text-on-surface-variant text-[10px] uppercase font-label">Qty:</span>
+<span class="text-on-surface text-xs font-bold">1</span>
+</div>
+</div>
+</div>
+<div>
+<h4 class="text-lg font-headline font-bold text-on-surface leading-tight">Astral Void Core</h4>
+<p class="text-xs text-on-surface-variant mt-1 line-clamp-1">Pulsating essence extracted from a dying star.</p>
+</div>
+<div class="flex items-center gap-3 py-3 border-y border-outline-variant/10">
+<img alt="Seller" class="w-6 h-6 rounded-full grayscale hover:grayscale-0 transition-all cursor-pointer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0umyKV4zH264nGGKujV5eaKebOX2ysCGPQrkjj7ivk9egA1imYpLe3NQB5wwEau3sO0MoQxS-Np8y7CrsWGyxN9zyDVGjfnvJob9SLJ1Nn8CFiBpK6sP-g1I6RxMc_RAmVddu6bMzGO5vTwilTQ5DWa1DMhZerMNKpyx6PYcjCGAkJOZ6PnhyPzRKiWY9zSV625TfKaP_O3yfWUUhsDlfVY0Y-g0NW1lw3YkiUvqdSP-nZyuu4W1_swWP0I6pHMS7FufXWH1TA2SU"/>
+<div class="flex-1">
+<p class="text-[10px] font-label text-on-surface-variant uppercase">Listed by</p>
+<p class="text-xs text-on-surface font-medium">VoidWalker_77</p>
+</div>
+<div class="text-right">
+<p class="text-[10px] font-label text-on-surface-variant uppercase">Time Left</p>
+<p class="text-xs text-secondary font-medium">04h 12m</p>
+</div>
+</div>
+<div class="flex items-center justify-between mt-2">
+<div class="flex flex-col">
+<span class="text-[10px] font-label text-on-surface-variant uppercase tracking-tighter">Current Bid</span>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-tertiary text-lg" style="font-variation-settings: 'FILL' 1;">diamond</span>
+<span class="text-xl font-headline font-bold text-on-surface">1,250</span>
+</div>
+</div>
+<button class="px-6 py-3 bg-tertiary text-on-tertiary font-label text-xs tracking-widest uppercase font-bold rounded-lg hover:shadow-[0_0_15px_rgba(255,89,227,0.5)] active:scale-95 transition-all">Buy Now</button>
+</div>
+</div>
+</div>
+<!-- Item Card 2 (Epic) -->
+<div class="group relative p-[1px] rounded-xl overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-secondary/30 via-transparent to-secondary/10 opacity-30"></div>
+<div class="relative bg-surface-container rounded-[11px] p-5 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div class="w-16 h-16 bg-surface-container-high rounded-lg flex items-center justify-center relative overflow-hidden group-hover:shadow-[0_0_20px_rgba(172,137,255,0.3)] transition-all">
+<div class="absolute inset-0 bg-gradient-to-tr from-secondary/20 to-transparent"></div>
+<span class="material-symbols-outlined text-4xl text-secondary" style="font-variation-settings: 'FILL' 1;">swords</span>
+</div>
+<div class="text-right">
+<span class="px-2 py-0.5 bg-secondary/10 text-secondary font-label text-[10px] tracking-widest uppercase border border-secondary/20 rounded">Epic</span>
+<div class="mt-2 flex items-center justify-end gap-1">
+<span class="text-on-surface-variant text-[10px] uppercase font-label">Qty:</span>
+<span class="text-on-surface text-xs font-bold">1</span>
+</div>
+</div>
+</div>
+<div>
+<h4 class="text-lg font-headline font-bold text-on-surface leading-tight">Neural Katana MK-IV</h4>
+<p class="text-xs text-on-surface-variant mt-1 line-clamp-1">Bypasses standard kinetic shielding.</p>
+</div>
+<div class="flex items-center gap-3 py-3 border-y border-outline-variant/10">
+<img alt="Seller" class="w-6 h-6 rounded-full grayscale hover:grayscale-0 transition-all cursor-pointer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtoYDmg5doqvAU3aG1lwEzpk6rsebu7pvuKicEH0MIG0LXay8Mmsa1HvR_Rg4S5kkJbMl830Ae8_ZmMZwVz9egAd1-CjMF9myM-q7uPvYKc1VIKf3GtGwcMNjsVqi_gVwHs9WBTk3Ry-1PmySxxkaqqE8DWqoqeKOUSFmpQx2dd0T9lGzbFrn5qXS_Ky0BvlSEnD8ojRBMg4dUs7nfkkNA4udJ0sK-x6fdZ8rc-1SWTfc-q5tk0MhIzOhUXsk6y-KymTJcU2f5a2Gn"/>
+<div class="flex-1">
+<p class="text-[10px] font-label text-on-surface-variant uppercase">Listed by</p>
+<p class="text-xs text-on-surface font-medium">GhostInShell</p>
+</div>
+<div class="text-right">
+<p class="text-[10px] font-label text-on-surface-variant uppercase">Time Left</p>
+<p class="text-xs text-on-surface-variant font-medium">23h 59m</p>
+</div>
+</div>
+<div class="flex items-center justify-between mt-2">
+<div class="flex flex-col">
+<span class="text-[10px] font-label text-on-surface-variant uppercase tracking-tighter">Fixed Price</span>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-lg" style="font-variation-settings: 'FILL' 1;">monetization_on</span>
+<span class="text-xl font-headline font-bold text-on-surface">45,000</span>
+</div>
+</div>
+<button class="px-6 py-3 bg-secondary text-on-secondary font-label text-xs tracking-widest uppercase font-bold rounded-lg hover:shadow-[0_0_15px_rgba(172,137,255,0.4)] active:scale-95 transition-all">Buy Now</button>
+</div>
+</div>
+</div>
+<!-- Item Card 3 (Common) -->
+<div class="group relative bg-surface-container rounded-xl border border-outline-variant/20 p-5 flex flex-col gap-4 hover:border-primary/40 transition-all">
+<div class="flex justify-between items-start">
+<div class="w-16 h-16 bg-surface-container-high rounded-lg flex items-center justify-center relative overflow-hidden">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant" style="font-variation-settings: 'FILL' 0;">bolt</span>
+</div>
+<div class="text-right">
+<span class="px-2 py-0.5 bg-outline-variant/10 text-on-surface-variant font-label text-[10px] tracking-widest uppercase border border-outline-variant/20 rounded">Common</span>
+<div class="mt-2 flex items-center justify-end gap-1">
+<span class="text-on-surface-variant text-[10px] uppercase font-label">Qty:</span>
+<span class="text-on-surface text-xs font-bold">500</span>
+</div>
+</div>
+</div>
+<div>
+<h4 class="text-lg font-headline font-bold text-on-surface leading-tight">Flux Capacitor Cell</h4>
+<p class="text-xs text-on-surface-variant mt-1 line-clamp-1">Standard power unit for light craft.</p>
+</div>
+<div class="flex items-center gap-3 py-3 border-y border-outline-variant/10">
+<img alt="Seller" class="w-6 h-6 rounded-full grayscale hover:grayscale-0 transition-all cursor-pointer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_32uwZGgIKz38vA-U9VjeWQBr3h6e_AZofmQYu6FDieUl2mL6F9V3ezbAqnsTiwbyMSt1KdyT0IQvq6ht9ha3bQGeNUW5Tsmy-cAlarxSNajrfzntr2t4p23tNPenRyYa6LhXulF655YVGqXNjwRyvdNOKvXnfJvJ76zZwufsd67ly01ZQmMx3GPneJUvzw76-lXXXl-SFkXJGDNxsiyWiSXJ8158vifOaPf5ATOYpaGeOguT4A0O9k6kvEosrcVwmcQmAU-EIS66"/>
+<div class="flex-1">
+<p class="text-[10px] font-label text-on-surface-variant uppercase">Listed by</p>
+<p class="text-xs text-on-surface font-medium">ScrapMerchant_X</p>
+</div>
+<div class="text-right">
+<p class="text-[10px] font-label text-on-surface-variant uppercase">Time Left</p>
+<p class="text-xs text-on-surface-variant font-medium">01d 05h</p>
+</div>
+</div>
+<div class="flex items-center justify-between mt-2">
+<div class="flex flex-col">
+<span class="text-[10px] font-label text-on-surface-variant uppercase tracking-tighter">Per Unit</span>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-lg" style="font-variation-settings: 'FILL' 1;">monetization_on</span>
+<span class="text-xl font-headline font-bold text-on-surface">120</span>
+</div>
+</div>
+<button class="px-6 py-3 border border-outline text-on-surface hover:bg-surface-container-highest font-label text-xs tracking-widest uppercase rounded-lg active:scale-95 transition-all">Buy Now</button>
+</div>
+</div>
+<!-- Repeat Item Cards for Density -->
+<!-- Item Card 4 (Rare) -->
+<div class="group relative bg-surface-container rounded-xl border border-primary/20 p-5 flex flex-col gap-4 hover:border-primary transition-all">
+<div class="flex justify-between items-start">
+<div class="w-16 h-16 bg-surface-container-high rounded-lg flex items-center justify-center relative overflow-hidden group-hover:shadow-[0_0_15px_rgba(143,245,255,0.2)] transition-all">
+<div class="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent"></div>
+<span class="material-symbols-outlined text-4xl text-primary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div class="text-right">
+<span class="px-2 py-0.5 bg-primary/10 text-primary font-label text-[10px] tracking-widest uppercase border border-primary/20 rounded">Rare</span>
+<div class="mt-2 flex items-center justify-end gap-1">
+<span class="text-on-surface-variant text-[10px] uppercase font-label">Qty:</span>
+<span class="text-on-surface text-xs font-bold">5</span>
+</div>
+</div>
+</div>
+<div>
+<h4 class="text-lg font-headline font-bold text-on-surface leading-tight">Glimmer Spore</h4>
+<p class="text-xs text-on-surface-variant mt-1 line-clamp-1">Essential for high-tier alchemy.</p>
+</div>
+<div class="flex items-center gap-3 py-3 border-y border-outline-variant/10">
+<img alt="Seller" class="w-6 h-6 rounded-full grayscale hover:grayscale-0 transition-all cursor-pointer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCm6vEdLJ8u0DTvfC51QqoZDcuy496cyOaV6B72FuVFVjRagGfORkQaUQq7dwhS833acAzFGb_sa3PZ-N4WXczTp_obNaDTqfp8hSX7XB5fgM3PfPAhmf0olZKs_kmcC8hpKW9TqQaOvP6oz8qf8VZufSTYJZ6YkjoN8ZA3TrehRMFMPyEoIh2AVDXZN4WlpneXM4XXwJZOlHGJ0gMNgJJFDnf88jF4Lg95a9kQKLEHPriYb7Yn_SmIBoE-0uyQdH4RtBpXpYWa84jn"/>
+<div class="flex-1"><p class="text-[10px] font-label text-on-surface-variant uppercase">Listed by</p><p class="text-xs text-on-surface font-medium">AlchemistPrime</p></div>
+</div>
+<div class="flex items-center justify-between mt-2">
+<div class="flex flex-col">
+<span class="text-[10px] font-label text-on-surface-variant uppercase tracking-tighter">Fixed Price</span>
+<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-primary text-lg" style="font-variation-settings: 'FILL' 1;">monetization_on</span><span class="text-xl font-headline font-bold text-on-surface">3,200</span></div>
+</div>
+<button class="px-6 py-3 bg-primary text-on-primary font-label text-xs tracking-widest uppercase font-bold rounded-lg hover:shadow-[0_0_15px_rgba(143,245,255,0.4)] active:scale-95 transition-all">Buy Now</button>
+</div>
+</div>
+<!-- Item Card 5 (Epic) -->
+<div class="group relative p-[1px] rounded-xl overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-secondary/30 via-transparent to-secondary/10 opacity-30"></div>
+<div class="relative bg-surface-container rounded-[11px] p-5 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div class="w-16 h-16 bg-surface-container-high rounded-lg flex items-center justify-center relative overflow-hidden group-hover:shadow-[0_0_20px_rgba(172,137,255,0.3)] transition-all">
+<span class="material-symbols-outlined text-4xl text-secondary" style="font-variation-settings: 'FILL' 1;">shield</span>
+</div>
+<div class="text-right">
+<span class="px-2 py-0.5 bg-secondary/10 text-secondary font-label text-[10px] tracking-widest uppercase border border-secondary/20 rounded">Epic</span>
+<div class="mt-2 flex items-center justify-end gap-1"><span class="text-on-surface-variant text-[10px] uppercase font-label">Qty:</span><span class="text-on-surface text-xs font-bold">1</span></div>
+</div>
+</div>
+<div>
+<h4 class="text-lg font-headline font-bold text-on-surface leading-tight">Aegis Nanoguard</h4>
+<p class="text-xs text-on-surface-variant mt-1 line-clamp-1">Reactive armor that adapts to damage.</p>
+</div>
+<div class="flex items-center gap-3 py-3 border-y border-outline-variant/10">
+<img alt="Seller" class="w-6 h-6 rounded-full grayscale hover:grayscale-0 transition-all cursor-pointer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2VtRYzxbxSGo9eTT1iyZAXDlHi9kKgpuXnKPe0DloqF5dtPR0DKJ3qz5hGoCLPaDklrLm76tolFBuBfPm1dnCAUdjJKpa7foNNkUN6XXwBy1vE-GFNOVN8f2NedW-vl1V63cWJtxJSW1ZwxbGzfNz72KvfArZHyAQyiIAuZfZq1AbnYJUkpUdnWln-aONAvW3hfBwn0dEnWsCVzG9tNJcOuNRjmAmug0aGpBoE6V2uohVNqUx9rzDiZAxourG6heSScXfgY3rXrZt"/>
+<div class="flex-1"><p class="text-[10px] font-label text-on-surface-variant uppercase">Listed by</p><p class="text-xs text-on-surface font-medium">TankMain_01</p></div>
+</div>
+<div class="flex items-center justify-between mt-2">
+<div class="flex flex-col">
+<span class="text-[10px] font-label text-on-surface-variant uppercase tracking-tighter">Fixed Price</span>
+<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-primary text-lg" style="font-variation-settings: 'FILL' 1;">monetization_on</span><span class="text-xl font-headline font-bold text-on-surface">22,000</span></div>
+</div>
+<button class="px-6 py-3 bg-secondary text-on-secondary font-label text-xs tracking-widest uppercase font-bold rounded-lg active:scale-95 transition-all">Buy Now</button>
+</div>
+</div>
+</div>
+<!-- Item Card 6 (Legendary) -->
+<div class="group relative p-[1px] rounded-xl overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-tertiary/40 via-transparent to-tertiary/10 opacity-50"></div>
+<div class="relative bg-surface-container rounded-[11px] p-5 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div class="w-16 h-16 bg-surface-container-high rounded-lg flex items-center justify-center relative overflow-hidden group-hover:shadow-[0_0_20px_rgba(255,89,227,0.3)] transition-all">
+<span class="material-symbols-outlined text-4xl text-tertiary" style="font-variation-settings: 'FILL' 1;">hardware</span>
+</div>
+<div class="text-right">
+<span class="px-2 py-0.5 bg-tertiary/10 text-tertiary font-label text-[10px] tracking-widest uppercase border border-tertiary/20 rounded">Legendary</span>
+<div class="mt-2 flex items-center justify-end gap-1"><span class="text-on-surface-variant text-[10px] uppercase font-label">Qty:</span><span class="text-on-surface text-xs font-bold">1</span></div>
+</div>
+</div>
+<div>
+<h4 class="text-lg font-headline font-bold text-on-surface leading-tight">Singularity Engine</h4>
+<p class="text-xs text-on-surface-variant mt-1 line-clamp-1">Infinite thrust for intergalactic travel.</p>
+</div>
+<div class="flex items-center gap-3 py-3 border-y border-outline-variant/10">
+<img alt="Seller" class="w-6 h-6 rounded-full grayscale hover:grayscale-0 transition-all cursor-pointer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIt3BtWxNodFnAIkencliQ7CMox6jhyW-Ob7twV5JioRzRTa8h2gh8SzngPn4MTKLgnTuu4Q_7kk8fhA1dgLva_81_R9CTKfdkbXF56XxJuKAjyoTE3b9hkIr_F-jpk_R9kcYw2rsxqrPv7S8bHv-4peEgrtmdlyFYVZ_E9HX8qbZDpW7YgJ4Tdtvs_CsvZUVgH0bRVgVDYVCfdp5skrHYvrSNvheIGxy5F_ty1fmI_kK01PAx38q_QaCMYb_LJNDNPgo9un1OS6Il"/>
+<div class="flex-1"><p class="text-[10px] font-label text-on-surface-variant uppercase">Listed by</p><p class="text-xs text-on-surface font-medium">Overlord_Z</p></div>
+</div>
+<div class="flex items-center justify-between mt-2">
+<div class="flex flex-col">
+<span class="text-[10px] font-label text-on-surface-variant uppercase tracking-tighter">Current Bid</span>
+<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-tertiary text-lg" style="font-variation-settings: 'FILL' 1;">diamond</span><span class="text-xl font-headline font-bold text-on-surface">5,000</span></div>
+</div>
+<button class="px-6 py-3 bg-tertiary text-on-tertiary font-label text-xs tracking-widest uppercase font-bold rounded-lg active:scale-95 transition-all">Place Bid</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Quick Access / Recents (Bento Element) -->
+<aside class="w-80 hidden 2xl:flex flex-col gap-6">
+<div class="bg-surface-container-high rounded-xl p-6 border border-outline-variant/10 space-y-4">
+<h3 class="font-label text-xs uppercase tracking-widest text-primary font-bold">Market Stats</h3>
+<div class="grid grid-cols-2 gap-4">
+<div class="p-3 bg-surface-container rounded-lg">
+<p class="text-[10px] font-label text-on-surface-variant uppercase">Vol (24h)</p>
+<p class="text-sm font-bold text-on-surface">2.4M Gold</p>
+</div>
+<div class="p-3 bg-surface-container rounded-lg">
+<p class="text-[10px] font-label text-on-surface-variant uppercase">Gas Fee</p>
+<p class="text-sm font-bold text-primary">0.01%</p>
+</div>
+</div>
+<div class="space-y-3 pt-2">
+<h4 class="text-[10px] font-label text-on-surface-variant uppercase tracking-widest">Trending Searches</h4>
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-surface-container-low text-[10px] text-on-surface-variant border border-outline-variant/30 rounded cursor-pointer hover:border-primary">Relic Cores</span>
+<span class="px-2 py-1 bg-surface-container-low text-[10px] text-on-surface-variant border border-outline-variant/30 rounded cursor-pointer hover:border-primary">Titanium</span>
+<span class="px-2 py-1 bg-surface-container-low text-[10px] text-on-surface-variant border border-outline-variant/30 rounded cursor-pointer hover:border-primary">Nano-fibers</span>
+</div>
+</div>
+</div>
+<div class="flex-1 bg-surface-container-low rounded-xl p-6 border border-outline-variant/10 flex flex-col">
+<h3 class="font-label text-xs uppercase tracking-widest text-on-surface font-bold mb-4">Live Activity</h3>
+<div class="flex-1 space-y-4 overflow-y-auto no-scrollbar">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<div class="text-xs">
+<span class="text-primary font-medium">User_012</span> bought <span class="text-on-surface font-bold">5x Flux Cells</span>
+<p class="text-[10px] text-on-surface-variant mt-0.5">2 mins ago</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-tertiary"></div>
+<div class="text-xs">
+<span class="text-tertiary font-medium">Legend_X</span> listed <span class="text-on-surface font-bold">Void Core</span>
+<p class="text-[10px] text-on-surface-variant mt-0.5">5 mins ago</p>
+</div>
+</div>
+<div class="flex items-center gap-3 opacity-70">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<div class="text-xs">
+<span class="text-secondary font-medium">RogueOne</span> bought <span class="text-on-surface font-bold">Shadow Blade</span>
+<p class="text-[10px] text-on-surface-variant mt-0.5">12 mins ago</p>
+</div>
+</div>
+<div class="flex items-center gap-3 opacity-50">
+<div class="w-2 h-2 rounded-full bg-on-surface-variant"></div>
+<div class="text-xs">
+<span class="text-on-surface-variant font-medium">Merchant99</span> sold <span class="text-on-surface font-bold">200x Iron</span>
+<p class="text-[10px] text-on-surface-variant mt-0.5">15 mins ago</p>
+</div>
+</div>
+</div>
+<button class="mt-4 w-full py-2 text-[10px] font-label uppercase tracking-widest text-on-surface-variant hover:text-on-surface transition-colors border-t border-outline-variant/10 pt-4">View All Activity</button>
+</div>
+</aside>
+</div>
+</main>
+<!-- Contextual FAB (Only for main Marketplace) -->
+<button class="fixed bottom-8 right-8 w-14 h-14 rounded-full bg-secondary text-on-secondary shadow-[0_8px_32px_rgba(172,137,255,0.4)] hover:shadow-[0_8px_32px_rgba(172,137,255,0.6)] flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300 z-50">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">add</span>
+</button>
+</body></html>

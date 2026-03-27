@@ -1,0 +1,1575 @@
+# Webes játék koncepció és részletes játékleírás
+
+## Alapkoncepció
+
+A játék egy **modern, böngészőből játszható, hosszú távra tervezett stratégiai-szerepjáték**, ahol a játékosok nyersanyagokat gyűjtenek, feldolgoznak, tárgyakat és felszereléseket készítenek, fejlesztik a karakterüket, csapatokba szerveződnek, harcolnak egymással, és egy folyamatosan élő gazdaságban vesznek részt.
+
+A látványvilág egy **stílusos, animált, modern webes felület**, sötét témával, látványos UI-elemekkel, sima átmenetekkel, lebegő háttérelemekkel, dinamikus panelekből felépülő felülettel. A játék nem klasszikus akciójáték, hanem egy **mély, számokra, döntésekre, fejlődésre és menedzsmentre épülő rendszer**, ahol az okos tervezés, időzítés és gazdasági előny legalább olyan fontos, mint a harc.
+
+## A játék fantasy-sci-fi stílusú világa
+
+A játék világa egy szétesett, nyersanyagokban gazdag kontinens vagy bolygó, ahol különböző régiókban más és más alapanyagok, veszélyek és lehetőségek találhatók. A játékosok kezdetben túlélők vagy telepesek, akik kis bázissal indulnak, majd fokozatosan építik fel a saját erejüket, felszerelésüket, csapatukat és befolyásukat.
+
+Ez azért jó, mert könnyen bővíthető új zónákkal, eseményekkel, nyersanyagokkal, craft receptekkel, klánfunkciókkal és szezonális tartalmakkal.
+
+---
+
+# 1. A játékos fő célja
+
+A játékos célja nem egyetlen végpont elérése, hanem egy **folyamatos fejlődési ciklus**:
+
+* nyersanyaggyűjtés
+* feldolgozás
+* craftolás
+* karakter- és bázisfejlesztés
+* harci erő növelése
+* ritka zónák megnyitása
+* gazdasági előny szerzése
+* klánban való együttműködés
+* PvE és PvP dominancia
+* szezonális és hosszú távú célok teljesítése
+
+A játék ezért hónapokig, de akár évekig is élvezhető marad.
+
+---
+
+# 2. Fő játékrendszerek
+
+## 2.1. Erőforrásrendszer
+
+A játék egyik legfontosabb alapja a több szintű resource-rendszer.
+
+### Nyersanyag kategóriák
+
+#### Alap nyersanyagok
+
+Ezek már a játék elején gyűjthetők:
+
+* fa
+* kő
+* vasérc
+* víz
+* élelem
+* textil
+* réz
+
+#### Középhaladó nyersanyagok
+
+Ezek fejlettebb szinttől nyílnak meg:
+
+* szén
+* ezüstérc
+* finomított fém
+* vegyi anyag
+* kristály
+* bőr
+* gyógynövény
+
+#### Haladó nyersanyagok
+
+Ezek ritkább zónákhoz, magasabb szinthez vagy külön eseményekhez kötöttek:
+
+* titán
+* obszidián
+* energiamag
+* ősi relikvia por
+* éterkristály
+* sötétfém
+* ritka ötvözet
+
+#### Esemény vagy klán nyersanyagok
+
+* zászlóanyag
+* ostromalkatrész
+* relikviatöredék
+* klánérmék
+* szezonális tokenek
+
+### Erőforrások szerepe
+
+Minden nyersanyag több célra használható:
+
+* épületfejlesztés
+* tárgykészítés
+* fegyverkészítés
+* páncélkészítés
+* bájitalok
+* javítás
+* kutatás
+* kereskedelem
+* klánprojekt
+
+### Fontos tervezési elv
+
+Nem minden resource legyen mindig hasznos ugyanarra. Az a jó, ha:
+
+* van, ami korai játékban fontos
+* van, ami később is kell nagy mennyiségben
+* van, ami ritka, de kis mennyiségben szükséges
+* van, ami feldolgozva lesz igazán értékes
+
+Így nem hal meg a gazdaság pár hét után.
+
+---
+
+## 2.2. Gyűjtési rendszer
+
+A nyersanyaggyűjtés többféleképpen történhet:
+
+### Aktív gyűjtés
+
+A játékos manuálisan indíthat gyűjtő akciókat:
+
+* favágás
+* bányászat
+* vadászat
+* gyűjtögetés
+* vízkinyerés
+* roncsfeltárás
+
+### Passzív termelés
+
+Fejlesztések után automatikusan is termelődhetnek nyersanyagok:
+
+* fűrésztelep
+* bánya
+* finomító
+* üvegház
+* labor
+* kristálykitermelő
+
+### Expedíciók
+
+A játékos egységeket vagy karaktert küld ki meghatározott időre:
+
+* rövid expedíció: 5–15 perc
+* közepes: 30–90 perc
+* hosszú: 2–8 óra
+* veszélyes: ritka loot + sérülési esély
+
+### Gyűjtési egyensúly
+
+A gyűjtés sebessége úgy legyen belőve, hogy:
+
+* az elején gyors sikerélmény legyen
+* később tervezni kelljen
+* a ritkább nyersanyagokért valóban dolgozni kelljen
+* de ne legyen frusztrálóan lassú
+
+Javasolt alapelv:
+
+* korai játék: 2–10 perces ciklusok
+* középjáték: 20–60 perces ciklusok
+* végjáték: több forrás összehangolása, nem pusztán hosszabb várakozás
+
+---
+
+## 2.3. Feldolgozás és gyártás
+
+A nyersanyagok nagy része ne legyen közvetlenül felhasználható csúcs tárgyakhoz. Legyen több lépcsős rendszer:
+
+### Példa lánc
+
+* vasérc -> vasrúd
+* fa -> deszka
+* gyógynövény + víz -> alapkivonat
+* kristály + finomított fém -> energiacella
+* bőr + textil -> megerősített szövet
+
+### Feldolgozó épületek
+
+* kohó
+* műhely
+* vegylabor
+* fegyverkovács
+* páncélműhely
+* relikvia műhely
+
+### Gyártási filozófia
+
+A craftolás legyen:
+
+* átlátható
+* fokozatosan mélyülő
+* kombinatorikus, de nem kaotikus
+
+A játékos ne vesszen el 1000 receptben rögtön. A receptek rétegenként nyíljanak meg.
+
+---
+
+# 3. Tárgyak és felszerelések
+
+## 3.1. Tárgytípusok
+
+* alapanyag
+* feldolgozott anyag
+* fogyóeszköz
+* küldetéstárgy
+* fejlesztési komponens
+* fegyver
+* páncél
+* kiegészítő
+* relikvia
+* klántárgy
+* event item
+
+## 3.2. Felszerelési slotok
+
+* főfegyver
+* mellékfegyver
+* sisak
+* páncél
+* kesztyű
+* csizma
+* nyaklánc / relikvia
+* gyűrű / modul
+* speciális eszköz
+
+## 3.3. Ritkasági szintek
+
+* gyakori
+* nem gyakori
+* ritka
+* epikus
+* legendás
+* mitikus
+
+## 3.4. Tárgy tulajdonságok
+
+* támadás
+* védelem
+* kritikus esély
+* kitérés
+* teherbírás
+* gyűjtési sebesség
+* craft bónusz
+* energia regeneráció
+* klánharc bónusz
+* zónaspecifikus ellenállás
+
+Ez fontos, mert így a játékos nem csak a nyers erőre, hanem specializációra is tud építeni.
+
+---
+
+# 4. Karakterfejlődés
+
+## 4.1. Szintek
+
+A karakter fejlődése szintekre épül. A szintlépés adhat:
+
+* új zónákat
+* új recepteket
+* új funkciókat
+* több energiát
+* több inventory helyet
+* új épületeket
+* új harci módokat
+
+## 4.2. Fejlődési tengelyek
+
+A karakter ne csak egyetlen szintből álljon. Legyen több külön fejlődési út:
+
+### Karakterszint
+
+Az általános fejlődés.
+
+### Szakmaszint
+
+Külön fejlődhet:
+
+* bányászat
+* favágás
+* kovácsolás
+* alkímia
+* mérnökség
+* vadászat
+* kereskedelem
+
+### Harci rang
+
+PvE és PvP aktivitás alapján.
+
+### Klánhűség / frakcióhírnév
+
+Különleges tartalmakhoz.
+
+---
+
+## 4.3. Javasolt szintfeloldási logika
+
+### 1–5. szint
+
+* alap resource gyűjtés
+* alap craft
+* kezdő fegyverek
+* profil, felszerelés, inventory
+* privát üzenetküldés
+
+### 6–10. szint
+
+* közepes receptek
+* marketplace / kereskedelem
+* első dungeon / expedíció
+* guild kereső
+* alap PvP kihívás
+
+### 11–20. szint
+
+* klánalapítás / csatlakozás
+* klán chat
+* csoportos harc
+* ritkább nyersanyagok
+* tárgyfejlesztés
+* enchant rendszer alapjai
+
+### 21–35. szint
+
+* területi harcok
+* speciális események
+* klánprojekt építések
+* ritka craft állomások
+* elit expedíciók
+
+### 36–50. szint
+
+* legendás tárgyak
+* összetett build-rendszer
+* relikviák
+* nagy klánháborúk
+* szezonális rangsor magasabb ligái
+
+### 50+ endgame rangok
+
+* prestige rendszer
+* kozmetikai és státusz jutalmak
+* speciális régiók
+* világ események
+* egyedi craft ágak
+
+---
+
+# 5. Harcrendszer
+
+A harc legyen számokra épülő, de izgalmas és taktikus.
+
+## 5.1. Harci alapstatisztikák
+
+* életerő
+* támadás
+* védelem
+* sebesség
+* kritikus esély
+* kritikus sebzés
+* pontosság
+* kitérés
+* páncéltörés
+* elemi vagy speciális sebzés
+
+## 5.2. Harci típusok
+
+### PvE
+
+* szörnyek
+* elit ellenfelek
+* bossok
+* dungeonök
+* napi kihívások
+* eseményellenfelek
+
+### PvP
+
+* 1v1 párbaj
+* rablótámadás
+* rangsorolt harc
+* bossért folyó verseny
+* területfoglalás
+
+### Csoportos harc
+
+* klán vs klán
+* rajtaütés
+* ostrom
+* világfőellenfél
+
+## 5.3. Harci mechanikai elv
+
+A harc lehet körökre osztott, automata-szimulációs rendszer, ahol a játékos:
+
+* felszerelést választ
+* fogyóeszközöket készít be
+* támadási formát választ
+* célpontot választ
+* időzítést és kockázatot kezel
+
+Ez webes játékhoz jól illik, mert nem igényel valós idejű reflexet, mégis lehet izgalmas.
+
+## 5.4. Kockázat-jutalom
+
+A PvP-ben ne lehessen túl könnyen teljesen tönkretenni másokat. Inkább:
+
+* erőforrás veszteség plafonnal
+* védelmi pajzs mechanika
+* napi limitált komoly támadás
+* bosszú rendszer
+* keresett státusz
+
+Így a játék nem lesz toxikus.
+
+---
+
+# 6. Klanok / csapatok
+
+## 6.1. Klán funkciók
+
+* klánalapítás
+* tagfelvétel
+* rangok és jogok
+* klán chat
+* klán üzenőfal
+* klán belső tárhely
+* klán projektek
+* klán küldetések
+* klán bossok
+* klán háborúk
+
+## 6.2. Klánon belüli rangok
+
+* vezető
+* helyettes
+* tiszt
+* veterán
+* tag
+* újonc
+
+Jogosultságok például:
+
+* meghívás
+* kidobás
+* tárhelykezelés
+* háború indítása
+* klánfejlesztések kezelése
+* belső üzenetek küldése
+
+## 6.3. Klánfejlődés
+
+A klán is fejlődjön külön szintekkel:
+
+* több taghely
+* közös buffok
+* gyorsabb gyűjtés
+* klán craft bónusz
+* saját embléma
+* klán projektek
+* ostrom funkciók
+
+---
+
+# 7. Kommunikációs rendszerek
+
+## 7.1. User chat
+
+* privát chat két játékos között
+* online státusz
+* némítás / tiltás
+* egyszerű gyorsüzenetek
+
+## 7.2. Csoport chat
+
+* klán chat
+* csapatszoba
+* event chat
+* ideiglenes raid szoba
+
+## 7.3. Belső levélrendszer
+
+* játékosok közti hosszabb üzenetek
+* tárgy / ajándék küldés lehetősége
+* admin üzenetek
+* rendszerértesítések
+* háborús jelentések
+* csata riportok
+
+A belső levélrendszer fontos, mert hosszú távú webes játékoknál nagyon jól működik.
+
+---
+
+# 8. Gazdaság és balansz
+
+Ez lesz az egyik legfontosabb része.
+
+## 8.1. Alapelvek
+
+A gazdaság akkor lesz jó, ha:
+
+* nincs túl gyors infláció
+* az alapanyagoknak később is van értéke
+* nem egyetlen nyersanyag dominál mindent
+* a craftolt tárgyak értéke érzékelhető
+* a ritka loot nem esik túl sűrűn
+* a napi aktivitás jutalmazott, de nem kötelező extrém módon
+
+## 8.2. Pénznemek
+
+### Alappénz
+
+* arany / kredit
+* küldetésekből, eladásból, harcból
+
+### Ritka prémium valuta
+
+* kristály / gem
+* eventből, achievementből, opcionális monetizációból
+
+### Klán valuta
+
+* klánjelvény / hadipont
+
+### Szezon valuta
+
+* szezon token
+
+## 8.3. Craft költség logika
+
+A craft költség ne csak nyersanyag legyen. Kellhet:
+
+* alapanyag
+* feldolgozott anyag
+* idő
+* energia
+* recept
+* állomásszint
+
+### Példa
+
+**Vas kard**
+
+* 20 fa
+* 15 vasérc
+* 5 bőr
+* 200 arany
+* 2 perc craft idő
+
+**Megerősített harci páncél**
+
+* 40 vasrúd
+* 18 bőr
+* 12 textil
+* 4 kristálymag
+* 3000 arany
+* 15 perc craft idő
+
+## 8.4. Javasolt gazdasági ritmus
+
+### Korai játék
+
+* gyors haladás
+* olcsó craft
+* sok kis sikerélmény
+
+### Középjáték
+
+* specializáció
+* piaci szerep
+* feldolgozó láncok
+* nagyobb döntések
+
+### Végjáték
+
+* ritka komponensek
+* klánszintű együttműködés
+* magas szintű craft
+* több hetes projektek
+
+---
+
+# 9. Küldetések és célrendszerek
+
+A játékosnak mindig legyen célja.
+
+## 9.1. Küldetéstípusok
+
+* fő küldetések
+* napi küldetések
+* heti küldetések
+* szakmai küldetések
+* klán küldetések
+* esemény küldetések
+* fejlődési mérföldkövek
+
+## 9.2. Achievement rendszer
+
+* összegyűjtött nyersanyagok
+* legyártott tárgyak
+* PvP győzelmek
+* klánsegítség
+* boss legyőzés
+* zónafelfedezés
+* ritka loot megszerzés
+
+## 9.3. Hosszú távú célok
+
+* 100%-os receptkönyv
+* legendás szett
+* top liga elérése
+* klánvezetői eredmények
+* különleges relikviák
+* prestige ciklusok
+
+---
+
+# 10. Zónák és világfelépítés
+
+## 10.1. Zónatípusok
+
+* kezdő síkság
+* sötét erdő
+* vashegység
+* mocsárvidék
+* kristálymező
+* sivatagi romok
+* vulkáni zóna
+* ősi város
+* klánháborús régiók
+
+## 10.2. Minden zóna adjon valami újat
+
+* új nyersanyag
+* új ellenfél
+* új craft recept
+* új veszély
+* új esemény
+
+Így a haladás kézzelfogható marad.
+
+---
+
+# 11. Profil és user funkciók
+
+A játékos profilja legyen több mint adatlap.
+
+## Profiloldal elemei
+
+* avatár
+* név / címek
+* szint
+* klán
+* felszerelés
+* statisztikák
+* harci előzmények
+* achievementek
+* gyűjtési specializációk
+* utolsó aktivitás
+* bemutatkozás
+
+## User műveletek
+
+* regisztráció
+* bejelentkezés
+* e-mail megerősítés
+* jelszócsere
+* elfelejtett jelszó
+* profil szerkesztés
+* avatár csere
+* értesítési beállítások
+* chat beállítások
+* adatvédelmi opciók
+
+---
+
+# 12. Admin felület
+
+Az admin rész különösen fontos. Ez ne csak adatbázis-nézet legyen, hanem valódi vezérlőközpont.
+
+## 12.1. Admin dashboard
+
+* napi aktív játékosok
+* regisztrációk
+* resource termelés trendek
+* infláció figyelés
+* legerősebb tárgyak
+* PvP statisztikák
+* chat aktivitás
+* klán aktivitás
+* hibajelzések
+* gyanús felhasználói minták
+
+## 12.2. Felhasználókezelés
+
+* user keresés
+* profil megtekintés
+* átmeneti tiltás
+* végleges tiltás
+* chat mute
+* inventory megtekintés
+* belső üzenet küldés
+* erőforrás módosítás
+* teszt jutalom adása
+
+## 12.3. Játékegyensúly modul
+
+* nyersanyag drop rate állítás
+* craft költségek
+* craft idők
+* PvP jutalmak
+* zóna szintek
+* ellenfél statok
+* küldetés jutalmak
+* event buffok/debuffok
+
+## 12.4. Tartalomkezelés
+
+* új itemek
+* receptek
+* zónák
+* ellenfelek
+* questek
+* achievementek
+* banner üzenetek
+* szezonális események
+
+## 12.5. Moderációs modul
+
+* chat riportok
+* levélrendszer riportok
+* csalásgyanús események
+* tranzakció logok
+* erőforrás anomáliák
+
+## 12.6. Teszt és beavatkozó eszközök
+
+* sandbox user mód
+* csata szimuláció
+* economy preview
+* item spawn teszt
+* napi reset teszt
+* event aktiválás teszt
+
+Ez az admin felület később rengeteg időt spórol meg.
+
+---
+
+# 13. Játékmeneti loop
+
+## Korai játék loop
+
+1. regisztráció
+2. kezdő küldetések
+3. alap resource gyűjtés
+4. első craft
+5. első felszerelés
+6. első PvE harc
+7. profil fejlődés
+
+## Középjáték loop
+
+1. több zóna megnyitása
+2. szakmák fejlődése
+3. piac és kereskedelem
+4. klánhoz csatlakozás
+5. csoportos célok
+6. ritka tárgyak gyártása
+7. taktikai PvP
+
+## Végjáték loop
+
+1. klánstratégia
+2. területkontroll
+3. legendás craft
+4. világ események
+5. szezonális rangsor
+6. prestige vagy specializáció mélyítés
+
+---
+
+# 14. Hogyan legyen izgalmas hosszú távon
+
+## Kell bele:
+
+* új zónák
+* új resource ágak
+* új craft tier-ek
+* szezonális eventek
+* limitált idejű bossok
+* egyedi kozmetikai jutalmak
+* klán szezonok
+* világváltozások
+* időszakos egyensúlyfrissítés
+
+## Amit kerülni kell:
+
+* túl sok várakozás tartalom nélkül
+* pay-to-win érzés
+* túl bonyolult kezdet
+* értelmetlen tárgyspam
+* túl büntető PvP
+
+---
+
+# 15. Monetizáció, ha később kell
+
+Úgy érdemes felépíteni, hogy ne legyen kötelező, de lehessen belőle bevétel:
+
+* kozmetikai skinek
+* profil díszítések
+* extra avatárkeretek
+* kényelmi funkciók
+* battle pass jellegű szezon bónusz
+* név- vagy kinézetváltás
+
+Kerülendő:
+
+* brutális stat előny pénzért
+* kizárólag pénzes craft alapanyag
+
+---
+
+# 16. Javasolt induló MVP tartalom
+
+A kezdő verzióhoz nem kell minden egyszerre, de az alapnak már erősnek kell lennie.
+
+## Első induló csomag
+
+* regisztráció / login / profil
+* 6–8 alap resource
+* 3 feldolgozó ág
+* 30–50 craft recept
+* 4–5 zóna
+* 15–20 ellenfél
+* alap PvP
+* privát chat
+* klán alapfunkciók
+* belső levélrendszer
+* napi/heti küldetések
+* admin panel alap vezérléssel
+
+## Későbbi bővítések
+
+* marketplace
+* klánháború
+* világ boss
+* prestige rendszer
+* relikvia rendszer
+* szezonok
+* eventek
+
+---
+
+# 17. Konkrét balansz-javaslat induláshoz
+
+## Kezdő resource mennyiségek
+
+A játékos induljon például:
+
+* 100 fa
+* 100 kő
+* 50 vasérc
+* 50 élelem
+* 20 textil
+* 200 arany
+
+## Korai gyűjtési sebességek
+
+* fa: 8–12 / perc
+* kő: 6–10 / perc
+* vasérc: 4–7 / perc
+* víz: 10–15 / perc
+* gyógynövény: 3–5 / perc
+
+## Korai craft költségek
+
+* alap szerszám: 20–40 resource
+* első fegyver: 50–80 resource
+* első páncél darab: 40–70 resource
+
+## Középjáték költségek
+
+* ritkább tárgy: 300–700 összesített alapanyag
+* fejlett felszerelés: 1000+ összesített érték
+* klánprojekt: több játékos együttműködése kelljen hozzá
+
+A kulcs: ne darabszám alapján legyen minden belőve, hanem **értékpont rendszer** alapján.
+
+---
+
+# 18. Javasolt értékpont rendszer
+
+Minden resource kap egy belső értéket.
+
+Például:
+
+* fa = 1
+* kő = 1
+* vasérc = 2
+* víz = 1
+* textil = 2
+* bőr = 3
+* kristály = 6
+* titán = 10
+* energiamag = 15
+
+Így sokkal könnyebb balanszolni a craft recepteket és jutalmakat.
+
+---
+
+# 19. Összefoglaló irány
+
+Ez a játék akkor lehet igazán jó, ha egyszerre ad:
+
+* gyors kezdő sikerélményt
+* mély középtávú fejlődést
+* hosszú távú stratégiai célokat
+* erős közösségi élményt
+* élő gazdaságot
+* rendszeresen bővíthető tartalmat
+
+A legjobb irány egy olyan webes játék, ami:
+
+* könnyen érthető az elején
+* egyre mélyebb lesz később
+* nem fullad unalomba pár hét után
+* klánokkal, crafttal, resource-rendszerrel és PvP-vel hónapokig fenntartható
+
+---
+
+# 20. UI / UX koncepció – modern, animált, stílusos webes játékfelület
+
+## UI alapirány
+
+A játék felülete legyen **modern, prémium hatású, sötét témás, animált dashboard-jellegű webes élmény**, ami egyszerre adja:
+
+* egy komoly online játék érzetét
+* egy átlátható menedzsment rendszer kényelmét
+* egy látványos, mai weboldal vizuális szintjét
+
+A cél nem egy túlzsúfolt MMO-felület, hanem egy **letisztult, rétegesen felépített, elegáns kezelőfelület**, amelyben a játékos először csak az alapokat látja, majd ahogy fejlődik, úgy nyílnak meg az összetettebb panelek.
+
+## Vizuális stílus
+
+### Hangulat
+
+* sötét háttér
+* mély kékes/fekete/lilás tónusok
+* neon vagy energiaszínű kiemelések
+* üveg-hatású panelek
+* finom fénylések
+* mozgó háttérelemek
+* lebegő részecskék vagy energia-vonalak
+* finom parallax hatások
+
+### Kiemelő színek
+
+Javasolt fő irány:
+
+* háttér: sötét grafit / mélykék
+* primer akciószín: elektromos kék vagy türkiz
+* másodlagos kiemelés: lila vagy borostyán
+* siker: zöld
+* veszély: piros
+* ritka vagy legendás elemek: arany / ibolya
+
+### Tipográfia
+
+* modern, jól olvasható sans-serif betűtípus
+* nagy, karakteres címek
+* közepes méretű, tiszta szövegek
+* számok és statisztikák kiemelt, jól skálázott megjelenítéssel
+
+### Panelek és kártyák
+
+* lekerekített sarkok
+* finom árnyékok
+* áttetsző vagy féláttetsző felületek
+* hover effektek
+* enyhe nagyítás vagy fénylés interakciókor
+
+---
+
+# 21. A publikus weboldal felépítése
+
+Ez az a rész, amit a látogatók és a még nem regisztrált felhasználók látnak.
+
+## 21.1. Főoldal
+
+A landing page legyen erős, filmszerű és animált.
+
+### Hero szekció
+
+Tartalom:
+
+* nagy cím
+* rövid, ütős leírás
+* látványos háttéranimáció
+* regisztráció gomb
+* belépés gomb
+* esetleg egy rövid gameplay előnézet vagy mockup
+
+### Javasolt fő szlogen irányok
+
+* Építs. Gyűjts. Harcolj. Uralkodj.
+* Egy világ, ahol minden erőforrás számít.
+* A stratégia többet ér, mint a puszta erő.
+
+### Hero mögötti vizuális világ
+
+* animált térkép
+* lebegő resource ikonok
+* energiavonalak
+* háttérben páncél/fegyver/item sziluettek
+* finom mozgás az egérre
+
+## 21.2. Főoldali blokkok
+
+### Blokk 1 – Mi a játék lényege
+
+* resource gyűjtés
+* craftolás
+* fejlődés
+* PvP
+* klánok
+* gazdaság
+
+### Blokk 2 – Játékmenet lépésekben
+
+* gyűjts alapanyagokat
+* készíts felszerelést
+* fejleszd a karakteredet
+* csatlakozz klánhoz
+* harcolj és urald a világot
+
+### Blokk 3 – Játékmechanikai előnyök
+
+* mély fejlődési rendszer
+* hosszú távú játékmenet
+* közösségi rendszerek
+* szezonok és események
+
+### Blokk 4 – Felszerelések / itemek / ritkaságok
+
+Látványos, lapozható kártyákkal.
+
+### Blokk 5 – Klanok és harcok
+
+Kiemelt vizuális modul.
+
+### Blokk 6 – Regisztráció CTA
+
+Nagy, látványos belépési pont.
+
+---
+
+# 22. Regisztráció és belépési élmény
+
+## Regisztráció
+
+A regisztráció legyen gyors, modern és bizalmat keltő.
+
+### Képernyő elemei
+
+* e-mail
+* felhasználónév
+* jelszó
+* jelszó megerősítés
+* szabályzat elfogadás
+* nagy, erős CTA gomb
+* rövid előnylista a form mellett
+
+### UI ötlet
+
+Kétoszlopos elrendezés:
+
+* bal oldalon marketing / illusztráció
+* jobb oldalon regisztrációs panel
+
+## Belépés
+
+* egyszerű login panel
+* elfelejtett jelszó
+* emlékezz rám
+* biztonsági infók
+
+## Onboarding
+
+Az első belépés után ne dobjuk rá az egész játékot a userre.
+
+Legyen:
+
+* rövid, 3–5 lépéses bemutatás
+* első küldetés
+* első gyűjtés
+* első craft
+* első harc
+
+---
+
+# 23. A belső játékfelület fő struktúrája
+
+A játék fő felülete legyen egy **centralizált irányítópult**, ami modulárisan bővíthető.
+
+## 23.1. Fő layout
+
+### Felső sáv
+
+Tartalmazza:
+
+* profil ikon / avatar
+* játékosnév
+* szint
+* energiaszint
+* prémium valuta
+* alappénz
+* értesítések
+* gyors levelek/chat ikon
+* beállítások
+
+### Bal oldali navigáció
+
+Ikonos menü:
+
+* főhadiszállás / dashboard
+* gyűjtés
+* craft / műhely
+* inventory
+* felszerelés
+* térkép / zónák
+* küldetések
+* PvP
+* klán
+* piac
+* levelek
+* ranglista
+* események
+
+### Középső tartalomterület
+
+Mindig ez a fő aktív nézet.
+
+### Jobb oldali segédpanel
+
+Dinamikus információk:
+
+* futó gyűjtések
+* aktív craftok
+* napi célok
+* klán események
+* gyors chat
+
+Ez azért jó, mert mindig van szem előtt információ, de nem lesz kaotikus.
+
+---
+
+# 24. Dashboard – a játékos fő kezdőoldala
+
+Ez legyen a játék szíve.
+
+## Dashboard modulok
+
+### Modul 1 – Karakter állapot
+
+* szint
+* HP / energia
+* harci erő
+* szakmaszintek
+* aktuális build röviden
+
+### Modul 2 – Resource áttekintő
+
+* fő resource-ok mennyisége
+* termelési sebesség
+* hiányzó alapanyag figyelmeztetések
+
+### Modul 3 – Aktív folyamatok
+
+* gyűjtés fut-e
+* craft folyamatok
+* expedíciók visszaszámlálása
+
+### Modul 4 – Napi küldetések
+
+* gyors állapot
+* claim gomb
+
+### Modul 5 – Harci összefoglaló
+
+* utolsó csata eredménye
+* támadások ellened
+* bosszú lehetőség
+
+### Modul 6 – Klán aktivitás
+
+* tagok online
+* új üzenetek
+* klánküldetések
+
+### Modul 7 – Események / hírek
+
+* aktuális eventek
+* admin üzenetek
+* világállapot változások
+
+---
+
+# 25. Resource és gyűjtési képernyő
+
+Ez a felület legyen látványos és informatív.
+
+## Fő elemek
+
+* választható zónák
+* resource típusok
+* kockázati szintek
+* várható hozam
+* szükséges energia
+* gyűjtési idő
+
+## Nézet ötlet
+
+Kártyás zónaválasztó rendszer:
+
+* minden zónának saját art / illusztráció
+* resource ikonok
+* ajánlott szint
+* veszélyességi címke
+
+### Gyűjtés közbeni UI
+
+* animált progress bar
+* esemény esély kijelzés
+* gyorsítás vagy megszakítás opció
+* loot előnézeti logika
+
+---
+
+# 26. Crafting / műhely képernyő
+
+A crafting képernyő a játék egyik legfontosabb része, ezért nagyon jól kezelhetőnek kell lennie.
+
+## Bal oldalon
+
+* kategóriák
+
+  * fegyverek
+  * páncélok
+  * eszközök
+  * fogyóeszközök
+  * speciális tárgyak
+
+## Középen
+
+* kiválasztott item nagy kártyája
+* recept
+* szükséges alapanyagok
+* hiányzó elemek piros jelölése
+* craft idő
+* craft mennyiség választó
+
+## Jobb oldalon
+
+* inventory releváns része
+* alternatív receptek
+* fejlesztési ágak
+* kapcsolódó tárgyak
+
+## Extra UX ötlet
+
+* lehessen szűrni: craftolható / nem craftolható / ritkaság / kategória
+* legyen kedvencek lista
+* legyen gyors craft sor
+
+---
+
+# 27. Inventory és felszerelés képernyő
+
+## Inventory
+
+* grid alapú megjelenítés
+* ritkasági színek
+* kategória filterek
+* kereső
+* mennyiség kijelzés
+* stackelhető itemek
+
+## Item megnyitáskor
+
+* nagy ikon
+* leírás
+* statok
+* összehasonlítás az éppen viselt tárggyal
+* eladás / szétszedés / fejlesztés / küldés
+
+## Felszerelés képernyő
+
+* karakter sziluett vagy full body illusztráció
+* slotok köré rendezve a gear
+* jobb oldalon összesített stat panel
+* build mentés lehetőség későbbre
+
+---
+
+# 28. Harci felület
+
+A harci UI legyen látványos, de ne legyen túlzsúfolt.
+
+## PvE és PvP csataablak
+
+### Felső rész
+
+* ellenfél neve
+* szintje
+* veszélyesség
+* erőviszony előnézet
+
+### Közép rész
+
+* két oldal egymással szemben
+* karakter és ellenfél panel
+* sebzés animációk
+* kritikus találat effekt
+* státuszhatások ikonokkal
+
+### Alsó rész
+
+* használható képességek / tárgyak
+* harc indítása
+* visszavonulás
+* auto mód
+
+### Csata után
+
+* loot összefoglaló
+* XP
+* sebzés riport
+* nyersanyag nyereség / veszteség
+* rangsorpont változás
+
+---
+
+# 29. Klán felület
+
+A klánoldal legyen egy mini közösségi központ.
+
+## Fő fülek
+
+* áttekintés
+* tagok
+* klán chat
+* klán fejlesztések
+* klán tárhely
+* háborúk
+* klán küldetések
+* diplomácia
+
+## Áttekintés oldal
+
+* klán embléma
+* leírás
+* szint
+* össz erő
+* online tagok
+* legutóbbi aktivitások
+
+## Taglista
+
+* rangok
+* aktivitás
+* hozzájárulás
+* harci erő
+* szerepkörök
+
+## Klán fejlesztés
+
+* közös projektek kártyákban
+* resource bedobás
+* fejlődési progress bar
+
+---
+
+# 30. Chat és belső levélrendszer UI
+
+## Chat
+
+* lebegő, összecsukható jobb alsó panel
+* több beszélgetés tabokban
+* emoji és gyors reakciók
+* klán / privát / csapat csatornák
+
+## Belső levelek
+
+* külön oldalon inbox nézet
+* levél lista bal oldalon
+* levéltartalom jobb oldalon
+* tárgycsatolás lehetősége
+* rendszerüzenetek kiemelve
+
+---
+
+# 31. Ranglista, események és szezonok képernyő
+
+## Ranglista
+
+* játékosok
+* klánok
+* gyűjtők
+* craft mesterek
+* PvP rangsor
+* szezonális toplisták
+
+## Eseményoldal
+
+* aktív események kártyákban
+* időzítések
+* jutalmak
+* részvételi állapot
+
+## Szezon képernyő
+
+* aktuális szezon állása
+* mérföldkövek
+* jutalomút
+* elit jutalmak
+
+---
+
+# 32. Mobil és reszponzív működés
+
+Bár a játék desktopon lesz a legerősebb, mobilon is működnie kell.
+
+## Mobil elv
+
+* egyszerűsített dashboard
+* alsó navigációs sáv
+* összecsukható panelek
+* kiemelt gyors funkciók
+* rövidebb táblázatok
+* swipe-olható kártyák
+
+A játék komplexebb részei desktopon kényelmesebbek, de mobilon is lehessen:
+
+* gyűjtést indítani
+* craftot elindítani
+* levelet olvasni
+* chatelni
+* napi jutalmat átvenni
+* alap harcot intézni
+
+---
+
+# 33. Mikroanimációk és effektek
+
+A modern hatást nagyban az apró animációk adják.
+
+## Javasolt animációk
+
+* hover fénylés a gombokon
+* panel beúszás
+* szám animációk resource növekedésnél
+* loot felvillanás
+* progress bar töltési animáció
+* ritka item drop külön effekt
+* menüváltásnál lágy átmenetek
+* háttérben finom mozgás
+
+## Amit kerülni kell
+
+* túl sok villogás
+* túl hosszú animációk
+* zavaró mozgások
+* mobilon lassító effektek
+
+---
+
+# 34. Admin felület UI koncepció
+
+Az admin ne csak hasznos legyen, hanem gyors és logikus is.
+
+## Admin layout
+
+* bal oldali erős, hierarchikus menü
+* felső gyors kereső
+* dashboard kártyák
+* nagy táblázatos nézetek
+* gyors edit drawer-ek
+* részletes modálok
+* log panelek
+
+## Admin fő menük
+
+* dashboard
+* felhasználók
+* itemek
+* receptek
+* resource-ok
+* zónák
+* harcrendszer
+* küldetések
+* klánok
+* üzenetek / moderáció
+* eventek
+* gazdaság / balansz
+* riportok
+* rendszerlogok
+
+## Erős admin UX elemek
+
+* minden listában szűrők
+* bulk műveletek
+* audit trail
+* előnézet funkciók
+* sandbox tesztelés
+* visszaállítási lehetőségek
+
+---
+
+# 35. Dizájnrendszer alapok
+
+Később a fejlesztéshez nagy segítség lesz, ha ez eleve rendszerben gondolkodik.
+
+## Alap komponensek
+
+* gombok
+* inputok
+* selectek
+* kártyák
+* modalok
+* tabok
+* stat blokkok
+* progress barok
+* tooltippek
+* notification elemek
+* inventory item kártyák
+* resource badge-ek
+* ritkasági jelölések
+
+## Állapotok
+
+* default
+* hover
+* active
+* disabled
+* success
+* warning
+* danger
+* premium
+
+---
+
+# 36. A legfontosabb UI elv
+
+A felület ne csak szép legyen, hanem mindig válaszoljon 3 kérdésre:
+
+1. Hol vagyok most?
+2. Mi a legfontosabb következő teendőm?
+3. Milyen állapotban van a karakterem és a gazdaságom?
+
+Ha ezt minden képernyő jól támogatja, a játék komplex marad, de nem lesz zavaros.
+
+---
+
+# 37. Következő logikus lépések
+
+Innen most 3 nagyon jó irány van:
+
+1. **kidolgozni a játék világát és frakcióit**
+2. **megcsinálni a teljes resource + craft listát konkrét számokkal**
+3. **megtervezni a konkrét oldalszerkezetet és képernyőlistát a weboldalhoz és a játékhoz**
+
+A legerősebb következő lépés szerintem az lenne, hogy most készítsünk egy **teljes oldaltérképet és képernyőstruktúrát**, utána pedig a **resource/craft balanszot**, mert abból már nagyon jól látszani fog az egész játék.

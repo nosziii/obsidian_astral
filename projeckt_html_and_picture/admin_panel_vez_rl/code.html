@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OBSIDIAN ASTRAL | COMMANDER ADMIN</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "inverse-primary": "#006a71",
+              "tertiary": "#ff59e3",
+              "inverse-surface": "#fcf8f9",
+              "surface-container-high": "#201f21",
+              "error-container": "#9f0519",
+              "on-primary-fixed": "#003f43",
+              "error": "#ff716c",
+              "secondary-dim": "#874cff",
+              "surface-container-lowest": "#000000",
+              "secondary-fixed": "#dac9ff",
+              "on-primary-fixed-variant": "#005e64",
+              "inverse-on-surface": "#565556",
+              "surface-container": "#1a191b",
+              "on-primary-container": "#005359",
+              "on-error": "#490006",
+              "outline": "#767576",
+              "tertiary-fixed-dim": "#ff68e3",
+              "on-tertiary": "#42003a",
+              "on-surface": "#ffffff",
+              "tertiary-container": "#ff05e5",
+              "surface-dim": "#0e0e0f",
+              "secondary-fixed-dim": "#ceb9ff",
+              "on-tertiary-container": "#1b0017",
+              "primary-fixed-dim": "#00deec",
+              "secondary-container": "#7000ff",
+              "on-surface-variant": "#adaaab",
+              "on-tertiary-fixed": "#33002d",
+              "surface-variant": "#262627",
+              "on-tertiary-fixed-variant": "#6d0061",
+              "on-secondary-fixed-variant": "#6300e2",
+              "on-secondary-fixed": "#41009a",
+              "primary-fixed": "#00eefc",
+              "secondary": "#ac89ff",
+              "on-secondary-container": "#f8f1ff",
+              "on-secondary": "#290067",
+              "on-error-container": "#ffa8a3",
+              "on-background": "#ffffff",
+              "surface": "#0e0e0f",
+              "surface-tint": "#8ff5ff",
+              "outline-variant": "#484849",
+              "on-primary": "#005d63",
+              "tertiary-dim": "#ff59e3",
+              "primary": "#8ff5ff",
+              "surface-container-highest": "#262627",
+              "surface-bright": "#2c2c2d",
+              "primary-dim": "#00deec",
+              "error-dim": "#d7383b",
+              "background": "#0e0e0f",
+              "primary-container": "#00eefc",
+              "surface-container-low": "#131314",
+              "tertiary-fixed": "#ff85e4"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Manrope"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(26, 25, 27, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0e0e0f;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #484849;
+        }
+        .scanner-line {
+            height: 2px;
+            background: linear-gradient(to right, transparent, #8ff5ff, transparent);
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body overflow-hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-8 h-16 bg-[#0e0e0f]/90 backdrop-blur-md border-b border-[#201f21] shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+<div class="flex items-center gap-4">
+<span class="text-2xl font-bold tracking-tighter text-[#8ff5ff] drop-shadow-[0_0_8px_rgba(143,245,255,0.5)] font-headline">OBSIDIAN ASTRAL</span>
+<div class="h-4 w-[1px] bg-outline-variant hidden md:block"></div>
+<span class="font-['Space_Grotesk'] uppercase tracking-[0.1em] text-[0.6875rem] text-[#8ff5ff] hidden md:block">System Node: Admin-01</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4">
+<button class="text-[#adaaab] hover:text-[#8ff5ff] transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="monetization_on">monetization_on</span>
+</button>
+<button class="text-[#adaaab] hover:text-[#8ff5ff] transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="diamond">diamond</span>
+</button>
+<button class="text-[#adaaab] hover:text-[#8ff5ff] transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+</button>
+</div>
+<div class="w-8 h-8 rounded-full border border-primary/30 overflow-hidden bg-surface-container-highest">
+<img alt="Player Avatar" class="w-full h-full object-cover" data-alt="Close up portrait of a serious cybernetic commander with glowing blue ocular implants and matte black armor" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJ7B21Dbp3UaZ145b1kF1oK5eLGyvYm5sY-F8reZjE0FAt7p4q8P6ilY1g2vGyre1WEU2N6Sh8cslYtseKrFizGCPx1CzrbASUK86rCDd1ZhoclAVkBos_KRcmBFfLfmISpiM9YFHRM8bmWKfqGMQq5oKnZSaD4aede3TzfEgcPN4LexjeTz7wzqnstUngoX0Oz6k3uj7oeBFc0D1humNny74Ven8UObbhN3u5PiXLT2ihFF-PPHjm5YYVmz84k3PZv0UeHzlQWHSL"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-4rem)] flex flex-col py-6 w-64 bg-[#0e0e0f]/40 backdrop-blur-2xl border-r border-[#201f21] shadow-[10px_0_30px_rgba(0,0,0,0.8)] z-40">
+<div class="px-6 mb-8">
+<h2 class="font-['Space_Grotesk'] text-sm tracking-widest uppercase text-[#ac89ff]">COMMANDER</h2>
+<p class="text-[0.6rem] text-on-surface-variant tracking-[0.2em] uppercase">Level 42 Elite</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-4 px-6 py-3 text-[#adaaab] opacity-70 hover:bg-[#201f21] hover:opacity-100 transition-all duration-300 hover:translate-x-1 duration-200 font-['Space_Grotesk'] text-sm tracking-widest uppercase" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-[#adaaab] opacity-70 hover:bg-[#201f21] hover:opacity-100 transition-all duration-300 hover:translate-x-1 duration-200 font-['Space_Grotesk'] text-sm tracking-widest uppercase" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span>Resources</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-[#adaaab] opacity-70 hover:bg-[#201f21] hover:opacity-100 transition-all duration-300 hover:translate-x-1 duration-200 font-['Space_Grotesk'] text-sm tracking-widest uppercase" href="#">
+<span class="material-symbols-outlined" data-icon="handyman">handyman</span>
+<span>Crafting</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-[#adaaab] opacity-70 hover:bg-[#201f21] hover:opacity-100 transition-all duration-300 hover:translate-x-1 duration-200 font-['Space_Grotesk'] text-sm tracking-widest uppercase" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span>Character</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-[#adaaab] opacity-70 hover:bg-[#201f21] hover:opacity-100 transition-all duration-300 hover:translate-x-1 duration-200 font-['Space_Grotesk'] text-sm tracking-widest uppercase" href="#">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span>Map</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-[#adaaab] opacity-70 hover:bg-[#201f21] hover:opacity-100 transition-all duration-300 hover:translate-x-1 duration-200 font-['Space_Grotesk'] text-sm tracking-widest uppercase" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span>Clan</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-[#adaaab] opacity-70 hover:bg-[#201f21] hover:opacity-100 transition-all duration-300 hover:translate-x-1 duration-200 font-['Space_Grotesk'] text-sm tracking-widest uppercase" href="#">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span>Marketplace</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 bg-[#8ff5ff]/10 text-[#8ff5ff] border-r-2 border-[#8ff5ff] shadow-[inset_-10px_0_20px_rgba(143,245,255,0.05)] font-['Space_Grotesk'] text-sm tracking-widest uppercase active" href="#">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+<span>Admin</span>
+</a>
+</nav>
+<div class="mt-auto px-6 py-4 border-t border-[#201f21]">
+<div class="flex items-center gap-2 text-error text-[0.65rem] font-bold tracking-widest">
+<span class="w-2 h-2 bg-error animate-pulse rounded-full"></span>
+                SYSTEM SECURE
+            </div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="ml-64 mt-16 p-8 h-[calc(100vh-4rem)] overflow-y-auto custom-scrollbar bg-[url('https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&amp;fit=crop&amp;q=80&amp;w=2000')] bg-fixed bg-cover opacity-100" data-alt="Subtle dark geometric pattern with faint glowing blue circuit lines on a deep black background">
+<div class="max-w-7xl mx-auto space-y-8">
+<!-- Header Section -->
+<div class="flex justify-between items-end">
+<div>
+<h1 class="text-4xl font-headline font-bold text-on-surface tracking-tighter">ADMIN CONTROL CENTER</h1>
+<p class="text-on-surface-variant font-label tracking-widest text-xs mt-1">OPERATIONAL OVERVIEW • SERVER TIMESTAMP: 14:02:59 UTC</p>
+</div>
+<div class="flex gap-4">
+<button class="px-6 py-2 bg-error text-on-error font-label text-xs font-bold tracking-tighter rounded-lg hover:bg-error-container transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="warning">warning</span>
+                        GLOBAL EMERGENCY STOP
+                    </button>
+<button class="px-6 py-2 bg-primary text-on-primary font-label text-xs font-bold tracking-tighter rounded-lg hover:bg-primary-dim transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="refresh">refresh</span>
+                        PUSH UPDATES
+                    </button>
+</div>
+</div>
+<!-- Analytics Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<!-- Large Chart Card -->
+<div class="md:col-span-2 glass-panel p-6 rounded-xl border border-outline-variant/30 relative overflow-hidden group">
+<div class="scanner-line opacity-20 group-hover:opacity-100 transition-opacity"></div>
+<div class="flex justify-between mb-8">
+<div>
+<p class="text-[0.65rem] font-label text-[#8ff5ff] tracking-widest uppercase">Player Engagement</p>
+<h3 class="text-2xl font-headline font-bold">DAU FLUX</h3>
+</div>
+<span class="text-primary text-xs font-bold">+12.4%</span>
+</div>
+<div class="h-32 flex items-end gap-1 px-2">
+<!-- Simplified Bar Chart Visual -->
+<div class="flex-1 bg-primary/20 hover:bg-primary transition-all rounded-t-sm h-[40%]"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary transition-all rounded-t-sm h-[60%]"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary transition-all rounded-t-sm h-[45%]"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary transition-all rounded-t-sm h-[70%]"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary transition-all rounded-t-sm h-[90%]"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary transition-all rounded-t-sm h-[85%]"></div>
+<div class="flex-1 bg-primary/10 hover:bg-primary transition-all rounded-t-sm h-[100%]"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary transition-all rounded-t-sm h-[75%]"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary transition-all rounded-t-sm h-[60%]"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary transition-all rounded-t-sm h-[50%]"></div>
+</div>
+</div>
+<!-- Secondary Stats -->
+<div class="glass-panel p-6 rounded-xl border border-outline-variant/30 flex flex-col justify-between">
+<div>
+<p class="text-[0.65rem] font-label text-secondary tracking-widest uppercase">Revenue 24H</p>
+<h3 class="text-3xl font-headline font-bold text-on-surface">$142.9K</h3>
+</div>
+<div class="mt-4 pt-4 border-t border-outline-variant/20">
+<div class="flex justify-between text-[0.65rem] mb-2">
+<span class="text-on-surface-variant">TARGET</span>
+<span class="text-on-surface">95%</span>
+</div>
+<div class="h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-secondary to-tertiary w-[95%]"></div>
+</div>
+</div>
+</div>
+<div class="glass-panel p-6 rounded-xl border border-outline-variant/30 flex flex-col justify-between">
+<div>
+<p class="text-[0.65rem] font-label text-error tracking-widest uppercase">Resource Inflation</p>
+<h3 class="text-3xl font-headline font-bold text-on-surface">0.82%</h3>
+</div>
+<div class="flex items-center gap-2 mt-2">
+<span class="material-symbols-outlined text-error text-sm" data-icon="trending_down">trending_down</span>
+<span class="text-error text-xs font-bold">STABLE</span>
+</div>
+<div class="mt-4 flex gap-1 items-center justify-center">
+<span class="w-1 h-3 bg-error/20 rounded-full"></span>
+<span class="w-1 h-5 bg-error/40 rounded-full"></span>
+<span class="w-1 h-2 bg-error/20 rounded-full"></span>
+<span class="w-1 h-4 bg-error/60 rounded-full"></span>
+<span class="w-1 h-6 bg-error rounded-full"></span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- User Management Section -->
+<div class="lg:col-span-2 glass-panel rounded-xl border border-outline-variant/30 flex flex-col h-[600px]">
+<div class="p-6 border-b border-outline-variant/20 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h2 class="text-xl font-headline font-bold">USER MANAGEMENT</h2>
+<p class="text-xs text-on-surface-variant font-label tracking-widest uppercase">Active Player Registry</p>
+</div>
+<div class="relative w-full md:w-72">
+<input class="w-full bg-surface-container-lowest border-0 border-b border-outline-variant text-sm font-label px-10 py-2 focus:ring-0 focus:border-primary transition-all" placeholder="Search by PID, Alias, or IP..." type="text"/>
+<span class="material-symbols-outlined absolute left-3 top-2 text-on-surface-variant" data-icon="search">search</span>
+</div>
+</div>
+<div class="flex-1 overflow-auto custom-scrollbar">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50 sticky top-0 z-10">
+<th class="px-6 py-4 text-[0.65rem] font-label tracking-[0.2em] text-on-surface-variant uppercase">Player identity</th>
+<th class="px-6 py-4 text-[0.65rem] font-label tracking-[0.2em] text-on-surface-variant uppercase">Region</th>
+<th class="px-6 py-4 text-[0.65rem] font-label tracking-[0.2em] text-on-surface-variant uppercase">Status</th>
+<th class="px-6 py-4 text-[0.65rem] font-label tracking-[0.2em] text-on-surface-variant uppercase text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr class="hover:bg-surface-container/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-variant flex items-center justify-center text-primary font-bold">X7</div>
+<div>
+<p class="text-sm font-bold">XENON_07</p>
+<p class="text-[0.65rem] text-on-surface-variant font-mono">PID: 8829-AZ</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-xs font-label">US-EAST</span>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-primary/10 text-primary text-[0.6rem] font-bold rounded border border-primary/20">ACTIVE</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors" title="Edit Inventory"><span class="material-symbols-outlined text-lg" data-icon="edit_square">edit_square</span></button>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors" title="Ban Player"><span class="material-symbols-outlined text-lg" data-icon="block">block</span></button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-variant flex items-center justify-center text-secondary font-bold">VD</div>
+<div>
+<p class="text-sm font-bold">VOID_DRIFTER</p>
+<p class="text-[0.65rem] text-on-surface-variant font-mono">PID: 1042-XP</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-xs font-label">EU-WEST</span>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-tertiary/10 text-tertiary text-[0.6rem] font-bold rounded border border-tertiary/20">MUTED</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg" data-icon="edit_square">edit_square</span></button>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined text-lg" data-icon="block">block</span></button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-variant flex items-center justify-center text-error font-bold">NR</div>
+<div>
+<p class="text-sm font-bold">NEO_REBEL</p>
+<p class="text-[0.65rem] text-on-surface-variant font-mono">PID: 9911-BC</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-xs font-label">ASIA-SGP</span>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-error/10 text-error text-[0.6rem] font-bold rounded border border-error/20">BANNED</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg" data-icon="edit_square">edit_square</span></button>
+<button class="p-2 text-primary hover:text-primary-dim transition-colors" title="Unban"><span class="material-symbols-outlined text-lg" data-icon="settings_backup_restore">settings_backup_restore</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Game Balance Section -->
+<div class="glass-panel p-6 rounded-xl border border-outline-variant/30 flex flex-col space-y-8">
+<div>
+<h2 class="text-xl font-headline font-bold text-secondary">GAME BALANCE</h2>
+<p class="text-xs text-on-surface-variant font-label tracking-widest uppercase">Live Parameter Tuning</p>
+</div>
+<!-- Drop Rates -->
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<span class="text-[0.65rem] font-label text-on-surface-variant tracking-widest uppercase">Drop Rates (Legendary)</span>
+<span class="text-sm font-headline font-bold text-primary">0.45%</span>
+</div>
+<input class="w-full h-1 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-primary" type="range"/>
+</div>
+<!-- Craft Times -->
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<span class="text-[0.65rem] font-label text-on-surface-variant tracking-widest uppercase">Craft Time Multiplier</span>
+<span class="text-sm font-headline font-bold text-secondary">1.2x</span>
+</div>
+<input class="w-full h-1 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-secondary" type="range"/>
+</div>
+<!-- Event Buffs Toggle -->
+<div class="space-y-4 pt-4 border-t border-outline-variant/20">
+<span class="text-[0.65rem] font-label text-on-surface-variant tracking-widest uppercase">Active Global Buffs</span>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-3 rounded-lg bg-surface-container">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary" data-icon="military_tech">military_tech</span>
+<span class="text-xs font-bold">Double XP Weekend</span>
+</div>
+<div class="w-10 h-5 bg-tertiary/20 rounded-full relative p-1 cursor-pointer">
+<div class="w-3 h-3 bg-tertiary rounded-full absolute right-1"></div>
+</div>
+</div>
+<div class="flex items-center justify-between p-3 rounded-lg bg-surface-container">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#adaaab]" data-icon="savings">savings</span>
+<span class="text-xs font-bold">Loot Overflow</span>
+</div>
+<div class="w-10 h-5 bg-surface-container-highest rounded-full relative p-1 cursor-pointer">
+<div class="w-3 h-3 bg-outline rounded-full absolute left-1"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-4 border-t border-outline-variant/20">
+<label class="text-[0.65rem] font-label text-on-surface-variant tracking-widest uppercase block mb-2">Manual Hotpatch Version</label>
+<div class="flex gap-2">
+<input class="flex-1 bg-surface-container text-xs font-mono p-2 border-b border-outline-variant focus:border-secondary transition-colors outline-none" type="text" value="v1.4.2-STABLE"/>
+<button class="bg-secondary p-2 rounded text-on-secondary hover:bg-secondary-dim transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="send">send</span>
+</button>
+</div>
+</div>
+<div class="bg-error/5 border border-error/20 p-4 rounded-lg">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-error" data-icon="report">report</span>
+<div>
+<p class="text-[0.65rem] font-bold text-error uppercase tracking-widest">Warning</p>
+<p class="text-[0.6rem] text-error/80 leading-relaxed">Changes to Game Balance are pushed live instantly to all 12 world shards.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Server Status Bar -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 pb-8">
+<div class="glass-panel p-4 rounded-lg flex items-center gap-3 border border-primary/20">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_#8ff5ff]"></div>
+<div class="text-[0.6rem] font-label tracking-widest">
+<p class="text-on-surface-variant">US-EAST</p>
+<p class="text-on-surface">ONLINE • 14ms</p>
+</div>
+</div>
+<div class="glass-panel p-4 rounded-lg flex items-center gap-3 border border-primary/20">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_#8ff5ff]"></div>
+<div class="text-[0.6rem] font-label tracking-widest">
+<p class="text-on-surface-variant">EU-WEST</p>
+<p class="text-on-surface">ONLINE • 42ms</p>
+</div>
+</div>
+<div class="glass-panel p-4 rounded-lg flex items-center gap-3 border border-tertiary/20">
+<div class="w-2 h-2 rounded-full bg-tertiary animate-pulse shadow-[0_0_8px_#ff59e3]"></div>
+<div class="text-[0.6rem] font-label tracking-widest">
+<p class="text-on-surface-variant">ASIA-SGP</p>
+<p class="text-on-surface">HEAVY LOAD • 112ms</p>
+</div>
+</div>
+<div class="glass-panel p-4 rounded-lg flex items-center gap-3 border border-outline-variant/20 opacity-50">
+<div class="w-2 h-2 rounded-full bg-outline"></div>
+<div class="text-[0.6rem] font-label tracking-widest">
+<p class="text-on-surface-variant">SOUTH-AM</p>
+<p class="text-on-surface">MAINTENANCE</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Contextual FAB (Hidden on Mobile/Subpages as per mandate) -->
+<button class="fixed bottom-8 right-8 w-14 h-14 rounded-full bg-secondary text-on-secondary shadow-[0_0_32px_rgba(172,137,255,0.4)] flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined text-2xl" data-icon="bolt" data-weight="fill" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</button>
+</body></html>

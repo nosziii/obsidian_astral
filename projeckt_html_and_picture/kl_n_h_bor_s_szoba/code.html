@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="hu"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary-fixed": "#41009a",
+              "surface-variant": "#262627",
+              "on-error-container": "#ffa8a3",
+              "on-error": "#490006",
+              "on-primary-fixed-variant": "#005e64",
+              "on-background": "#ffffff",
+              "surface-dim": "#0e0e0f",
+              "surface-container-highest": "#262627",
+              "error-dim": "#d7383b",
+              "error": "#ff716c",
+              "primary-fixed": "#00eefc",
+              "surface": "#0e0e0f",
+              "surface-container-lowest": "#000000",
+              "tertiary-container": "#ff05e5",
+              "primary-container": "#00eefc",
+              "outline-variant": "#484849",
+              "tertiary-dim": "#ff59e3",
+              "on-primary": "#005d63",
+              "inverse-surface": "#fcf8f9",
+              "on-tertiary-fixed": "#33002d",
+              "tertiary": "#ff59e3",
+              "secondary-fixed-dim": "#ceb9ff",
+              "on-secondary": "#290067",
+              "on-surface": "#ffffff",
+              "on-tertiary": "#42003a",
+              "inverse-primary": "#006a71",
+              "inverse-on-surface": "#565556",
+              "on-surface-variant": "#adaaab",
+              "on-tertiary-container": "#1b0017",
+              "surface-tint": "#8ff5ff",
+              "primary-fixed-dim": "#00deec",
+              "primary": "#8ff5ff",
+              "tertiary-fixed-dim": "#ff68e3",
+              "on-secondary-fixed-variant": "#6300e2",
+              "on-primary-fixed": "#003f43",
+              "on-tertiary-fixed-variant": "#6d0061",
+              "surface-bright": "#2c2c2d",
+              "tertiary-fixed": "#ff85e4",
+              "on-primary-container": "#005359",
+              "secondary": "#ac89ff",
+              "on-secondary-container": "#f8f1ff",
+              "surface-container-low": "#131314",
+              "surface-container": "#1a191b",
+              "surface-container-high": "#201f21",
+              "outline": "#767576",
+              "secondary-fixed": "#dac9ff",
+              "background": "#0e0e0f",
+              "secondary-container": "#7000ff",
+              "error-container": "#9f0519",
+              "secondary-dim": "#874cff",
+              "primary-dim": "#00deec"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Manrope"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bg-obsidian-gradient {
+            background: radial-gradient(circle at center, #131314 0%, #0e0e0f 100%);
+        }
+        .hologram-flicker {
+            box-shadow: 0 0 20px rgba(143, 245, 255, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary">
+<!-- TopAppBar -->
+<nav class="fixed top-0 w-full flex justify-between items-center px-6 h-16 bg-[#0e0e0f]/80 backdrop-blur-xl z-50 shadow-[0_0_20px_rgba(143,245,255,0.1)]">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-black text-[#8ff5ff] tracking-tighter font-headline">OBSIDIAN ASTRAL</span>
+<div class="hidden md:flex gap-6 font-['Space_Grotesk'] tracking-tight text-sm">
+<a class="text-[#adaaab] hover:text-white transition-colors" href="#">MAP</a>
+<a class="text-[#8ff5ff] border-b-2 border-[#8ff5ff] pb-1" href="#">CLAN</a>
+<a class="text-[#adaaab] hover:text-white transition-colors" href="#">MARKET</a>
+<a class="text-[#adaaab] hover:text-white transition-colors" href="#">STAREX</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-3 mr-4">
+<button class="hover:bg-[#201f21]/50 p-2 rounded transition-all active:scale-95 text-[#adaaab] hover:text-white">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="hover:bg-[#201f21]/50 p-2 rounded transition-all active:scale-95 text-[#adaaab] hover:text-white">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="hover:bg-[#201f21]/50 p-2 rounded transition-all active:scale-95 text-[#adaaab] hover:text-white">
+<span class="material-symbols-outlined">bolt</span>
+</button>
+</div>
+<button class="flex items-center gap-2 bg-[#201f21]/50 px-4 py-2 rounded-lg border border-outline-variant/30 text-[#8ff5ff] font-headline text-sm font-bold tracking-tight">
+<span class="material-symbols-outlined text-sm">person</span>
+                PROFILE
+            </button>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 border-r border-[#201f21] bg-[#000000]/60 backdrop-blur-2xl flex flex-col py-8 px-4 z-40 hidden md:flex">
+<div class="mb-8 px-2">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container/20 rounded-lg flex items-center justify-center border border-primary/30">
+<span class="material-symbols-outlined text-primary">shield</span>
+</div>
+<div>
+<h3 class="text-white font-headline font-bold text-sm tracking-widest">ARCHON-7</h3>
+<p class="text-[#8ff5ff] text-[10px] font-headline tracking-[0.1em]">LVL 99 LEGENDARY</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 py-3 px-4 rounded text-[#adaaab] hover:text-[#ac89ff] hover:bg-[#131314] transition-all font-headline uppercase tracking-[0.1em] text-[10px]" href="#">
+<span class="material-symbols-outlined">dashboard</span> DASHBOARD
+            </a>
+<a class="flex items-center gap-3 py-3 px-4 rounded text-[#adaaab] hover:text-[#ac89ff] hover:bg-[#131314] transition-all font-headline uppercase tracking-[0.1em] text-[10px]" href="#">
+<span class="material-symbols-outlined">explore</span> WORLD MAP
+            </a>
+<a class="flex items-center gap-3 py-3 px-4 rounded text-[#8ff5ff] font-bold border-l-4 border-[#8ff5ff] bg-gradient-to-r from-[#8ff5ff]/10 to-transparent font-headline uppercase tracking-[0.1em] text-[10px]" href="#">
+<span class="material-symbols-outlined">groups</span> WAR ROOM
+            </a>
+<a class="flex items-center gap-3 py-3 px-4 rounded text-[#adaaab] hover:text-[#ac89ff] hover:bg-[#131314] transition-all font-headline uppercase tracking-[0.1em] text-[10px]" href="#">
+<span class="material-symbols-outlined">shield</span> ARMORY
+            </a>
+<a class="flex items-center gap-3 py-3 px-4 rounded text-[#adaaab] hover:text-[#ac89ff] hover:bg-[#131314] transition-all font-headline uppercase tracking-[0.1em] text-[10px]" href="#">
+<span class="material-symbols-outlined">military_tech</span> QUESTS
+            </a>
+</nav>
+<div class="mt-auto space-y-4">
+<button class="w-full bg-secondary text-on-secondary font-headline font-bold tracking-widest py-3 rounded-md hover:brightness-110 active:scale-[0.98] transition-all text-[10px]">
+                RECRUIT UNIT
+            </button>
+<div class="pt-4 border-t border-[#201f21] flex flex-col gap-1">
+<a class="flex items-center gap-3 py-2 px-4 rounded text-[#adaaab] hover:text-white font-headline text-[10px]" href="#">
+<span class="material-symbols-outlined text-sm">settings</span> SETTINGS
+                </a>
+<a class="flex items-center gap-3 py-2 px-4 rounded text-error-dim hover:text-error font-headline text-[10px]" href="#">
+<span class="material-symbols-outlined text-sm">logout</span> LOGOUT
+                </a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="md:ml-64 pt-20 pb-20 md:pb-8 px-6 min-h-screen bg-obsidian-gradient">
+<div class="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Tactical Map (Hero Section) -->
+<div class="lg:col-span-8 flex flex-col gap-6">
+<div class="relative aspect-video rounded-xl overflow-hidden border border-primary/20 bg-surface-container-low group shadow-2xl">
+<img class="w-full h-full object-cover opacity-60 mix-blend-screen grayscale contrast-125" data-alt="top-down high-tech holographic tactical battle map of a futuristic desert city with neon grid lines and data overlays" data-location="Obsidian Outpost" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAi713iNCwpqTOA-zxO7JyFVm7e2w1zziKPGcDY2dC4KACuePDvNpGqJduEB5kQGUgVgMk-0HQ6SO_R6G1MLSRHny-MdyEp_FjK-Gw_UuKdy7cawbMKr-Hr0sb4L3npcyTqMpiRCVBxUxOHt1MSVW3pb1YxDTNnOR6rnGmxuxkx4BmKPXLbi0gLE-64cg29mVNXCPg6J7wKLyEa7JjXNK6XoB0pc2Fj1n4m1oHvHaCz8Z-cGJE_XLhTdbdCACZBKvUjanAW7Ewvldu"/>
+<!-- Map Overlays -->
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-60"></div>
+<div class="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none">
+<div class="flex justify-between items-start">
+<div class="bg-surface/80 backdrop-blur-md border border-primary/30 p-4 rounded-lg">
+<h1 class="font-headline text-2xl font-black text-white tracking-tighter">CLAN WAR ROOM: EPSILON-9</h1>
+<p class="text-primary text-[10px] font-headline tracking-[0.2em] uppercase">Target: Iron Reach Outpost</p>
+</div>
+<div class="flex gap-2">
+<div class="bg-error-container/20 border border-error/50 px-3 py-1 rounded-full flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>
+<span class="text-error font-headline text-[10px] font-bold">HOSTILE PRESENCE DETECTED</span>
+</div>
+</div>
+</div>
+<!-- Tactical HUD elements -->
+<div class="flex justify-between items-end">
+<div class="flex gap-4">
+<div class="bg-surface-container/60 border border-outline-variant/30 p-3 rounded backdrop-blur-sm">
+<p class="text-[8px] text-on-surface-variant font-headline tracking-widest mb-1">ELEVATION</p>
+<p class="text-white font-headline text-lg font-bold">1,402m</p>
+</div>
+<div class="bg-surface-container/60 border border-outline-variant/30 p-3 rounded backdrop-blur-sm">
+<p class="text-[8px] text-on-surface-variant font-headline tracking-widest mb-1">WIND</p>
+<p class="text-white font-headline text-lg font-bold">12km/h NW</p>
+</div>
+</div>
+<div class="flex flex-col items-end gap-2">
+<button class="pointer-events-auto bg-primary text-on-primary font-headline font-black tracking-[0.2em] px-8 py-4 rounded-lg flex items-center gap-3 shadow-[0_0_30px_rgba(143,245,255,0.3)] hover:scale-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined">swords</span>
+                                    INITIATE SIEGE
+                                </button>
+</div>
+</div>
+</div>
+<!-- Scanning Line Effect (CSS visual) -->
+<div class="absolute inset-0 pointer-events-none opacity-10 bg-[linear-gradient(transparent_0%,rgba(143,245,255,1)_50%,transparent_100%)] bg-[length:100%_4px] animate-[pulse_4s_infinite]"></div>
+</div>
+<!-- Bento Row 1: Strategy & Intelligence -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Strategy Selection -->
+<div class="bg-surface-container rounded-xl p-6 border border-outline-variant/20">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline font-bold text-sm tracking-widest flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">strategy</span>
+                                CURRENT STRATEGY
+                            </h3>
+<span class="text-[10px] text-on-surface-variant font-headline font-bold">ACTIVE: INFILTRATE</span>
+</div>
+<div class="grid grid-cols-3 gap-3">
+<button class="flex flex-col items-center gap-2 p-4 rounded-lg bg-surface-container-high border border-outline-variant/30 hover:border-primary/50 transition-colors group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">rocket_launch</span>
+<span class="font-headline text-[10px] tracking-tight text-on-surface-variant">ATTACK</span>
+</button>
+<button class="flex flex-col items-center gap-2 p-4 rounded-lg bg-surface-container-high border border-outline-variant/30 hover:border-primary/50 transition-colors group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">shield</span>
+<span class="font-headline text-[10px] tracking-tight text-on-surface-variant">DEFEND</span>
+</button>
+<button class="flex flex-col items-center gap-2 p-4 rounded-lg bg-primary/10 border border-primary text-primary">
+<span class="material-symbols-outlined">visibility_off</span>
+<span class="font-headline text-[10px] tracking-tight">INFILTRATE</span>
+</button>
+</div>
+</div>
+<!-- Enemy Intelligence -->
+<div class="bg-surface-container rounded-xl p-6 border border-outline-variant/20 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-tertiary/5 rounded-full blur-3xl -mr-16 -mt-16"></div>
+<h3 class="font-headline font-bold text-sm tracking-widest flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-tertiary text-sm">visibility</span>
+                            ENEMY INTELLIGENCE
+                        </h3>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<span class="text-xs text-on-surface-variant">Clan Strength</span>
+<div class="w-32 h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-tertiary" style="width: 78%"></div>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-xs text-on-surface-variant">Defenses</span>
+<span class="text-xs text-tertiary font-bold">REINFORCED</span>
+</div>
+<div class="p-3 bg-tertiary/5 border border-tertiary/20 rounded text-[11px] text-tertiary-dim leading-relaxed">
+<span class="font-bold">URGENT:</span> Automated turrets active in Sector 4. High energy signatures detected in the central spire.
+                            </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Side Panels: Units & Council -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<!-- Deployed Units -->
+<div class="bg-surface-container rounded-xl p-6 border border-outline-variant/20 flex-1">
+<h3 class="font-headline font-bold text-sm tracking-widest flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-secondary text-sm">groups_3</span>
+                        DEPLOYED UNITS
+                    </h3>
+<div class="space-y-3">
+<div class="flex items-center gap-4 p-3 rounded bg-surface-container-high border-l-2 border-primary">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-sm text-primary">swords</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-center">
+<span class="text-xs font-bold">Storm Stalkers</span>
+<span class="text-[10px] text-primary">READY</span>
+</div>
+<div class="w-full h-1 bg-surface-container-lowest mt-2">
+<div class="h-full bg-primary" style="width: 100%"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4 p-3 rounded bg-surface-container-high border-l-2 border-secondary">
+<div class="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-sm text-secondary">precision_manufacturing</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-center">
+<span class="text-xs font-bold">Breach Walkers</span>
+<span class="text-[10px] text-secondary">74%</span>
+</div>
+<div class="w-full h-1 bg-surface-container-lowest mt-2">
+<div class="h-full bg-secondary" style="width: 74%"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4 p-3 rounded bg-surface-container-high border-l-2 border-outline-variant/30 opacity-60">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-sm text-on-surface-variant">helicopter</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-center">
+<span class="text-xs font-bold">Air Support</span>
+<span class="text-[10px] text-on-surface-variant">DEPLOYING...</span>
+</div>
+<div class="w-full h-1 bg-surface-container-lowest mt-2">
+<div class="h-full bg-outline-variant" style="width: 25%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- War Council Chat -->
+<div class="bg-surface-container rounded-xl border border-outline-variant/20 flex flex-col h-[400px]">
+<div class="p-4 border-b border-outline-variant/20 flex justify-between items-center">
+<h3 class="font-headline font-bold text-sm tracking-widest flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">forum</span>
+                            WAR COUNCIL
+                        </h3>
+<span class="flex items-center gap-1 text-[10px] text-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                            4 ACTIVE
+                        </span>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-4 font-body text-xs">
+<div class="space-y-1">
+<p class="font-headline font-bold text-secondary text-[10px]">COMMANDER_VEX <span class="text-on-surface-variant font-normal ml-2">12:44</span></p>
+<div class="bg-surface-container-high p-2 rounded-lg rounded-tl-none border border-outline-variant/10">
+                                We strike at dawn. All units must be in position by 0400 hours.
+                            </div>
+</div>
+<div class="space-y-1">
+<p class="font-headline font-bold text-primary text-[10px]">OPERATOR_X <span class="text-on-surface-variant font-normal ml-2">12:45</span></p>
+<div class="bg-surface-container-high p-2 rounded-lg rounded-tl-none border border-outline-variant/10">
+                                Sensors indicate they've reinforced the north gate. Strategy shifted to Infiltrate.
+                            </div>
+</div>
+<div class="space-y-1">
+<p class="font-headline font-bold text-secondary text-[10px]">STEALTH_EYE <span class="text-on-surface-variant font-normal ml-2">12:48</span></p>
+<div class="bg-surface-container-high p-2 rounded-lg rounded-tl-none border border-outline-variant/10">
+                                Scouting complete. Energy signature is highest at the core spire.
+                            </div>
+</div>
+</div>
+<div class="p-4 bg-surface-container-low border-t border-outline-variant/20">
+<div class="flex gap-2">
+<input class="flex-1 bg-surface-container-lowest border-0 border-b border-outline-variant/50 focus:border-primary focus:ring-0 text-xs font-headline tracking-wider text-white px-2 py-2 placeholder:text-on-surface-variant/50" placeholder="BROADCAST TO CLAN..." type="text"/>
+<button class="bg-surface-container-highest p-2 rounded hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<footer class="fixed bottom-0 left-0 w-full flex justify-center items-center gap-8 bg-[#131314]/90 backdrop-blur-md border-t border-[#201f21] z-50 h-12 md:hidden">
+<a class="text-[#adaaab] flex items-center gap-2 px-4 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined">public</span>
+<span class="font-['Manrope'] text-xs">GLOBAL</span>
+</a>
+<a class="text-[#8ff5ff] flex items-center gap-2 bg-[#201f21] px-4 py-1 rounded-full" href="#">
+<span class="material-symbols-outlined">security</span>
+<span class="font-['Manrope'] text-xs">CLAN</span>
+</a>
+<a class="text-[#adaaab] flex items-center gap-2 px-4 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined">diversity_3</span>
+<span class="font-['Manrope'] text-xs">PARTY</span>
+</a>
+<a class="text-[#adaaab] flex items-center gap-2 px-4 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-['Manrope'] text-xs">SYSTEM</span>
+</a>
+</footer>
+</body></html>
