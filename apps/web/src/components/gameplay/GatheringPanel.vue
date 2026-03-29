@@ -14,16 +14,20 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <BasePanel title="Gyűjtési műveletek" subtitle="Erőforrás kör">
+  <BasePanel title="Folyamatban lévő műveletek" subtitle="Queue nézet">
     <div class="card-list">
-      <article v-for="item in items" :key="item.key" class="action-card">
+      <article v-for="item in items" :key="item.key" class="action-card progress-card">
+        <div class="progress-icon">⚒</div>
         <div>
-          <h4>{{ item.label }}</h4>
+          <h4 class="card-title">{{ item.label }}</h4>
           <p class="muted">{{ item.description }}</p>
-        </div>
-        <div class="action-meta">
-          <span>{{ item.energyCost }} energia</span>
-          <span>{{ item.rewardXp }} XP</span>
+          <div class="progress-track">
+            <div class="progress-fill" :style="{ width: `${Math.min(96, item.rewardXp * 4)}%` }" />
+          </div>
+          <div class="chip-row">
+            <span class="compact-label">Állapot: aktív kitermelési fázis</span>
+            <span class="compact-label">{{ item.durationSeconds }} mp</span>
+          </div>
         </div>
         <button
           class="primary-button"

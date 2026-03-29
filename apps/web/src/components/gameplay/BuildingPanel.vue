@@ -21,21 +21,35 @@ function stateFor(buildingKey: string) {
 function resourceLabel(resourceKey: string) {
   return props.resources.find((item) => item.key === resourceKey)?.label ?? resourceKey;
 }
+
+function categoryTone(category: BuildingDefinition["category"]) {
+  if (category === "feldolgozas") {
+    return "secondary";
+  }
+
+  if (category === "tamogatas") {
+    return "tertiary";
+  }
+
+  return "";
+}
 </script>
 
 <template>
-  <BasePanel title="Bázisfejlesztések" subtitle="Épületek">
+  <BasePanel title="Bázisfejlesztések" subtitle="Műhely modulok">
     <div class="card-list">
       <article v-for="building in catalog" :key="building.key" class="action-card">
         <div class="tag-row">
-          <p class="eyebrow">{{ building.category }}</p>
-          <span class="chip">Szint {{ stateFor(building.key)?.level ?? 1 }}</span>
+          <span class="tag-pill" :class="categoryTone(building.category)">{{ building.category }}</span>
+          <span class="chip">szint {{ stateFor(building.key)?.level ?? 1 }}</span>
         </div>
-        <h4>{{ building.label }}</h4>
+        <h4 class="card-title">{{ building.label }}</h4>
         <p class="muted">{{ building.description }}</p>
-        <div class="recipe-line">
-          <span>Következő költség:</span>
-          <strong>{{ building.baseCost.map((item) => `${item.amount} ${resourceLabel(item.resourceKey)}`).join(", ") }}</strong>
+        <div class="detail-list">
+          <div class="detail-row">
+            <span class="compact-label">Költség</span>
+            <strong>{{ building.baseCost.map((item) => `${item.amount} ${resourceLabel(item.resourceKey)}`).join(", ") }}</strong>
+          </div>
         </div>
         <button
           class="secondary-button"

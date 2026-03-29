@@ -1,0 +1,107 @@
+.workshop-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(310px, 0.9fr);
+  gap: 24px;
+}
+
+.workshop-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.workshop-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.workshop-tab {
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-dim);
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.workshop-tab.is-active {
+  background: rgba(121, 238, 248, 0.12);
+  color: var(--primary);
+}
+
+.recipe-card {
+  cursor: pointer;
+  transition: border-color 160ms ease, transform 160ms ease;
+}
+
+.recipe-card:hover {
+  transform: translateY(-2px);
+}
+
+.recipe-card-top {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 16px;
+}
+
+.recipe-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 1.35rem;
+}
+
+.recipe-icon.secondary {
+  color: var(--secondary);
+}
+
+.recipe-icon.tertiary {
+  color: var(--tertiary);
+}
+
+.recipe-status {
+  margin-left: auto;
+}
+
+.detail-panel {
+  display: grid;
+  gap: 18px;
+}
+
+.detail-visual {
+  min-height: 180px;
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(121, 238, 248, 0.08), transparent),
+    radial-gradient(circle at center, rgba(167, 132, 255, 0.18), transparent 55%),
+    rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.component-list {
+  display: grid;
+  gap: 10px;
+}
+
+.component-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+@media (max-width: 1280px) {
+  .workshop-layout {
+    grid-template-columns: 1fr;
+  }
+}

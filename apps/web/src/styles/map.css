@@ -1,0 +1,150 @@
+.map-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(300px, 0.78fr);
+  gap: 24px;
+}
+
+.map-stage {
+  position: relative;
+  min-height: 640px;
+  overflow: hidden;
+}
+
+.map-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(121, 238, 248, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(121, 238, 248, 0.08) 1px, transparent 1px);
+  background-size: 30px 30px;
+  opacity: 0.3;
+}
+
+.sector-title {
+  position: absolute;
+  top: 26px;
+  left: 26px;
+  z-index: 1;
+}
+
+.sector-heading {
+  margin: 8px 0 0;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  letter-spacing: -0.05em;
+  color: var(--primary);
+}
+
+.map-stats {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  z-index: 1;
+  display: flex;
+  gap: 12px;
+}
+
+.map-stat {
+  min-width: 118px;
+  padding: 12px 14px;
+  border-left: 1px solid rgba(121, 238, 248, 0.24);
+  background: rgba(11, 12, 15, 0.82);
+}
+
+.map-node {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+  text-align: center;
+}
+
+.node-diamond {
+  width: 84px;
+  height: 84px;
+  display: grid;
+  place-items: center;
+  transform: rotate(45deg);
+  border-radius: 18px;
+  border: 1px solid rgba(121, 238, 248, 0.38);
+  background: rgba(121, 238, 248, 0.14);
+  color: var(--primary);
+  box-shadow: 0 0 28px rgba(121, 238, 248, 0.16);
+}
+
+.node-diamond > span {
+  transform: rotate(-45deg);
+  font-size: 1.65rem;
+}
+
+.node-diamond.secondary {
+  border-color: rgba(167, 132, 255, 0.38);
+  background: rgba(167, 132, 255, 0.12);
+  color: var(--secondary);
+}
+
+.node-diamond.danger {
+  border-color: rgba(255, 107, 120, 0.38);
+  background: rgba(255, 107, 120, 0.12);
+  color: var(--danger);
+}
+
+.map-footer {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 22px;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-end;
+}
+
+.map-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.control-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: rgba(12, 13, 17, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.expedition-sidebar {
+  display: grid;
+  gap: 18px;
+}
+
+.expedition-card {
+  display: grid;
+  gap: 14px;
+}
+
+.log-bullets {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text-muted);
+  display: grid;
+  gap: 10px;
+}
+
+@media (max-width: 1280px) {
+  .map-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .map-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
