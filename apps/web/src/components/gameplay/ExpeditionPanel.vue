@@ -7,6 +7,7 @@ const props = defineProps<{
   catalog: ExpeditionDefinition[];
   activeRuns: ExpeditionSnapshot[];
   pendingAction: string | null;
+  playerLevel: number;
 }>();
 
 const emit = defineEmits<{
@@ -67,13 +68,23 @@ function progressWidth(expedition: ExpeditionDefinition) {
           <span class="compact-label">Energia</span>
           <strong>{{ expedition.energyCost }}</strong>
         </div>
+        <div class="detail-row">
+          <span class="compact-label">Feloldás</span>
+          <strong>{{ expedition.requiredLevel }}. szint</strong>
+        </div>
         <button
           class="primary-button"
           type="button"
-          :disabled="pendingAction === `expedition:${expedition.key}`"
+          :disabled="playerLevel < expedition.requiredLevel || pendingAction === `expedition:${expedition.key}`"
           @click="emit('start', expedition.key)"
         >
-          {{ pendingAction === `expedition:${expedition.key}` ? "Indítás…" : "Expedíció küldése" }}
+          {{
+            playerLevel < expedition.requiredLevel
+              ? `${expedition.requiredLevel}. szint kell`
+              : pendingAction === `expedition:${expedition.key}`
+                ? "Indítás…"
+                : "Expedíció küldése"
+          }}
         </button>
       </article>
 

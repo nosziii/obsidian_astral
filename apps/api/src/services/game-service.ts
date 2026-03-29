@@ -1,55 +1,12 @@
-import type { Prisma } from "@prisma/client";
 import type { RecipeIngredient } from "@obsidian-astral/shared";
 
 import { prisma } from "../db.js";
 import { buildingMap, expeditionMap, gatheringMap, recipeMap } from "../lib/catalog.js";
 import { GameRuleError } from "../lib/errors.js";
 import { applyXp } from "../lib/leveling.js";
+import { changeInventory, scaledRewards } from "./inventory-service.js";
+import type { PlayerState } from "./player-service.js";
 import { ensurePlayer, getGameState } from "./player-service.js";
-
-async function changeInventory(playerId: string, items: RecipeIngredient[], direction: "add" | "remove") {
-  for (const item of items) {
-    const entry = await prisma.inventoryEntry.findUnique({
-      where: {
-        playerId_resourceKey: {
-          playerId,
-          resourceKey: item.resourceKey,
-        },
-      },
-    });
-
-    const currentQuantity = entry?.quantity ?? 0;
-    const nextQuantity = direction === "add" ? currentQuantity + item.amount : currentQuantity - item.amount;
-
-    if (nextQuantity < 0) {
-      throw new GameRuleError(`Nincs elegendő készlet: ${item.resourceKey}`);
-    }
-
-    await prisma.inventoryEntry.upsert({
-      where: {
-        playerId_resourceKey: {
-          playerId,
-          resourceKey: item.resourceKey,
-        },
-      },
-      create: {
-        playerId,
-        resourceKey: item.resourceKey,
-        quantity: nextQuantity,
-      },
-      update: {
-        quantity: nextQuantity,
-      },
-    });
-  }
-}
-
-function scaledRewards(baseRewards: RecipeIngredient[], bonusMultiplier: number): RecipeIngredient[] {
-  return baseRewards.map((reward) => ({
-    ...reward,
-    amount: Math.max(1, Math.round(reward.amount * (1 + bonusMultiplier))),
-  }));
-}
 
 async function applyPlayerProgress(playerId: string, energyDelta: number, gainedXp: number) {
   const player = await prisma.player.findUniqueOrThrow({ where: { id: playerId } });
@@ -82,6 +39,12 @@ function getBuildingBonus(buildingKey: string, resourceKeys: string[], level: nu
   return resourceKeys.reduce((sum, resourceKey) => sum + (definition.productionBonus[resourceKey] ?? 0), 0) * level;
 }
 
+function ensureLevelRequirement(playerLevel: number, requiredLevel: number, label: string) {
+  if (playerLevel < requiredLevel) {
+    throw new GameRuleError(`${label} csak ${requiredLevel}. szinttől érhető el.`);
+  }
+}
+
 export async function gatherResources(actionKey: string) {
   const action = gatheringMap.get(actionKey);
 
@@ -90,15 +53,21 @@ export async function gatherResources(actionKey: string) {
   }
 
   const player = await ensurePlayer();
-  const sawmillLevel = player.buildings.find((item: (typeof player.buildings)[number]) => item.buildingKey === "furesztelep")?.level ?? 1;
-  const furnaceLevel = player.buildings.find((item: (typeof player.buildings)[number]) => item.buildingKey === "koho")?.level ?? 1;
-  const labLevel = player.buildings.find((item: (typeof player.buildings)[number]) => item.buildingKey === "labor")?.level ?? 1;
+  ensureLevelRequirement(player.level, action.requiredLevel, action.label);
+
+  const sawmillLevel = player.buildings.find((item: PlayerState["buildings"][number]) => item.buildingKey === "furesztelep")?.level ?? 1;
+  const furnaceLevel = player.buildings.find((item: PlayerState["buildings"][number]) => item.buildingKey === "koho")?.level ?? 1;
+  const labLevel = player.buildings.find((item: PlayerState["buildings"][number]) => item.buildingKey === "labor")?.level ?? 1;
+  const mineLevel = player.buildings.find((item: PlayerState["buildings"][number]) => item.buildingKey === "banya")?.level ?? 0;
+  const greenhouseLevel = player.buildings.find((item: PlayerState["buildings"][number]) => item.buildingKey === "uveghaz")?.level ?? 0;
 
   const resourceKeys = action.yields.map((item) => item.resourceKey);
   const bonusMultiplier =
     getBuildingBonus("furesztelep", resourceKeys, sawmillLevel) +
     getBuildingBonus("koho", resourceKeys, furnaceLevel) +
-    getBuildingBonus("labor", resourceKeys, labLevel);
+    getBuildingBonus("labor", resourceKeys, labLevel) +
+    getBuildingBonus("banya", resourceKeys, mineLevel) +
+    getBuildingBonus("uveghaz", resourceKeys, greenhouseLevel);
 
   await applyPlayerProgress(player.id, -action.energyCost, action.rewardXp);
   await changeInventory(player.id, scaledRewards(action.yields, bonusMultiplier), "add");
@@ -114,16 +83,15 @@ export async function craftRecipe(recipeKey: string) {
   }
 
   const player = await ensurePlayer();
+  ensureLevelRequirement(player.level, recipe.requiredLevel, recipe.label);
 
-  if (player.level < recipe.requiredLevel) {
-    throw new GameRuleError("A recepthez magasabb szint szükséges.");
-  }
-
-  const furnaceLevel = player.buildings.find((item: (typeof player.buildings)[number]) => item.buildingKey === "koho")?.level ?? 1;
-  const labLevel = player.buildings.find((item: (typeof player.buildings)[number]) => item.buildingKey === "labor")?.level ?? 1;
+  const furnaceLevel = player.buildings.find((item: PlayerState["buildings"][number]) => item.buildingKey === "koho")?.level ?? 1;
+  const labLevel = player.buildings.find((item: PlayerState["buildings"][number]) => item.buildingKey === "labor")?.level ?? 1;
+  const refineryLevel = player.buildings.find((item: PlayerState["buildings"][number]) => item.buildingKey === "finomito")?.level ?? 0;
   const bonusMultiplier =
     getBuildingBonus("koho", recipe.produces.map((item) => item.resourceKey), furnaceLevel) +
-    getBuildingBonus("labor", recipe.produces.map((item) => item.resourceKey), labLevel);
+    getBuildingBonus("labor", recipe.produces.map((item) => item.resourceKey), labLevel) +
+    getBuildingBonus("finomito", recipe.produces.map((item) => item.resourceKey), refineryLevel);
 
   await changeInventory(player.id, recipe.ingredients, "remove");
   await changeInventory(player.id, scaledRewards(recipe.produces, bonusMultiplier), "add");
@@ -147,7 +115,9 @@ export async function upgradeBuilding(buildingKey: string) {
   }
 
   const player = await ensurePlayer();
-  const building = player.buildings.find((item: (typeof player.buildings)[number]) => item.buildingKey === buildingKey);
+  ensureLevelRequirement(player.level, definition.requiredLevel, definition.label);
+
+  const building = player.buildings.find((item: PlayerState["buildings"][number]) => item.buildingKey === buildingKey);
 
   if (!building) {
     throw new GameRuleError("Az épület állapota nem található.");
@@ -200,8 +170,10 @@ export async function startExpedition(expeditionKey: string) {
   }
 
   const player = await ensurePlayer();
+  ensureLevelRequirement(player.level, definition.requiredLevel, definition.label);
+
   const activeRuns = player.expeditions.filter(
-    (item: (typeof player.expeditions)[number]) => item.claimedAt === null && item.endsAt.getTime() > Date.now(),
+    (item: PlayerState["expeditions"][number]) => item.claimedAt === null && item.endsAt.getTime() > Date.now(),
   );
 
   if (activeRuns.length >= 2) {
@@ -218,7 +190,7 @@ export async function startExpedition(expeditionKey: string) {
       playerId: player.id,
       expeditionKey,
       status: "folyamatban",
-      rewardPayload: createExpeditionRewards(expeditionKey) as unknown as Prisma.InputJsonValue,
+      rewardPayload: createExpeditionRewards(expeditionKey) as unknown as object,
       startedAt,
       endsAt,
     },

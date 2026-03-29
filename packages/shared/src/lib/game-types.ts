@@ -2,6 +2,15 @@ export type ResourceTier = "alap" | "kozepes" | "halado" | "esemeny";
 export type RecipeCategory = "fegyver" | "pancel" | "fogyoeszkoz" | "anyag";
 export type BuildingCategory = "kitermeles" | "feldolgozas" | "tamogatas";
 export type ExpeditionRisk = "alacsony" | "kozepes" | "magas";
+export type ProfessionKey =
+  | "favagas"
+  | "banyaszat"
+  | "vadaszat"
+  | "alkimia"
+  | "mernokseg"
+  | "kereskedelem"
+  | "felderites";
+export type ZoneStatus = "elérhető" | "hamarosan" | "zárolt";
 
 export interface ResourceDefinition {
   key: string;
@@ -25,6 +34,7 @@ export interface RecipeDefinition {
   rewardXp: number;
   produces: RecipeIngredient[];
   ingredients: RecipeIngredient[];
+  station: string;
 }
 
 export interface BuildingDefinition {
@@ -32,8 +42,10 @@ export interface BuildingDefinition {
   label: string;
   category: BuildingCategory;
   description: string;
+  requiredLevel: number;
   baseCost: RecipeIngredient[];
   productionBonus: Partial<Record<string, number>>;
+  passiveProduction: RecipeIngredient[];
 }
 
 export interface GatheringDefinition {
@@ -43,6 +55,8 @@ export interface GatheringDefinition {
   energyCost: number;
   durationSeconds: number;
   rewardXp: number;
+  requiredLevel: number;
+  profession: ProfessionKey;
   yields: RecipeIngredient[];
 }
 
@@ -52,6 +66,7 @@ export interface ExpeditionDefinition {
   description: string;
   durationMinutes: number;
   energyCost: number;
+  requiredLevel: number;
   risk: ExpeditionRisk;
   rewardXp: number;
   guaranteedRewards: RecipeIngredient[];
@@ -90,6 +105,30 @@ export interface ExpeditionSnapshot {
   startedAt: string;
 }
 
+export interface ProfessionSnapshot {
+  key: ProfessionKey;
+  label: string;
+  level: number;
+  focus: string;
+  progressPercent: number;
+}
+
+export interface PassiveProductionSnapshot {
+  buildingKey: string;
+  label: string;
+  level: number;
+  outputs: Array<RecipeIngredient & { label: string; amountPerHour: number }>;
+}
+
+export interface ZoneSnapshot {
+  key: string;
+  label: string;
+  description: string;
+  recommendedLevel: number;
+  risk: ExpeditionRisk;
+  status: ZoneStatus;
+}
+
 export interface GameState {
   player: PlayerSnapshot;
   inventory: InventorySnapshot[];
@@ -100,4 +139,7 @@ export interface GameState {
   gatherings: GatheringDefinition[];
   buildingCatalog: BuildingDefinition[];
   expeditionsCatalog: ExpeditionDefinition[];
+  professions: ProfessionSnapshot[];
+  passiveProduction: PassiveProductionSnapshot[];
+  zones: ZoneSnapshot[];
 }

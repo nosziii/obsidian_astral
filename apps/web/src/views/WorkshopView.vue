@@ -63,6 +63,7 @@ function resourceLabel(resourceKey: string) {
             :recipes="gameState.recipes"
             :resources="gameState.resources"
             :selected-recipe-key="selectedRecipeKey"
+            :player-level="gameState.player.level"
             @select="selectedRecipeKey = $event"
           />
         </div>
@@ -73,6 +74,7 @@ function resourceLabel(resourceKey: string) {
         :states="gameState.buildings"
         :resources="gameState.resources"
         :pending-action="pendingAction"
+        :player-level="gameState.player.level"
         @upgrade="upgradeBuilding"
       />
     </div>
@@ -98,6 +100,10 @@ function resourceLabel(resourceKey: string) {
           <div class="detail-row">
             <span class="compact-label">XP jutalom</span>
             <strong>{{ selectedRecipe.rewardXp }}</strong>
+          </div>
+          <div class="detail-row">
+            <span class="compact-label">Állomás</span>
+            <strong>{{ selectedRecipe.station }}</strong>
           </div>
         </div>
 
@@ -126,10 +132,16 @@ function resourceLabel(resourceKey: string) {
         <button
           class="primary-button"
           type="button"
-          :disabled="pendingAction === `craft:${selectedRecipe.key}`"
+          :disabled="gameState.player.level < selectedRecipe.requiredLevel || pendingAction === `craft:${selectedRecipe.key}`"
           @click="craft(selectedRecipe.key)"
         >
-          {{ pendingAction === `craft:${selectedRecipe.key}` ? "Craftolás…" : "Gyártás indítása" }}
+          {{
+            gameState.player.level < selectedRecipe.requiredLevel
+              ? `${selectedRecipe.requiredLevel}. szint szükséges`
+              : pendingAction === `craft:${selectedRecipe.key}`
+                ? "Craftolás…"
+                : "Gyártás indítása"
+          }}
         </button>
       </div>
     </BasePanel>

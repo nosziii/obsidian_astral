@@ -8,6 +8,7 @@ const props = defineProps<{
   states: BuildingSnapshot[];
   resources: ResourceDefinition[];
   pendingAction: string | null;
+  playerLevel: number;
 }>();
 
 const emit = defineEmits<{
@@ -50,14 +51,24 @@ function categoryTone(category: BuildingDefinition["category"]) {
             <span class="compact-label">Költség</span>
             <strong>{{ building.baseCost.map((item) => `${item.amount} ${resourceLabel(item.resourceKey)}`).join(", ") }}</strong>
           </div>
+          <div class="detail-row">
+            <span class="compact-label">Feloldás</span>
+            <strong>{{ building.requiredLevel }}. szint</strong>
+          </div>
         </div>
         <button
           class="secondary-button"
           type="button"
-          :disabled="pendingAction === `building:${building.key}`"
+          :disabled="playerLevel < building.requiredLevel || pendingAction === `building:${building.key}`"
           @click="emit('upgrade', building.key)"
         >
-          {{ pendingAction === `building:${building.key}` ? "Fejlesztés…" : "Szintlépés" }}
+          {{
+            playerLevel < building.requiredLevel
+              ? `${building.requiredLevel}. szint kell`
+              : pendingAction === `building:${building.key}`
+                ? "Fejlesztés…"
+                : "Szintlépés"
+          }}
         </button>
       </article>
     </div>

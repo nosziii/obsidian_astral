@@ -45,7 +45,12 @@ const encounters = computed(() => {
     </div>
 
     <div class="dashboard-lower">
-      <GatheringPanel :items="gameState.gatherings" :pending-action="pendingAction" @gather="gather" />
+      <GatheringPanel
+        :items="gameState.gatherings"
+        :pending-action="pendingAction"
+        :player-level="gameState.player.level"
+        @gather="gather"
+      />
 
       <BasePanel title="Legutóbbi események" subtitle="Recent encounters">
         <div class="log-list">
@@ -75,5 +80,39 @@ const encounters = computed(() => {
         <input class="chat-input" type="text" placeholder="Írj üzenetet…" />
       </div>
     </BasePanel>
+
+    <div class="view-grid">
+      <BasePanel title="Passzív termelés" subtitle="Bázis output">
+        <div class="card-list">
+          <article v-for="entry in gameState.passiveProduction" :key="entry.buildingKey" class="action-card">
+            <div class="tag-row">
+              <span class="tag-pill">{{ entry.label }}</span>
+              <span class="chip">szint {{ entry.level }}</span>
+            </div>
+            <div class="detail-list">
+              <div v-for="output in entry.outputs" :key="`${entry.buildingKey}-${output.resourceKey}`" class="detail-row">
+                <span>{{ output.label }}</span>
+                <strong>{{ output.amountPerHour }}/óra</strong>
+              </div>
+            </div>
+          </article>
+        </div>
+      </BasePanel>
+
+      <BasePanel title="Zónastátusz" subtitle="Előrehaladás">
+        <div class="card-list">
+          <article v-for="zone in gameState.zones" :key="zone.key" class="action-card">
+            <div class="tag-row">
+              <span class="tag-pill" :class="zone.status === 'zárolt' ? 'danger' : zone.status === 'hamarosan' ? 'secondary' : 'success'">
+                {{ zone.status }}
+              </span>
+              <span class="compact-label">ajánlott {{ zone.recommendedLevel }}. szint</span>
+            </div>
+            <h4 class="card-title">{{ zone.label }}</h4>
+            <p class="muted">{{ zone.description }}</p>
+          </article>
+        </div>
+      </BasePanel>
+    </div>
   </div>
 </template>

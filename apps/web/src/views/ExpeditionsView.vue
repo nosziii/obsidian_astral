@@ -76,6 +76,7 @@ const { claimExpedition, gameState, pendingAction, startExpedition } = useGameSt
         :catalog="gameState.expeditionsCatalog"
         :active-runs="gameState.expeditions"
         :pending-action="pendingAction"
+        :player-level="gameState.player.level"
         @claim="claimExpedition"
         @start="startExpedition"
       />

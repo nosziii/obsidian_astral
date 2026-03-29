@@ -16,6 +16,9 @@ const starterInventory: Record<string, number> = {
   szen: 24,
   kristaly: 16,
   gyogynoveny: 18,
+  bor: 10,
+  ezusterc: 8,
+  vegyi_anyag: 6,
 };
 
 async function main() {

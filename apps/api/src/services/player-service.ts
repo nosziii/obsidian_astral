@@ -1,20 +1,31 @@
-import type { Prisma } from "@prisma/client";
-import type { BuildingSnapshot, ExpeditionSnapshot, GameState, InventorySnapshot, PlayerSnapshot } from "@obsidian-astral/shared";
-import { buildings, expeditions, gatherings, recipes, resources } from "@obsidian-astral/shared";
+import type {
+  BuildingSnapshot,
+  ExpeditionSnapshot,
+  GameState,
+  InventorySnapshot,
+  PassiveProductionSnapshot,
+  PlayerSnapshot,
+  ProfessionKey,
+  ProfessionSnapshot,
+  ZoneSnapshot,
+} from "@obsidian-astral/shared";
+import {
+  buildings,
+  expeditions,
+  gatherings,
+  professionLabels,
+  recipes,
+  resources,
+  zones,
+} from "@obsidian-astral/shared";
 
 import { prisma } from "../db.js";
+import { buildingMap, resourceMap } from "../lib/catalog.js";
 import { xpToNextLevel } from "../lib/leveling.js";
+import { syncPassiveProduction } from "./passive-service.js";
 
-export type PlayerState = Prisma.PlayerGetPayload<{
-  include: {
-    inventory: true;
-    buildings: true;
-    expeditions: true;
-  };
-}>;
-
-export async function ensurePlayer(): Promise<PlayerState> {
-  const player = await prisma.player.findFirst({
+async function loadPlayerState() {
+  return prisma.player.findFirst({
     include: {
       inventory: true,
       buildings: true,
@@ -28,9 +39,157 @@ export async function ensurePlayer(): Promise<PlayerState> {
       },
     },
   });
+}
+
+export type PlayerState = NonNullable<Awaited<ReturnType<typeof loadPlayerState>>>;
+
+async function syncCatalogState(player: PlayerState) {
+  const knownBuildings = new Set(player.buildings.map((item: PlayerState["buildings"][number]) => item.buildingKey));
+  const missingBuildings = buildings.filter((building) => !knownBuildings.has(building.key));
+
+  if (missingBuildings.length === 0) {
+    return false;
+  }
+
+  await prisma.buildingState.createMany({
+    data: missingBuildings.map((building) => ({
+      playerId: player.id,
+      buildingKey: building.key,
+      level: 1,
+    })),
+    skipDuplicates: true,
+  });
+
+  return true;
+}
+
+function calculateProfessionProgress(player: PlayerState): ProfessionSnapshot[] {
+  const scores = new Map<ProfessionKey, number>();
+
+  (Object.keys(professionLabels) as ProfessionKey[]).forEach((key) => scores.set(key, 0));
+
+  gatherings.forEach((gathering) => {
+    if (player.level >= gathering.requiredLevel) {
+      scores.set(gathering.profession, (scores.get(gathering.profession) ?? 0) + 14 + gathering.rewardXp);
+    }
+  });
+
+  recipes.forEach((recipe) => {
+    if (player.level >= recipe.requiredLevel) {
+      const professionKey: ProfessionKey =
+        recipe.category === "fogyoeszkoz"
+          ? "alkimia"
+          : recipe.category === "anyag"
+            ? "mernokseg"
+            : recipe.category === "pancel"
+              ? "kereskedelem"
+              : "favagas";
+      scores.set(professionKey, (scores.get(professionKey) ?? 0) + 10 + recipe.rewardXp);
+    }
+  });
+
+  player.buildings.forEach((building: PlayerState["buildings"][number]) => {
+    const definition = buildingMap.get(building.buildingKey);
+
+    if (!definition) {
+      return;
+    }
+
+    const targetProfession: ProfessionKey =
+      definition.category === "kitermeles"
+        ? "banyaszat"
+        : definition.category === "feldolgozas"
+          ? "mernokseg"
+          : "alkimia";
+    scores.set(targetProfession, (scores.get(targetProfession) ?? 0) + building.level * 18);
+  });
+
+  scores.set("felderites", (scores.get("felderites") ?? 0) + player.expeditions.length * 24 + player.level * 8);
+  scores.set("kereskedelem", (scores.get("kereskedelem") ?? 0) + Math.floor(player.credits / 20));
+  scores.set(
+    "vadaszat",
+    (scores.get("vadaszat") ?? 0) +
+      Math.floor((player.inventory.find((item: PlayerState["inventory"][number]) => item.resourceKey === "bor")?.quantity ?? 0) / 2),
+  );
+
+  return (Object.entries(professionLabels) as Array<[ProfessionKey, (typeof professionLabels)[ProfessionKey]]>).map(
+    ([key, definition]) => {
+      const score = scores.get(key) ?? 0;
+      const level = 1 + Math.floor(score / 70);
+
+      return {
+        key,
+        label: definition.label,
+        focus: definition.focus,
+        level,
+        progressPercent: score % 70 === 0 ? 100 : Math.round(((score % 70) / 70) * 100),
+      };
+    },
+  );
+}
+
+function createPassiveProductionSnapshots(player: PlayerState): PassiveProductionSnapshot[] {
+  return player.buildings
+    .map((buildingState: PlayerState["buildings"][number]) => {
+      const definition = buildingMap.get(buildingState.buildingKey);
+
+      if (!definition || definition.passiveProduction.length === 0) {
+        return null;
+      }
+
+      return {
+        buildingKey: buildingState.buildingKey,
+        label: definition.label,
+        level: buildingState.level,
+        outputs: definition.passiveProduction.map((item) => ({
+          ...item,
+          label: resourceMap.get(item.resourceKey)?.label ?? item.resourceKey,
+          amountPerHour: item.amount * buildingState.level,
+        })),
+      };
+    })
+    .filter((item: PassiveProductionSnapshot | null): item is PassiveProductionSnapshot => item !== null);
+}
+
+function createZoneSnapshots(player: PlayerState): ZoneSnapshot[] {
+  return zones.map((zone) => ({
+    ...zone,
+    status:
+      player.level >= zone.recommendedLevel
+        ? "elérhető"
+        : player.level + 1 >= zone.recommendedLevel
+          ? "hamarosan"
+          : "zárolt",
+  }));
+}
+
+export async function ensurePlayer(sync = true): Promise<PlayerState> {
+  let player = await loadPlayerState();
 
   if (!player) {
     throw new Error("Nincs inicializált játékos. Futtasd a seed scriptet.");
+  }
+
+  if (sync) {
+    const catalogChanged = await syncCatalogState(player);
+
+    if (catalogChanged) {
+      player = await loadPlayerState();
+
+      if (!player) {
+        throw new Error("A játékos állapot nem tölthető be a katalógus szinkron után.");
+      }
+    }
+
+    const changed = await syncPassiveProduction(player);
+
+    if (changed) {
+      player = await loadPlayerState();
+
+      if (!player) {
+        throw new Error("A játékos állapot nem tölthető be a passzív szinkron után.");
+      }
+    }
   }
 
   return player;
@@ -92,5 +251,8 @@ export async function getGameState(): Promise<GameState> {
     gatherings,
     buildingCatalog: buildings,
     expeditionsCatalog: expeditions,
+    professions: calculateProfessionProgress(player),
+    passiveProduction: createPassiveProductionSnapshots(player),
+    zones: createZoneSnapshots(player),
   };
 }

@@ -6,6 +6,7 @@ import BasePanel from "../ui/BasePanel.vue";
 defineProps<{
   items: GatheringDefinition[];
   pendingAction: string | null;
+  playerLevel: number;
 }>();
 
 const emit = defineEmits<{
@@ -27,15 +28,22 @@ const emit = defineEmits<{
           <div class="chip-row">
             <span class="compact-label">Állapot: aktív kitermelési fázis</span>
             <span class="compact-label">{{ item.durationSeconds }} mp</span>
+            <span class="compact-label">szakma: {{ item.profession }}</span>
           </div>
         </div>
         <button
           class="primary-button"
           type="button"
-          :disabled="pendingAction === `gather:${item.key}`"
+          :disabled="playerLevel < item.requiredLevel || pendingAction === `gather:${item.key}`"
           @click="emit('gather', item.key)"
         >
-          {{ pendingAction === `gather:${item.key}` ? "Folyamatban…" : "Indítás" }}
+          {{
+            playerLevel < item.requiredLevel
+              ? `${item.requiredLevel}. szint kell`
+              : pendingAction === `gather:${item.key}`
+                ? "Folyamatban…"
+                : "Indítás"
+          }}
         </button>
       </article>
     </div>

@@ -2,9 +2,22 @@ import type {
   BuildingDefinition,
   ExpeditionDefinition,
   GatheringDefinition,
+  ProfessionKey,
+  ProfessionSnapshot,
   RecipeDefinition,
   ResourceDefinition,
+  ZoneSnapshot,
 } from "./game-types.js";
+
+export const professionLabels: Record<ProfessionKey, { label: string; focus: string }> = {
+  favagas: { label: "Favágás", focus: "Faipari és szerkezeti kitermelés" },
+  banyaszat: { label: "Bányászat", focus: "Fém és ásvány kitermelés" },
+  vadaszat: { label: "Vadászat", focus: "Élelem és bőr ellátás" },
+  alkimia: { label: "Alkímia", focus: "Kivonatok és laborfolyamatok" },
+  mernokseg: { label: "Mérnökség", focus: "Finomított alkatrészek és energiarendszerek" },
+  kereskedelem: { label: "Kereskedelem", focus: "Készletérték és gazdasági egyensúly" },
+  felderites: { label: "Felderítés", focus: "Expedíciós és zónafelfedezési előny" },
+};
 
 export const resources: ResourceDefinition[] = [
   { key: "fa", label: "Fa", tier: "alap", description: "Könnyen gyűjthető alapanyag építkezéshez és craftoláshoz." },
@@ -17,12 +30,19 @@ export const resources: ResourceDefinition[] = [
   { key: "szen", label: "Szén", tier: "kozepes", description: "Olvasztáshoz és ipari folyamatokhoz kell." },
   { key: "kristaly", label: "Kristály", tier: "kozepes", description: "Energiával telített ritkább nyersanyag." },
   { key: "gyogynoveny", label: "Gyógynövény", tier: "kozepes", description: "Gyógyító és támogató receptek alapja." },
+  { key: "bor", label: "Bőr", tier: "kozepes", description: "Vadászati melléktermék megerősített felszerelésekhez." },
+  { key: "ezusterc", label: "Ezüstérc", tier: "kozepes", description: "Vezető és értékes érctípus fejlettebb modulokhoz." },
+  { key: "vegyi_anyag", label: "Vegyi anyag", tier: "kozepes", description: "Laboratóriumi feldolgozásokhoz szükséges reagens." },
   { key: "obszidian", label: "Obszidián", tier: "halado", description: "Ritka, nagy értékű sötétfém alapanyag." },
   { key: "energiamag", label: "Energiamag", tier: "halado", description: "Haladó craft és fejlesztés kulcseleme." },
+  { key: "titan", label: "Titán", tier: "halado", description: "Erős szerkezeti fém a csúcskategóriás eszközökhöz." },
+  { key: "eterkristaly", label: "Éterkristály", tier: "halado", description: "Instabil, ritka energiahordozó magas szintű craftokhoz." },
   { key: "vasrud", label: "Vasrúd", tier: "kozepes", description: "Finomított fémkomponens fegyverekhez és építkezéshez." },
   { key: "deszka", label: "Deszka", tier: "kozepes", description: "Megmunkált fa szerkezetekhez és tárgyakhoz." },
   { key: "alapkivonat", label: "Alapkivonat", tier: "kozepes", description: "Egyszerű gyógyító és támogató oldat." },
   { key: "energiacella", label: "Energiacella", tier: "halado", description: "Nagy sűrűségű energiaforrás fejlett eszközökhöz." },
+  { key: "finomitott_fem", label: "Finomított fém", tier: "kozepes", description: "Korszerű ötvözet mérnöki és fegyverrendszerekhez." },
+  { key: "megerositett_szovet", label: "Megerősített szövet", tier: "kozepes", description: "Bőr és textil kombinációja könnyű páncélokhoz." },
 ];
 
 export const gatherings: GatheringDefinition[] = [
@@ -33,6 +53,8 @@ export const gatherings: GatheringDefinition[] = [
     energyCost: 5,
     durationSeconds: 45,
     rewardXp: 12,
+    requiredLevel: 1,
+    profession: "favagas",
     yields: [
       { resourceKey: "fa", amount: 18 },
       { resourceKey: "elelem", amount: 4 },
@@ -45,6 +67,8 @@ export const gatherings: GatheringDefinition[] = [
     energyCost: 7,
     durationSeconds: 60,
     rewardXp: 16,
+    requiredLevel: 1,
+    profession: "banyaszat",
     yields: [
       { resourceKey: "ko", amount: 14 },
       { resourceKey: "vaserc", amount: 12 },
@@ -58,9 +82,56 @@ export const gatherings: GatheringDefinition[] = [
     energyCost: 4,
     durationSeconds: 40,
     rewardXp: 10,
+    requiredLevel: 1,
+    profession: "alkimia",
     yields: [
       { resourceKey: "viz", amount: 16 },
       { resourceKey: "gyogynoveny", amount: 5 },
+    ],
+  },
+  {
+    key: "vadaszat",
+    label: "Vadászat",
+    description: "Portyázás húsért, bőrért és ritkább gyógynövényekért.",
+    energyCost: 8,
+    durationSeconds: 70,
+    rewardXp: 18,
+    requiredLevel: 2,
+    profession: "vadaszat",
+    yields: [
+      { resourceKey: "elelem", amount: 14 },
+      { resourceKey: "bor", amount: 6 },
+      { resourceKey: "gyogynoveny", amount: 3 },
+    ],
+  },
+  {
+    key: "gyujtogetes",
+    label: "Gyűjtögetés",
+    description: "Alkímiai és mérnöki alapanyagok felkutatása törmelékmezőkön.",
+    energyCost: 9,
+    durationSeconds: 75,
+    rewardXp: 22,
+    requiredLevel: 3,
+    profession: "alkimia",
+    yields: [
+      { resourceKey: "vegyi_anyag", amount: 6 },
+      { resourceKey: "gyogynoveny", amount: 4 },
+      { resourceKey: "rez", amount: 5 },
+    ],
+  },
+  {
+    key: "roncsfeltaras",
+    label: "Roncsfeltárás",
+    description: "Elhagyott technológiai roncsok átvizsgálása ritkább komponensekért.",
+    energyCost: 12,
+    durationSeconds: 90,
+    rewardXp: 28,
+    requiredLevel: 4,
+    profession: "mernokseg",
+    yields: [
+      { resourceKey: "ezusterc", amount: 6 },
+      { resourceKey: "kristaly", amount: 4 },
+      { resourceKey: "energiamag", amount: 1 },
     ],
   },
 ];
@@ -74,6 +145,7 @@ export const recipes: RecipeDefinition[] = [
     craftSeconds: 30,
     requiredLevel: 1,
     rewardXp: 18,
+    station: "Kohó",
     ingredients: [
       { resourceKey: "vaserc", amount: 8 },
       { resourceKey: "szen", amount: 3 },
@@ -88,6 +160,7 @@ export const recipes: RecipeDefinition[] = [
     craftSeconds: 20,
     requiredLevel: 1,
     rewardXp: 14,
+    station: "Műhely",
     ingredients: [{ resourceKey: "fa", amount: 10 }],
     produces: [{ resourceKey: "deszka", amount: 4 }],
   },
@@ -99,6 +172,7 @@ export const recipes: RecipeDefinition[] = [
     craftSeconds: 25,
     requiredLevel: 1,
     rewardXp: 20,
+    station: "Vegylabor",
     ingredients: [
       { resourceKey: "gyogynoveny", amount: 6 },
       { resourceKey: "viz", amount: 8 },
@@ -106,18 +180,66 @@ export const recipes: RecipeDefinition[] = [
     produces: [{ resourceKey: "alapkivonat", amount: 2 }],
   },
   {
+    key: "megerositett_szovet",
+    label: "Megerősített szövet",
+    category: "pancel",
+    description: "Könnyű, mégis strapabíró réteg páncélzatokhoz.",
+    craftSeconds: 35,
+    requiredLevel: 2,
+    rewardXp: 24,
+    station: "Páncélműhely",
+    ingredients: [
+      { resourceKey: "textil", amount: 8 },
+      { resourceKey: "bor", amount: 6 },
+    ],
+    produces: [{ resourceKey: "megerositett_szovet", amount: 2 }],
+  },
+  {
+    key: "finomitott_fem",
+    label: "Finomított fém",
+    category: "anyag",
+    description: "Ezüstérc és vas kombinációjából készült tiszta ötvözet.",
+    craftSeconds: 45,
+    requiredLevel: 3,
+    rewardXp: 30,
+    station: "Finomító",
+    ingredients: [
+      { resourceKey: "ezusterc", amount: 5 },
+      { resourceKey: "vasrud", amount: 4 },
+      { resourceKey: "szen", amount: 4 },
+    ],
+    produces: [{ resourceKey: "finomitott_fem", amount: 3 }],
+  },
+  {
     key: "energiacella",
     label: "Energiacella",
     category: "anyag",
     description: "Finomított kristály és fém kombinációja a fejlett technológiákhoz.",
     craftSeconds: 45,
-    requiredLevel: 2,
+    requiredLevel: 3,
     rewardXp: 32,
+    station: "Labor",
     ingredients: [
       { resourceKey: "kristaly", amount: 6 },
-      { resourceKey: "vasrud", amount: 4 },
+      { resourceKey: "finomitott_fem", amount: 4 },
     ],
     produces: [{ resourceKey: "energiacella", amount: 2 }],
+  },
+  {
+    key: "obszidian_penge",
+    label: "Obszidián penge",
+    category: "fegyver",
+    description: "Ritkább expedíciókra tervezett nagy átütésű fegyvermag.",
+    craftSeconds: 70,
+    requiredLevel: 5,
+    rewardXp: 44,
+    station: "Fegyverkovács",
+    ingredients: [
+      { resourceKey: "obszidian", amount: 5 },
+      { resourceKey: "energiacella", amount: 2 },
+      { resourceKey: "finomitott_fem", amount: 4 },
+    ],
+    produces: [{ resourceKey: "titan", amount: 1 }],
   },
 ];
 
@@ -127,35 +249,89 @@ export const buildings: BuildingDefinition[] = [
     label: "Fűrésztelep",
     category: "kitermeles",
     description: "Növeli a favágás és megmunkálás hatékonyságát.",
+    requiredLevel: 1,
     baseCost: [
       { resourceKey: "fa", amount: 40 },
       { resourceKey: "ko", amount: 20 },
     ],
     productionBonus: { fa: 0.12, deszka: 0.1 },
+    passiveProduction: [{ resourceKey: "fa", amount: 18 }],
   },
   {
     key: "koho",
     label: "Kohó",
     category: "feldolgozas",
     description: "Növeli a fémalapú craft receptek kimenetét.",
+    requiredLevel: 1,
     baseCost: [
       { resourceKey: "ko", amount: 45 },
       { resourceKey: "vaserc", amount: 24 },
       { resourceKey: "szen", amount: 12 },
     ],
-    productionBonus: { vaserc: 0.08, vasrud: 0.12 },
+    productionBonus: { vaserc: 0.08, vasrud: 0.12, finomitott_fem: 0.08 },
+    passiveProduction: [{ resourceKey: "szen", amount: 8 }],
   },
   {
     key: "labor",
     label: "Labor",
     category: "tamogatas",
     description: "Javítja a kivonatok és energiacellák hatásfokát.",
+    requiredLevel: 1,
     baseCost: [
       { resourceKey: "rez", amount: 20 },
       { resourceKey: "kristaly", amount: 10 },
       { resourceKey: "viz", amount: 30 },
     ],
     productionBonus: { gyogynoveny: 0.08, alapkivonat: 0.15, energiacella: 0.08 },
+    passiveProduction: [{ resourceKey: "vegyi_anyag", amount: 4 }],
+  },
+  {
+    key: "banya",
+    label: "Bánya",
+    category: "kitermeles",
+    description: "Stabil, passzív érc- és kőtermelést biztosít.",
+    requiredLevel: 2,
+    baseCost: [
+      { resourceKey: "ko", amount: 60 },
+      { resourceKey: "deszka", amount: 20 },
+      { resourceKey: "vasrud", amount: 10 },
+    ],
+    productionBonus: { ko: 0.1, vaserc: 0.1, ezusterc: 0.06 },
+    passiveProduction: [
+      { resourceKey: "ko", amount: 14 },
+      { resourceKey: "vaserc", amount: 10 },
+    ],
+  },
+  {
+    key: "uveghaz",
+    label: "Üvegház",
+    category: "tamogatas",
+    description: "Folyamatos gyógynövény- és élelemtermelést ad.",
+    requiredLevel: 2,
+    baseCost: [
+      { resourceKey: "viz", amount: 50 },
+      { resourceKey: "deszka", amount: 18 },
+      { resourceKey: "textil", amount: 14 },
+    ],
+    productionBonus: { elelem: 0.08, gyogynoveny: 0.12 },
+    passiveProduction: [
+      { resourceKey: "elelem", amount: 10 },
+      { resourceKey: "gyogynoveny", amount: 6 },
+    ],
+  },
+  {
+    key: "finomito",
+    label: "Finomító",
+    category: "feldolgozas",
+    description: "Fejlettebb ötvözetek és kristályalapú komponensek előállítását segíti.",
+    requiredLevel: 3,
+    baseCost: [
+      { resourceKey: "vasrud", amount: 20 },
+      { resourceKey: "kristaly", amount: 12 },
+      { resourceKey: "rez", amount: 18 },
+    ],
+    productionBonus: { finomitott_fem: 0.16, energiacella: 0.1, kristaly: 0.06 },
+    passiveProduction: [{ resourceKey: "kristaly", amount: 5 }],
   },
 ];
 
@@ -166,6 +342,7 @@ export const expeditions: ExpeditionDefinition[] = [
     description: "Rövid expedíció a vasban gazdag peremvidékre.",
     durationMinutes: 5,
     energyCost: 10,
+    requiredLevel: 1,
     risk: "alacsony",
     rewardXp: 36,
     guaranteedRewards: [
@@ -180,6 +357,7 @@ export const expeditions: ExpeditionDefinition[] = [
     description: "Közepes kockázatú út kristályért és energiamag-maradványokért.",
     durationMinutes: 10,
     energyCost: 16,
+    requiredLevel: 2,
     risk: "kozepes",
     rewardXp: 54,
     guaranteedRewards: [
@@ -188,4 +366,68 @@ export const expeditions: ExpeditionDefinition[] = [
     ],
     bonusRewards: [{ resourceKey: "energiamag", amount: 2 }],
   },
+  {
+    key: "elfeledett_labor",
+    label: "Elfeledett labor",
+    description: "Régi kutatózóna vegyi és mérnöki maradványokkal.",
+    durationMinutes: 18,
+    energyCost: 22,
+    requiredLevel: 3,
+    risk: "kozepes",
+    rewardXp: 78,
+    guaranteedRewards: [
+      { resourceKey: "vegyi_anyag", amount: 10 },
+      { resourceKey: "ezusterc", amount: 8 },
+    ],
+    bonusRewards: [{ resourceKey: "finomitott_fem", amount: 3 }],
+  },
+  {
+    key: "obszidian_hasadek",
+    label: "Obszidián-hasadék",
+    description: "Magas kockázatú törésmező ritka sötétfém és éterenergia nyomokkal.",
+    durationMinutes: 28,
+    energyCost: 30,
+    requiredLevel: 5,
+    risk: "magas",
+    rewardXp: 118,
+    guaranteedRewards: [
+      { resourceKey: "obszidian", amount: 8 },
+      { resourceKey: "energiamag", amount: 3 },
+    ],
+    bonusRewards: [{ resourceKey: "eterkristaly", amount: 2 }],
+  },
 ];
+
+export const zones: Omit<ZoneSnapshot, "status">[] = [
+  {
+    key: "keleti_perem",
+    label: "Keleti perem",
+    description: "Korai kitermelő mezők fa-, kő- és vasalapokkal.",
+    recommendedLevel: 1,
+    risk: "alacsony",
+  },
+  {
+    key: "kristalymezok",
+    label: "Kristálymezők",
+    description: "Középszintű zóna labor- és energiaalapanyagokkal.",
+    recommendedLevel: 3,
+    risk: "kozepes",
+  },
+  {
+    key: "vortex_cluster",
+    label: "Vortex-cluster",
+    description: "Instabil, ritka lootot rejtő magas szintű szektor.",
+    recommendedLevel: 5,
+    risk: "magas",
+  },
+];
+
+export function emptyProfessionSnapshots(): ProfessionSnapshot[] {
+  return Object.entries(professionLabels).map(([key, value]) => ({
+    key: key as ProfessionKey,
+    label: value.label,
+    focus: value.focus,
+    level: 1,
+    progressPercent: 0,
+  }));
+}

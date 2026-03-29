@@ -5,6 +5,7 @@ const props = defineProps<{
   recipes: RecipeDefinition[];
   resources: ResourceDefinition[];
   selectedRecipeKey: string | null;
+  playerLevel: number;
 }>();
 
 const emit = defineEmits<{
@@ -61,6 +62,7 @@ function recipeTone(category: RecipeDefinition["category"]) {
           </div>
           <h4 class="card-title">{{ recipe.label }}</h4>
           <p class="muted">{{ recipe.description }}</p>
+          <p class="compact-label">Állomás: {{ recipe.station }}</p>
         </div>
       </div>
 
@@ -72,6 +74,10 @@ function recipeTone(category: RecipeDefinition["category"]) {
         <div class="detail-row">
           <span class="compact-label">Ad</span>
           <strong>{{ recipe.produces.map((item) => `${item.amount} ${resourceLabel(item.resourceKey)}`).join(", ") }}</strong>
+        </div>
+        <div class="detail-row" v-if="playerLevel < recipe.requiredLevel">
+          <span class="compact-label">Zárolás</span>
+          <strong>{{ recipe.requiredLevel }}. szinttől</strong>
         </div>
       </div>
     </article>

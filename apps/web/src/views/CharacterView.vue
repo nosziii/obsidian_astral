@@ -50,6 +50,21 @@ const inventoryPreview = computed(() => gameState.value?.inventory.slice(0, 8) ?
           <strong class="value-strong">{{ stat.icon }} {{ stat.value }}</strong>
         </article>
       </div>
+
+      <BasePanel title="Szakmai fejlődés" subtitle="Mastery">
+        <div class="card-list">
+          <article v-for="profession in gameState.professions" :key="profession.key" class="action-card">
+            <div class="tag-row">
+              <span class="tag-pill secondary">szint {{ profession.level }}</span>
+              <span class="compact-label">{{ profession.focus }}</span>
+            </div>
+            <h4 class="card-title">{{ profession.label }}</h4>
+            <div class="progress-track">
+              <div class="progress-fill" :style="{ width: `${profession.progressPercent}%` }" />
+            </div>
+          </article>
+        </div>
+      </BasePanel>
     </div>
 
     <BasePanel title="Inventár" subtitle="Felszerelés és készlet">
