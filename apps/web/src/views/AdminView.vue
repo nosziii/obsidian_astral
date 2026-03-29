@@ -4,9 +4,10 @@ import { computed, onMounted, ref } from "vue";
 import BasePanel from "../components/ui/BasePanel.vue";
 import { useAuth } from "../composables/use-auth";
 
-const { adminOverview, adminStatus, loadAdminOverview, grantPack, runSystemPulse } = useAuth();
+const { adminOverview, adminPlayerDetail, adminStatus, loadAdminOverview, loadAdminPlayerDetail, grantPack, runSystemPulse } = useAuth();
 const query = ref("");
 const activeRole = ref<"mind" | "jatekos" | "admin">("mind");
+const selectedPlayerId = ref<string | null>(null);
 
 onMounted(() => {
   if (!adminOverview.value) {
@@ -30,6 +31,11 @@ const visiblePlayers = computed(() => {
     return matchesRole && matchesQuery;
   });
 });
+
+async function selectPlayer(playerId: string) {
+  selectedPlayerId.value = playerId;
+  await loadAdminPlayerDetail(playerId);
+}
 </script>
 
 <template>
@@ -86,18 +92,77 @@ const visiblePlayers = computed(() => {
           <span>Kreditek</span>
           <span>Művelet</span>
         </div>
-        <div v-for="player in visiblePlayers" :key="player.id" class="admin-row">
+        <div v-for="player in visiblePlayers" :key="player.id" class="admin-row" :class="{ 'admin-row--active': selectedPlayerId === player.id }">
           <span>{{ player.name }}</span>
           <span>{{ player.email }}</span>
           <span>{{ player.role }}</span>
           <span>{{ player.level }}</span>
           <span>{{ new Intl.NumberFormat("hu-HU").format(player.credits) }}</span>
-          <button class="ghost-button admin-inline-button" type="button" @click="grantPack(player.id)">
-            Segélycsomag
-          </button>
+          <div class="admin-row-actions">
+            <button class="ghost-button admin-inline-button" type="button" @click="selectPlayer(player.id)">Részletek</button>
+            <button class="ghost-button admin-inline-button" type="button" @click="grantPack(player.id)">Segélycsomag</button>
+          </div>
         </div>
       </div>
       <p v-if="!visiblePlayers.length" class="muted">Nincs a szűrésnek megfelelő játékos.</p>
+    </BasePanel>
+
+    <BasePanel v-if="adminPlayerDetail" title="Játékos részletei" subtitle="Admin inspect">
+      <div class="admin-detail-grid">
+        <article class="action-card">
+          <div class="detail-list">
+            <div class="detail-row">
+              <span class="compact-label">Név</span>
+              <strong>{{ adminPlayerDetail.player.name }}</strong>
+            </div>
+            <div class="detail-row">
+              <span class="compact-label">Flotta</span>
+              <strong>{{ adminPlayerDetail.player.fleet }}</strong>
+            </div>
+            <div class="detail-row">
+              <span class="compact-label">E-mail</span>
+              <strong>{{ adminPlayerDetail.player.email }}</strong>
+            </div>
+            <div class="detail-row">
+              <span class="compact-label">Asztralit</span>
+              <strong>{{ new Intl.NumberFormat('hu-HU').format(adminPlayerDetail.player.astralite) }}</strong>
+            </div>
+          </div>
+          <p class="muted">{{ adminPlayerDetail.player.bio }}</p>
+        </article>
+
+        <article class="action-card">
+          <h4 class="card-title">Aktív események</h4>
+          <div v-if="adminPlayerDetail.activities.length" class="detail-list">
+            <div v-for="activity in adminPlayerDetail.activities" :key="activity.id" class="detail-row">
+              <span>{{ activity.label }}</span>
+              <strong>{{ activity.status }}</strong>
+            </div>
+          </div>
+          <p v-else class="muted">Nincs aktív esemény.</p>
+        </article>
+
+        <article class="action-card">
+          <h4 class="card-title">Fő készlet</h4>
+          <div v-if="adminPlayerDetail.inventory.length" class="detail-list">
+            <div v-for="item in adminPlayerDetail.inventory" :key="item.resourceKey" class="detail-row">
+              <span>{{ item.resourceKey }}</span>
+              <strong>{{ item.quantity }}</strong>
+            </div>
+          </div>
+          <p v-else class="muted">Nincs készlet.</p>
+        </article>
+
+        <article class="action-card">
+          <h4 class="card-title">Épületek</h4>
+          <div class="detail-list">
+            <div v-for="building in adminPlayerDetail.buildings" :key="building.key" class="detail-row">
+              <span>{{ building.label }}</span>
+              <strong>{{ building.level }}. szint</strong>
+            </div>
+          </div>
+        </article>
+      </div>
     </BasePanel>
   </div>
 </template>

@@ -48,6 +48,22 @@
   align-items: center;
 }
 
+.admin-row--active {
+  border: 1px solid rgba(121, 238, 248, 0.18);
+}
+
+.admin-row-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.admin-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
 .admin-row--head {
   color: var(--text-dim);
   font-size: 0.75rem;
@@ -89,6 +105,7 @@
     grid-template-columns: 1fr;
   }
 
+  .admin-detail-grid,
   .admin-row {
     grid-template-columns: 1fr;
     gap: 8px;

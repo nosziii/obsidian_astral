@@ -17,6 +17,7 @@ import {
 import { config } from "./config.js";
 import { GameRuleError } from "./lib/errors.js";
 import { attachAuthSession, requireAuth, requireRole } from "./lib/request-auth.js";
+import { getAdminPlayerDetail } from "./services/admin-player-service.js";
 import { createChatMessage, listChatMessages } from "./services/chat-service.js";
 import { getAdminOverview, grantStarterPack, triggerSystemPulse } from "./services/admin-service.js";
 import { getSessionByToken, loginAccount, logoutAccount, registerAccount, updateProfile } from "./services/auth-service.js";
@@ -172,6 +173,15 @@ export function createServer() {
     try {
       requireRole(request, "admin");
       response.json(await getAdminOverview());
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  app.get("/api/admin/players/:playerId", async (request, response, next) => {
+    try {
+      requireRole(request, "admin");
+      response.json(await getAdminPlayerDetail(request.params.playerId));
     } catch (error) {
       next(error);
     }

@@ -338,6 +338,7 @@ export const buildings: BuildingDefinition[] = [
 export const expeditions: ExpeditionDefinition[] = [
   {
     key: "vashegy_kor",
+    zoneKey: "keleti_perem",
     label: "Vashegy körjárat",
     description: "Rövid expedíció a vasban gazdag peremvidékre.",
     durationMinutes: 5,
@@ -353,6 +354,7 @@ export const expeditions: ExpeditionDefinition[] = [
   },
   {
     key: "kristalyhasadek",
+    zoneKey: "kristalymezok",
     label: "Kristályhasadék",
     description: "Közepes kockázatú út kristályért és energiamag-maradványokért.",
     durationMinutes: 10,
@@ -368,6 +370,7 @@ export const expeditions: ExpeditionDefinition[] = [
   },
   {
     key: "elfeledett_labor",
+    zoneKey: "kristalymezok",
     label: "Elfeledett labor",
     description: "Régi kutatózóna vegyi és mérnöki maradványokkal.",
     durationMinutes: 18,
@@ -383,6 +386,7 @@ export const expeditions: ExpeditionDefinition[] = [
   },
   {
     key: "obszidian_hasadek",
+    zoneKey: "vortex_cluster",
     label: "Obszidián-hasadék",
     description: "Magas kockázatú törésmező ritka sötétfém és éterenergia nyomokkal.",
     durationMinutes: 28,

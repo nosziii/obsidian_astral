@@ -67,6 +67,7 @@ export interface GatheringDefinition {
 
 export interface ExpeditionDefinition {
   key: string;
+  zoneKey: string;
   label: string;
   description: string;
   durationMinutes: number;
@@ -202,6 +203,16 @@ export interface AdminOverview {
   totalAstralite: number;
   averageLevel: number;
   newestPlayers: AdminPlayerSummary[];
+}
+
+export interface AdminPlayerDetail {
+  player: AdminPlayerSummary & {
+    bio: string;
+    fleet: string;
+  };
+  inventory: InventorySnapshot[];
+  buildings: BuildingSnapshot[];
+  activities: ActivitySnapshot[];
 }
 
 export interface EquipmentSnapshot {

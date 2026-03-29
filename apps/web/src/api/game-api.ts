@@ -1,4 +1,13 @@
-import type { AdminActionResult, AdminOverview, AuthSession, ChatChannel, ChatMessageSnapshot, GameState, SessionPlayer } from "@obsidian-astral/shared";
+import type {
+  AdminActionResult,
+  AdminOverview,
+  AdminPlayerDetail,
+  AuthSession,
+  ChatChannel,
+  ChatMessageSnapshot,
+  GameState,
+  SessionPlayer,
+} from "@obsidian-astral/shared";
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:4000";
 
@@ -88,6 +97,7 @@ export const gameApi = {
       body: JSON.stringify(input),
     }),
   adminOverview: () => request<AdminOverview>("/api/admin/overview"),
+  adminPlayerDetail: (playerId: string) => request<AdminPlayerDetail>(`/api/admin/players/${playerId}`),
   equipResource: (resourceKey: string | null) =>
     request<GameState>("/api/profile/equipment", {
       method: "POST",

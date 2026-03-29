@@ -44,6 +44,14 @@ watch(
 
 const selectedZone = computed(() => zoneNodes.value.find((item) => item.key === selectedZoneKey.value) ?? null);
 
+const visibleExpeditions = computed(() => {
+  if (!gameState.value || !selectedZone.value) {
+    return [];
+  }
+
+  return gameState.value.expeditionsCatalog.filter((item) => item.zoneKey === selectedZone.value?.key);
+});
+
 const mapTransform = computed(() => {
   const zone = selectedZone.value;
 
@@ -129,7 +137,7 @@ function centerSelectedZone() {
     <div class="expedition-sidebar">
       <ExpeditionPanel
         :activities="gameState.activities"
-        :catalog="gameState.expeditionsCatalog"
+        :catalog="visibleExpeditions"
         :active-runs="gameState.expeditions"
         :now="activityNow"
         :pending-action="pendingAction"
