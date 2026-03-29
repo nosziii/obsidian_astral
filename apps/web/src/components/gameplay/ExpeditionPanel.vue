@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ExpeditionDefinition, ExpeditionSnapshot } from "@obsidian-astral/shared";
 
+import { formatCategoryLabel } from "../../lib/formatters";
 import BasePanel from "../ui/BasePanel.vue";
 
 const props = defineProps<{
@@ -51,7 +52,7 @@ function progressWidth(expedition: ExpeditionDefinition) {
       <article v-for="expedition in catalog" :key="expedition.key" class="action-card expedition-card">
         <div class="tag-row">
           <span class="compact-label">Célpont</span>
-          <span class="tag-pill" :class="riskTone(expedition.risk)">{{ expedition.risk }}</span>
+          <span class="tag-pill" :class="riskTone(expedition.risk)">{{ formatCategoryLabel(expedition.risk) }}</span>
         </div>
         <div>
           <h4 class="card-title">{{ expedition.label }}</h4>

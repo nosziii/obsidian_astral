@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { RecipeDefinition, ResourceDefinition } from "@obsidian-astral/shared";
 
+import { formatCategoryLabel } from "../../lib/formatters";
+
 const props = defineProps<{
   recipes: RecipeDefinition[];
   resources: ResourceDefinition[];
@@ -57,7 +59,7 @@ function recipeTone(category: RecipeDefinition["category"]) {
         <div class="recipe-icon" :class="recipeTone(recipe.category)">{{ recipeIcon(recipe.category) }}</div>
         <div>
           <div class="tag-row">
-            <span class="tag-pill">{{ recipe.category }}</span>
+            <span class="tag-pill">{{ formatCategoryLabel(recipe.category) }}</span>
             <span class="tag-pill tertiary recipe-status">szint {{ recipe.requiredLevel }}</span>
           </div>
           <h4 class="card-title">{{ recipe.label }}</h4>

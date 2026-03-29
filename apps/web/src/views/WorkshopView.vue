@@ -1,16 +1,31 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
+import type { RecipeCategory } from "@obsidian-astral/shared";
 
 import BuildingPanel from "../components/gameplay/BuildingPanel.vue";
 import CraftingPanel from "../components/gameplay/CraftingPanel.vue";
 import BasePanel from "../components/ui/BasePanel.vue";
 import { useGameState } from "../composables/use-game-state";
+import { formatCategoryLabel } from "../lib/formatters";
 
 const { craft, gameState, pendingAction, upgradeBuilding } = useGameState();
 const selectedRecipeKey = ref<string | null>(null);
+const activeCategory = ref<RecipeCategory | "mind">("mind");
+
+const categoryTabs: Array<RecipeCategory | "mind"> = ["mind", "fegyver", "pancel", "fogyoeszkoz", "anyag"];
+
+const visibleRecipes = computed(() => {
+  if (!gameState.value) {
+    return [];
+  }
+
+  return activeCategory.value === "mind"
+    ? gameState.value.recipes
+    : gameState.value.recipes.filter((item) => item.category === activeCategory.value);
+});
 
 watch(
-  () => gameState.value?.recipes,
+  () => visibleRecipes.value,
   (recipes) => {
     if (!recipes?.length) {
       selectedRecipeKey.value = null;
@@ -25,11 +40,15 @@ watch(
 );
 
 const selectedRecipe = computed(() =>
-  gameState.value?.recipes.find((item) => item.key === selectedRecipeKey.value) ?? null,
+  visibleRecipes.value.find((item) => item.key === selectedRecipeKey.value) ?? visibleRecipes.value[0] ?? null,
 );
 
 function resourceLabel(resourceKey: string) {
   return gameState.value?.resources.find((item) => item.key === resourceKey)?.label ?? resourceKey;
+}
+
+function selectCategory(category: RecipeCategory | "mind") {
+  activeCategory.value = category;
 }
 </script>
 
@@ -53,14 +72,20 @@ function resourceLabel(resourceKey: string) {
           </div>
 
           <div class="workshop-tabs">
-            <span class="workshop-tab is-active">Fegyverek</span>
-            <span class="workshop-tab">Páncél</span>
-            <span class="workshop-tab">Fogyóeszközök</span>
-            <span class="workshop-tab">Anyagok</span>
+            <button
+              v-for="category in categoryTabs"
+              :key="category"
+              class="workshop-tab"
+              :class="{ 'is-active': activeCategory === category }"
+              type="button"
+              @click="selectCategory(category)"
+            >
+              {{ category === "mind" ? "Minden" : formatCategoryLabel(category) }}
+            </button>
           </div>
 
           <CraftingPanel
-            :recipes="gameState.recipes"
+            :recipes="visibleRecipes"
             :resources="gameState.resources"
             :selected-recipe-key="selectedRecipeKey"
             :player-level="gameState.player.level"

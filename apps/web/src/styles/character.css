@@ -149,6 +149,12 @@
   background: rgba(255, 255, 255, 0.04);
 }
 
+.inventory-tile.is-selected {
+  border-color: rgba(121, 238, 248, 0.9);
+  box-shadow: 0 0 0 1px rgba(121, 238, 248, 0.24);
+  color: var(--primary);
+}
+
 .item-detail {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;

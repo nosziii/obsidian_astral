@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
 
 import BasePanel from "../components/ui/BasePanel.vue";
 import { useGameState } from "../composables/use-game-state";
 
 const { gameState } = useGameState();
+const selectedInventoryIndex = ref(0);
+const equippedLabel = ref("Nincs aktív felszerelés");
 
 const stats = computed(() => {
   if (!gameState.value) {
@@ -20,6 +22,22 @@ const stats = computed(() => {
 });
 
 const inventoryPreview = computed(() => gameState.value?.inventory.slice(0, 8) ?? []);
+
+watch(inventoryPreview, (items) => {
+  if (selectedInventoryIndex.value >= items.length) {
+    selectedInventoryIndex.value = 0;
+  }
+});
+
+const selectedInventoryItem = computed(() => inventoryPreview.value[selectedInventoryIndex.value] ?? null);
+
+function activateSelectedItem() {
+  if (!selectedInventoryItem.value) {
+    return;
+  }
+
+  equippedLabel.value = selectedInventoryItem.value.resourceKey;
+}
 </script>
 
 <template>
@@ -71,25 +89,30 @@ const inventoryPreview = computed(() => gameState.value?.inventory.slice(0, 8) ?
       <div class="inventory-shell">
         <div class="inventory-grid">
           <div
-            v-for="index in 20"
+            v-for="(item, index) in Array.from({ length: 20 }, (_value, tileIndex) => inventoryPreview[tileIndex] ?? null)"
             :key="index"
             class="inventory-tile"
-            :class="{ 'is-filled': index <= inventoryPreview.length }"
+            :class="{ 'is-filled': item, 'is-selected': selectedInventoryIndex === index }"
+            @click="selectedInventoryIndex = index"
           >
-            {{ inventoryPreview[index - 1]?.resourceKey?.slice(0, 2).toUpperCase() ?? "·" }}
+            {{ item?.resourceKey?.slice(0, 2).toUpperCase() ?? "·" }}
           </div>
         </div>
 
-        <div v-if="inventoryPreview[0]" class="action-card">
+        <div v-if="selectedInventoryItem" class="action-card">
           <div class="item-detail">
             <div class="recipe-icon tertiary">⚔</div>
             <div>
-              <h4 class="card-title">{{ inventoryPreview[0].resourceKey }}</h4>
-              <p class="muted">Elérhető mennyiség: {{ inventoryPreview[0].quantity }}</p>
+              <h4 class="card-title">{{ selectedInventoryItem.resourceKey }}</h4>
+              <p class="muted">Elérhető mennyiség: {{ selectedInventoryItem.quantity }}</p>
             </div>
             <span class="tag-pill secondary">epic</span>
           </div>
-          <button class="primary-button" type="button">Felszerelés aktiválása</button>
+          <div class="detail-row">
+            <span class="compact-label">Aktív slot</span>
+            <strong>{{ equippedLabel }}</strong>
+          </div>
+          <button class="primary-button" type="button" @click="activateSelectedItem">Felszerelés aktiválása</button>
         </div>
       </div>
     </BasePanel>

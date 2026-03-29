@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { BuildingDefinition, BuildingSnapshot, ResourceDefinition } from "@obsidian-astral/shared";
 
+import { formatCategoryLabel } from "../../lib/formatters";
 import BasePanel from "../ui/BasePanel.vue";
 
 const props = defineProps<{
@@ -41,7 +42,7 @@ function categoryTone(category: BuildingDefinition["category"]) {
     <div class="card-list">
       <article v-for="building in catalog" :key="building.key" class="action-card">
         <div class="tag-row">
-          <span class="tag-pill" :class="categoryTone(building.category)">{{ building.category }}</span>
+          <span class="tag-pill" :class="categoryTone(building.category)">{{ formatCategoryLabel(building.category) }}</span>
           <span class="chip">szint {{ stateFor(building.key)?.level ?? 1 }}</span>
         </div>
         <h4 class="card-title">{{ building.label }}</h4>
