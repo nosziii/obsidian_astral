@@ -81,7 +81,7 @@ export const gameApi = {
       body: JSON.stringify(input),
     }),
   adminOverview: () => request<AdminOverview>("/api/admin/overview"),
-  equipResource: (resourceKey: string) =>
+  equipResource: (resourceKey: string | null) =>
     request<GameState>("/api/profile/equipment", {
       method: "POST",
       body: JSON.stringify({ resourceKey }),

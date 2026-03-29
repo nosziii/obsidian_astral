@@ -3,6 +3,7 @@ import { computed, ref, watch } from "vue";
 
 import BasePanel from "../components/ui/BasePanel.vue";
 import { useGameState } from "../composables/use-game-state";
+import { formatCategoryLabel } from "../lib/formatters";
 
 const { equipResource, gameState, pendingAction } = useGameState();
 const selectedInventoryIndex = ref(0);
@@ -48,6 +49,9 @@ watch(inventoryPreview, (items) => {
 
 const selectedInventoryItem = computed(() => inventoryPreview.value[selectedInventoryIndex.value] ?? null);
 const activeEquipment = computed(() => gameState.value?.equipment[0] ?? null);
+const selectedResource = computed(() =>
+  gameState.value?.resources.find((item) => item.key === selectedInventoryItem.value?.resourceKey) ?? null,
+);
 
 async function activateSelectedItem() {
   if (!selectedInventoryItem.value) {
@@ -55,6 +59,10 @@ async function activateSelectedItem() {
   }
 
   await equipResource(selectedInventoryItem.value.resourceKey);
+}
+
+async function clearEquipment() {
+  await equipResource(null);
 }
 </script>
 
@@ -121,10 +129,11 @@ async function activateSelectedItem() {
           <div class="item-detail">
             <div class="recipe-icon tertiary">⚔</div>
             <div>
-              <h4 class="card-title">{{ selectedInventoryItem.resourceKey }}</h4>
+              <h4 class="card-title">{{ selectedResource?.label ?? selectedInventoryItem.resourceKey }}</h4>
               <p class="muted">Elérhető mennyiség: {{ selectedInventoryItem.quantity }}</p>
+              <p class="muted">{{ selectedResource?.description ?? "Készletben tárolt erőforrás." }}</p>
             </div>
-            <span class="tag-pill secondary">epic</span>
+            <span class="tag-pill secondary">{{ formatCategoryLabel(selectedResource?.tier ?? "alap") }}</span>
           </div>
           <div class="detail-row">
             <span class="compact-label">Aktív slot</span>
@@ -141,6 +150,14 @@ async function activateSelectedItem() {
             @click="activateSelectedItem"
           >
             {{ pendingAction === `equip:${selectedInventoryItem.resourceKey}` ? "Aktiválás…" : "Felszerelés aktiválása" }}
+          </button>
+          <button
+            class="ghost-button"
+            type="button"
+            :disabled="!activeEquipment?.resourceKey || pendingAction === 'equip:none'"
+            @click="clearEquipment"
+          >
+            {{ pendingAction === "equip:none" ? "Levétel…" : "Aktív felszerelés levétele" }}
           </button>
         </div>
       </div>

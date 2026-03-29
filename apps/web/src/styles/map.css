@@ -10,6 +10,13 @@
   overflow: hidden;
 }
 
+.map-canvas {
+  position: absolute;
+  inset: 0;
+  transition: transform 220ms ease;
+  transform-origin: center center;
+}
+
 .map-stage::before {
   content: "";
   position: absolute;
@@ -59,6 +66,15 @@
   gap: 10px;
   justify-items: center;
   text-align: center;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.map-node.is-active .node-diamond {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2), 0 0 32px rgba(121, 238, 248, 0.24);
 }
 
 .node-diamond {
@@ -116,6 +132,7 @@
   place-items: center;
   background: rgba(12, 13, 17, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
 }
 
 .expedition-sidebar {

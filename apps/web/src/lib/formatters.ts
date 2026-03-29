@@ -28,6 +28,9 @@ export function formatCategoryLabel(categoryKey: string) {
     craft: "Craft",
     building: "Építés",
     expedition: "Expedíció",
+    alap: "Alap",
+    halado: "Haladó",
+    esemeny: "Esemény",
   };
 
   return labels[categoryKey] ?? categoryKey;

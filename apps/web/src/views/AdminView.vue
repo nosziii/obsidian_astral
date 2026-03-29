@@ -1,15 +1,34 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 import BasePanel from "../components/ui/BasePanel.vue";
 import { useAuth } from "../composables/use-auth";
 
 const { adminOverview, adminStatus, loadAdminOverview, grantPack, runSystemPulse } = useAuth();
+const query = ref("");
+const activeRole = ref<"mind" | "jatekos" | "admin">("mind");
 
 onMounted(() => {
   if (!adminOverview.value) {
     void loadAdminOverview();
   }
+});
+
+const visiblePlayers = computed(() => {
+  if (!adminOverview.value) {
+    return [];
+  }
+
+  return adminOverview.value.newestPlayers.filter((player) => {
+    const matchesRole = activeRole.value === "mind" || player.role === activeRole.value;
+    const normalizedQuery = query.value.trim().toLowerCase();
+    const matchesQuery =
+      normalizedQuery.length === 0 ||
+      player.name.toLowerCase().includes(normalizedQuery) ||
+      player.email.toLowerCase().includes(normalizedQuery);
+
+    return matchesRole && matchesQuery;
+  });
 });
 </script>
 
@@ -49,6 +68,15 @@ onMounted(() => {
     </div>
 
     <BasePanel title="Új játékosok" subtitle="Commander roster">
+      <div class="admin-toolbar">
+        <input v-model="query" class="auth-input admin-search" type="text" placeholder="Keresés név vagy e-mail alapján" />
+        <div class="chip-row">
+          <button class="ghost-button" :class="{ 'is-active': activeRole === 'mind' }" type="button" @click="activeRole = 'mind'">Mind</button>
+          <button class="ghost-button" :class="{ 'is-active': activeRole === 'jatekos' }" type="button" @click="activeRole = 'jatekos'">Játékos</button>
+          <button class="ghost-button" :class="{ 'is-active': activeRole === 'admin' }" type="button" @click="activeRole = 'admin'">Admin</button>
+        </div>
+      </div>
+
       <div class="admin-table">
         <div class="admin-row admin-row--head">
           <span>Név</span>
@@ -58,7 +86,7 @@ onMounted(() => {
           <span>Kreditek</span>
           <span>Művelet</span>
         </div>
-        <div v-for="player in adminOverview.newestPlayers" :key="player.id" class="admin-row">
+        <div v-for="player in visiblePlayers" :key="player.id" class="admin-row">
           <span>{{ player.name }}</span>
           <span>{{ player.email }}</span>
           <span>{{ player.role }}</span>
@@ -69,6 +97,7 @@ onMounted(() => {
           </button>
         </div>
       </div>
+      <p v-if="!visiblePlayers.length" class="muted">Nincs a szűrésnek megfelelő játékos.</p>
     </BasePanel>
   </div>
 </template>

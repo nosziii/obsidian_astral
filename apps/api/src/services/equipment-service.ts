@@ -2,7 +2,18 @@ import { resourceMap } from "../lib/catalog.js";
 import { GameRuleError } from "../lib/errors.js";
 import { prisma } from "../db.js";
 
-export async function equipResource(playerId: string, resourceKey: string) {
+export async function equipResource(playerId: string, resourceKey: string | null) {
+  if (!resourceKey) {
+    await prisma.player.update({
+      where: { id: playerId },
+      data: {
+        equippedResourceKey: null,
+      },
+    });
+
+    return;
+  }
+
   const inventoryEntry = await prisma.inventoryEntry.findUnique({
     where: {
       playerId_resourceKey: {

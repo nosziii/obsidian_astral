@@ -38,7 +38,7 @@ export const profileUpdateSchema = z.object({
 });
 
 export const equipmentUpdateSchema = z.object({
-  resourceKey: z.string().min(1),
+  resourceKey: z.string().min(1).nullable(),
 });
 
 export const adminGrantPackSchema = z.object({

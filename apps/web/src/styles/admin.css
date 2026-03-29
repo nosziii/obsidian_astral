@@ -23,6 +23,21 @@
   gap: 10px;
 }
 
+.admin-toolbar {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.admin-search {
+  max-width: 420px;
+}
+
+.admin-toolbar .ghost-button.is-active {
+  border-color: rgba(121, 238, 248, 0.24);
+  color: var(--primary);
+}
+
 .admin-row {
   display: grid;
   grid-template-columns: 1.2fr 1.6fr 0.8fr 0.6fr 0.8fr;
