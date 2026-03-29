@@ -61,6 +61,33 @@ async function main() {
 
   await bootstrapPlayerState(player);
   await bootstrapPlayerState(admin);
+
+  const existingMessageCount = await prisma.chatMessage.count();
+
+  if (existingMessageCount === 0) {
+    await prisma.chatMessage.createMany({
+      data: [
+        {
+          playerId: admin.id,
+          channel: "global",
+          authorName: "Admin Parancsnok",
+          content: "Üdv az Obsidian Astral szektorban. A kommunikációs csatorna aktív.",
+        },
+        {
+          playerId: player.id,
+          channel: "global",
+          authorName: playerName,
+          content: "Első műveleti napló bejegyzés rögzítve.",
+        },
+        {
+          playerId: admin.id,
+          channel: "workshop",
+          authorName: "Admin Parancsnok",
+          content: "A műhelycsatornán megoszthatók a craftolási igények és ritka alapanyagok.",
+        },
+      ],
+    });
+  }
 }
 
 main()

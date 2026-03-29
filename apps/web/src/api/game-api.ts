@@ -1,4 +1,4 @@
-import type { AdminActionResult, AdminOverview, AuthSession, GameState, SessionPlayer } from "@obsidian-astral/shared";
+import type { AdminActionResult, AdminOverview, AuthSession, ChatChannel, ChatMessageSnapshot, GameState, SessionPlayer } from "@obsidian-astral/shared";
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:4000";
 
@@ -35,6 +35,13 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 
 export const gameApi = {
   getState: () => request<GameState>("/api/game-state"),
+  listChatMessages: (channel: ChatChannel) =>
+    request<ChatMessageSnapshot[]>(`/api/chat?channel=${channel}`),
+  sendChatMessage: (channel: ChatChannel, content: string) =>
+    request<ChatMessageSnapshot[]>("/api/chat", {
+      method: "POST",
+      body: JSON.stringify({ channel, content }),
+    }),
   gather: (actionKey: string) =>
     request<GameState>("/api/actions/gather", {
       method: "POST",

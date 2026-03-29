@@ -5,6 +5,7 @@ import type { RecipeCategory } from "@obsidian-astral/shared";
 import BuildingPanel from "../components/gameplay/BuildingPanel.vue";
 import CraftingPanel from "../components/gameplay/CraftingPanel.vue";
 import ActivityTimeline from "../components/gameplay/ActivityTimeline.vue";
+import ChatPanel from "../components/gameplay/ChatPanel.vue";
 import BasePanel from "../components/ui/BasePanel.vue";
 import { useGameState } from "../composables/use-game-state";
 import { formatCategoryLabel } from "../lib/formatters";
@@ -158,17 +159,7 @@ const selectedRecipeActivity = computed(() => {
           </div>
         </div>
 
-        <div class="chat-card">
-          <div class="chat-tabs">
-            <span class="chat-tab is-active">Műhely chat</span>
-            <span class="chat-tab">Klán chat</span>
-          </div>
-          <div class="chat-messages">
-            <p class="chat-line"><strong>[Xenon]:</strong> Van fölös sztár-vas trading logic core-ért.</p>
-            <p class="chat-line"><strong>[Nova_01]:</strong> Új raidhoz még több gyógyító csomag kell.</p>
-            <p class="chat-line"><strong>[Shadow]:</strong> T7 pajzsot adok a déli szektorban.</p>
-          </div>
-        </div>
+        <ChatPanel channel="workshop" subtitle="Workshop chat" title="Műhely kommunikáció" />
 
         <button
           class="primary-button"

@@ -44,3 +44,8 @@ export const equipmentUpdateSchema = z.object({
 export const adminGrantPackSchema = z.object({
   playerId: z.string().min(1),
 });
+
+export const chatMessageCreateSchema = z.object({
+  channel: z.enum(["global", "workshop"]),
+  content: z.string().trim().min(1).max(280),
+});

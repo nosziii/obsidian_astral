@@ -336,6 +336,13 @@
   color: var(--text-main);
 }
 
+.chat-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+}
+
 @media (max-width: 1280px) {
   .dashboard-grid,
   .dashboard-lower {

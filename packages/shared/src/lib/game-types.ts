@@ -5,6 +5,7 @@ export type ExpeditionRisk = "alacsony" | "kozepes" | "magas";
 export type UserRole = "jatekos" | "admin";
 export type ActivityKind = "gathering" | "craft" | "building" | "expedition";
 export type ActivityStatus = "folyamatban" | "befejezve";
+export type ChatChannel = "global" | "workshop";
 export type ProfessionKey =
   | "favagas"
   | "banyaszat"
@@ -141,6 +142,14 @@ export interface ZoneSnapshot {
   recommendedLevel: number;
   risk: ExpeditionRisk;
   status: ZoneStatus;
+}
+
+export interface ChatMessageSnapshot {
+  id: string;
+  channel: ChatChannel;
+  authorName: string;
+  content: string;
+  createdAt: string;
 }
 
 export interface GameState {

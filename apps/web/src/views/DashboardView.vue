@@ -2,8 +2,8 @@
 import PlayerHero from "../components/dashboard/PlayerHero.vue";
 import ResourceGrid from "../components/dashboard/ResourceGrid.vue";
 import ActivityFeed from "../components/gameplay/ActivityFeed.vue";
+import ChatPanel from "../components/gameplay/ChatPanel.vue";
 import GatheringPanel from "../components/gameplay/GatheringPanel.vue";
-import BasePanel from "../components/ui/BasePanel.vue";
 import { useGameState } from "../composables/use-game-state";
 
 const { activityNow, gameState, gather, pendingAction } = useGameState();
@@ -29,20 +29,7 @@ const { activityNow, gameState, gather, pendingAction } = useGameState();
       <ActivityFeed :activities="gameState.activities" :now="activityNow" />
     </div>
 
-    <BasePanel title="Belső kommunikáció" subtitle="Global chat">
-      <div class="chat-card">
-        <div class="chat-tabs">
-          <span class="chat-tab is-active">Globál chat</span>
-          <span class="chat-tab">Klán chat</span>
-        </div>
-        <div class="chat-messages">
-          <p class="chat-line"><strong>[Nightstalker]:</strong> Esti bányász runhoz kell még egy healer.</p>
-          <p class="chat-line"><strong>[Vortex_7]:</strong> Arra csereérett ritka kőzetet keresek.</p>
-          <p class="chat-line"><strong>[Admin]:</strong> Karbantartás 4 órán belül.</p>
-        </div>
-        <input class="chat-input" type="text" placeholder="Írj üzenetet…" />
-      </div>
-    </BasePanel>
+    <ChatPanel channel="global" subtitle="Global chat" title="Belső kommunikáció" />
 
     <div class="view-grid">
       <BasePanel title="Passzív termelés" subtitle="Bázis output">

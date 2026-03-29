@@ -27,6 +27,7 @@ model Player {
   inventory           InventoryEntry[]
   buildings           BuildingState[]
   expeditions         ExpeditionRun[]
+  chatMessages        ChatMessage[]
   timedActions        TimedAction[]
   sessions            Session[]
 }
@@ -78,6 +79,18 @@ model Session {
   player     Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
 
   @@index([playerId])
+}
+
+model ChatMessage {
+  id         String   @id @default(cuid())
+  playerId   String?
+  channel    String
+  authorName String
+  content    String
+  createdAt  DateTime @default(now())
+  player     Player?  @relation(fields: [playerId], references: [id], onDelete: SetNull)
+
+  @@index([channel, createdAt])
 }
 
 model TimedAction {

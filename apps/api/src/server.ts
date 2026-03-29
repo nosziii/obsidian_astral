@@ -1,6 +1,7 @@
 import cors from "cors";
 import express from "express";
 import {
+  chatMessageCreateSchema,
   adminGrantPackSchema,
   loginSchema,
   equipmentUpdateSchema,
@@ -16,6 +17,7 @@ import {
 import { config } from "./config.js";
 import { GameRuleError } from "./lib/errors.js";
 import { attachAuthSession, requireAuth, requireRole } from "./lib/request-auth.js";
+import { createChatMessage, listChatMessages } from "./services/chat-service.js";
 import { getAdminOverview, grantStarterPack, triggerSystemPulse } from "./services/admin-service.js";
 import { getSessionByToken, loginAccount, logoutAccount, registerAccount, updateProfile } from "./services/auth-service.js";
 import { equipResource } from "./services/equipment-service.js";
@@ -92,6 +94,30 @@ export function createServer() {
   app.get("/api/game-state", async (_request, response, next) => {
     try {
       response.json(await getGameState(requireAuth(_request).player.id));
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  app.get("/api/chat", async (request, response, next) => {
+    try {
+      requireAuth(request);
+      const channel = request.query.channel;
+
+      if (channel !== "global" && channel !== "workshop") {
+        throw new GameRuleError("Ismeretlen chat csatorna.", 400);
+      }
+
+      response.json(await listChatMessages(channel));
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  app.post("/api/chat", async (request, response, next) => {
+    try {
+      const body = chatMessageCreateSchema.parse(request.body);
+      response.status(201).json(await createChatMessage(requireAuth(request).player.id, body.channel, body.content));
     } catch (error) {
       next(error);
     }
