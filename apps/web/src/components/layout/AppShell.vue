@@ -1,14 +1,19 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { RouterLink, RouterView, useRoute } from "vue-router";
+import { RouterLink, RouterView, useRoute, useRouter } from "vue-router";
 
+import { useAuth } from "../../composables/use-auth";
 import { useGameState } from "../../composables/use-game-state";
-import { routes } from "../../router";
+import { protectedRoutes } from "../../router";
 
 const route = useRoute();
+const router = useRouter();
 const { errorMessage, gameState, isLoading, refresh } = useGameState();
+const { logout, session } = useAuth();
 
-const navigationItems = routes.filter((item) => item.path && item.path !== "/");
+const navigationItems = computed(() =>
+  protectedRoutes.filter((item) => !(item.meta?.adminOnly && session.value?.player.role !== "admin")),
+);
 const activeLabel = computed(() => route.meta.label ?? "Dashboard");
 
 const initials = computed(() =>
@@ -35,6 +40,11 @@ const topbarMetrics = computed(() => {
     },
   ];
 });
+
+async function handleLogout() {
+  await logout();
+  await router.push("/auth/login");
+}
 </script>
 
 <template>
@@ -45,11 +55,13 @@ const topbarMetrics = computed(() => {
         <h1 class="brand">Parancsnoki hálózat</h1>
       </div>
 
-      <div v-if="gameState" class="sidebar-profile">
+        <div v-if="gameState" class="sidebar-profile">
         <div class="profile-avatar">{{ initials }}</div>
         <div>
-          <p class="profile-name">{{ gameState.player.name }}</p>
-          <p class="profile-meta">Szint {{ gameState.player.level }}</p>
+          <p class="profile-name">{{ session?.player.name ?? gameState.player.name }}</p>
+          <p class="profile-meta">
+            {{ session?.player.role === "admin" ? "Admin hozzáférés" : `Szint ${gameState.player.level}` }}
+          </p>
         </div>
       </div>
 
@@ -57,7 +69,7 @@ const topbarMetrics = computed(() => {
         <RouterLink
           v-for="item in navigationItems"
           :key="item.path"
-          :to="item.path"
+          :to="`/${item.path}`"
           class="nav-link"
           active-class="is-active"
         >
@@ -66,8 +78,8 @@ const topbarMetrics = computed(() => {
       </nav>
 
       <div class="sidebar-footer">
-        <a class="support-link" href="#">Beállítások</a>
-        <a class="support-link" href="#">Támogatás</a>
+        <RouterLink class="support-link" to="/profile">Profil</RouterLink>
+        <button class="support-link sidebar-button" type="button" @click="handleLogout">Kijelentkezés</button>
       </div>
     </aside>
 
@@ -89,7 +101,7 @@ const topbarMetrics = computed(() => {
 
           <div v-if="gameState" class="topbar-user">
             <div>
-              <p class="eyebrow">Commander</p>
+              <p class="eyebrow">{{ session?.player.role === "admin" ? "Admin" : "Commander" }}</p>
               <p class="profile-meta">LVL {{ gameState.player.level }}</p>
             </div>
             <div class="topbar-avatar">{{ initials }}</div>

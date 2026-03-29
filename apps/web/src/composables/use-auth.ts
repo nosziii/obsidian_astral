@@ -1,0 +1,108 @@
+import { computed, ref } from "vue";
+import type { AdminOverview, AuthSession } from "@obsidian-astral/shared";
+
+import { gameApi, setApiAuthToken } from "../api/game-api";
+
+const STORAGE_KEY = "obsidian-astral-token";
+
+const session = ref<AuthSession | null>(null);
+const authLoaded = ref(false);
+const authError = ref("");
+const adminOverview = ref<AdminOverview | null>(null);
+
+function syncToken(token: string | null) {
+  setApiAuthToken(token);
+
+  if (token) {
+    localStorage.setItem(STORAGE_KEY, token);
+  } else {
+    localStorage.removeItem(STORAGE_KEY);
+  }
+}
+
+function applySession(nextSession: AuthSession | null) {
+  session.value = nextSession;
+  syncToken(nextSession?.token ?? null);
+}
+
+export async function loadAuthSession() {
+  const token = localStorage.getItem(STORAGE_KEY);
+  syncToken(token);
+
+  if (!token) {
+    session.value = null;
+    authLoaded.value = true;
+    return null;
+  }
+
+  try {
+    session.value = await gameApi.session();
+    syncToken(session.value?.token ?? null);
+    authError.value = "";
+  } catch (error) {
+    session.value = null;
+    syncToken(null);
+    authError.value = error instanceof Error ? error.message : "Nem sikerült helyreállítani a munkamenetet.";
+  } finally {
+    authLoaded.value = true;
+  }
+
+  return session.value;
+}
+
+export function useAuth() {
+  async function login(email: string, password: string) {
+    const nextSession = await gameApi.login({ email, password });
+    applySession(nextSession);
+    authLoaded.value = true;
+    authError.value = "";
+    return nextSession;
+  }
+
+  async function register(name: string, email: string, password: string) {
+    const nextSession = await gameApi.register({ name, email, password });
+    applySession(nextSession);
+    authLoaded.value = true;
+    authError.value = "";
+    return nextSession;
+  }
+
+  async function logout() {
+    try {
+      await gameApi.logout();
+    } finally {
+      applySession(null);
+      adminOverview.value = null;
+    }
+  }
+
+  async function saveProfile(input: { name: string; bio: string; fleet: string }) {
+    const player = await gameApi.updateProfile(input);
+
+    if (session.value) {
+      session.value = {
+        ...session.value,
+        player,
+      };
+    }
+
+    return player;
+  }
+
+  async function loadAdminOverview() {
+    adminOverview.value = await gameApi.adminOverview();
+    return adminOverview.value;
+  }
+
+  return {
+    session: computed(() => session.value),
+    authLoaded: computed(() => authLoaded.value),
+    authError: computed(() => authError.value),
+    adminOverview: computed(() => adminOverview.value),
+    login,
+    register,
+    logout,
+    saveProfile,
+    loadAdminOverview,
+  };
+}

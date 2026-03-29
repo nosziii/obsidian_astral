@@ -9,7 +9,12 @@ datasource db {
 
 model Player {
   id          String           @id @default(cuid())
+  email       String?          @unique
+  passwordHash String?
+  role        String           @default("jatekos")
   name        String
+  bio         String           @default("Új parancsnok az Obsidian Astral szektorban.")
+  fleet       String           @default("Nebulous Vanguard")
   level       Int              @default(1)
   xp          Int              @default(0)
   energy      Int              @default(100)
@@ -21,6 +26,7 @@ model Player {
   inventory   InventoryEntry[]
   buildings   BuildingState[]
   expeditions ExpeditionRun[]
+  sessions    Session[]
 }
 
 model InventoryEntry {
@@ -59,4 +65,15 @@ model ExpeditionRun {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   player        Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+}
+
+model Session {
+  id         String   @id @default(cuid())
+  playerId   String
+  token      String   @unique
+  createdAt  DateTime @default(now())
+  expiresAt  DateTime
+  player     Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@index([playerId])
 }

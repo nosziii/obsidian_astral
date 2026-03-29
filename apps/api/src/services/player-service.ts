@@ -195,8 +195,74 @@ export async function ensurePlayer(sync = true): Promise<PlayerState> {
   return player;
 }
 
-export async function getGameState(): Promise<GameState> {
-  const player = await ensurePlayer();
+export async function ensurePlayerById(playerId: string, sync = true): Promise<PlayerState> {
+  let player = await prisma.player.findUnique({
+    where: { id: playerId },
+    include: {
+      inventory: true,
+      buildings: true,
+      expeditions: {
+        where: {
+          claimedAt: null,
+        },
+        orderBy: {
+          endsAt: "asc",
+        },
+      },
+    },
+  });
+
+  if (!player) {
+    throw new Error("A játékos nem található.");
+  }
+
+  if (sync) {
+    const catalogChanged = await syncCatalogState(player);
+
+    if (catalogChanged) {
+      player = await prisma.player.findUnique({
+        where: { id: playerId },
+        include: {
+          inventory: true,
+          buildings: true,
+          expeditions: {
+            where: { claimedAt: null },
+            orderBy: { endsAt: "asc" },
+          },
+        },
+      });
+    }
+
+    if (!player) {
+      throw new Error("A játékos állapot nem tölthető be a katalógus szinkron után.");
+    }
+
+    const changed = await syncPassiveProduction(player);
+
+    if (changed) {
+      player = await prisma.player.findUnique({
+        where: { id: playerId },
+        include: {
+          inventory: true,
+          buildings: true,
+          expeditions: {
+            where: { claimedAt: null },
+            orderBy: { endsAt: "asc" },
+          },
+        },
+      });
+    }
+
+    if (!player) {
+      throw new Error("A játékos állapot nem tölthető be a passzív szinkron után.");
+    }
+  }
+
+  return player;
+}
+
+export async function getGameState(playerId?: string): Promise<GameState> {
+  const player = playerId ? await ensurePlayerById(playerId) : await ensurePlayer();
 
   const playerSnapshot: PlayerSnapshot = {
     id: player.id,

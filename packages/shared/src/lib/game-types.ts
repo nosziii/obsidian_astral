@@ -2,6 +2,7 @@ export type ResourceTier = "alap" | "kozepes" | "halado" | "esemeny";
 export type RecipeCategory = "fegyver" | "pancel" | "fogyoeszkoz" | "anyag";
 export type BuildingCategory = "kitermeles" | "feldolgozas" | "tamogatas";
 export type ExpeditionRisk = "alacsony" | "kozepes" | "magas";
+export type UserRole = "jatekos" | "admin";
 export type ProfessionKey =
   | "favagas"
   | "banyaszat"
@@ -142,4 +143,39 @@ export interface GameState {
   professions: ProfessionSnapshot[];
   passiveProduction: PassiveProductionSnapshot[];
   zones: ZoneSnapshot[];
+}
+
+export interface SessionPlayer {
+  id: string;
+  email: string;
+  name: string;
+  role: UserRole;
+  level: number;
+  bio: string;
+  fleet: string;
+}
+
+export interface AuthSession {
+  token: string;
+  player: SessionPlayer;
+}
+
+export interface AdminPlayerSummary {
+  id: string;
+  email: string;
+  name: string;
+  role: UserRole;
+  level: number;
+  credits: number;
+  astralite: number;
+  createdAt: string;
+}
+
+export interface AdminOverview {
+  totalPlayers: number;
+  activeExpeditions: number;
+  totalCredits: number;
+  totalAstralite: number;
+  averageLevel: number;
+  newestPlayers: AdminPlayerSummary[];
 }

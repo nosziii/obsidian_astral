@@ -1,18 +1,33 @@
-import type { GameState } from "@obsidian-astral/shared";
+import type { AdminOverview, AuthSession, GameState, SessionPlayer } from "@obsidian-astral/shared";
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:4000";
 
+let authToken: string | null = null;
+
+export function setApiAuthToken(token: string | null) {
+  authToken = token;
+}
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
+  const headers = new Headers(init?.headers);
+  headers.set("Content-Type", "application/json");
+
+  if (authToken) {
+    headers.set("Authorization", `Bearer ${authToken}`);
+  }
+
   const response = await fetch(`${apiBaseUrl}${path}`, {
-    headers: {
-      "Content-Type": "application/json",
-    },
     ...init,
+    headers,
   });
 
   if (!response.ok) {
     const body = (await response.json().catch(() => null)) as { message?: string } | null;
     throw new Error(body?.message ?? "A kérés sikertelen volt.");
+  }
+
+  if (response.status === 204) {
+    return undefined as T;
   }
 
   return response.json() as Promise<T>;
@@ -45,4 +60,25 @@ export const gameApi = {
       method: "POST",
       body: JSON.stringify({ expeditionId }),
     }),
+  register: (input: { email: string; password: string; name: string }) =>
+    request<AuthSession>("/api/auth/register", {
+      method: "POST",
+      body: JSON.stringify(input),
+    }),
+  login: (input: { email: string; password: string }) =>
+    request<AuthSession>("/api/auth/login", {
+      method: "POST",
+      body: JSON.stringify(input),
+    }),
+  session: () => request<AuthSession | null>("/api/auth/session"),
+  logout: () =>
+    request<void>("/api/auth/logout", {
+      method: "POST",
+    }),
+  updateProfile: (input: { name: string; bio: string; fleet: string }) =>
+    request<SessionPlayer>("/api/profile", {
+      method: "PATCH",
+      body: JSON.stringify(input),
+    }),
+  adminOverview: () => request<AdminOverview>("/api/admin/overview"),
 };

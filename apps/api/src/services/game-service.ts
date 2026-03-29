@@ -6,7 +6,7 @@ import { GameRuleError } from "../lib/errors.js";
 import { applyXp } from "../lib/leveling.js";
 import { changeInventory, scaledRewards } from "./inventory-service.js";
 import type { PlayerState } from "./player-service.js";
-import { ensurePlayer, getGameState } from "./player-service.js";
+import { ensurePlayerById, getGameState } from "./player-service.js";
 
 async function applyPlayerProgress(playerId: string, energyDelta: number, gainedXp: number) {
   const player = await prisma.player.findUniqueOrThrow({ where: { id: playerId } });
@@ -45,14 +45,14 @@ function ensureLevelRequirement(playerLevel: number, requiredLevel: number, labe
   }
 }
 
-export async function gatherResources(actionKey: string) {
+export async function gatherResources(playerId: string, actionKey: string) {
   const action = gatheringMap.get(actionKey);
 
   if (!action) {
     throw new GameRuleError("Ismeretlen gyűjtési művelet.", 404);
   }
 
-  const player = await ensurePlayer();
+  const player = await ensurePlayerById(playerId);
   ensureLevelRequirement(player.level, action.requiredLevel, action.label);
 
   const sawmillLevel = player.buildings.find((item: PlayerState["buildings"][number]) => item.buildingKey === "furesztelep")?.level ?? 1;
@@ -72,17 +72,17 @@ export async function gatherResources(actionKey: string) {
   await applyPlayerProgress(player.id, -action.energyCost, action.rewardXp);
   await changeInventory(player.id, scaledRewards(action.yields, bonusMultiplier), "add");
 
-  return getGameState();
+  return getGameState(playerId);
 }
 
-export async function craftRecipe(recipeKey: string) {
+export async function craftRecipe(playerId: string, recipeKey: string) {
   const recipe = recipeMap.get(recipeKey);
 
   if (!recipe) {
     throw new GameRuleError("Ismeretlen recept.", 404);
   }
 
-  const player = await ensurePlayer();
+  const player = await ensurePlayerById(playerId);
   ensureLevelRequirement(player.level, recipe.requiredLevel, recipe.label);
 
   const furnaceLevel = player.buildings.find((item: PlayerState["buildings"][number]) => item.buildingKey === "koho")?.level ?? 1;
@@ -97,7 +97,7 @@ export async function craftRecipe(recipeKey: string) {
   await changeInventory(player.id, scaledRewards(recipe.produces, bonusMultiplier), "add");
   await applyPlayerProgress(player.id, -6, recipe.rewardXp);
 
-  return getGameState();
+  return getGameState(playerId);
 }
 
 function buildUpgradeCost(level: number, baseCost: RecipeIngredient[]): RecipeIngredient[] {
@@ -107,14 +107,14 @@ function buildUpgradeCost(level: number, baseCost: RecipeIngredient[]): RecipeIn
   }));
 }
 
-export async function upgradeBuilding(buildingKey: string) {
+export async function upgradeBuilding(playerId: string, buildingKey: string) {
   const definition = buildingMap.get(buildingKey);
 
   if (!definition) {
     throw new GameRuleError("Ismeretlen épület.", 404);
   }
 
-  const player = await ensurePlayer();
+  const player = await ensurePlayerById(playerId);
   ensureLevelRequirement(player.level, definition.requiredLevel, definition.label);
 
   const building = player.buildings.find((item: PlayerState["buildings"][number]) => item.buildingKey === buildingKey);
@@ -141,7 +141,7 @@ export async function upgradeBuilding(buildingKey: string) {
 
   await applyPlayerProgress(player.id, -8, 28 + targetLevel * 6);
 
-  return getGameState();
+  return getGameState(playerId);
 }
 
 function createExpeditionRewards(expeditionKey: string) {
@@ -162,14 +162,14 @@ function createExpeditionRewards(expeditionKey: string) {
   return rewards;
 }
 
-export async function startExpedition(expeditionKey: string) {
+export async function startExpedition(playerId: string, expeditionKey: string) {
   const definition = expeditionMap.get(expeditionKey);
 
   if (!definition) {
     throw new GameRuleError("Ismeretlen expedíció.", 404);
   }
 
-  const player = await ensurePlayer();
+  const player = await ensurePlayerById(playerId);
   ensureLevelRequirement(player.level, definition.requiredLevel, definition.label);
 
   const activeRuns = player.expeditions.filter(
@@ -196,11 +196,11 @@ export async function startExpedition(expeditionKey: string) {
     },
   });
 
-  return getGameState();
+  return getGameState(playerId);
 }
 
-export async function claimExpedition(expeditionId: string) {
-  const player = await ensurePlayer();
+export async function claimExpedition(playerId: string, expeditionId: string) {
+  const player = await ensurePlayerById(playerId);
   const expedition = await prisma.expeditionRun.findUnique({
     where: { id: expeditionId },
   });
@@ -230,5 +230,5 @@ export async function claimExpedition(expeditionId: string) {
   });
   await applyPlayerProgress(player.id, 0, definition?.rewardXp ?? 0);
 
-  return getGameState();
+  return getGameState(playerId);
 }

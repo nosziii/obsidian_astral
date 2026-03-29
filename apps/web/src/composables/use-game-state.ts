@@ -8,6 +8,13 @@ const pendingAction = ref<string | null>(null);
 const errorMessage = ref("");
 const loaded = ref(false);
 
+export function clearGameState() {
+  gameState.value = null;
+  pendingAction.value = null;
+  errorMessage.value = "";
+  loaded.value = false;
+}
+
 async function loadGameState() {
   try {
     errorMessage.value = "";
