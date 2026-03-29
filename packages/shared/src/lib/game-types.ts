@@ -3,6 +3,8 @@ export type RecipeCategory = "fegyver" | "pancel" | "fogyoeszkoz" | "anyag";
 export type BuildingCategory = "kitermeles" | "feldolgozas" | "tamogatas";
 export type ExpeditionRisk = "alacsony" | "kozepes" | "magas";
 export type UserRole = "jatekos" | "admin";
+export type ActivityKind = "gathering" | "craft" | "building" | "expedition";
+export type ActivityStatus = "folyamatban" | "befejezve";
 export type ProfessionKey =
   | "favagas"
   | "banyaszat"
@@ -102,9 +104,19 @@ export interface ExpeditionSnapshot {
   id: string;
   key: string;
   label: string;
-  status: "folyamatban" | "befejezve";
+  status: ActivityStatus;
   endsAt: string;
   startedAt: string;
+}
+
+export interface ActivitySnapshot {
+  id: string;
+  kind: ActivityKind;
+  targetKey: string;
+  label: string;
+  status: ActivityStatus;
+  startedAt: string;
+  endsAt: string;
 }
 
 export interface ProfessionSnapshot {
@@ -136,6 +148,7 @@ export interface GameState {
   inventory: InventorySnapshot[];
   buildings: BuildingSnapshot[];
   expeditions: ExpeditionSnapshot[];
+  activities: ActivitySnapshot[];
   resources: ResourceDefinition[];
   recipes: RecipeDefinition[];
   gatherings: GatheringDefinition[];

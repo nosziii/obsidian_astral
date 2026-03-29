@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import type { BuildingDefinition, BuildingSnapshot, ResourceDefinition } from "@obsidian-astral/shared";
+import type { ActivitySnapshot, BuildingDefinition, BuildingSnapshot, ResourceDefinition } from "@obsidian-astral/shared";
 
 import { formatCategoryLabel } from "../../lib/formatters";
+import ActivityTimeline from "./ActivityTimeline.vue";
 import BasePanel from "../ui/BasePanel.vue";
 
 const props = defineProps<{
+  activities: ActivitySnapshot[];
   catalog: BuildingDefinition[];
+  now: number;
   states: BuildingSnapshot[];
   resources: ResourceDefinition[];
   pendingAction: string | null;
@@ -18,6 +21,10 @@ const emit = defineEmits<{
 
 function stateFor(buildingKey: string) {
   return props.states.find((item) => item.key === buildingKey);
+}
+
+function activityFor(buildingKey: string) {
+  return props.activities.find((item) => item.kind === "building" && item.targetKey === buildingKey) ?? null;
 }
 
 function resourceLabel(resourceKey: string) {
@@ -57,16 +64,17 @@ function categoryTone(category: BuildingDefinition["category"]) {
             <strong>{{ building.requiredLevel }}. szint</strong>
           </div>
         </div>
+        <ActivityTimeline :activity="activityFor(building.key)" :now="now" idle-text="Nincs aktív fejlesztés" />
         <button
           class="secondary-button"
           type="button"
-          :disabled="playerLevel < building.requiredLevel || pendingAction === `building:${building.key}`"
+          :disabled="playerLevel < building.requiredLevel || pendingAction === `building:${building.key}` || !!activityFor(building.key)"
           @click="emit('upgrade', building.key)"
         >
           {{
             playerLevel < building.requiredLevel
               ? `${building.requiredLevel}. szint kell`
-              : pendingAction === `building:${building.key}`
+              : pendingAction === `building:${building.key}` || activityFor(building.key)
                 ? "Fejlesztés…"
                 : "Szintlépés"
           }}

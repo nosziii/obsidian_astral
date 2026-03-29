@@ -1,4 +1,4 @@
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
 import type { GameState } from "@obsidian-astral/shared";
 
 import { gameApi } from "../api/game-api";
@@ -7,6 +7,11 @@ const gameState = ref<GameState | null>(null);
 const pendingAction = ref<string | null>(null);
 const errorMessage = ref("");
 const loaded = ref(false);
+const activityNow = ref(Date.now());
+
+let consumerCount = 0;
+let clockHandle: number | null = null;
+let refreshHandle: number | null = null;
 
 export function clearGameState() {
   gameState.value = null;
@@ -26,6 +31,18 @@ async function loadGameState() {
   }
 }
 
+async function refreshActiveState() {
+  if (!gameState.value?.activities.some((item) => item.status === "folyamatban") || pendingAction.value) {
+    return;
+  }
+
+  try {
+    gameState.value = await gameApi.getState();
+  } catch (error) {
+    errorMessage.value = error instanceof Error ? error.message : "Nem sikerült frissíteni az eseményállapotot.";
+  }
+}
+
 async function runAction(actionKey: string, operation: () => Promise<GameState>) {
   pendingAction.value = actionKey;
 
@@ -41,12 +58,43 @@ async function runAction(actionKey: string, operation: () => Promise<GameState>)
 
 export function useGameState() {
   onMounted(() => {
+    consumerCount += 1;
+
     if (!loaded.value) {
       void loadGameState();
+    }
+
+    if (clockHandle === null) {
+      clockHandle = window.setInterval(() => {
+        activityNow.value = Date.now();
+      }, 1_000);
+    }
+
+    if (refreshHandle === null) {
+      refreshHandle = window.setInterval(() => {
+        void refreshActiveState();
+      }, 5_000);
+    }
+  });
+
+  onUnmounted(() => {
+    consumerCount -= 1;
+
+    if (consumerCount <= 0) {
+      if (clockHandle !== null) {
+        window.clearInterval(clockHandle);
+        clockHandle = null;
+      }
+
+      if (refreshHandle !== null) {
+        window.clearInterval(refreshHandle);
+        refreshHandle = null;
+      }
     }
   });
 
   return {
+    activityNow: computed(() => activityNow.value),
     gameState: computed(() => gameState.value),
     errorMessage: computed(() => errorMessage.value),
     isLoading: computed(() => !loaded.value && !gameState.value),

@@ -1,4 +1,5 @@
 import type {
+  ActivitySnapshot,
   BuildingSnapshot,
   EquipmentSnapshot,
   ExpeditionSnapshot,
@@ -21,8 +22,9 @@ import {
 } from "@obsidian-astral/shared";
 
 import { prisma } from "../db.js";
-import { buildingMap, resourceMap } from "../lib/catalog.js";
+import { buildingMap, expeditionMap, gatheringMap, recipeMap, resourceMap } from "../lib/catalog.js";
 import { xpToNextLevel } from "../lib/leveling.js";
+import { syncTimedActions } from "./activity-service.js";
 import { syncPassiveProduction } from "./passive-service.js";
 
 async function loadPlayerState() {
@@ -33,6 +35,14 @@ async function loadPlayerState() {
       expeditions: {
         where: {
           claimedAt: null,
+        },
+        orderBy: {
+          endsAt: "asc",
+        },
+      },
+      timedActions: {
+        where: {
+          status: "folyamatban",
         },
         orderBy: {
           endsAt: "asc",
@@ -180,6 +190,41 @@ function createEquipmentSnapshots(player: PlayerState): EquipmentSnapshot[] {
   ];
 }
 
+function createActivitySnapshots(player: PlayerState): ActivitySnapshot[] {
+  const timedActivities: ActivitySnapshot[] = player.timedActions.map((entry: PlayerState["timedActions"][number]) => {
+    const label =
+      entry.kind === "gathering"
+        ? gatheringMap.get(entry.targetKey)?.label
+        : entry.kind === "craft"
+          ? recipeMap.get(entry.targetKey)?.label
+          : buildingMap.get(entry.targetKey)?.label;
+
+    return {
+      id: entry.id,
+      kind: entry.kind as ActivitySnapshot["kind"],
+      targetKey: entry.targetKey,
+      label: label ?? entry.targetKey,
+      status: "folyamatban",
+      startedAt: entry.startedAt.toISOString(),
+      endsAt: entry.endsAt.toISOString(),
+    };
+  });
+
+  const expeditionActivities: ActivitySnapshot[] = player.expeditions.map((entry: PlayerState["expeditions"][number]) => ({
+    id: entry.id,
+    kind: "expedition",
+    targetKey: entry.expeditionKey,
+    label: expeditionMap.get(entry.expeditionKey)?.label ?? entry.expeditionKey,
+    status: entry.endsAt.getTime() <= Date.now() ? "befejezve" : "folyamatban",
+    startedAt: entry.startedAt.toISOString(),
+    endsAt: entry.endsAt.toISOString(),
+  }));
+
+  return [...timedActivities, ...expeditionActivities].sort(
+    (left, right) => new Date(left.endsAt).getTime() - new Date(right.endsAt).getTime(),
+  );
+}
+
 export async function ensurePlayer(sync = true): Promise<PlayerState> {
   let player = await loadPlayerState();
 
@@ -198,9 +243,19 @@ export async function ensurePlayer(sync = true): Promise<PlayerState> {
       }
     }
 
-    const changed = await syncPassiveProduction(player);
+    const timedActionsChanged = await syncTimedActions(player.id);
 
-    if (changed) {
+    if (timedActionsChanged) {
+      player = await loadPlayerState();
+
+      if (!player) {
+        throw new Error("A játékos állapot nem tölthető be az eseményszinkron után.");
+      }
+    }
+
+    const passiveChanged = await syncPassiveProduction(player);
+
+    if (passiveChanged) {
       player = await loadPlayerState();
 
       if (!player) {
@@ -226,6 +281,14 @@ export async function ensurePlayerById(playerId: string, sync = true): Promise<P
           endsAt: "asc",
         },
       },
+      timedActions: {
+        where: {
+          status: "folyamatban",
+        },
+        orderBy: {
+          endsAt: "asc",
+        },
+      },
     },
   });
 
@@ -246,12 +309,40 @@ export async function ensurePlayerById(playerId: string, sync = true): Promise<P
             where: { claimedAt: null },
             orderBy: { endsAt: "asc" },
           },
+          timedActions: {
+            where: { status: "folyamatban" },
+            orderBy: { endsAt: "asc" },
+          },
         },
       });
     }
 
     if (!player) {
       throw new Error("A játékos állapot nem tölthető be a katalógus szinkron után.");
+    }
+
+    const timedActionsChanged = await syncTimedActions(player.id);
+
+    if (timedActionsChanged) {
+      player = await prisma.player.findUnique({
+        where: { id: playerId },
+        include: {
+          inventory: true,
+          buildings: true,
+          expeditions: {
+            where: { claimedAt: null },
+            orderBy: { endsAt: "asc" },
+          },
+          timedActions: {
+            where: { status: "folyamatban" },
+            orderBy: { endsAt: "asc" },
+          },
+        },
+      });
+    }
+
+    if (!player) {
+      throw new Error("A játékos állapot nem tölthető be az eseményszinkron után.");
     }
 
     const changed = await syncPassiveProduction(player);
@@ -264,6 +355,10 @@ export async function ensurePlayerById(playerId: string, sync = true): Promise<P
           buildings: true,
           expeditions: {
             where: { claimedAt: null },
+            orderBy: { endsAt: "asc" },
+          },
+          timedActions: {
+            where: { status: "folyamatban" },
             orderBy: { endsAt: "asc" },
           },
         },
@@ -329,6 +424,7 @@ export async function getGameState(playerId?: string): Promise<GameState> {
     inventory,
     buildings: buildingSnapshots,
     expeditions: expeditionSnapshots,
+    activities: createActivitySnapshots(player),
     resources,
     recipes,
     gatherings,

@@ -8,26 +8,27 @@ datasource db {
 }
 
 model Player {
-  id          String           @id @default(cuid())
-  email       String?          @unique
-  passwordHash String?
-  role        String           @default("jatekos")
-  name        String
-  bio         String           @default("Új parancsnok az Obsidian Astral szektorban.")
-  fleet       String           @default("Nebulous Vanguard")
+  id                  String           @id @default(cuid())
+  email               String?          @unique
+  passwordHash        String?
+  role                String           @default("jatekos")
+  name                String
+  bio                 String           @default("Új parancsnok az Obsidian Astral szektorban.")
+  fleet               String           @default("Nebulous Vanguard")
   equippedResourceKey String?
-  level       Int              @default(1)
-  xp          Int              @default(0)
-  energy      Int              @default(100)
-  energyMax   Int              @default(100)
-  credits     Int              @default(250)
-  astralite   Int              @default(40)
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
-  inventory   InventoryEntry[]
-  buildings   BuildingState[]
-  expeditions ExpeditionRun[]
-  sessions    Session[]
+  level               Int              @default(1)
+  xp                  Int              @default(0)
+  energy              Int              @default(100)
+  energyMax           Int              @default(100)
+  credits             Int              @default(250)
+  astralite           Int              @default(40)
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+  inventory           InventoryEntry[]
+  buildings           BuildingState[]
+  expeditions         ExpeditionRun[]
+  timedActions        TimedAction[]
+  sessions            Session[]
 }
 
 model InventoryEntry {
@@ -77,4 +78,21 @@ model Session {
   player     Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
 
   @@index([playerId])
+}
+
+model TimedAction {
+  id         String   @id @default(cuid())
+  playerId   String
+  kind       String
+  targetKey  String
+  status     String   @default("folyamatban")
+  payload    Json
+  startedAt  DateTime
+  endsAt     DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  player     Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@index([playerId, status, endsAt])
+  @@index([playerId, kind, targetKey, status])
 }

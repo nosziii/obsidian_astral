@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import type { GatheringDefinition } from "@obsidian-astral/shared";
+import type { ActivitySnapshot, GatheringDefinition } from "@obsidian-astral/shared";
 
 import { formatProfessionLabel } from "../../lib/formatters";
+import ActivityTimeline from "./ActivityTimeline.vue";
 import BasePanel from "../ui/BasePanel.vue";
 
-defineProps<{
+const props = defineProps<{
+  activities: ActivitySnapshot[];
   items: GatheringDefinition[];
+  now: number;
   pendingAction: string | null;
   playerLevel: number;
 }>();
@@ -13,6 +16,10 @@ defineProps<{
 const emit = defineEmits<{
   gather: [actionKey: string];
 }>();
+
+function activityFor(actionKey: string) {
+  return props.activities.find((item) => item.kind === "gathering" && item.targetKey === actionKey) ?? null;
+}
 </script>
 
 <template>
@@ -28,13 +35,13 @@ const emit = defineEmits<{
               <button
                 class="primary-button gathering-card-button"
                 type="button"
-                :disabled="playerLevel < item.requiredLevel || pendingAction === `gather:${item.key}`"
+                :disabled="playerLevel < item.requiredLevel || pendingAction === `gather:${item.key}` || !!activityFor(item.key)"
                 @click="emit('gather', item.key)"
               >
                 {{
                   playerLevel < item.requiredLevel
                     ? `${item.requiredLevel}. szint kell`
-                    : pendingAction === `gather:${item.key}`
+                    : pendingAction === `gather:${item.key}` || activityFor(item.key)
                       ? "Folyamatban…"
                       : "Indítás"
                 }}
@@ -43,12 +50,9 @@ const emit = defineEmits<{
 
             <p class="muted">{{ item.description }}</p>
 
-            <div class="progress-track">
-              <div class="progress-fill" :style="{ width: `${Math.min(96, item.rewardXp * 4)}%` }" />
-            </div>
+            <ActivityTimeline :activity="activityFor(item.key)" :now="now" idle-text="Indítható" />
 
             <div class="gathering-meta">
-              <span class="compact-label">Állapot: aktív kitermelési fázis</span>
               <span class="compact-label">{{ item.durationSeconds }} mp</span>
               <span class="compact-label">Szakma: {{ formatProfessionLabel(item.profession) }}</span>
             </div>

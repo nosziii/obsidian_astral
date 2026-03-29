@@ -18,7 +18,19 @@ Monorepó alapú webes stratégiai RPG prototípus Vue, Node, Prisma, PostgreSQL
 5. Seed: `npm run db:seed`
 6. Indítás: `npm run dev`
 
+## Környezeti változók
+
+- `DATABASE_URL`: dockeres PostgreSQL kapcsolat
+- `DATABASE_URL_LOCAL`: helyi Prisma parancsokhoz használt kapcsolat
+- `API_PORT`: API port
+- `WEB_PORT`: web kliens port
+- `WEB_HOST`: Vite bind host
+- `VITE_DEV_SERVER_PORT`: fejlesztői Vite port
+- `VITE_API_BASE_URL`: böngészőből elérhető API cím
+- `CORS_ORIGIN`: engedélyezett frontend origin
+- `POSTGRES_HOST`: dockeres adatbázis host
+- `POSTGRES_INTERNAL_PORT`: dockeres adatbázis belső port
+
 ## Docker
 
 - Indítás: `docker compose up --build`
-

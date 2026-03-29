@@ -1,40 +1,12 @@
 <script setup lang="ts">
-import { computed } from "vue";
-
 import PlayerHero from "../components/dashboard/PlayerHero.vue";
 import ResourceGrid from "../components/dashboard/ResourceGrid.vue";
+import ActivityFeed from "../components/gameplay/ActivityFeed.vue";
 import GatheringPanel from "../components/gameplay/GatheringPanel.vue";
 import BasePanel from "../components/ui/BasePanel.vue";
 import { useGameState } from "../composables/use-game-state";
 
-const { gameState, gather, pendingAction } = useGameState();
-
-const encounters = computed(() => {
-  if (!gameState.value) {
-    return [];
-  }
-
-  return [
-    {
-      title: "Győzelem! A Mélységi Őrjárat visszatért.",
-      detail: `Zsákmány: ${gameState.value.inventory[0]?.quantity ?? 0} ${gameState.value.resources[0]?.label ?? "nyersanyag"}`,
-      ago: "2 perce",
-      tone: "",
-    },
-    {
-      title: "Klánvédelem sikeres a keleti szektorban.",
-      detail: `Tartósságvesztés: ${Math.max(2, Math.round(gameState.value.player.level / 3))}%`,
-      ago: "1 órája",
-      tone: "info",
-    },
-    {
-      title: "Felderítés lezárva a Vortex-peremnél.",
-      detail: "Új kitermelési pont azonosítva.",
-      ago: "4 órája",
-      tone: "success",
-    },
-  ];
-});
+const { activityNow, gameState, gather, pendingAction } = useGameState();
 </script>
 
 <template>
@@ -46,24 +18,15 @@ const encounters = computed(() => {
 
     <div class="dashboard-lower">
       <GatheringPanel
+        :activities="gameState.activities"
         :items="gameState.gatherings"
+        :now="activityNow"
         :pending-action="pendingAction"
         :player-level="gameState.player.level"
         @gather="gather"
       />
 
-      <BasePanel title="Legutóbbi események" subtitle="Recent encounters">
-        <div class="log-list">
-          <article v-for="item in encounters" :key="item.title" class="log-item">
-            <span class="log-dot" :class="item.tone" />
-            <div>
-              <strong>{{ item.title }}</strong>
-              <p class="muted">{{ item.detail }}</p>
-            </div>
-            <span class="compact-label">{{ item.ago }}</span>
-          </article>
-        </div>
-      </BasePanel>
+      <ActivityFeed :activities="gameState.activities" :now="activityNow" />
     </div>
 
     <BasePanel title="Belső kommunikáció" subtitle="Global chat">

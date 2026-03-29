@@ -1,9 +1,8 @@
 import "dotenv/config";
 
-const fallbackDatabaseUrl =
-  process.env.DATABASE_URL_LOCAL ?? "postgresql://obsidian:obsidian@localhost:5432/obsidian_astral?schema=public";
+const fallbackDatabaseUrl = process.env.DATABASE_URL_LOCAL;
 
-if (!process.env.DATABASE_URL) {
+if (!process.env.DATABASE_URL && fallbackDatabaseUrl) {
   process.env.DATABASE_URL = fallbackDatabaseUrl;
 }
 

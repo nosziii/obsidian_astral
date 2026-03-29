@@ -11,4 +11,4 @@ WORKDIR /app/apps/web
 
 EXPOSE 4173
 
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "4173"]
+CMD ["sh", "-c", "npm run dev -- --host ${WEB_HOST:-0.0.0.0} --port ${VITE_DEV_SERVER_PORT:-4173}"]

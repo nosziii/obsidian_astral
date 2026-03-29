@@ -3,7 +3,7 @@ import BasePanel from "../components/ui/BasePanel.vue";
 import ExpeditionPanel from "../components/gameplay/ExpeditionPanel.vue";
 import { useGameState } from "../composables/use-game-state";
 
-const { claimExpedition, gameState, pendingAction, startExpedition } = useGameState();
+const { activityNow, claimExpedition, gameState, pendingAction, startExpedition } = useGameState();
 </script>
 
 <template>
@@ -73,8 +73,10 @@ const { claimExpedition, gameState, pendingAction, startExpedition } = useGameSt
 
     <div class="expedition-sidebar">
       <ExpeditionPanel
+        :activities="gameState.activities"
         :catalog="gameState.expeditionsCatalog"
         :active-runs="gameState.expeditions"
+        :now="activityNow"
         :pending-action="pendingAction"
         :player-level="gameState.player.level"
         @claim="claimExpedition"

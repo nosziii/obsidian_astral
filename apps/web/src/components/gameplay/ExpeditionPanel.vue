@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import type { ExpeditionDefinition, ExpeditionSnapshot } from "@obsidian-astral/shared";
+import type { ActivitySnapshot, ExpeditionDefinition, ExpeditionSnapshot } from "@obsidian-astral/shared";
 
 import { formatCategoryLabel } from "../../lib/formatters";
+import ActivityTimeline from "./ActivityTimeline.vue";
 import BasePanel from "../ui/BasePanel.vue";
 
 const props = defineProps<{
+  activities: ActivitySnapshot[];
   catalog: ExpeditionDefinition[];
   activeRuns: ExpeditionSnapshot[];
+  now: number;
   pendingAction: string | null;
   playerLevel: number;
 }>();
@@ -15,19 +18,6 @@ const emit = defineEmits<{
   start: [expeditionKey: string];
   claim: [expeditionId: string];
 }>();
-
-function remainingText(endsAt: string) {
-  const diff = new Date(endsAt).getTime() - Date.now();
-
-  if (diff <= 0) {
-    return "Befejezve";
-  }
-
-  const hours = Math.floor(diff / 3_600_000);
-  const minutes = Math.ceil((diff % 3_600_000) / 60_000);
-
-  return hours > 0 ? `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}` : `${minutes} perc`;
-}
 
 function riskTone(risk: ExpeditionDefinition["risk"]) {
   if (risk === "magas") {
@@ -41,8 +31,8 @@ function riskTone(risk: ExpeditionDefinition["risk"]) {
   return "success";
 }
 
-function progressWidth(expedition: ExpeditionDefinition) {
-  return `${Math.min(92, expedition.rewardXp + expedition.energyCost * 2)}%`;
+function activityForRun(expeditionId: string) {
+  return props.activities.find((item) => item.kind === "expedition" && item.id === expeditionId) ?? null;
 }
 </script>
 
@@ -57,9 +47,6 @@ function progressWidth(expedition: ExpeditionDefinition) {
         <div>
           <h4 class="card-title">{{ expedition.label }}</h4>
           <p class="muted">{{ expedition.description }}</p>
-        </div>
-        <div class="progress-track">
-          <div class="progress-fill" :style="{ width: progressWidth(expedition) }" />
         </div>
         <div class="detail-row">
           <span class="compact-label">Időtartam</span>
@@ -94,9 +81,7 @@ function progressWidth(expedition: ExpeditionDefinition) {
       <article v-for="run in activeRuns" :key="run.id" class="action-card expedition-card">
         <div class="tag-row">
           <span class="compact-label">{{ run.label }}</span>
-          <span class="tag-pill" :class="run.status === 'befejezve' ? 'success' : ''">
-            {{ remainingText(run.endsAt) }}
-          </span>
+          <span class="tag-pill" :class="run.status === 'befejezve' ? 'success' : ''">{{ run.status }}</span>
         </div>
         <div>
           <h4 class="card-title">
@@ -104,6 +89,7 @@ function progressWidth(expedition: ExpeditionDefinition) {
           </h4>
           <p class="muted">Kezdés: {{ new Date(run.startedAt).toLocaleString("hu-HU") }}</p>
         </div>
+        <ActivityTimeline :activity="activityForRun(run.id)" :now="now" idle-text="Lezárva" />
         <button
           class="secondary-button"
           type="button"

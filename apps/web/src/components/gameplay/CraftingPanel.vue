@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import type { RecipeDefinition, ResourceDefinition } from "@obsidian-astral/shared";
+import type { ActivitySnapshot, RecipeDefinition, ResourceDefinition } from "@obsidian-astral/shared";
 
 import { formatCategoryLabel } from "../../lib/formatters";
 
 const props = defineProps<{
+  activities: ActivitySnapshot[];
   recipes: RecipeDefinition[];
   resources: ResourceDefinition[];
   selectedRecipeKey: string | null;
@@ -44,6 +45,10 @@ function recipeTone(category: RecipeDefinition["category"]) {
 
   return "";
 }
+
+function activityFor(recipeKey: string) {
+  return props.activities.find((item) => item.kind === "craft" && item.targetKey === recipeKey) ?? null;
+}
 </script>
 
 <template>
@@ -61,6 +66,7 @@ function recipeTone(category: RecipeDefinition["category"]) {
           <div class="tag-row">
             <span class="tag-pill">{{ formatCategoryLabel(recipe.category) }}</span>
             <span class="tag-pill tertiary recipe-status">szint {{ recipe.requiredLevel }}</span>
+            <span v-if="activityFor(recipe.key)" class="tag-pill success">Folyamatban</span>
           </div>
           <h4 class="card-title">{{ recipe.label }}</h4>
           <p class="muted">{{ recipe.description }}</p>

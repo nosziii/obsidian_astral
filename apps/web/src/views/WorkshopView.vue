@@ -4,11 +4,12 @@ import type { RecipeCategory } from "@obsidian-astral/shared";
 
 import BuildingPanel from "../components/gameplay/BuildingPanel.vue";
 import CraftingPanel from "../components/gameplay/CraftingPanel.vue";
+import ActivityTimeline from "../components/gameplay/ActivityTimeline.vue";
 import BasePanel from "../components/ui/BasePanel.vue";
 import { useGameState } from "../composables/use-game-state";
 import { formatCategoryLabel } from "../lib/formatters";
 
-const { craft, gameState, pendingAction, upgradeBuilding } = useGameState();
+const { activityNow, craft, gameState, pendingAction, upgradeBuilding } = useGameState();
 const selectedRecipeKey = ref<string | null>(null);
 const activeCategory = ref<RecipeCategory | "mind">("mind");
 
@@ -50,6 +51,16 @@ function resourceLabel(resourceKey: string) {
 function selectCategory(category: RecipeCategory | "mind") {
   activeCategory.value = category;
 }
+
+const selectedRecipeActivity = computed(() => {
+  if (!gameState.value || !selectedRecipe.value) {
+    return null;
+  }
+
+  return gameState.value.activities.find(
+    (item) => item.kind === "craft" && item.targetKey === selectedRecipe.value?.key,
+  ) ?? null;
+});
 </script>
 
 <template>
@@ -85,6 +96,7 @@ function selectCategory(category: RecipeCategory | "mind") {
           </div>
 
           <CraftingPanel
+            :activities="gameState.activities"
             :recipes="visibleRecipes"
             :resources="gameState.resources"
             :selected-recipe-key="selectedRecipeKey"
@@ -95,7 +107,9 @@ function selectCategory(category: RecipeCategory | "mind") {
       </BasePanel>
 
       <BuildingPanel
+        :activities="gameState.activities"
         :catalog="gameState.buildingCatalog"
+        :now="activityNow"
         :states="gameState.buildings"
         :resources="gameState.resources"
         :pending-action="pendingAction"
@@ -132,6 +146,8 @@ function selectCategory(category: RecipeCategory | "mind") {
           </div>
         </div>
 
+        <ActivityTimeline :activity="selectedRecipeActivity" :now="activityNow" idle-text="Nincs aktív gyártás" />
+
         <div>
           <p class="eyebrow">Szükséges komponensek</p>
           <div class="component-list">
@@ -157,13 +173,17 @@ function selectCategory(category: RecipeCategory | "mind") {
         <button
           class="primary-button"
           type="button"
-          :disabled="gameState.player.level < selectedRecipe.requiredLevel || pendingAction === `craft:${selectedRecipe.key}`"
+          :disabled="
+            gameState.player.level < selectedRecipe.requiredLevel ||
+            pendingAction === `craft:${selectedRecipe.key}` ||
+            !!selectedRecipeActivity
+          "
           @click="craft(selectedRecipe.key)"
         >
           {{
             gameState.player.level < selectedRecipe.requiredLevel
               ? `${selectedRecipe.requiredLevel}. szint szükséges`
-              : pendingAction === `craft:${selectedRecipe.key}`
+              : pendingAction === `craft:${selectedRecipe.key}` || selectedRecipeActivity
                 ? "Craftolás…"
                 : "Gyártás indítása"
           }}

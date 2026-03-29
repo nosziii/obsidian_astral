@@ -13,4 +13,4 @@ RUN npm run prisma:generate --workspace @obsidian-astral/api
 
 EXPOSE 4000
 
-CMD ["sh", "-c", "node -e \"const net=require('node:net'); const host='db'; const port=5432; const tryConnect=()=>{const socket=net.connect(port, host); socket.on('connect',()=>{socket.end(); process.exit(0);}); socket.on('error',()=>setTimeout(tryConnect, 2000));}; tryConnect();\" && npm run prisma:push --workspace @obsidian-astral/api && npm run prisma:seed --workspace @obsidian-astral/api && npm run dev --workspace @obsidian-astral/api"]
+CMD ["sh", "-c", "node -e \"const net=require('node:net'); const host=process.env.POSTGRES_HOST||'db'; const port=Number(process.env.POSTGRES_INTERNAL_PORT||5432); const tryConnect=()=>{const socket=net.connect(port, host); socket.on('connect',()=>{socket.end(); process.exit(0);}); socket.on('error',()=>setTimeout(tryConnect, 2000));}; tryConnect();\" && npm run prisma:push --workspace @obsidian-astral/api && npm run prisma:seed --workspace @obsidian-astral/api && npm run dev --workspace @obsidian-astral/api"]

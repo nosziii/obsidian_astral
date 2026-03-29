@@ -112,6 +112,15 @@
   gap: 10px;
 }
 
+.activity-timeline {
+  display: grid;
+  gap: 10px;
+}
+
+.live-log-item {
+  align-items: start;
+}
+
 .divider {
   height: 1px;
   margin: 8px 0;

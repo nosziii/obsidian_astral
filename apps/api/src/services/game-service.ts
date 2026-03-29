@@ -3,31 +3,11 @@ import type { RecipeIngredient } from "@obsidian-astral/shared";
 import { prisma } from "../db.js";
 import { buildingMap, expeditionMap, gatheringMap, recipeMap } from "../lib/catalog.js";
 import { GameRuleError } from "../lib/errors.js";
-import { applyXp } from "../lib/leveling.js";
+import { createTimedAction, ensureNoActiveTimedAction } from "./activity-service.js";
 import { changeInventory, scaledRewards } from "./inventory-service.js";
 import type { PlayerState } from "./player-service.js";
+import { applyPlayerProgress } from "./progress-service.js";
 import { ensurePlayerById, getGameState } from "./player-service.js";
-
-async function applyPlayerProgress(playerId: string, energyDelta: number, gainedXp: number) {
-  const player = await prisma.player.findUniqueOrThrow({ where: { id: playerId } });
-  const nextEnergy = player.energy + energyDelta;
-
-  if (nextEnergy < 0) {
-    throw new GameRuleError("Nincs elég energia a művelethez.");
-  }
-
-  const progressed = applyXp(player.level, player.xp, gainedXp);
-
-  return prisma.player.update({
-    where: { id: playerId },
-    data: {
-      energy: Math.min(nextEnergy, player.energyMax),
-      level: progressed.level,
-      xp: progressed.xp,
-      energyMax: progressed.level > player.level ? player.energyMax + 10 * (progressed.level - player.level) : player.energyMax,
-    },
-  });
-}
 
 function getBuildingBonus(buildingKey: string, resourceKeys: string[], level: number): number {
   const definition = buildingMap.get(buildingKey);
@@ -69,8 +49,18 @@ export async function gatherResources(playerId: string, actionKey: string) {
     getBuildingBonus("banya", resourceKeys, mineLevel) +
     getBuildingBonus("uveghaz", resourceKeys, greenhouseLevel);
 
-  await applyPlayerProgress(player.id, -action.energyCost, action.rewardXp);
-  await changeInventory(player.id, scaledRewards(action.yields, bonusMultiplier), "add");
+  await ensureNoActiveTimedAction(player.id, "gathering", action.key);
+  await applyPlayerProgress(player.id, -action.energyCost, 0);
+  await createTimedAction({
+    playerId: player.id,
+    kind: "gathering",
+    targetKey: action.key,
+    durationSeconds: action.durationSeconds,
+    payload: {
+      rewards: scaledRewards(action.yields, bonusMultiplier),
+      xp: action.rewardXp,
+    },
+  });
 
   return getGameState(playerId);
 }
@@ -93,9 +83,19 @@ export async function craftRecipe(playerId: string, recipeKey: string) {
     getBuildingBonus("labor", recipe.produces.map((item) => item.resourceKey), labLevel) +
     getBuildingBonus("finomito", recipe.produces.map((item) => item.resourceKey), refineryLevel);
 
+  await ensureNoActiveTimedAction(player.id, "craft", recipe.key);
   await changeInventory(player.id, recipe.ingredients, "remove");
-  await changeInventory(player.id, scaledRewards(recipe.produces, bonusMultiplier), "add");
-  await applyPlayerProgress(player.id, -6, recipe.rewardXp);
+  await applyPlayerProgress(player.id, -6, 0);
+  await createTimedAction({
+    playerId: player.id,
+    kind: "craft",
+    targetKey: recipe.key,
+    durationSeconds: recipe.craftSeconds,
+    payload: {
+      rewards: scaledRewards(recipe.produces, bonusMultiplier),
+      xp: recipe.rewardXp,
+    },
+  });
 
   return getGameState(playerId);
 }
@@ -126,20 +126,19 @@ export async function upgradeBuilding(playerId: string, buildingKey: string) {
   const targetLevel = building.level + 1;
   const upgradeCost = buildUpgradeCost(targetLevel, definition.baseCost);
 
+  await ensureNoActiveTimedAction(player.id, "building", buildingKey);
   await changeInventory(player.id, upgradeCost, "remove");
-  await prisma.buildingState.update({
-    where: {
-      playerId_buildingKey: {
-        playerId: player.id,
-        buildingKey,
-      },
-    },
-    data: {
-      level: targetLevel,
+  await applyPlayerProgress(player.id, -8, 0);
+  await createTimedAction({
+    playerId: player.id,
+    kind: "building",
+    targetKey: buildingKey,
+    durationSeconds: 45 + targetLevel * 15,
+    payload: {
+      buildingLevel: targetLevel,
+      xp: 28 + targetLevel * 6,
     },
   });
-
-  await applyPlayerProgress(player.id, -8, 28 + targetLevel * 6);
 
   return getGameState(playerId);
 }
