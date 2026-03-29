@@ -15,6 +15,7 @@ model Player {
   name        String
   bio         String           @default("Új parancsnok az Obsidian Astral szektorban.")
   fleet       String           @default("Nebulous Vanguard")
+  equippedResourceKey String?
   level       Int              @default(1)
   xp          Int              @default(0)
   energy      Int              @default(100)

@@ -1,5 +1,6 @@
-import type { AdminOverview, AdminPlayerSummary, UserRole } from "@obsidian-astral/shared";
+import type { AdminActionResult, AdminOverview, AdminPlayerSummary, UserRole } from "@obsidian-astral/shared";
 import { prisma } from "../db.js";
+import { changeInventory } from "./inventory-service.js";
 
 function toAdminPlayerSummary(player: {
   id: string;
@@ -49,5 +50,62 @@ export async function getAdminOverview(): Promise<AdminOverview> {
     totalAstralite: aggregate._sum.astralite ?? 0,
     averageLevel: Math.round((aggregate._avg.level ?? 0) * 10) / 10,
     newestPlayers: players.map(toAdminPlayerSummary),
+  };
+}
+
+export async function triggerSystemPulse(): Promise<AdminActionResult> {
+  const players = await prisma.player.findMany({
+    select: {
+      id: true,
+      energyMax: true,
+    },
+  });
+
+  await Promise.all(
+    players.map((player) =>
+      prisma.player.update({
+        where: { id: player.id },
+        data: {
+          energy: player.energyMax,
+        },
+      }),
+    ),
+  );
+
+  return {
+    message: `${players.length} játékos energiaállapota feltöltve lett.`,
+  };
+}
+
+export async function grantStarterPack(playerId: string): Promise<AdminActionResult> {
+  const player = await prisma.player.findUnique({
+    where: { id: playerId },
+  });
+
+  if (!player) {
+    throw new Error("A játékos nem található.");
+  }
+
+  await prisma.player.update({
+    where: { id: playerId },
+    data: {
+      credits: { increment: 250 },
+      astralite: { increment: 35 },
+      energy: Math.min(player.energyMax, player.energy + 20),
+    },
+  });
+
+  await changeInventory(
+    playerId,
+    [
+      { resourceKey: "fa", amount: 20 },
+      { resourceKey: "vaserc", amount: 10 },
+      { resourceKey: "gyogynoveny", amount: 6 },
+    ],
+    "add",
+  );
+
+  return {
+    message: `${player.name} segélycsomagot kapott.`,
   };
 }

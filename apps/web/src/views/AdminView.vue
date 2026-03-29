@@ -1,21 +1,16 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted } from "vue";
 
 import BasePanel from "../components/ui/BasePanel.vue";
 import { useAuth } from "../composables/use-auth";
 
-const { adminOverview, loadAdminOverview } = useAuth();
-const statusMessage = ref("");
+const { adminOverview, adminStatus, loadAdminOverview, grantPack, runSystemPulse } = useAuth();
 
 onMounted(() => {
   if (!adminOverview.value) {
     void loadAdminOverview();
   }
 });
-
-function triggerSystemPulse() {
-  statusMessage.value = "Rendszerimpulzus kiküldve. Az admin összesítő most frissíthető.";
-}
 </script>
 
 <template>
@@ -27,12 +22,12 @@ function triggerSystemPulse() {
         <p class="muted">Operatív áttekintés a játékosokról, az aktivitásról és a gazdasági állapotról.</p>
       </div>
       <div class="admin-actions">
-        <button class="secondary-button" type="button" @click="triggerSystemPulse">Rendszerimpulzus</button>
+        <button class="secondary-button" type="button" @click="runSystemPulse">Rendszerimpulzus</button>
         <button class="primary-button" type="button" @click="loadAdminOverview">Frissítés</button>
       </div>
     </section>
 
-    <p v-if="statusMessage" class="status-banner">{{ statusMessage }}</p>
+    <p v-if="adminStatus" class="status-banner">{{ adminStatus.message }}</p>
 
     <div class="admin-grid">
       <article class="data-card">
@@ -61,6 +56,7 @@ function triggerSystemPulse() {
           <span>Szerep</span>
           <span>Szint</span>
           <span>Kreditek</span>
+          <span>Művelet</span>
         </div>
         <div v-for="player in adminOverview.newestPlayers" :key="player.id" class="admin-row">
           <span>{{ player.name }}</span>
@@ -68,6 +64,9 @@ function triggerSystemPulse() {
           <span>{{ player.role }}</span>
           <span>{{ player.level }}</span>
           <span>{{ new Intl.NumberFormat("hu-HU").format(player.credits) }}</span>
+          <button class="ghost-button admin-inline-button" type="button" @click="grantPack(player.id)">
+            Segélycsomag
+          </button>
         </div>
       </div>
     </BasePanel>

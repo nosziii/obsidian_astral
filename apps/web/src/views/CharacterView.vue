@@ -4,20 +4,37 @@ import { computed, ref, watch } from "vue";
 import BasePanel from "../components/ui/BasePanel.vue";
 import { useGameState } from "../composables/use-game-state";
 
-const { gameState } = useGameState();
+const { equipResource, gameState, pendingAction } = useGameState();
 const selectedInventoryIndex = ref(0);
-const equippedLabel = ref("Nincs aktív felszerelés");
 
 const stats = computed(() => {
   if (!gameState.value) {
     return [];
   }
 
+  const equipmentBonus = gameState.value.equipment[0]?.resourceKey ? gameState.value.player.level * 2 : 0;
+
   return [
-    { label: "Életerő", value: new Intl.NumberFormat("hu-HU").format(gameState.value.player.credits), icon: "♥" },
-    { label: "Támadás", value: new Intl.NumberFormat("hu-HU").format(gameState.value.player.level * 91), icon: "ϟ" },
-    { label: "Védelem", value: new Intl.NumberFormat("hu-HU").format(gameState.value.player.level * 52), icon: "🛡" },
-    { label: "Kritikus", value: `${Math.min(42, gameState.value.player.level)}.5%`, icon: "✦" },
+    {
+      label: "Életerő",
+      value: new Intl.NumberFormat("hu-HU").format(gameState.value.player.credits),
+      icon: "♥",
+    },
+    {
+      label: "Támadás",
+      value: new Intl.NumberFormat("hu-HU").format(gameState.value.player.level * 91 + equipmentBonus),
+      icon: "ϟ",
+    },
+    {
+      label: "Védelem",
+      value: new Intl.NumberFormat("hu-HU").format(gameState.value.player.level * 52 + Math.round(equipmentBonus / 2)),
+      icon: "🛡",
+    },
+    {
+      label: "Kritikus",
+      value: `${Math.min(42, gameState.value.player.level)}.5%`,
+      icon: "✦",
+    },
   ];
 });
 
@@ -30,13 +47,14 @@ watch(inventoryPreview, (items) => {
 });
 
 const selectedInventoryItem = computed(() => inventoryPreview.value[selectedInventoryIndex.value] ?? null);
+const activeEquipment = computed(() => gameState.value?.equipment[0] ?? null);
 
-function activateSelectedItem() {
+async function activateSelectedItem() {
   if (!selectedInventoryItem.value) {
     return;
   }
 
-  equippedLabel.value = selectedInventoryItem.value.resourceKey;
+  await equipResource(selectedInventoryItem.value.resourceKey);
 }
 </script>
 
@@ -46,7 +64,7 @@ function activateSelectedItem() {
       <BasePanel title="Parancsnoki profil" subtitle="Karakter">
         <div class="character-stage">
           <div class="character-grid" />
-          <div class="equipment-slot slot-top-left">⚔</div>
+          <div class="equipment-slot slot-top-left">{{ activeEquipment?.resourceLabel?.slice(0, 1).toUpperCase() ?? "⚔" }}</div>
           <div class="equipment-slot secondary slot-top-center">☠</div>
           <div class="equipment-slot secondary slot-top-right">✋</div>
           <div class="equipment-slot slot-left">🛡</div>
@@ -110,9 +128,20 @@ function activateSelectedItem() {
           </div>
           <div class="detail-row">
             <span class="compact-label">Aktív slot</span>
-            <strong>{{ equippedLabel }}</strong>
+            <strong>{{ activeEquipment?.resourceLabel ?? "Nincs kiválasztva" }}</strong>
           </div>
-          <button class="primary-button" type="button" @click="activateSelectedItem">Felszerelés aktiválása</button>
+          <div class="detail-row">
+            <span class="compact-label">Bónusz</span>
+            <strong>{{ activeEquipment?.bonusText ?? "Nincs bónusz" }}</strong>
+          </div>
+          <button
+            class="primary-button"
+            type="button"
+            :disabled="pendingAction === `equip:${selectedInventoryItem.resourceKey}`"
+            @click="activateSelectedItem"
+          >
+            {{ pendingAction === `equip:${selectedInventoryItem.resourceKey}` ? "Aktiválás…" : "Felszerelés aktiválása" }}
+          </button>
         </div>
       </div>
     </BasePanel>

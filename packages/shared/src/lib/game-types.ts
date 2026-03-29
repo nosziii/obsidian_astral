@@ -12,6 +12,7 @@ export type ProfessionKey =
   | "kereskedelem"
   | "felderites";
 export type ZoneStatus = "elérhető" | "hamarosan" | "zárolt";
+export type EquipmentSlotKey = "fofegyver";
 
 export interface ResourceDefinition {
   key: string;
@@ -143,6 +144,7 @@ export interface GameState {
   professions: ProfessionSnapshot[];
   passiveProduction: PassiveProductionSnapshot[];
   zones: ZoneSnapshot[];
+  equipment: EquipmentSnapshot[];
 }
 
 export interface SessionPlayer {
@@ -178,4 +180,16 @@ export interface AdminOverview {
   totalAstralite: number;
   averageLevel: number;
   newestPlayers: AdminPlayerSummary[];
+}
+
+export interface EquipmentSnapshot {
+  slot: EquipmentSlotKey;
+  label: string;
+  resourceKey: string | null;
+  resourceLabel: string | null;
+  bonusText: string;
+}
+
+export interface AdminActionResult {
+  message: string;
 }

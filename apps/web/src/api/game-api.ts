@@ -1,4 +1,4 @@
-import type { AdminOverview, AuthSession, GameState, SessionPlayer } from "@obsidian-astral/shared";
+import type { AdminActionResult, AdminOverview, AuthSession, GameState, SessionPlayer } from "@obsidian-astral/shared";
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:4000";
 
@@ -81,4 +81,18 @@ export const gameApi = {
       body: JSON.stringify(input),
     }),
   adminOverview: () => request<AdminOverview>("/api/admin/overview"),
+  equipResource: (resourceKey: string) =>
+    request<GameState>("/api/profile/equipment", {
+      method: "POST",
+      body: JSON.stringify({ resourceKey }),
+    }),
+  triggerSystemPulse: () =>
+    request<AdminActionResult>("/api/admin/system-pulse", {
+      method: "POST",
+    }),
+  grantStarterPack: (playerId: string) =>
+    request<AdminActionResult>("/api/admin/grant-pack", {
+      method: "POST",
+      body: JSON.stringify({ playerId }),
+    }),
 };

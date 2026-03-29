@@ -1,7 +1,9 @@
 import cors from "cors";
 import express from "express";
 import {
+  adminGrantPackSchema,
   loginSchema,
+  equipmentUpdateSchema,
   profileUpdateSchema,
   registerSchema,
   craftActionSchema,
@@ -14,8 +16,9 @@ import {
 import { config } from "./config.js";
 import { GameRuleError } from "./lib/errors.js";
 import { attachAuthSession, requireAuth, requireRole } from "./lib/request-auth.js";
-import { getAdminOverview } from "./services/admin-service.js";
+import { getAdminOverview, grantStarterPack, triggerSystemPulse } from "./services/admin-service.js";
 import { getSessionByToken, loginAccount, logoutAccount, registerAccount, updateProfile } from "./services/auth-service.js";
+import { equipResource } from "./services/equipment-service.js";
 import { claimExpedition, craftRecipe, gatherResources, startExpedition, upgradeBuilding } from "./services/game-service.js";
 import { getGameState } from "./services/player-service.js";
 
@@ -70,6 +73,17 @@ export function createServer() {
     try {
       const body = profileUpdateSchema.parse(request.body);
       response.json(await updateProfile(requireAuth(request).player.id, body));
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  app.post("/api/profile/equipment", async (request, response, next) => {
+    try {
+      const body = equipmentUpdateSchema.parse(request.body);
+      const session = requireAuth(request);
+      await equipResource(session.player.id, body.resourceKey);
+      response.json(await getGameState(session.player.id));
     } catch (error) {
       next(error);
     }
@@ -132,6 +146,25 @@ export function createServer() {
     try {
       requireRole(request, "admin");
       response.json(await getAdminOverview());
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  app.post("/api/admin/system-pulse", async (request, response, next) => {
+    try {
+      requireRole(request, "admin");
+      response.json(await triggerSystemPulse());
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  app.post("/api/admin/grant-pack", async (request, response, next) => {
+    try {
+      requireRole(request, "admin");
+      const body = adminGrantPackSchema.parse(request.body);
+      response.json(await grantStarterPack(body.playerId));
     } catch (error) {
       next(error);
     }

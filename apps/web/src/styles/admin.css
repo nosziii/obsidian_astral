@@ -40,6 +40,11 @@
   text-transform: uppercase;
 }
 
+.admin-inline-button {
+  min-height: 36px;
+  padding: 0 12px;
+}
+
 .sidebar-button {
   padding: 0;
   background: transparent;

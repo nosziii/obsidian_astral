@@ -1,5 +1,5 @@
 import { computed, ref } from "vue";
-import type { AdminOverview, AuthSession } from "@obsidian-astral/shared";
+import type { AdminActionResult, AdminOverview, AuthSession } from "@obsidian-astral/shared";
 
 import { gameApi, setApiAuthToken } from "../api/game-api";
 
@@ -9,6 +9,7 @@ const session = ref<AuthSession | null>(null);
 const authLoaded = ref(false);
 const authError = ref("");
 const adminOverview = ref<AdminOverview | null>(null);
+const adminStatus = ref<AdminActionResult | null>(null);
 
 function syncToken(token: string | null) {
   setApiAuthToken(token);
@@ -94,15 +95,30 @@ export function useAuth() {
     return adminOverview.value;
   }
 
+  async function runSystemPulse() {
+    adminStatus.value = await gameApi.triggerSystemPulse();
+    adminOverview.value = await gameApi.adminOverview();
+    return adminStatus.value;
+  }
+
+  async function grantPack(playerId: string) {
+    adminStatus.value = await gameApi.grantStarterPack(playerId);
+    adminOverview.value = await gameApi.adminOverview();
+    return adminStatus.value;
+  }
+
   return {
     session: computed(() => session.value),
     authLoaded: computed(() => authLoaded.value),
     authError: computed(() => authError.value),
     adminOverview: computed(() => adminOverview.value),
+    adminStatus: computed(() => adminStatus.value),
     login,
     register,
     logout,
     saveProfile,
     loadAdminOverview,
+    runSystemPulse,
+    grantPack,
   };
 }

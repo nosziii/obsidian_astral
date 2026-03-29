@@ -1,5 +1,6 @@
 import type {
   BuildingSnapshot,
+  EquipmentSnapshot,
   ExpeditionSnapshot,
   GameState,
   InventorySnapshot,
@@ -163,6 +164,22 @@ function createZoneSnapshots(player: PlayerState): ZoneSnapshot[] {
   }));
 }
 
+function createEquipmentSnapshots(player: PlayerState): EquipmentSnapshot[] {
+  const equippedResource = player.equippedResourceKey ? resourceMap.get(player.equippedResourceKey) : null;
+
+  return [
+    {
+      slot: "fofegyver",
+      label: "Főfegyver",
+      resourceKey: player.equippedResourceKey,
+      resourceLabel: equippedResource?.label ?? null,
+      bonusText: equippedResource
+        ? `Támadási fókusz +${Math.max(4, player.level * 2)} a(z) ${equippedResource.label} alapján`
+        : "Nincs aktív fegyvermag kiválasztva",
+    },
+  ];
+}
+
 export async function ensurePlayer(sync = true): Promise<PlayerState> {
   let player = await loadPlayerState();
 
@@ -320,5 +337,6 @@ export async function getGameState(playerId?: string): Promise<GameState> {
     professions: calculateProfessionProgress(player),
     passiveProduction: createPassiveProductionSnapshots(player),
     zones: createZoneSnapshots(player),
+    equipment: createEquipmentSnapshots(player),
   };
 }

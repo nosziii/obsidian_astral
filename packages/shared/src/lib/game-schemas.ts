@@ -36,3 +36,11 @@ export const profileUpdateSchema = z.object({
   bio: z.string().min(10).max(240),
   fleet: z.string().min(3).max(48),
 });
+
+export const equipmentUpdateSchema = z.object({
+  resourceKey: z.string().min(1),
+});
+
+export const adminGrantPackSchema = z.object({
+  playerId: z.string().min(1),
+});
