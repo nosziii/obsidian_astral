@@ -13,19 +13,20 @@ Utolsó frissítés: 2026-03-30
 - felszerelés aktiválás és levétel a karakter nézetben
 - interaktív zónatérkép és zónához kötött expedíciószűrés
 - admin játékosrészletek: készlet, épületek, aktivitások
+- admin készletmódosítás és alap játékosérték-szerkesztés
+- expedíciós napló és lezárt futások listázása
 - env és docker alapú konfiguráció rendezése
 
 ## Folyamatban
 
-- admin részletes beavatkozások bővítése
 - expedíciós és zónarendszer mélyítése
+- admin részletes beavatkozások bővítése
 
 ## Még hiányzik
 
-- admin inventory szerkesztés erőforrás szinten
 - admin épületszint-szerkesztés külön műveletekkel
 - admin szerepkörváltás és account korlátozás
-- expedíciós napló és részletes jutalomnézet
+- expedíciós részletes jutalomnézet külön run-oldallal
 - zónaesemények és random encounter rendszer
 - külön item alapú equipment rendszer slotokkal
 - dashboard értesítési központ

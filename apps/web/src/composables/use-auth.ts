@@ -131,6 +131,12 @@ export function useAuth() {
     return adminStatus.value;
   }
 
+  async function mutateAdminInventory(playerId: string, input: { resourceKey: string; amount: number; mode: "add" | "remove" }) {
+    adminStatus.value = await gameApi.mutateAdminInventory(playerId, input);
+    adminPlayerDetail.value = await gameApi.adminPlayerDetail(playerId);
+    return adminStatus.value;
+  }
+
   return {
     session: computed(() => session.value),
     authLoaded: computed(() => authLoaded.value),
@@ -146,6 +152,7 @@ export function useAuth() {
     loadAdminPlayerDetail,
     saveAdminPlayer,
     cancelAdminActivity,
+    mutateAdminInventory,
     runSystemPulse,
     grantPack,
   };

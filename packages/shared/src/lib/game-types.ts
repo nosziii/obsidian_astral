@@ -111,6 +111,16 @@ export interface ExpeditionSnapshot {
   startedAt: string;
 }
 
+export interface ExpeditionHistorySnapshot {
+  id: string;
+  key: string;
+  label: string;
+  claimedAt: string | null;
+  startedAt: string;
+  endedAt: string;
+  rewards: RecipeIngredient[];
+}
+
 export interface ActivitySnapshot {
   id: string;
   kind: ActivityKind;
@@ -224,6 +234,12 @@ export interface AdminPlayerUpdateInput {
   energyMax?: number;
   credits?: number;
   astralite?: number;
+}
+
+export interface AdminInventoryMutationInput {
+  resourceKey: string;
+  amount: number;
+  mode: "add" | "remove";
 }
 
 export interface EquipmentSnapshot {

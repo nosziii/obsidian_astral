@@ -1,10 +1,12 @@
 import type {
   AdminActionResult,
+  AdminInventoryMutationInput,
   AdminOverview,
   AdminPlayerDetail,
   AuthSession,
   ChatChannel,
   ChatMessageSnapshot,
+  ExpeditionHistorySnapshot,
   GameState,
   SessionPlayer,
 } from "@obsidian-astral/shared";
@@ -44,6 +46,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 
 export const gameApi = {
   getState: () => request<GameState>("/api/game-state"),
+  expeditionHistory: () => request<ExpeditionHistorySnapshot[]>("/api/expeditions/history"),
   listChatMessages: (channel: ChatChannel) =>
     request<ChatMessageSnapshot[]>(`/api/chat?channel=${channel}`),
   sendChatMessage: (channel: ChatChannel, content: string) =>
@@ -107,6 +110,11 @@ export const gameApi = {
     request<AdminActionResult>(`/api/admin/players/${playerId}/cancel-activity`, {
       method: "POST",
       body: JSON.stringify({ activityId }),
+    }),
+  mutateAdminInventory: (playerId: string, input: AdminInventoryMutationInput) =>
+    request<AdminActionResult>(`/api/admin/players/${playerId}/inventory`, {
+      method: "POST",
+      body: JSON.stringify(input),
     }),
   equipResource: (resourceKey: string | null) =>
     request<GameState>("/api/profile/equipment", {

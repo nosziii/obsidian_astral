@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 
+import AdminInventoryEditor from "../components/admin/AdminInventoryEditor.vue";
 import AdminPlayerEditor from "../components/admin/AdminPlayerEditor.vue";
 import BasePanel from "../components/ui/BasePanel.vue";
 import { useAuth } from "../composables/use-auth";
 
-const { adminOverview, adminPlayerDetail, adminStatus, loadAdminOverview, loadAdminPlayerDetail, saveAdminPlayer, cancelAdminActivity, grantPack, runSystemPulse } = useAuth();
+const { adminOverview, adminPlayerDetail, adminStatus, loadAdminOverview, loadAdminPlayerDetail, saveAdminPlayer, cancelAdminActivity, mutateAdminInventory, grantPack, runSystemPulse } = useAuth();
 const query = ref("");
 const activeRole = ref<"mind" | "jatekos" | "admin">("mind");
 const selectedPlayerId = ref<string | null>(null);
@@ -52,6 +53,14 @@ async function stopSelectedActivity(activityId: string) {
   }
 
   await cancelAdminActivity(selectedPlayerId.value, activityId);
+}
+
+async function updateInventory(payload: { resourceKey: string; amount: number; mode: "add" | "remove" }) {
+  if (!selectedPlayerId.value) {
+    return;
+  }
+
+  await mutateAdminInventory(selectedPlayerId.value, payload);
 }
 </script>
 
@@ -149,6 +158,8 @@ async function stopSelectedActivity(activityId: string) {
         </article>
 
         <AdminPlayerEditor :detail="adminPlayerDetail" @save="submitPlayerUpdate" @cancel-activity="stopSelectedActivity" />
+
+        <AdminInventoryEditor @mutate="updateInventory" />
 
         <article class="action-card">
           <h4 class="card-title">Aktív események</h4>

@@ -65,3 +65,9 @@ export const adminPlayerUpdateSchema = z
 export const adminCancelActivitySchema = z.object({
   activityId: z.string().min(1),
 });
+
+export const adminInventoryMutationSchema = z.object({
+  resourceKey: z.string().min(1),
+  amount: z.number().int().min(1).max(10_000),
+  mode: z.enum(["add", "remove"]),
+});

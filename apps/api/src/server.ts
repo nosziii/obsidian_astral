@@ -2,6 +2,7 @@ import cors from "cors";
 import express from "express";
 import {
   adminCancelActivitySchema,
+  adminInventoryMutationSchema,
   chatMessageCreateSchema,
   adminGrantPackSchema,
   adminPlayerUpdateSchema,
@@ -20,8 +21,10 @@ import { config } from "./config.js";
 import { GameRuleError } from "./lib/errors.js";
 import { attachAuthSession, requireAuth, requireRole } from "./lib/request-auth.js";
 import { getAdminPlayerDetail } from "./services/admin-player-service.js";
+import { mutateAdminPlayerInventory } from "./services/admin-player-inventory-service.js";
 import { cancelAdminPlayerActivity, updateAdminPlayer } from "./services/admin-player-mutation-service.js";
 import { createChatMessage, listChatMessages } from "./services/chat-service.js";
+import { listExpeditionHistory } from "./services/expedition-history-service.js";
 import { getAdminOverview, grantStarterPack, triggerSystemPulse } from "./services/admin-service.js";
 import { getSessionByToken, loginAccount, logoutAccount, registerAccount, updateProfile } from "./services/auth-service.js";
 import { equipResource } from "./services/equipment-service.js";
@@ -127,6 +130,14 @@ export function createServer() {
     }
   });
 
+  app.get("/api/expeditions/history", async (request, response, next) => {
+    try {
+      response.json(await listExpeditionHistory(requireAuth(request).player.id));
+    } catch (error) {
+      next(error);
+    }
+  });
+
   app.post("/api/actions/gather", async (request, response, next) => {
     try {
       const body = gatherActionSchema.parse(request.body);
@@ -205,6 +216,16 @@ export function createServer() {
       requireRole(request, "admin");
       const body = adminCancelActivitySchema.parse(request.body);
       response.json(await cancelAdminPlayerActivity(request.params.playerId, body.activityId));
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  app.post("/api/admin/players/:playerId/inventory", async (request, response, next) => {
+    try {
+      requireRole(request, "admin");
+      const body = adminInventoryMutationSchema.parse(request.body);
+      response.json(await mutateAdminPlayerInventory(request.params.playerId, body));
     } catch (error) {
       next(error);
     }

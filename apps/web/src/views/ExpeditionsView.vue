@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
 
+import ExpeditionHistoryPanel from "../components/gameplay/ExpeditionHistoryPanel.vue";
 import ExpeditionPanel from "../components/gameplay/ExpeditionPanel.vue";
 import BasePanel from "../components/ui/BasePanel.vue";
+import { useExpeditionHistory } from "../composables/use-expedition-history";
 import { useGameState } from "../composables/use-game-state";
 import { zoneLayout } from "../lib/zone-layout";
 
 const { activityNow, claimExpedition, gameState, pendingAction, startExpedition } = useGameState();
+const { historyEntries, historyError, loadHistory } = useExpeditionHistory();
 const selectedZoneKey = ref<string | null>(null);
 const zoomLevel = ref(1);
 
@@ -98,6 +101,11 @@ function decreaseZoom() {
 function centerSelectedZone() {
   zoomLevel.value = Math.max(1.2, zoomLevel.value);
 }
+
+async function claimRun(expeditionId: string) {
+  await claimExpedition(expeditionId);
+  await loadHistory();
+}
 </script>
 
 <template>
@@ -164,7 +172,7 @@ function centerSelectedZone() {
         :now="activityNow"
         :pending-action="pendingAction"
         :player-level="gameState.player.level"
-        @claim="claimExpedition"
+        @claim="claimRun"
         @start="startExpedition"
       />
 
@@ -199,6 +207,8 @@ function centerSelectedZone() {
           </div>
         </div>
       </BasePanel>
+
+      <ExpeditionHistoryPanel :entries="historyEntries" :error-message="historyError" />
     </div>
   </div>
 </template>
