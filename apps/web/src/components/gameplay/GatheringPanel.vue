@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { ActivitySnapshot, GatheringDefinition } from "@obsidian-astral/shared";
 
+import BasePanel from "../ui/BasePanel.vue";
 import { formatProfessionLabel } from "../../lib/formatters";
 import ActivityTimeline from "./ActivityTimeline.vue";
-import BasePanel from "../ui/BasePanel.vue";
 
 const props = defineProps<{
   activities: ActivitySnapshot[];
@@ -24,7 +24,7 @@ function activityFor(actionKey: string) {
 
 <template>
   <BasePanel title="Folyamatban lévő műveletek" subtitle="Queue nézet">
-    <div class="card-list">
+    <div class="card-list gathering-grid">
       <article v-for="item in items" :key="item.key" class="action-card gathering-card">
         <div class="gathering-card-main">
           <div class="progress-icon">⚒</div>
@@ -42,7 +42,7 @@ function activityFor(actionKey: string) {
                   playerLevel < item.requiredLevel
                     ? `${item.requiredLevel}. szint kell`
                     : pendingAction === `gather:${item.key}` || activityFor(item.key)
-                      ? "Folyamatban…"
+                      ? "Folyamatban..."
                       : "Indítás"
                 }}
               </button>

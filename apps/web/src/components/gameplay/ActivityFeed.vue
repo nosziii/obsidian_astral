@@ -13,7 +13,7 @@ defineProps<{
 
 <template>
   <BasePanel title="Aktív események" subtitle="Élő követés">
-    <div v-if="activities.length" class="log-list">
+    <div v-if="activities.length" class="log-list activity-feed-compact">
       <article v-for="activity in activities" :key="activity.id" class="log-item live-log-item">
         <div>
           <strong>{{ activity.label }}</strong>
