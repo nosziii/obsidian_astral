@@ -49,3 +49,19 @@ export const chatMessageCreateSchema = z.object({
   channel: z.enum(["global", "workshop"]),
   content: z.string().trim().min(1).max(280),
 });
+
+export const adminPlayerUpdateSchema = z
+  .object({
+    level: z.number().int().min(1).max(100).optional(),
+    energy: z.number().int().min(0).max(1000).optional(),
+    energyMax: z.number().int().min(1).max(1000).optional(),
+    credits: z.number().int().min(0).max(1_000_000).optional(),
+    astralite: z.number().int().min(0).max(1_000_000).optional(),
+  })
+  .refine((value) => Object.values(value).some((entry) => entry !== undefined), {
+    message: "Legalább egy mezőt meg kell adni.",
+  });
+
+export const adminCancelActivitySchema = z.object({
+  activityId: z.string().min(1),
+});

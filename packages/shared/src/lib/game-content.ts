@@ -409,6 +409,7 @@ export const zones: Omit<ZoneSnapshot, "status">[] = [
     description: "Korai kitermelő mezők fa-, kő- és vasalapokkal.",
     recommendedLevel: 1,
     risk: "alacsony",
+    rewardMultiplier: 1,
   },
   {
     key: "kristalymezok",
@@ -416,6 +417,7 @@ export const zones: Omit<ZoneSnapshot, "status">[] = [
     description: "Középszintű zóna labor- és energiaalapanyagokkal.",
     recommendedLevel: 3,
     risk: "kozepes",
+    rewardMultiplier: 1.15,
   },
   {
     key: "vortex_cluster",
@@ -423,6 +425,7 @@ export const zones: Omit<ZoneSnapshot, "status">[] = [
     description: "Instabil, ritka lootot rejtő magas szintű szektor.",
     recommendedLevel: 5,
     risk: "magas",
+    rewardMultiplier: 1.3,
   },
 ];
 

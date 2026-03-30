@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 
+import AdminPlayerEditor from "../components/admin/AdminPlayerEditor.vue";
 import BasePanel from "../components/ui/BasePanel.vue";
 import { useAuth } from "../composables/use-auth";
 
-const { adminOverview, adminPlayerDetail, adminStatus, loadAdminOverview, loadAdminPlayerDetail, grantPack, runSystemPulse } = useAuth();
+const { adminOverview, adminPlayerDetail, adminStatus, loadAdminOverview, loadAdminPlayerDetail, saveAdminPlayer, cancelAdminActivity, grantPack, runSystemPulse } = useAuth();
 const query = ref("");
 const activeRole = ref<"mind" | "jatekos" | "admin">("mind");
 const selectedPlayerId = ref<string | null>(null);
@@ -35,6 +36,22 @@ const visiblePlayers = computed(() => {
 async function selectPlayer(playerId: string) {
   selectedPlayerId.value = playerId;
   await loadAdminPlayerDetail(playerId);
+}
+
+async function submitPlayerUpdate(payload: { level: number; energy: number; energyMax: number; credits: number; astralite: number }) {
+  if (!selectedPlayerId.value) {
+    return;
+  }
+
+  await saveAdminPlayer(selectedPlayerId.value, payload);
+}
+
+async function stopSelectedActivity(activityId: string) {
+  if (!selectedPlayerId.value) {
+    return;
+  }
+
+  await cancelAdminActivity(selectedPlayerId.value, activityId);
 }
 </script>
 
@@ -131,6 +148,8 @@ async function selectPlayer(playerId: string) {
           <p class="muted">{{ adminPlayerDetail.player.bio }}</p>
         </article>
 
+        <AdminPlayerEditor :detail="adminPlayerDetail" @save="submitPlayerUpdate" @cancel-activity="stopSelectedActivity" />
+
         <article class="action-card">
           <h4 class="card-title">Aktív események</h4>
           <div v-if="adminPlayerDetail.activities.length" class="detail-list">
@@ -152,17 +171,17 @@ async function selectPlayer(playerId: string) {
           </div>
           <p v-else class="muted">Nincs készlet.</p>
         </article>
-
-        <article class="action-card">
-          <h4 class="card-title">Épületek</h4>
-          <div class="detail-list">
-            <div v-for="building in adminPlayerDetail.buildings" :key="building.key" class="detail-row">
-              <span>{{ building.label }}</span>
-              <strong>{{ building.level }}. szint</strong>
-            </div>
-          </div>
-        </article>
       </div>
+
+      <article class="action-card">
+        <h4 class="card-title">Épületek</h4>
+        <div class="detail-list">
+          <div v-for="building in adminPlayerDetail.buildings" :key="building.key" class="detail-row">
+            <span>{{ building.label }}</span>
+            <strong>{{ building.level }}. szint</strong>
+          </div>
+        </div>
+      </article>
     </BasePanel>
   </div>
 </template>

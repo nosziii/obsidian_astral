@@ -52,6 +52,28 @@ const visibleExpeditions = computed(() => {
   return gameState.value.expeditionsCatalog.filter((item) => item.zoneKey === selectedZone.value?.key);
 });
 
+const selectedZoneRewardText = computed(() => {
+  if (!selectedZone.value) {
+    return "Nincs zónabónusz.";
+  }
+
+  return `Jutalomszorzó: x${selectedZone.value.rewardMultiplier.toFixed(2)}`;
+});
+
+const selectedZoneRewardPreview = computed(() => {
+  if (!selectedZone.value) {
+    return [];
+  }
+
+  return visibleExpeditions.value.flatMap((expedition) =>
+    expedition.guaranteedRewards.map((reward) => ({
+      key: `${expedition.key}-${reward.resourceKey}`,
+      label: gameState.value?.resources.find((resource) => resource.key === reward.resourceKey)?.label ?? reward.resourceKey,
+      amount: Math.round(reward.amount * selectedZone.value!.rewardMultiplier),
+    })),
+  );
+});
+
 const mapTransform = computed(() => {
   const zone = selectedZone.value;
 
@@ -159,6 +181,21 @@ function centerSelectedZone() {
           <div class="detail-row">
             <span class="compact-label">Elérhetőség</span>
             <strong>{{ selectedZone.status }}</strong>
+          </div>
+          <div class="detail-row">
+            <span class="compact-label">Zónabónusz</span>
+            <strong>{{ selectedZoneRewardText }}</strong>
+          </div>
+          <div class="detail-row">
+            <span class="compact-label">Expedíciók</span>
+            <strong>{{ visibleExpeditions.length }} elérhető</strong>
+          </div>
+        </div>
+
+        <div v-if="selectedZoneRewardPreview.length" class="component-list">
+          <div v-for="item in selectedZoneRewardPreview.slice(0, 4)" :key="item.key" class="component-item">
+            <span>{{ item.label }}</span>
+            <strong>{{ item.amount }}</strong>
           </div>
         </div>
       </BasePanel>

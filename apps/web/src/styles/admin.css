@@ -64,6 +64,12 @@
   gap: 16px;
 }
 
+.admin-edit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
 .admin-row--head {
   color: var(--text-dim);
   font-size: 0.75rem;
@@ -106,6 +112,7 @@
   }
 
   .admin-detail-grid,
+  .admin-edit-grid,
   .admin-row {
     grid-template-columns: 1fr;
     gap: 8px;

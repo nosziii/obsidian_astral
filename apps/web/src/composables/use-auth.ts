@@ -117,6 +117,20 @@ export function useAuth() {
     return adminPlayerDetail.value;
   }
 
+  async function saveAdminPlayer(playerId: string, input: { level?: number; energy?: number; energyMax?: number; credits?: number; astralite?: number }) {
+    adminStatus.value = await gameApi.updateAdminPlayer(playerId, input);
+    adminOverview.value = await gameApi.adminOverview();
+    adminPlayerDetail.value = await gameApi.adminPlayerDetail(playerId);
+    return adminStatus.value;
+  }
+
+  async function cancelAdminActivity(playerId: string, activityId: string) {
+    adminStatus.value = await gameApi.cancelAdminActivity(playerId, activityId);
+    adminOverview.value = await gameApi.adminOverview();
+    adminPlayerDetail.value = await gameApi.adminPlayerDetail(playerId);
+    return adminStatus.value;
+  }
+
   return {
     session: computed(() => session.value),
     authLoaded: computed(() => authLoaded.value),
@@ -130,6 +144,8 @@ export function useAuth() {
     saveProfile,
     loadAdminOverview,
     loadAdminPlayerDetail,
+    saveAdminPlayer,
+    cancelAdminActivity,
     runSystemPulse,
     grantPack,
   };

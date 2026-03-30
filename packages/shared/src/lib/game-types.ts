@@ -142,6 +142,7 @@ export interface ZoneSnapshot {
   description: string;
   recommendedLevel: number;
   risk: ExpeditionRisk;
+  rewardMultiplier: number;
   status: ZoneStatus;
 }
 
@@ -209,10 +210,20 @@ export interface AdminPlayerDetail {
   player: AdminPlayerSummary & {
     bio: string;
     fleet: string;
+    energy: number;
+    energyMax: number;
   };
   inventory: InventorySnapshot[];
   buildings: BuildingSnapshot[];
   activities: ActivitySnapshot[];
+}
+
+export interface AdminPlayerUpdateInput {
+  level?: number;
+  energy?: number;
+  energyMax?: number;
+  credits?: number;
+  astralite?: number;
 }
 
 export interface EquipmentSnapshot {

@@ -98,6 +98,16 @@ export const gameApi = {
     }),
   adminOverview: () => request<AdminOverview>("/api/admin/overview"),
   adminPlayerDetail: (playerId: string) => request<AdminPlayerDetail>(`/api/admin/players/${playerId}`),
+  updateAdminPlayer: (playerId: string, input: { level?: number; energy?: number; energyMax?: number; credits?: number; astralite?: number }) =>
+    request<AdminActionResult>(`/api/admin/players/${playerId}`, {
+      method: "PATCH",
+      body: JSON.stringify(input),
+    }),
+  cancelAdminActivity: (playerId: string, activityId: string) =>
+    request<AdminActionResult>(`/api/admin/players/${playerId}/cancel-activity`, {
+      method: "POST",
+      body: JSON.stringify({ activityId }),
+    }),
   equipResource: (resourceKey: string | null) =>
     request<GameState>("/api/profile/equipment", {
       method: "POST",

@@ -4,6 +4,7 @@ import { prisma } from "../db.js";
 import { buildingMap, expeditionMap, gatheringMap, recipeMap } from "../lib/catalog.js";
 import { GameRuleError } from "../lib/errors.js";
 import { createTimedAction, ensureNoActiveTimedAction } from "./activity-service.js";
+import { getZoneRewardMultiplier } from "./expedition-zone-service.js";
 import { changeInventory, scaledRewards } from "./inventory-service.js";
 import type { PlayerState } from "./player-service.js";
 import { applyPlayerProgress } from "./progress-service.js";
@@ -150,11 +151,11 @@ function createExpeditionRewards(expeditionKey: string) {
     throw new GameRuleError("Ismeretlen expedíció.", 404);
   }
 
-  const rewards = [...definition.guaranteedRewards];
+  const rewards = scaledRewards([...definition.guaranteedRewards], getZoneRewardMultiplier(definition.zoneKey) - 1);
 
   for (const bonusReward of definition.bonusRewards) {
     if (Math.random() > 0.45) {
-      rewards.push(bonusReward);
+      rewards.push(...scaledRewards([bonusReward], getZoneRewardMultiplier(definition.zoneKey) - 1));
     }
   }
 

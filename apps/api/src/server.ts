@@ -1,8 +1,10 @@
 import cors from "cors";
 import express from "express";
 import {
+  adminCancelActivitySchema,
   chatMessageCreateSchema,
   adminGrantPackSchema,
+  adminPlayerUpdateSchema,
   loginSchema,
   equipmentUpdateSchema,
   profileUpdateSchema,
@@ -18,6 +20,7 @@ import { config } from "./config.js";
 import { GameRuleError } from "./lib/errors.js";
 import { attachAuthSession, requireAuth, requireRole } from "./lib/request-auth.js";
 import { getAdminPlayerDetail } from "./services/admin-player-service.js";
+import { cancelAdminPlayerActivity, updateAdminPlayer } from "./services/admin-player-mutation-service.js";
 import { createChatMessage, listChatMessages } from "./services/chat-service.js";
 import { getAdminOverview, grantStarterPack, triggerSystemPulse } from "./services/admin-service.js";
 import { getSessionByToken, loginAccount, logoutAccount, registerAccount, updateProfile } from "./services/auth-service.js";
@@ -182,6 +185,26 @@ export function createServer() {
     try {
       requireRole(request, "admin");
       response.json(await getAdminPlayerDetail(request.params.playerId));
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  app.patch("/api/admin/players/:playerId", async (request, response, next) => {
+    try {
+      requireRole(request, "admin");
+      const body = adminPlayerUpdateSchema.parse(request.body);
+      response.json(await updateAdminPlayer(request.params.playerId, body));
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  app.post("/api/admin/players/:playerId/cancel-activity", async (request, response, next) => {
+    try {
+      requireRole(request, "admin");
+      const body = adminCancelActivitySchema.parse(request.body);
+      response.json(await cancelAdminPlayerActivity(request.params.playerId, body.activityId));
     } catch (error) {
       next(error);
     }
