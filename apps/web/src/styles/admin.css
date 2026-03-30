@@ -40,7 +40,7 @@
 
 .admin-row {
   display: grid;
-  grid-template-columns: 1.2fr 1.6fr 0.8fr 0.6fr 0.8fr;
+  grid-template-columns: 1.2fr 1.5fr 0.8fr 0.9fr 0.6fr 1fr;
   gap: 16px;
   padding: 14px 16px;
   border-radius: 16px;
@@ -80,6 +80,21 @@
 .admin-inline-button {
   min-height: 36px;
   padding: 0 12px;
+}
+
+.admin-toggle-field {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.admin-toggle-button {
+  justify-self: start;
+}
+
+.admin-toggle-button.is-danger {
+  border-color: rgba(255, 107, 120, 0.3);
+  color: var(--danger);
 }
 
 .sidebar-button {

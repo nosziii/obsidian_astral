@@ -317,6 +317,26 @@
   border-left-color: rgba(255, 107, 120, 0.36);
 }
 
+.notification-card.is-read {
+  opacity: 0.72;
+}
+
+.notification-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.notification-card-copy {
+  display: grid;
+  gap: 8px;
+}
+
+.notification-card-button {
+  justify-self: start;
+}
+
 .log-dot {
   width: 16px;
   height: 16px;

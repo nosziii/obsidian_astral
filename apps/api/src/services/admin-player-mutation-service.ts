@@ -2,6 +2,7 @@ import type { AdminActionResult, AdminPlayerUpdateInput } from "@obsidian-astral
 
 import { prisma } from "../db.js";
 import { GameRuleError } from "../lib/errors.js";
+import { createNotification } from "./notification-service.js";
 
 export async function updateAdminPlayer(playerId: string, input: AdminPlayerUpdateInput): Promise<AdminActionResult> {
   const player = await prisma.player.findUnique({
@@ -14,6 +15,8 @@ export async function updateAdminPlayer(playerId: string, input: AdminPlayerUpda
 
   const nextEnergyMax = input.energyMax ?? player.energyMax;
   const nextEnergy = Math.min(input.energy ?? player.energy, nextEnergyMax);
+  const nextRole = input.role ?? player.role;
+  const nextSuspended = input.isSuspended ?? player.isSuspended;
 
   await prisma.player.update({
     where: { id: playerId },
@@ -23,8 +26,29 @@ export async function updateAdminPlayer(playerId: string, input: AdminPlayerUpda
       energyMax: input.energyMax,
       credits: input.credits,
       astralite: input.astralite,
+      role: nextRole,
+      isSuspended: nextSuspended,
     },
   });
+
+  if (nextSuspended) {
+    await prisma.session.deleteMany({
+      where: { playerId },
+    });
+  }
+
+  if (input.role !== undefined || input.isSuspended !== undefined) {
+    await createNotification({
+      playerId,
+      kind: "admin",
+      title: "Fiókbeállítások frissültek",
+      body: nextSuspended
+        ? "Az admin központ korlátozta a hozzáférésedet."
+        : `A fiókod jogosultsági szintje frissült: ${nextRole}.`,
+      tone: nextSuspended ? "danger" : "secondary",
+      actionLabel: "Profil",
+    });
+  }
 
   return {
     message: `${player.name} alapértékei frissítve lettek.`,

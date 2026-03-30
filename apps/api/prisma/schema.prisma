@@ -8,27 +8,29 @@ datasource db {
 }
 
 model Player {
-  id                 String                 @id @default(cuid())
-  email              String?                @unique
+  id                 String                   @id @default(cuid())
+  email              String?                  @unique
   passwordHash       String?
-  role               String                 @default("jatekos")
+  role               String                   @default("jatekos")
   name               String
-  bio                String                 @default("Új parancsnok az Obsidian Astral szektorban.")
-  fleet              String                 @default("Nebulous Vanguard")
-  level              Int                    @default(1)
-  xp                 Int                    @default(0)
-  energy             Int                    @default(100)
-  energyMax          Int                    @default(100)
-  credits            Int                    @default(250)
-  astralite          Int                    @default(40)
-  createdAt          DateTime               @default(now())
-  updatedAt          DateTime               @updatedAt
+  bio                String                   @default("Új parancsnok az Obsidian Astral szektorban.")
+  fleet              String                   @default("Nebulous Vanguard")
+  level              Int                      @default(1)
+  xp                 Int                      @default(0)
+  energy             Int                      @default(100)
+  energyMax          Int                      @default(100)
+  credits            Int                      @default(250)
+  astralite          Int                      @default(40)
+  isSuspended        Boolean                  @default(false)
+  createdAt          DateTime                 @default(now())
+  updatedAt          DateTime                 @updatedAt
   inventory          InventoryEntry[]
   equipmentInventory EquipmentInventoryEntry[]
   equippedItems      EquippedItem[]
   buildings          BuildingState[]
   expeditions        ExpeditionRun[]
   chatMessages       ChatMessage[]
+  notifications      Notification[]
   timedActions       TimedAction[]
   sessions           Session[]
 }
@@ -116,6 +118,25 @@ model ChatMessage {
   player     Player?  @relation(fields: [playerId], references: [id], onDelete: SetNull)
 
   @@index([channel, createdAt])
+}
+
+model Notification {
+  id          String   @id @default(cuid())
+  playerId    String
+  referenceKey String?
+  kind        String
+  title       String
+  body        String
+  tone        String
+  actionLabel String
+  readAt      DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  player      Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@index([playerId, createdAt])
+  @@index([playerId, readAt, createdAt])
+  @@unique([playerId, referenceKey])
 }
 
 model TimedAction {

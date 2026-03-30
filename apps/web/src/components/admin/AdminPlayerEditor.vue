@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { ref, watchEffect } from "vue";
-import type { AdminPlayerDetail } from "@obsidian-astral/shared";
+import type { AdminPlayerDetail, AdminPlayerUpdateInput, UserRole } from "@obsidian-astral/shared";
 
 const props = defineProps<{
   detail: AdminPlayerDetail;
 }>();
 
 const emit = defineEmits<{
-  save: [payload: { level: number; energy: number; energyMax: number; credits: number; astralite: number }];
+  save: [payload: AdminPlayerUpdateInput];
   cancelActivity: [activityId: string];
 }>();
 
@@ -16,6 +16,8 @@ const energy = ref(0);
 const energyMax = ref(0);
 const credits = ref(0);
 const astralite = ref(0);
+const role = ref<UserRole>("jatekos");
+const isSuspended = ref(false);
 
 watchEffect(() => {
   level.value = props.detail.player.level;
@@ -23,6 +25,8 @@ watchEffect(() => {
   energyMax.value = props.detail.player.energyMax;
   credits.value = props.detail.player.credits;
   astralite.value = props.detail.player.astralite;
+  role.value = props.detail.player.role;
+  isSuspended.value = props.detail.player.isSuspended;
 });
 
 function submit() {
@@ -32,6 +36,8 @@ function submit() {
     energyMax: energyMax.value,
     credits: credits.value,
     astralite: astralite.value,
+    role: role.value,
+    isSuspended: isSuspended.value,
   });
 }
 </script>
@@ -59,6 +65,24 @@ function submit() {
       <label class="field-label">
         Asztralit
         <input v-model.number="astralite" class="auth-input" type="number" min="0" />
+      </label>
+      <label class="field-label">
+        Szerepkör
+        <select v-model="role" class="auth-input">
+          <option value="jatekos">Játékos</option>
+          <option value="admin">Admin</option>
+        </select>
+      </label>
+      <label class="field-label admin-toggle-field">
+        <span>Fiók állapota</span>
+        <button
+          class="ghost-button admin-toggle-button"
+          :class="{ 'is-danger': isSuspended }"
+          type="button"
+          @click="isSuspended = !isSuspended"
+        >
+          {{ isSuspended ? "Korlátozott" : "Aktív" }}
+        </button>
       </label>
       <button class="primary-button" type="submit">Mentés</button>
     </form>

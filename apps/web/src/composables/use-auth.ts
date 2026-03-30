@@ -1,7 +1,9 @@
 import { computed, ref } from "vue";
-import type { AdminActionResult, AdminOverview, AdminPlayerDetail, AuthSession } from "@obsidian-astral/shared";
+import type { AdminActionResult, AdminOverview, AdminPlayerDetail, AdminPlayerUpdateInput, AuthSession } from "@obsidian-astral/shared";
 
 import { gameApi, setApiAuthToken } from "../api/game-api";
+import { clearGameState } from "./use-game-state";
+import { clearNotifications } from "./use-notifications";
 
 const STORAGE_KEY = "obsidian-astral-token";
 
@@ -76,6 +78,8 @@ export function useAuth() {
       applySession(null);
       adminOverview.value = null;
       adminPlayerDetail.value = null;
+      clearGameState();
+      clearNotifications();
     }
   }
 
@@ -106,9 +110,11 @@ export function useAuth() {
   async function grantPack(playerId: string) {
     adminStatus.value = await gameApi.grantStarterPack(playerId);
     adminOverview.value = await gameApi.adminOverview();
+
     if (adminPlayerDetail.value?.player.id === playerId) {
       adminPlayerDetail.value = await gameApi.adminPlayerDetail(playerId);
     }
+
     return adminStatus.value;
   }
 
@@ -117,7 +123,7 @@ export function useAuth() {
     return adminPlayerDetail.value;
   }
 
-  async function saveAdminPlayer(playerId: string, input: { level?: number; energy?: number; energyMax?: number; credits?: number; astralite?: number }) {
+  async function saveAdminPlayer(playerId: string, input: AdminPlayerUpdateInput) {
     adminStatus.value = await gameApi.updateAdminPlayer(playerId, input);
     adminOverview.value = await gameApi.adminOverview();
     adminPlayerDetail.value = await gameApi.adminPlayerDetail(playerId);

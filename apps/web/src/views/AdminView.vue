@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
+import type { AdminPlayerUpdateInput } from "@obsidian-astral/shared";
 
 import AdminBuildingEditor from "../components/admin/AdminBuildingEditor.vue";
 import AdminInventoryEditor from "../components/admin/AdminInventoryEditor.vue";
@@ -53,7 +54,7 @@ async function selectPlayer(playerId: string) {
   await loadAdminPlayerDetail(playerId);
 }
 
-async function submitPlayerUpdate(payload: { level: number; energy: number; energyMax: number; credits: number; astralite: number }) {
+async function submitPlayerUpdate(payload: AdminPlayerUpdateInput) {
   if (!selectedPlayerId.value) {
     return;
   }
@@ -83,6 +84,10 @@ async function updateBuilding(payload: { buildingKey: string; level: number }) {
   }
 
   await mutateAdminBuilding(selectedPlayerId.value, payload);
+}
+
+function formatRole(role: "jatekos" | "admin") {
+  return role === "admin" ? "Admin" : "Játékos";
 }
 </script>
 
@@ -136,8 +141,8 @@ async function updateBuilding(payload: { buildingKey: string; level: number }) {
           <span>Név</span>
           <span>E-mail</span>
           <span>Szerep</span>
+          <span>Státusz</span>
           <span>Szint</span>
-          <span>Kreditek</span>
           <span>Művelet</span>
         </div>
         <div
@@ -148,9 +153,9 @@ async function updateBuilding(payload: { buildingKey: string; level: number }) {
         >
           <span>{{ player.name }}</span>
           <span>{{ player.email }}</span>
-          <span>{{ player.role }}</span>
+          <span>{{ formatRole(player.role) }}</span>
+          <span>{{ player.isSuspended ? "Korlátozott" : "Aktív" }}</span>
           <span>{{ player.level }}</span>
-          <span>{{ new Intl.NumberFormat("hu-HU").format(player.credits) }}</span>
           <div class="admin-row-actions">
             <button class="ghost-button admin-inline-button" type="button" @click="selectPlayer(player.id)">Részletek</button>
             <button class="ghost-button admin-inline-button" type="button" @click="grantPack(player.id)">Segélycsomag</button>
@@ -175,6 +180,10 @@ async function updateBuilding(payload: { buildingKey: string; level: number }) {
             <div class="detail-row">
               <span class="compact-label">E-mail</span>
               <strong>{{ adminPlayerDetail.player.email }}</strong>
+            </div>
+            <div class="detail-row">
+              <span class="compact-label">Státusz</span>
+              <strong>{{ adminPlayerDetail.player.isSuspended ? "Korlátozott" : "Aktív" }}</strong>
             </div>
             <div class="detail-row">
               <span class="compact-label">Asztralit</span>

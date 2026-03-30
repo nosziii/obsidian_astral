@@ -6,6 +6,7 @@ import { GameRuleError } from "../lib/errors.js";
 import { createTimedAction, ensureNoActiveTimedAction } from "./activity-service.js";
 import { getZoneRewardMultiplier } from "./expedition-zone-service.js";
 import { changeInventory, scaledRewards } from "./inventory-service.js";
+import { createNotification } from "./notification-service.js";
 import type { PlayerState } from "./player-service.js";
 import { applyPlayerProgress } from "./progress-service.js";
 import { ensurePlayerById, getGameState } from "./player-service.js";
@@ -196,6 +197,15 @@ export async function startExpedition(playerId: string, expeditionKey: string) {
     },
   });
 
+  await createNotification({
+    playerId: player.id,
+    kind: "expedicio",
+    title: `${definition.label} elindítva`,
+    body: "Az expedíció folyamatban van. Az élő követés panelen figyelheted az állapotát.",
+    tone: "secondary",
+    actionLabel: "Expedíciók",
+  });
+
   return getGameState(playerId);
 }
 
@@ -229,6 +239,16 @@ export async function claimExpedition(playerId: string, expeditionId: string) {
     },
   });
   await applyPlayerProgress(player.id, 0, definition?.rewardXp ?? 0);
+
+  await createNotification({
+    playerId: player.id,
+    kind: "expedicio",
+    title: `${definition?.label ?? expedition.expeditionKey} jutalma átvéve`,
+    body: "Az expedíció lezárult, a jutalmak bekerültek a készletbe és a tapasztalat jóváírva.",
+    tone: "primary",
+    actionLabel: "Készlet",
+    referenceKey: `expedition-claim:${expedition.id}`,
+  });
 
   return getGameState(playerId);
 }

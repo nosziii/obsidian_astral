@@ -58,6 +58,8 @@ export const adminPlayerUpdateSchema = z
     energyMax: z.number().int().min(1).max(1000).optional(),
     credits: z.number().int().min(0).max(1_000_000).optional(),
     astralite: z.number().int().min(0).max(1_000_000).optional(),
+    role: z.enum(["jatekos", "admin"]).optional(),
+    isSuspended: z.boolean().optional(),
   })
   .refine((value) => Object.values(value).some((entry) => entry !== undefined), {
     message: "Legalább egy mezőt meg kell adni.",
@@ -76,4 +78,8 @@ export const adminInventoryMutationSchema = z.object({
 export const adminBuildingMutationSchema = z.object({
   buildingKey: z.string().min(1),
   level: z.number().int().min(1).max(50),
+});
+
+export const notificationReadSchema = z.object({
+  notificationId: z.string().min(1),
 });

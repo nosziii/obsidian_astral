@@ -6,6 +6,8 @@ export type UserRole = "jatekos" | "admin";
 export type ActivityKind = "gathering" | "craft" | "building" | "expedition";
 export type ActivityStatus = "folyamatban" | "befejezve";
 export type ChatChannel = "global" | "workshop";
+export type NotificationTone = "primary" | "secondary" | "danger";
+export type NotificationKind = "rendszer" | "gazdasag" | "expedicio" | "admin";
 export type ProfessionKey =
   | "favagas"
   | "banyaszat"
@@ -197,6 +199,17 @@ export interface ChatMessageSnapshot {
   createdAt: string;
 }
 
+export interface NotificationSnapshot {
+  id: string;
+  kind: NotificationKind;
+  title: string;
+  body: string;
+  tone: NotificationTone;
+  actionLabel: string;
+  createdAt: string;
+  readAt: string | null;
+}
+
 export interface GameState {
   player: PlayerSnapshot;
   inventory: InventorySnapshot[];
@@ -236,6 +249,7 @@ export interface AdminPlayerSummary {
   email: string;
   name: string;
   role: UserRole;
+  isSuspended: boolean;
   level: number;
   credits: number;
   astralite: number;
@@ -269,6 +283,8 @@ export interface AdminPlayerUpdateInput {
   energyMax?: number;
   credits?: number;
   astralite?: number;
+  role?: UserRole;
+  isSuspended?: boolean;
 }
 
 export interface AdminInventoryMutationInput {

@@ -7,10 +7,12 @@ import PlayerHero from "../components/dashboard/PlayerHero.vue";
 import ResourceGrid from "../components/dashboard/ResourceGrid.vue";
 import BasePanel from "../components/ui/BasePanel.vue";
 import { useGameState } from "../composables/use-game-state";
-import { buildDashboardNotifications } from "../lib/dashboard-notifications";
+import { useNotifications } from "../composables/use-notifications";
 import { formatCategoryLabel } from "../lib/formatters";
 
 const { activityNow, gameState, gather, pendingAction } = useGameState();
+const { notifications, notificationsError, pendingNotificationAction, markNotificationRead, markAllNotificationsRead } =
+  useNotifications();
 
 function zoneStatusClass(status: string) {
   if (status === "zarolt") {
@@ -45,14 +47,12 @@ function zoneStatusClass(status: string) {
       <div class="dashboard-sidebar-stack">
         <ActivityFeed :activities="gameState.activities" :now="activityNow" />
         <NotificationCenter
-          :notifications="
-            buildDashboardNotifications({
-              activities: gameState.activities,
-              zones: gameState.zones,
-              passiveProduction: gameState.passiveProduction,
-            })
-          "
+          :notifications="notifications"
+          :pending-action="pendingNotificationAction"
+          @mark-read="markNotificationRead"
+          @mark-all-read="markAllNotificationsRead"
         />
+        <p v-if="notificationsError" class="muted">{{ notificationsError }}</p>
       </div>
     </div>
 

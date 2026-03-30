@@ -1,4 +1,5 @@
 import type { AuthSession, SessionPlayer, UserRole } from "@obsidian-astral/shared";
+
 import { prisma } from "../db.js";
 import { createSessionToken, hashPassword, verifyPassword } from "../lib/auth.js";
 import { GameRuleError } from "../lib/errors.js";
@@ -45,6 +46,12 @@ async function createSessionForPlayer(playerId: string) {
   return token;
 }
 
+function ensureNotSuspended(player: { isSuspended: boolean }) {
+  if (player.isSuspended) {
+    throw new GameRuleError("Ez a fiók jelenleg korlátozva van.", 403);
+  }
+}
+
 export async function registerAccount(email: string, password: string, name: string): Promise<AuthSession> {
   const existing = await prisma.player.findUnique({
     where: { email },
@@ -83,6 +90,8 @@ export async function loginAccount(email: string, password: string): Promise<Aut
     throw new GameRuleError("Hibás e-mail cím vagy jelszó.", 401);
   }
 
+  ensureNotSuspended(player);
+
   const token = await createSessionForPlayer(player.id);
 
   return {
@@ -105,10 +114,11 @@ export async function getSessionByToken(token: string | null): Promise<AuthSessi
     return null;
   }
 
-  if (session.expiresAt.getTime() <= Date.now()) {
+  if (session.player.isSuspended || session.expiresAt.getTime() <= Date.now()) {
     await prisma.session.delete({
       where: { token },
     });
+
     return null;
   }
 

@@ -1,7 +1,7 @@
 import type { AdminPlayerDetail } from "@obsidian-astral/shared";
-import { buildingMap } from "../lib/catalog.js";
 
 import { prisma } from "../db.js";
+import { buildingMap } from "../lib/catalog.js";
 import { getGameState } from "./player-service.js";
 
 export async function getAdminPlayerDetail(playerId: string): Promise<AdminPlayerDetail> {
@@ -13,14 +13,15 @@ export async function getAdminPlayerDetail(playerId: string): Promise<AdminPlaye
         email: true,
         name: true,
         role: true,
+        isSuspended: true,
         level: true,
-      credits: true,
-      astralite: true,
-      energy: true,
-      energyMax: true,
-      createdAt: true,
-      bio: true,
-      fleet: true,
+        credits: true,
+        astralite: true,
+        energy: true,
+        energyMax: true,
+        createdAt: true,
+        bio: true,
+        fleet: true,
       },
     }),
     getGameState(playerId),
@@ -32,6 +33,7 @@ export async function getAdminPlayerDetail(playerId: string): Promise<AdminPlaye
       email: player.email ?? "nincs@beallitva.local",
       name: player.name,
       role: player.role as AdminPlayerDetail["player"]["role"],
+      isSuspended: player.isSuspended,
       level: player.level,
       credits: player.credits,
       astralite: player.astralite,

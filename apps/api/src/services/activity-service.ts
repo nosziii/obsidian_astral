@@ -2,8 +2,10 @@ import type { ActivityKind, RecipeIngredient } from "@obsidian-astral/shared";
 import type { Prisma } from "@prisma/client";
 
 import { prisma } from "../db.js";
+import { buildingMap, gatheringMap, recipeMap } from "../lib/catalog.js";
 import { GameRuleError } from "../lib/errors.js";
 import { changeInventory } from "./inventory-service.js";
+import { createNotification } from "./notification-service.js";
 import { applyPlayerProgress } from "./progress-service.js";
 
 interface TimedActionPayload {
@@ -86,6 +88,30 @@ async function finishTimedAction(actionId: string) {
   if (typeof payload.xp === "number" && payload.xp > 0) {
     await applyPlayerProgress(action.playerId, 0, payload.xp);
   }
+
+  const actionLabel =
+    action.kind === "gathering"
+      ? gatheringMap.get(action.targetKey)?.label
+      : action.kind === "craft"
+        ? recipeMap.get(action.targetKey)?.label
+        : buildingMap.get(action.targetKey)?.label;
+
+  const completionBody =
+    action.kind === "building"
+      ? `Az épületfejlesztés lezárult, az új szint aktív.`
+      : action.kind === "craft"
+        ? "A gyártási ciklus lefutott, a jutalmak bekerültek a készletbe."
+        : "A gyűjtési művelet lezárult, a zsákmány bekerült a készletbe.";
+
+  await createNotification({
+    playerId: action.playerId,
+    kind: action.kind === "building" ? "rendszer" : "gazdasag",
+    title: `${actionLabel ?? action.targetKey} befejeződött`,
+    body: completionBody,
+    tone: "primary",
+    actionLabel: action.kind === "building" ? "Bázisnézet" : "Készlet",
+    referenceKey: `timed-action:${action.id}`,
+  });
 
   await prisma.timedAction.update({
     where: { id: actionId },

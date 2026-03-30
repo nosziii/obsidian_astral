@@ -4,11 +4,13 @@ import type {
   AdminInventoryMutationInput,
   AdminOverview,
   AdminPlayerDetail,
+  AdminPlayerUpdateInput,
   AuthSession,
   ChatChannel,
   ChatMessageSnapshot,
   ExpeditionHistorySnapshot,
   GameState,
+  NotificationSnapshot,
   SessionPlayer,
 } from "@obsidian-astral/shared";
 
@@ -53,6 +55,15 @@ export const gameApi = {
     request<ChatMessageSnapshot[]>("/api/chat", {
       method: "POST",
       body: JSON.stringify({ channel, content }),
+    }),
+  listNotifications: () => request<NotificationSnapshot[]>("/api/notifications"),
+  markNotificationRead: (notificationId: string) =>
+    request<AdminActionResult>(`/api/notifications/${notificationId}/read`, {
+      method: "POST",
+    }),
+  markAllNotificationsRead: () =>
+    request<AdminActionResult>("/api/notifications/read-all", {
+      method: "POST",
     }),
   gather: (actionKey: string) =>
     request<GameState>("/api/actions/gather", {
@@ -101,10 +112,7 @@ export const gameApi = {
     }),
   adminOverview: () => request<AdminOverview>("/api/admin/overview"),
   adminPlayerDetail: (playerId: string) => request<AdminPlayerDetail>(`/api/admin/players/${playerId}`),
-  updateAdminPlayer: (
-    playerId: string,
-    input: { level?: number; energy?: number; energyMax?: number; credits?: number; astralite?: number },
-  ) =>
+  updateAdminPlayer: (playerId: string, input: AdminPlayerUpdateInput) =>
     request<AdminActionResult>(`/api/admin/players/${playerId}`, {
       method: "PATCH",
       body: JSON.stringify(input),

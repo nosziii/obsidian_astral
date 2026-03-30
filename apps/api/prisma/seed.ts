@@ -21,6 +21,7 @@ async function main() {
       passwordHash: await hashPassword(playerPassword),
       name: playerName,
       role: "jatekos",
+      isSuspended: false,
       level: 1,
       xp: 0,
       energy: 100,
@@ -31,6 +32,7 @@ async function main() {
     update: {
       passwordHash: await hashPassword(playerPassword),
       name: playerName,
+      isSuspended: false,
     },
   });
 
@@ -43,6 +45,7 @@ async function main() {
       role: "admin",
       bio: "Rendszerfelügyeleti hozzáféréssel rendelkező admin fiók.",
       fleet: "System Node Admin",
+      isSuspended: false,
       level: 42,
       xp: 0,
       energy: 140,
@@ -56,6 +59,7 @@ async function main() {
       role: "admin",
       bio: "Rendszerfelügyeleti hozzáféréssel rendelkező admin fiók.",
       fleet: "System Node Admin",
+      isSuspended: false,
     },
   });
 
@@ -84,6 +88,31 @@ async function main() {
           channel: "workshop",
           authorName: "Admin Parancsnok",
           content: "A műhelycsatornán megoszthatók a craftolási igények és ritka alapanyagok.",
+        },
+      ],
+    });
+  }
+
+  const existingNotificationCount = await prisma.notification.count();
+
+  if (existingNotificationCount === 0) {
+    await prisma.notification.createMany({
+      data: [
+        {
+          playerId: player.id,
+          kind: "rendszer",
+          title: "Üdv a szektorban",
+          body: "A dashboard értesítési központja már valós eseményeket és admin üzeneteket követ.",
+          tone: "primary",
+          actionLabel: "Dashboard",
+        },
+        {
+          playerId: admin.id,
+          kind: "admin",
+          title: "Admin központ aktív",
+          body: "A role és fiókmoderációs panel használatra kész.",
+          tone: "secondary",
+          actionLabel: "Admin",
         },
       ],
     });

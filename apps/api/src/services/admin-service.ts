@@ -1,12 +1,15 @@
 import type { AdminActionResult, AdminOverview, AdminPlayerSummary, UserRole } from "@obsidian-astral/shared";
+
 import { prisma } from "../db.js";
 import { changeInventory } from "./inventory-service.js";
+import { createNotification } from "./notification-service.js";
 
 function toAdminPlayerSummary(player: {
   id: string;
   email: string | null;
   name: string;
   role: string;
+  isSuspended: boolean;
   level: number;
   credits: number;
   astralite: number;
@@ -17,6 +20,7 @@ function toAdminPlayerSummary(player: {
     email: player.email ?? "nincs@beallitva.local",
     name: player.name,
     role: player.role as UserRole,
+    isSuspended: player.isSuspended,
     level: player.level,
     credits: player.credits,
     astralite: player.astralite,
@@ -72,6 +76,19 @@ export async function triggerSystemPulse(): Promise<AdminActionResult> {
     ),
   );
 
+  await Promise.all(
+    players.map((player) =>
+      createNotification({
+        playerId: player.id,
+        kind: "admin",
+        title: "Rendszerimpulzus végrehajtva",
+        body: "Az admin központ teljesen visszatöltötte az energiaállapotodat.",
+        tone: "secondary",
+        actionLabel: "Dashboard",
+      }),
+    ),
+  );
+
   return {
     message: `${players.length} játékos energiaállapota feltöltve lett.`,
   };
@@ -104,6 +121,15 @@ export async function grantStarterPack(playerId: string): Promise<AdminActionRes
     ],
     "add",
   );
+
+  await createNotification({
+    playerId,
+    kind: "admin",
+    title: "Segélycsomag érkezett",
+    body: "Az admin központ kreditekkel, asztralittal és alapanyagokkal töltötte fel a készletedet.",
+    tone: "primary",
+    actionLabel: "Készlet",
+  });
 
   return {
     message: `${player.name} segélycsomagot kapott.`,

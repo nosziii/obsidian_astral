@@ -7,6 +7,7 @@ import {
   chatMessageCreateSchema,
   adminGrantPackSchema,
   adminPlayerUpdateSchema,
+  notificationReadSchema,
   loginSchema,
   equipmentUpdateSchema,
   profileUpdateSchema,
@@ -31,6 +32,7 @@ import { getAdminOverview, grantStarterPack, triggerSystemPulse } from "./servic
 import { getSessionByToken, loginAccount, logoutAccount, registerAccount, updateProfile } from "./services/auth-service.js";
 import { equipItem } from "./services/equipment-service.js";
 import { claimExpedition, craftRecipe, gatherResources, startExpedition, upgradeBuilding } from "./services/game-service.js";
+import { listNotifications, markAllNotificationsRead, markNotificationRead } from "./services/notification-service.js";
 import { getGameState } from "./services/player-service.js";
 
 export function createServer() {
@@ -228,6 +230,31 @@ export function createServer() {
       requireRole(request, "admin");
       const body = adminInventoryMutationSchema.parse(request.body);
       response.json(await mutateAdminPlayerInventory(request.params.playerId, body));
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  app.get("/api/notifications", async (request, response, next) => {
+    try {
+      response.json(await listNotifications(requireAuth(request).player.id));
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  app.post("/api/notifications/:notificationId/read", async (request, response, next) => {
+    try {
+      const body = notificationReadSchema.parse(request.params);
+      response.json(await markNotificationRead(requireAuth(request).player.id, body.notificationId));
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  app.post("/api/notifications/read-all", async (request, response, next) => {
+    try {
+      response.json(await markAllNotificationsRead(requireAuth(request).player.id));
     } catch (error) {
       next(error);
     }
