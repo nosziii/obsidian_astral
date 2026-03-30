@@ -259,7 +259,7 @@ export interface AdminPlayerDetail {
     energyMax: number;
   };
   inventory: InventorySnapshot[];
-  buildings: BuildingSnapshot[];
+  buildings: AdminBuildingDetail[];
   activities: ActivitySnapshot[];
 }
 
@@ -275,6 +275,18 @@ export interface AdminInventoryMutationInput {
   resourceKey: string;
   amount: number;
   mode: "add" | "remove";
+}
+
+export interface AdminBuildingDetail extends BuildingSnapshot {
+  category: BuildingCategory;
+  description: string;
+  requiredLevel: number;
+  passiveProduction: RecipeIngredient[];
+}
+
+export interface AdminBuildingMutationInput {
+  buildingKey: string;
+  level: number;
 }
 
 export interface EquipmentSnapshot {

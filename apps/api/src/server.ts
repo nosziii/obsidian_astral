@@ -2,6 +2,7 @@ import cors from "cors";
 import express from "express";
 import {
   adminCancelActivitySchema,
+  adminBuildingMutationSchema,
   adminInventoryMutationSchema,
   chatMessageCreateSchema,
   adminGrantPackSchema,
@@ -22,6 +23,7 @@ import { GameRuleError } from "./lib/errors.js";
 import { attachAuthSession, requireAuth, requireRole } from "./lib/request-auth.js";
 import { getAdminPlayerDetail } from "./services/admin-player-service.js";
 import { mutateAdminPlayerInventory } from "./services/admin-player-inventory-service.js";
+import { updateAdminPlayerBuilding } from "./services/admin-player-building-service.js";
 import { cancelAdminPlayerActivity, updateAdminPlayer } from "./services/admin-player-mutation-service.js";
 import { createChatMessage, listChatMessages } from "./services/chat-service.js";
 import { listExpeditionHistory } from "./services/expedition-history-service.js";
@@ -226,6 +228,16 @@ export function createServer() {
       requireRole(request, "admin");
       const body = adminInventoryMutationSchema.parse(request.body);
       response.json(await mutateAdminPlayerInventory(request.params.playerId, body));
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  app.post("/api/admin/players/:playerId/buildings", async (request, response, next) => {
+    try {
+      requireRole(request, "admin");
+      const body = adminBuildingMutationSchema.parse(request.body);
+      response.json(await updateAdminPlayerBuilding(request.params.playerId, body));
     } catch (error) {
       next(error);
     }

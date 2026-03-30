@@ -1,5 +1,6 @@
 import type {
   AdminActionResult,
+  AdminBuildingMutationInput,
   AdminInventoryMutationInput,
   AdminOverview,
   AdminPlayerDetail,
@@ -115,6 +116,11 @@ export const gameApi = {
     }),
   mutateAdminInventory: (playerId: string, input: AdminInventoryMutationInput) =>
     request<AdminActionResult>(`/api/admin/players/${playerId}/inventory`, {
+      method: "POST",
+      body: JSON.stringify(input),
+    }),
+  mutateAdminBuilding: (playerId: string, input: AdminBuildingMutationInput) =>
+    request<AdminActionResult>(`/api/admin/players/${playerId}/buildings`, {
       method: "POST",
       body: JSON.stringify(input),
     }),

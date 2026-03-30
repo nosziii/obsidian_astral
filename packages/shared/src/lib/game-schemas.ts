@@ -72,3 +72,8 @@ export const adminInventoryMutationSchema = z.object({
   amount: z.number().int().min(1).max(10_000),
   mode: z.enum(["add", "remove"]),
 });
+
+export const adminBuildingMutationSchema = z.object({
+  buildingKey: z.string().min(1),
+  level: z.number().int().min(1).max(50),
+});

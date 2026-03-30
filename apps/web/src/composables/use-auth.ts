@@ -137,6 +137,12 @@ export function useAuth() {
     return adminStatus.value;
   }
 
+  async function mutateAdminBuilding(playerId: string, input: { buildingKey: string; level: number }) {
+    adminStatus.value = await gameApi.mutateAdminBuilding(playerId, input);
+    adminPlayerDetail.value = await gameApi.adminPlayerDetail(playerId);
+    return adminStatus.value;
+  }
+
   return {
     session: computed(() => session.value),
     authLoaded: computed(() => authLoaded.value),
@@ -153,6 +159,7 @@ export function useAuth() {
     saveAdminPlayer,
     cancelAdminActivity,
     mutateAdminInventory,
+    mutateAdminBuilding,
     runSystemPulse,
     grantPack,
   };

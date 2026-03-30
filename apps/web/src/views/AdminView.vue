@@ -1,12 +1,26 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 
+import AdminBuildingEditor from "../components/admin/AdminBuildingEditor.vue";
 import AdminInventoryEditor from "../components/admin/AdminInventoryEditor.vue";
 import AdminPlayerEditor from "../components/admin/AdminPlayerEditor.vue";
 import BasePanel from "../components/ui/BasePanel.vue";
 import { useAuth } from "../composables/use-auth";
 
-const { adminOverview, adminPlayerDetail, adminStatus, loadAdminOverview, loadAdminPlayerDetail, saveAdminPlayer, cancelAdminActivity, mutateAdminInventory, grantPack, runSystemPulse } = useAuth();
+const {
+  adminOverview,
+  adminPlayerDetail,
+  adminStatus,
+  loadAdminOverview,
+  loadAdminPlayerDetail,
+  saveAdminPlayer,
+  cancelAdminActivity,
+  mutateAdminInventory,
+  mutateAdminBuilding,
+  grantPack,
+  runSystemPulse,
+} = useAuth();
+
 const query = ref("");
 const activeRole = ref<"mind" | "jatekos" | "admin">("mind");
 const selectedPlayerId = ref<string | null>(null);
@@ -62,10 +76,18 @@ async function updateInventory(payload: { resourceKey: string; amount: number; m
 
   await mutateAdminInventory(selectedPlayerId.value, payload);
 }
+
+async function updateBuilding(payload: { buildingKey: string; level: number }) {
+  if (!selectedPlayerId.value) {
+    return;
+  }
+
+  await mutateAdminBuilding(selectedPlayerId.value, payload);
+}
 </script>
 
 <template>
-  <div class="view-stack" v-if="adminOverview">
+  <div v-if="adminOverview" class="view-stack">
     <section class="admin-hero panel">
       <div>
         <p class="eyebrow">System node: admin-01</p>
@@ -118,7 +140,12 @@ async function updateInventory(payload: { resourceKey: string; amount: number; m
           <span>Kreditek</span>
           <span>Művelet</span>
         </div>
-        <div v-for="player in visiblePlayers" :key="player.id" class="admin-row" :class="{ 'admin-row--active': selectedPlayerId === player.id }">
+        <div
+          v-for="player in visiblePlayers"
+          :key="player.id"
+          class="admin-row"
+          :class="{ 'admin-row--active': selectedPlayerId === player.id }"
+        >
           <span>{{ player.name }}</span>
           <span>{{ player.email }}</span>
           <span>{{ player.role }}</span>
@@ -151,7 +178,7 @@ async function updateInventory(payload: { resourceKey: string; amount: number; m
             </div>
             <div class="detail-row">
               <span class="compact-label">Asztralit</span>
-              <strong>{{ new Intl.NumberFormat('hu-HU').format(adminPlayerDetail.player.astralite) }}</strong>
+              <strong>{{ new Intl.NumberFormat("hu-HU").format(adminPlayerDetail.player.astralite) }}</strong>
             </div>
           </div>
           <p class="muted">{{ adminPlayerDetail.player.bio }}</p>
@@ -184,15 +211,7 @@ async function updateInventory(payload: { resourceKey: string; amount: number; m
         </article>
       </div>
 
-      <article class="action-card">
-        <h4 class="card-title">Épületek</h4>
-        <div class="detail-list">
-          <div v-for="building in adminPlayerDetail.buildings" :key="building.key" class="detail-row">
-            <span>{{ building.label }}</span>
-            <strong>{{ building.level }}. szint</strong>
-          </div>
-        </div>
-      </article>
+      <AdminBuildingEditor :buildings="adminPlayerDetail.buildings" @save="updateBuilding" />
     </BasePanel>
   </div>
 </template>

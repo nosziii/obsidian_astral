@@ -1,4 +1,5 @@
 import type { AdminPlayerDetail } from "@obsidian-astral/shared";
+import { buildingMap } from "../lib/catalog.js";
 
 import { prisma } from "../db.js";
 import { getGameState } from "./player-service.js";
@@ -41,7 +42,17 @@ export async function getAdminPlayerDetail(playerId: string): Promise<AdminPlaye
       fleet: player.fleet,
     },
     inventory: gameState.inventory.slice(0, 12),
-    buildings: gameState.buildings,
+    buildings: gameState.buildings.map((building) => {
+      const catalog = buildingMap.get(building.key);
+
+      return {
+        ...building,
+        category: catalog?.category ?? "kitermeles",
+        description: catalog?.description ?? "Nincs leírás.",
+        requiredLevel: catalog?.requiredLevel ?? 1,
+        passiveProduction: catalog?.passiveProduction ?? [],
+      };
+    }),
     activities: gameState.activities,
   };
 }

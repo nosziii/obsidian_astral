@@ -15,6 +15,7 @@ Utolsó frissítés: 2026-03-30
 - expedíciós napló és részletes expedíciós run overview képernyő
 - dashboard értesítési központ első verziója
 - dashboard queue és élő követés layout javítása
+- admin épület editor külön szerkesztőfelülettel és backend művelettel
 - admin játékosrészletek: készlet, épületek, aktivitások
 - admin készletmódosítás és alap játékosérték-szerkesztés
 - env és docker alapú konfiguráció rendezése
@@ -24,10 +25,10 @@ Utolsó frissítés: 2026-03-30
 - expedíciós és zónarendszer mélyítése
 - admin részletes beavatkozások bővítése
 - design alapú nézetek fokozatos átültetése kisebb, jól szeparált komponensekre
+- notification center állapotkezelésének mélyítése
 
 ## Még hiányzik
 
-- admin épületszint-szerkesztés külön műveletekkel
 - admin szerepkörváltás és account korlátozás
 - zónaesemények és random encounter rendszer
 - equipment tárgyforrások: drop, craft, jutalomlánc

@@ -90,9 +90,62 @@
   cursor: pointer;
 }
 
+.admin-building-editor {
+  gap: 18px;
+}
+
+.admin-building-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.admin-building-layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.82fr) minmax(0, 1.18fr);
+  gap: 16px;
+}
+
+.admin-building-list,
+.admin-building-form {
+  display: grid;
+  gap: 12px;
+}
+
+.admin-building-tile {
+  display: grid;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.03);
+  text-align: left;
+  cursor: pointer;
+}
+
+.admin-building-tile.is-active {
+  border-color: rgba(121, 238, 248, 0.22);
+  box-shadow: inset 0 0 0 1px rgba(121, 238, 248, 0.12);
+}
+
+.admin-building-preview {
+  padding: 18px;
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at top right, rgba(121, 238, 248, 0.14), transparent 36%),
+    radial-gradient(circle at bottom left, rgba(167, 132, 255, 0.12), transparent 28%),
+    rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
 @media (max-width: 1120px) {
   .admin-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-building-layout {
+    grid-template-columns: 1fr;
   }
 }
 
