@@ -8,28 +8,29 @@ datasource db {
 }
 
 model Player {
-  id                  String           @id @default(cuid())
-  email               String?          @unique
-  passwordHash        String?
-  role                String           @default("jatekos")
-  name                String
-  bio                 String           @default("Új parancsnok az Obsidian Astral szektorban.")
-  fleet               String           @default("Nebulous Vanguard")
-  equippedResourceKey String?
-  level               Int              @default(1)
-  xp                  Int              @default(0)
-  energy              Int              @default(100)
-  energyMax           Int              @default(100)
-  credits             Int              @default(250)
-  astralite           Int              @default(40)
-  createdAt           DateTime         @default(now())
-  updatedAt           DateTime         @updatedAt
-  inventory           InventoryEntry[]
-  buildings           BuildingState[]
-  expeditions         ExpeditionRun[]
-  chatMessages        ChatMessage[]
-  timedActions        TimedAction[]
-  sessions            Session[]
+  id                 String                 @id @default(cuid())
+  email              String?                @unique
+  passwordHash       String?
+  role               String                 @default("jatekos")
+  name               String
+  bio                String                 @default("Új parancsnok az Obsidian Astral szektorban.")
+  fleet              String                 @default("Nebulous Vanguard")
+  level              Int                    @default(1)
+  xp                 Int                    @default(0)
+  energy             Int                    @default(100)
+  energyMax          Int                    @default(100)
+  credits            Int                    @default(250)
+  astralite          Int                    @default(40)
+  createdAt          DateTime               @default(now())
+  updatedAt          DateTime               @updatedAt
+  inventory          InventoryEntry[]
+  equipmentInventory EquipmentInventoryEntry[]
+  equippedItems      EquippedItem[]
+  buildings          BuildingState[]
+  expeditions        ExpeditionRun[]
+  chatMessages       ChatMessage[]
+  timedActions       TimedAction[]
+  sessions           Session[]
 }
 
 model InventoryEntry {
@@ -42,6 +43,30 @@ model InventoryEntry {
   player      Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
 
   @@unique([playerId, resourceKey])
+}
+
+model EquipmentInventoryEntry {
+  id        String   @id @default(cuid())
+  playerId  String
+  itemKey   String
+  quantity  Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@unique([playerId, itemKey])
+}
+
+model EquippedItem {
+  id        String   @id @default(cuid())
+  playerId  String
+  slot      String
+  itemKey   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@unique([playerId, slot])
 }
 
 model BuildingState {
@@ -71,12 +96,12 @@ model ExpeditionRun {
 }
 
 model Session {
-  id         String   @id @default(cuid())
-  playerId   String
-  token      String   @unique
-  createdAt  DateTime @default(now())
-  expiresAt  DateTime
-  player     Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  id        String   @id @default(cuid())
+  playerId  String
+  token     String   @unique
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+  player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
 
   @@index([playerId])
 }
@@ -94,17 +119,17 @@ model ChatMessage {
 }
 
 model TimedAction {
-  id         String   @id @default(cuid())
-  playerId   String
-  kind       String
-  targetKey  String
-  status     String   @default("folyamatban")
-  payload    Json
-  startedAt  DateTime
-  endsAt     DateTime
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  player     Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  id        String   @id @default(cuid())
+  playerId  String
+  kind      String
+  targetKey String
+  status    String   @default("folyamatban")
+  payload   Json
+  startedAt DateTime
+  endsAt    DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
 
   @@index([playerId, status, endsAt])
   @@index([playerId, kind, targetKey, status])

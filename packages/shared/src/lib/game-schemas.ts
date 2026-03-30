@@ -38,7 +38,8 @@ export const profileUpdateSchema = z.object({
 });
 
 export const equipmentUpdateSchema = z.object({
-  resourceKey: z.string().min(1).nullable(),
+  slot: z.enum(["fofegyver", "mellekfegyver", "sisak", "pancel", "kesztyu", "csizma", "relikvia"]),
+  itemKey: z.string().min(1).nullable(),
 });
 
 export const adminGrantPackSchema = z.object({

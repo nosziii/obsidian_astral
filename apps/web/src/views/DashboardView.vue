@@ -4,9 +4,23 @@ import ResourceGrid from "../components/dashboard/ResourceGrid.vue";
 import ActivityFeed from "../components/gameplay/ActivityFeed.vue";
 import ChatPanel from "../components/gameplay/ChatPanel.vue";
 import GatheringPanel from "../components/gameplay/GatheringPanel.vue";
+import BasePanel from "../components/ui/BasePanel.vue";
 import { useGameState } from "../composables/use-game-state";
+import { formatCategoryLabel } from "../lib/formatters";
 
 const { activityNow, gameState, gather, pendingAction } = useGameState();
+
+function zoneStatusClass(status: string) {
+  if (status === "zarolt") {
+    return "danger";
+  }
+
+  if (status === "hamarosan") {
+    return "secondary";
+  }
+
+  return "success";
+}
 </script>
 
 <template>
@@ -53,8 +67,8 @@ const { activityNow, gameState, gather, pendingAction } = useGameState();
         <div class="card-list">
           <article v-for="zone in gameState.zones" :key="zone.key" class="action-card">
             <div class="tag-row">
-              <span class="tag-pill" :class="zone.status === 'zárolt' ? 'danger' : zone.status === 'hamarosan' ? 'secondary' : 'success'">
-                {{ zone.status }}
+              <span class="tag-pill" :class="zoneStatusClass(zone.status)">
+                {{ formatCategoryLabel(zone.status) }}
               </span>
               <span class="compact-label">ajánlott {{ zone.recommendedLevel }}. szint</span>
             </div>

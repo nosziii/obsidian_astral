@@ -1,5 +1,7 @@
 import type {
   BuildingDefinition,
+  EquipmentItemDefinition,
+  EquipmentSlotKey,
   ExpeditionDefinition,
   GatheringDefinition,
   ProfessionKey,
@@ -8,6 +10,16 @@ import type {
   ResourceDefinition,
   ZoneSnapshot,
 } from "./game-types.js";
+
+export const equipmentSlotLabels: Record<EquipmentSlotKey, string> = {
+  fofegyver: "Főfegyver",
+  mellekfegyver: "Mellékfegyver",
+  sisak: "Sisak",
+  pancel: "Páncél",
+  kesztyu: "Kesztyű",
+  csizma: "Csizma",
+  relikvia: "Relikvia",
+};
 
 export const professionLabels: Record<ProfessionKey, { label: string; focus: string }> = {
   favagas: { label: "Favágás", focus: "Faipari és szerkezeti kitermelés" },
@@ -399,6 +411,101 @@ export const expeditions: ExpeditionDefinition[] = [
       { resourceKey: "energiamag", amount: 3 },
     ],
     bonusRewards: [{ resourceKey: "eterkristaly", amount: 2 }],
+  },
+];
+
+export const equipmentItems: EquipmentItemDefinition[] = [
+  {
+    key: "obszidian_penge_proto",
+    label: "Obszidián penge prototípus",
+    description: "Korai közelharci fegyvermag stabil támadási bónusszal.",
+    slot: "fofegyver",
+    category: "fegyver",
+    rarity: "gyakori",
+    requiredLevel: 1,
+    statLine: {
+      tamadas: 14,
+      kritikus: 2,
+    },
+  },
+  {
+    key: "rez_oldalfegyver",
+    label: "Réz oldalfegyver",
+    description: "Könnyű mellékfegyver gyors támogató lövésekhez.",
+    slot: "mellekfegyver",
+    category: "fegyver",
+    rarity: "gyakori",
+    requiredLevel: 1,
+    statLine: {
+      tamadas: 7,
+      kritikus: 1,
+    },
+  },
+  {
+    key: "felderito_sisak",
+    label: "Felderítő sisak",
+    description: "Terepfelderítéshez készült, gyűjtési sebességet növelő sisak.",
+    slot: "sisak",
+    category: "pancel",
+    rarity: "ritka",
+    requiredLevel: 2,
+    statLine: {
+      vedelem: 9,
+      gyujtesiSebesseg: 6,
+    },
+  },
+  {
+    key: "megerositett_mellvert",
+    label: "Megerősített mellvért",
+    description: "Tartós frontvonali páncél a nagyobb túlélőképességért.",
+    slot: "pancel",
+    category: "pancel",
+    rarity: "ritka",
+    requiredLevel: 2,
+    statLine: {
+      vedelem: 16,
+      energiaRegeneralas: 2,
+    },
+  },
+  {
+    key: "mesterkovacs_kesztyu",
+    label: "Mesterkovács kesztyű",
+    description: "Precíziós műhelymunka során craft bónuszt ad.",
+    slot: "kesztyu",
+    category: "kiegeszito",
+    rarity: "ritka",
+    requiredLevel: 3,
+    statLine: {
+      craftBonus: 8,
+      vedelem: 4,
+    },
+  },
+  {
+    key: "viharjaro_csizma",
+    label: "Viharjáró csizma",
+    description: "Növeli a mobilitást és az expedíciós műveletek hatékonyságát.",
+    slot: "csizma",
+    category: "pancel",
+    rarity: "ritka",
+    requiredLevel: 3,
+    statLine: {
+      gyujtesiSebesseg: 5,
+      energiaRegeneralas: 3,
+    },
+  },
+  {
+    key: "asztral_relikvia",
+    label: "Asztrál relikvia",
+    description: "Instabil ereklye, amely támadó és craft előnyt is ad.",
+    slot: "relikvia",
+    category: "kiegeszito",
+    rarity: "epikus",
+    requiredLevel: 4,
+    statLine: {
+      tamadas: 10,
+      craftBonus: 10,
+      kritikus: 3,
+    },
   },
 ];
 

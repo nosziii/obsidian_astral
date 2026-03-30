@@ -1,165 +1,146 @@
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed } from "vue";
 
 import BasePanel from "../components/ui/BasePanel.vue";
 import { useGameState } from "../composables/use-game-state";
-import { formatCategoryLabel } from "../lib/formatters";
+import { formatCategoryLabel, formatEquipmentSlotLabel } from "../lib/formatters";
 
-const { equipResource, gameState, pendingAction } = useGameState();
-const selectedInventoryIndex = ref(0);
+const { equipItem, gameState, pendingAction } = useGameState();
 
-const stats = computed(() => {
-  if (!gameState.value) {
-    return [];
-  }
+const equipmentLoadout = computed(() => gameState.value?.equipment ?? []);
+const ownedEquipment = computed(() =>
+  (gameState.value?.equipmentInventory ?? []).map((entry) => {
+    const definition = gameState.value?.equipmentCatalog.find((item) => item.key === entry.itemKey);
 
-  const equipmentBonus = gameState.value.equipment[0]?.resourceKey ? gameState.value.player.level * 2 : 0;
+    return {
+      ...entry,
+      definition,
+    };
+  }),
+);
+
+const derivedStats = computed(() => {
+  const statLine = equipmentLoadout.value.reduce(
+    (aggregate, slot) => {
+      const definition = gameState.value?.equipmentCatalog.find((item) => item.key === slot.itemKey);
+
+      if (!definition) {
+        return aggregate;
+      }
+
+      aggregate.tamadas += definition.statLine.tamadas ?? 0;
+      aggregate.vedelem += definition.statLine.vedelem ?? 0;
+      aggregate.kritikus += definition.statLine.kritikus ?? 0;
+      aggregate.gyujtesiSebesseg += definition.statLine.gyujtesiSebesseg ?? 0;
+      aggregate.craftBonus += definition.statLine.craftBonus ?? 0;
+      return aggregate;
+    },
+    {
+      tamadas: 0,
+      vedelem: 0,
+      kritikus: 0,
+      gyujtesiSebesseg: 0,
+      craftBonus: 0,
+    },
+  );
 
   return [
-    {
-      label: "Életerő",
-      value: new Intl.NumberFormat("hu-HU").format(gameState.value.player.credits),
-      icon: "♥",
-    },
-    {
-      label: "Támadás",
-      value: new Intl.NumberFormat("hu-HU").format(gameState.value.player.level * 91 + equipmentBonus),
-      icon: "ϟ",
-    },
-    {
-      label: "Védelem",
-      value: new Intl.NumberFormat("hu-HU").format(gameState.value.player.level * 52 + Math.round(equipmentBonus / 2)),
-      icon: "🛡",
-    },
-    {
-      label: "Kritikus",
-      value: `${Math.min(42, gameState.value.player.level)}.5%`,
-      icon: "✦",
-    },
+    { label: "Támadás", value: statLine.tamadas },
+    { label: "Védelem", value: statLine.vedelem },
+    { label: "Kritikus", value: `${statLine.kritikus}%` },
+    { label: "Gyűjtés", value: `${statLine.gyujtesiSebesseg}%` },
+    { label: "Craft", value: `${statLine.craftBonus}%` },
   ];
 });
 
-const inventoryPreview = computed(() => gameState.value?.inventory.slice(0, 8) ?? []);
-
-watch(inventoryPreview, (items) => {
-  if (selectedInventoryIndex.value >= items.length) {
-    selectedInventoryIndex.value = 0;
-  }
-});
-
-const selectedInventoryItem = computed(() => inventoryPreview.value[selectedInventoryIndex.value] ?? null);
-const activeEquipment = computed(() => gameState.value?.equipment[0] ?? null);
-const selectedResource = computed(() =>
-  gameState.value?.resources.find((item) => item.key === selectedInventoryItem.value?.resourceKey) ?? null,
-);
-
-async function activateSelectedItem() {
-  if (!selectedInventoryItem.value) {
-    return;
-  }
-
-  await equipResource(selectedInventoryItem.value.resourceKey);
+function itemsForSlot(slot: string) {
+  return ownedEquipment.value.filter((entry) => entry.definition?.slot === slot && entry.quantity > 0);
 }
 
-async function clearEquipment() {
-  await equipResource(null);
+async function handleEquip(slot: string, itemKey: string | null) {
+  await equipItem(slot, itemKey);
 }
 </script>
 
 <template>
-  <div v-if="gameState" class="character-layout">
-    <div class="character-panel">
-      <BasePanel title="Parancsnoki profil" subtitle="Karakter">
-        <div class="character-stage">
-          <div class="character-grid" />
-          <div class="equipment-slot slot-top-left">{{ activeEquipment?.resourceLabel?.slice(0, 1).toUpperCase() ?? "⚔" }}</div>
-          <div class="equipment-slot secondary slot-top-center">☠</div>
-          <div class="equipment-slot secondary slot-top-right">✋</div>
-          <div class="equipment-slot slot-left">🛡</div>
-          <div class="equipment-slot tertiary slot-right">✦</div>
-          <div class="equipment-slot slot-bottom-left">42</div>
-          <div class="equipment-slot success slot-bottom-center">👣</div>
-
-          <div class="character-figure">
-            <div class="silhouette">🕴</div>
-            <p class="eyebrow">{{ gameState.player.name }}</p>
-            <p class="muted">Szint {{ gameState.player.level }} parancsnok</p>
-          </div>
-        </div>
-      </BasePanel>
-
-      <div class="stat-grid">
-        <article v-for="stat in stats" :key="stat.label" class="data-card">
-          <span class="compact-label">{{ stat.label }}</span>
-          <strong class="value-strong">{{ stat.icon }} {{ stat.value }}</strong>
+  <div v-if="gameState" class="view-grid">
+    <BasePanel title="Karakterprofil" subtitle="Loadout">
+      <div class="profile-grid">
+        <article class="profile-card">
+          <span class="compact-label">Név</span>
+          <strong>{{ gameState.player.name }}</strong>
+        </article>
+        <article class="profile-card">
+          <span class="compact-label">Szint</span>
+          <strong>{{ gameState.player.level }}</strong>
+        </article>
+        <article class="profile-card">
+          <span class="compact-label">Energia</span>
+          <strong>{{ gameState.player.energy }}/{{ gameState.player.energyMax }}</strong>
+        </article>
+        <article class="profile-card">
+          <span class="compact-label">Asztralit</span>
+          <strong>{{ gameState.player.astralite }}</strong>
         </article>
       </div>
 
-      <BasePanel title="Szakmai fejlődés" subtitle="Mastery">
-        <div class="card-list">
-          <article v-for="profession in gameState.professions" :key="profession.key" class="action-card">
-            <div class="tag-row">
-              <span class="tag-pill secondary">szint {{ profession.level }}</span>
-              <span class="compact-label">{{ profession.focus }}</span>
-            </div>
-            <h4 class="card-title">{{ profession.label }}</h4>
-            <div class="progress-track">
-              <div class="progress-fill" :style="{ width: `${profession.progressPercent}%` }" />
-            </div>
-          </article>
-        </div>
-      </BasePanel>
-    </div>
+      <div class="card-list">
+        <article v-for="stat in derivedStats" :key="stat.label" class="action-card">
+          <p class="eyebrow">{{ stat.label }}</p>
+          <h4>{{ stat.value }}</h4>
+        </article>
+      </div>
+    </BasePanel>
 
-    <BasePanel title="Inventár" subtitle="Felszerelés és készlet">
-      <div class="inventory-shell">
-        <div class="inventory-grid">
-          <div
-            v-for="(item, index) in Array.from({ length: 20 }, (_value, tileIndex) => inventoryPreview[tileIndex] ?? null)"
-            :key="index"
-            class="inventory-tile"
-            :class="{ 'is-filled': item, 'is-selected': selectedInventoryIndex === index }"
-            @click="selectedInventoryIndex = index"
-          >
-            {{ item?.resourceKey?.slice(0, 2).toUpperCase() ?? "·" }}
+    <BasePanel title="Aktív felszerelés" subtitle="Slotok">
+      <div class="card-list">
+        <article v-for="slot in equipmentLoadout" :key="slot.slot" class="action-card">
+          <div class="tag-row">
+            <p class="eyebrow">{{ formatEquipmentSlotLabel(slot.slot) }}</p>
+            <span v-if="slot.rarity" class="chip">{{ formatCategoryLabel(slot.rarity) }}</span>
           </div>
-        </div>
+          <h4>{{ slot.itemLabel ?? "Üres slot" }}</h4>
+          <p class="muted">{{ slot.bonusText }}</p>
 
-        <div v-if="selectedInventoryItem" class="action-card">
-          <div class="item-detail">
-            <div class="recipe-icon tertiary">⚔</div>
-            <div>
-              <h4 class="card-title">{{ selectedResource?.label ?? selectedInventoryItem.resourceKey }}</h4>
-              <p class="muted">Elérhető mennyiség: {{ selectedInventoryItem.quantity }}</p>
-              <p class="muted">{{ selectedResource?.description ?? "Készletben tárolt erőforrás." }}</p>
-            </div>
-            <span class="tag-pill secondary">{{ formatCategoryLabel(selectedResource?.tier ?? "alap") }}</span>
+          <div class="card-list">
+            <button
+              v-for="item in itemsForSlot(slot.slot)"
+              :key="item.itemKey"
+              class="ghost-button"
+              type="button"
+              :disabled="pendingAction === `equip:${slot.slot}:${item.itemKey}`"
+              @click="handleEquip(slot.slot, item.itemKey)"
+            >
+              {{ item.definition?.label }} x{{ item.quantity }}
+            </button>
           </div>
-          <div class="detail-row">
-            <span class="compact-label">Aktív slot</span>
-            <strong>{{ activeEquipment?.resourceLabel ?? "Nincs kiválasztva" }}</strong>
-          </div>
-          <div class="detail-row">
-            <span class="compact-label">Bónusz</span>
-            <strong>{{ activeEquipment?.bonusText ?? "Nincs bónusz" }}</strong>
-          </div>
+
           <button
-            class="primary-button"
+            class="secondary-button"
             type="button"
-            :disabled="pendingAction === `equip:${selectedInventoryItem.resourceKey}`"
-            @click="activateSelectedItem"
+            :disabled="pendingAction === `equip:${slot.slot}:none` || !slot.itemKey"
+            @click="handleEquip(slot.slot, null)"
           >
-            {{ pendingAction === `equip:${selectedInventoryItem.resourceKey}` ? "Aktiválás…" : "Felszerelés aktiválása" }}
+            {{ pendingAction === `equip:${slot.slot}:none` ? "Levétel..." : "Levétel" }}
           </button>
-          <button
-            class="ghost-button"
-            type="button"
-            :disabled="!activeEquipment?.resourceKey || pendingAction === 'equip:none'"
-            @click="clearEquipment"
-          >
-            {{ pendingAction === "equip:none" ? "Levétel…" : "Aktív felszerelés levétele" }}
-          </button>
-        </div>
+        </article>
+      </div>
+    </BasePanel>
+
+    <BasePanel title="Tárgykatalógus" subtitle="Owned equipment">
+      <div class="card-list">
+        <article v-for="entry in ownedEquipment" :key="entry.itemKey" class="action-card">
+          <div class="tag-row">
+            <p class="eyebrow">{{ formatEquipmentSlotLabel(entry.definition?.slot ?? "fofegyver") }}</p>
+            <span class="chip">{{ formatCategoryLabel(entry.definition?.rarity ?? "gyakori") }}</span>
+          </div>
+          <h4>{{ entry.definition?.label ?? entry.itemKey }}</h4>
+          <p class="muted">{{ entry.definition?.description ?? "Nincs leírás." }}</p>
+          <div class="detail-row">
+            <span class="compact-label">Darab</span>
+            <strong>{{ entry.quantity }}</strong>
+          </div>
+        </article>
       </div>
     </BasePanel>
   </div>

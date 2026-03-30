@@ -116,10 +116,10 @@ export const gameApi = {
       method: "POST",
       body: JSON.stringify(input),
     }),
-  equipResource: (resourceKey: string | null) =>
+  equipItem: (slot: string, itemKey: string | null) =>
     request<GameState>("/api/profile/equipment", {
       method: "POST",
-      body: JSON.stringify({ resourceKey }),
+      body: JSON.stringify({ slot, itemKey }),
     }),
   triggerSystemPulse: () =>
     request<AdminActionResult>("/api/admin/system-pulse", {

@@ -27,7 +27,7 @@ import { createChatMessage, listChatMessages } from "./services/chat-service.js"
 import { listExpeditionHistory } from "./services/expedition-history-service.js";
 import { getAdminOverview, grantStarterPack, triggerSystemPulse } from "./services/admin-service.js";
 import { getSessionByToken, loginAccount, logoutAccount, registerAccount, updateProfile } from "./services/auth-service.js";
-import { equipResource } from "./services/equipment-service.js";
+import { equipItem } from "./services/equipment-service.js";
 import { claimExpedition, craftRecipe, gatherResources, startExpedition, upgradeBuilding } from "./services/game-service.js";
 import { getGameState } from "./services/player-service.js";
 
@@ -91,7 +91,7 @@ export function createServer() {
     try {
       const body = equipmentUpdateSchema.parse(request.body);
       const session = requireAuth(request);
-      await equipResource(session.player.id, body.resourceKey);
+      await equipItem(session.player.id, body.slot, body.itemKey);
       response.json(await getGameState(session.player.id));
     } catch (error) {
       next(error);

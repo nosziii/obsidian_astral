@@ -1,6 +1,7 @@
 import type {
   ActivitySnapshot,
   BuildingSnapshot,
+  EquipmentInventorySnapshot,
   EquipmentSnapshot,
   ExpeditionSnapshot,
   GameState,
@@ -13,6 +14,8 @@ import type {
 } from "@obsidian-astral/shared";
 import {
   buildings,
+  equipmentItems,
+  equipmentSlotLabels,
   expeditions,
   gatherings,
   professionLabels,
@@ -22,7 +25,7 @@ import {
 } from "@obsidian-astral/shared";
 
 import { prisma } from "../db.js";
-import { buildingMap, expeditionMap, gatheringMap, recipeMap, resourceMap } from "../lib/catalog.js";
+import { buildingMap, equipmentItemMap, expeditionMap, gatheringMap, recipeMap, resourceMap } from "../lib/catalog.js";
 import { xpToNextLevel } from "../lib/leveling.js";
 import { syncTimedActions } from "./activity-service.js";
 import { syncPassiveProduction } from "./passive-service.js";
@@ -31,6 +34,8 @@ async function loadPlayerState() {
   return prisma.player.findFirst({
     include: {
       inventory: true,
+      equipmentInventory: true,
+      equippedItems: true,
       buildings: true,
       expeditions: {
         where: {
@@ -57,19 +62,47 @@ export type PlayerState = NonNullable<Awaited<ReturnType<typeof loadPlayerState>
 async function syncCatalogState(player: PlayerState) {
   const knownBuildings = new Set(player.buildings.map((item: PlayerState["buildings"][number]) => item.buildingKey));
   const missingBuildings = buildings.filter((building) => !knownBuildings.has(building.key));
+  const knownEquipmentItems = new Set(player.equipmentInventory.map((item) => item.itemKey));
+  const missingEquipmentItems = equipmentItems.filter((item) => !knownEquipmentItems.has(item.key));
+  const knownSlots = new Set(player.equippedItems.map((item) => item.slot));
+  const missingSlots = Object.keys(equipmentSlotLabels).filter((slot) => !knownSlots.has(slot));
 
-  if (missingBuildings.length === 0) {
+  if (missingBuildings.length === 0 && missingEquipmentItems.length === 0 && missingSlots.length === 0) {
     return false;
   }
 
-  await prisma.buildingState.createMany({
-    data: missingBuildings.map((building) => ({
-      playerId: player.id,
-      buildingKey: building.key,
-      level: 1,
-    })),
-    skipDuplicates: true,
-  });
+  if (missingBuildings.length > 0) {
+    await prisma.buildingState.createMany({
+      data: missingBuildings.map((building) => ({
+        playerId: player.id,
+        buildingKey: building.key,
+        level: 1,
+      })),
+      skipDuplicates: true,
+    });
+  }
+
+  if (missingEquipmentItems.length > 0) {
+    await prisma.equipmentInventoryEntry.createMany({
+      data: missingEquipmentItems.map((item) => ({
+        playerId: player.id,
+        itemKey: item.key,
+        quantity: 0,
+      })),
+      skipDuplicates: true,
+    });
+  }
+
+  if (missingSlots.length > 0) {
+    await prisma.equippedItem.createMany({
+      data: missingSlots.map((slot) => ({
+        playerId: player.id,
+        slot,
+        itemKey: null,
+      })),
+      skipDuplicates: true,
+    });
+  }
 
   return true;
 }
@@ -167,27 +200,36 @@ function createZoneSnapshots(player: PlayerState): ZoneSnapshot[] {
     ...zone,
     status:
       player.level >= zone.recommendedLevel
-        ? "elérhető"
+        ? "elerheto"
         : player.level + 1 >= zone.recommendedLevel
           ? "hamarosan"
-          : "zárolt",
+          : "zarolt",
   }));
 }
 
 function createEquipmentSnapshots(player: PlayerState): EquipmentSnapshot[] {
-  const equippedResource = player.equippedResourceKey ? resourceMap.get(player.equippedResourceKey) : null;
+  return (Object.entries(equipmentSlotLabels) as Array<[keyof typeof equipmentSlotLabels, string]>).map(([slot, label]) => {
+    const equippedEntry = player.equippedItems.find((item) => item.slot === slot);
+    const equipmentItem = equippedEntry?.itemKey ? equipmentItemMap.get(equippedEntry.itemKey) : null;
+    const statLine = equipmentItem?.statLine;
+    const bonusParts = [
+      statLine?.tamadas ? `Támadás +${statLine.tamadas}` : null,
+      statLine?.vedelem ? `Védelem +${statLine.vedelem}` : null,
+      statLine?.kritikus ? `Kritikus +${statLine.kritikus}%` : null,
+      statLine?.gyujtesiSebesseg ? `Gyűjtés +${statLine.gyujtesiSebesseg}%` : null,
+      statLine?.craftBonus ? `Craft +${statLine.craftBonus}%` : null,
+      statLine?.energiaRegeneralas ? `Energia +${statLine.energiaRegeneralas}/kör` : null,
+    ].filter((item): item is string => item !== null);
 
-  return [
-    {
-      slot: "fofegyver",
-      label: "Főfegyver",
-      resourceKey: player.equippedResourceKey,
-      resourceLabel: equippedResource?.label ?? null,
-      bonusText: equippedResource
-        ? `Támadási fókusz +${Math.max(4, player.level * 2)} a(z) ${equippedResource.label} alapján`
-        : "Nincs aktív fegyvermag kiválasztva",
-    },
-  ];
+    return {
+      slot,
+      label,
+      itemKey: equipmentItem?.key ?? null,
+      itemLabel: equipmentItem?.label ?? null,
+      rarity: equipmentItem?.rarity ?? null,
+      bonusText: bonusParts.join(", ") || "Nincs aktív tárgy ebben a slotban",
+    };
+  });
 }
 
 function createActivitySnapshots(player: PlayerState): ActivitySnapshot[] {
@@ -272,6 +314,8 @@ export async function ensurePlayerById(playerId: string, sync = true): Promise<P
     where: { id: playerId },
     include: {
       inventory: true,
+      equipmentInventory: true,
+      equippedItems: true,
       buildings: true,
       expeditions: {
         where: {
@@ -304,6 +348,8 @@ export async function ensurePlayerById(playerId: string, sync = true): Promise<P
         where: { id: playerId },
         include: {
           inventory: true,
+          equipmentInventory: true,
+          equippedItems: true,
           buildings: true,
           expeditions: {
             where: { claimedAt: null },
@@ -328,6 +374,8 @@ export async function ensurePlayerById(playerId: string, sync = true): Promise<P
         where: { id: playerId },
         include: {
           inventory: true,
+          equipmentInventory: true,
+          equippedItems: true,
           buildings: true,
           expeditions: {
             where: { claimedAt: null },
@@ -352,6 +400,8 @@ export async function ensurePlayerById(playerId: string, sync = true): Promise<P
         where: { id: playerId },
         include: {
           inventory: true,
+          equipmentInventory: true,
+          equippedItems: true,
           buildings: true,
           expeditions: {
             where: { claimedAt: null },
@@ -395,6 +445,14 @@ export async function getGameState(playerId?: string): Promise<GameState> {
     }))
     .sort((left: InventorySnapshot, right: InventorySnapshot) => right.quantity - left.quantity);
 
+  const equipmentInventory: EquipmentInventorySnapshot[] = player.equipmentInventory
+    .filter((entry) => entry.quantity > 0)
+    .map((entry) => ({
+      itemKey: entry.itemKey,
+      quantity: entry.quantity,
+    }))
+    .sort((left, right) => right.quantity - left.quantity);
+
   const buildingSnapshots: BuildingSnapshot[] = player.buildings.map((entry: PlayerState["buildings"][number]) => {
     const definition = buildings.find((item) => item.key === entry.buildingKey);
 
@@ -434,5 +492,7 @@ export async function getGameState(playerId?: string): Promise<GameState> {
     passiveProduction: createPassiveProductionSnapshots(player),
     zones: createZoneSnapshots(player),
     equipment: createEquipmentSnapshots(player),
+    equipmentInventory,
+    equipmentCatalog: equipmentItems,
   };
 }

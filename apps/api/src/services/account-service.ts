@@ -1,5 +1,5 @@
 import type { Player } from "@prisma/client";
-import { buildings, resources } from "@obsidian-astral/shared";
+import { buildings, equipmentItems, equipmentSlotLabels, resources } from "@obsidian-astral/shared";
 
 import { prisma } from "../db.js";
 
@@ -19,6 +19,13 @@ const starterInventory: Record<string, number> = {
   vegyi_anyag: 6,
 };
 
+const starterEquipmentInventory: Record<string, number> = {
+  obszidian_penge_proto: 1,
+  rez_oldalfegyver: 1,
+  felderito_sisak: 1,
+  megerositett_mellvert: 1,
+};
+
 export async function bootstrapPlayerState(player: Player) {
   await prisma.inventoryEntry.createMany({
     data: resources.map((resource) => ({
@@ -34,6 +41,24 @@ export async function bootstrapPlayerState(player: Player) {
       playerId: player.id,
       buildingKey: building.key,
       level: 1,
+    })),
+    skipDuplicates: true,
+  });
+
+  await prisma.equipmentInventoryEntry.createMany({
+    data: equipmentItems.map((item) => ({
+      playerId: player.id,
+      itemKey: item.key,
+      quantity: starterEquipmentInventory[item.key] ?? 0,
+    })),
+    skipDuplicates: true,
+  });
+
+  await prisma.equippedItem.createMany({
+    data: Object.keys(equipmentSlotLabels).map((slot) => ({
+      playerId: player.id,
+      slot,
+      itemKey: null,
     })),
     skipDuplicates: true,
   });

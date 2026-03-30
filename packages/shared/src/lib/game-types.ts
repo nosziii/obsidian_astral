@@ -14,8 +14,16 @@ export type ProfessionKey =
   | "mernokseg"
   | "kereskedelem"
   | "felderites";
-export type ZoneStatus = "elérhető" | "hamarosan" | "zárolt";
-export type EquipmentSlotKey = "fofegyver";
+export type ZoneStatus = "elerheto" | "hamarosan" | "zarolt";
+export type EquipmentSlotKey =
+  | "fofegyver"
+  | "mellekfegyver"
+  | "sisak"
+  | "pancel"
+  | "kesztyu"
+  | "csizma"
+  | "relikvia";
+export type EquipmentItemCategory = "fegyver" | "pancel" | "kiegeszito";
 
 export interface ResourceDefinition {
   key: string;
@@ -79,6 +87,26 @@ export interface ExpeditionDefinition {
   bonusRewards: RecipeIngredient[];
 }
 
+export interface EquipmentStatLine {
+  tamadas?: number;
+  vedelem?: number;
+  kritikus?: number;
+  gyujtesiSebesseg?: number;
+  craftBonus?: number;
+  energiaRegeneralas?: number;
+}
+
+export interface EquipmentItemDefinition {
+  key: string;
+  label: string;
+  description: string;
+  slot: EquipmentSlotKey;
+  category: EquipmentItemCategory;
+  rarity: "gyakori" | "ritka" | "epikus";
+  requiredLevel: number;
+  statLine: EquipmentStatLine;
+}
+
 export interface PlayerSnapshot {
   id: string;
   name: string;
@@ -93,6 +121,11 @@ export interface PlayerSnapshot {
 
 export interface InventorySnapshot {
   resourceKey: string;
+  quantity: number;
+}
+
+export interface EquipmentInventorySnapshot {
+  itemKey: string;
   quantity: number;
 }
 
@@ -179,6 +212,8 @@ export interface GameState {
   passiveProduction: PassiveProductionSnapshot[];
   zones: ZoneSnapshot[];
   equipment: EquipmentSnapshot[];
+  equipmentInventory: EquipmentInventorySnapshot[];
+  equipmentCatalog: EquipmentItemDefinition[];
 }
 
 export interface SessionPlayer {
@@ -245,8 +280,9 @@ export interface AdminInventoryMutationInput {
 export interface EquipmentSnapshot {
   slot: EquipmentSlotKey;
   label: string;
-  resourceKey: string | null;
-  resourceLabel: string | null;
+  itemKey: string | null;
+  itemLabel: string | null;
+  rarity: EquipmentItemDefinition["rarity"] | null;
   bonusText: string;
 }
 

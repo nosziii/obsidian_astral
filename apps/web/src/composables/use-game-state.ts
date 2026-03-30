@@ -108,7 +108,7 @@ export function useGameState() {
       runAction(`expedition:${expeditionKey}`, () => gameApi.startExpedition(expeditionKey)),
     claimExpedition: (expeditionId: string) =>
       runAction(`claim:${expeditionId}`, () => gameApi.claimExpedition(expeditionId)),
-    equipResource: (resourceKey: string | null) =>
-      runAction(`equip:${resourceKey ?? "none"}`, () => gameApi.equipResource(resourceKey)),
+    equipItem: (slot: string, itemKey: string | null) =>
+      runAction(`equip:${slot}:${itemKey ?? "none"}`, () => gameApi.equipItem(slot, itemKey)),
   };
 }

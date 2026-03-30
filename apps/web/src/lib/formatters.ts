@@ -12,6 +12,20 @@ export function formatProfessionLabel(professionKey: string) {
   return labels[professionKey] ?? professionKey;
 }
 
+export function formatEquipmentSlotLabel(slotKey: string) {
+  const labels: Record<string, string> = {
+    fofegyver: "Főfegyver",
+    mellekfegyver: "Mellékfegyver",
+    sisak: "Sisak",
+    pancel: "Páncél",
+    kesztyu: "Kesztyű",
+    csizma: "Csizma",
+    relikvia: "Relikvia",
+  };
+
+  return labels[slotKey] ?? slotKey;
+}
+
 export function formatCategoryLabel(categoryKey: string) {
   const labels: Record<string, string> = {
     fegyver: "Fegyver",
@@ -24,6 +38,8 @@ export function formatCategoryLabel(categoryKey: string) {
     alacsony: "Alacsony",
     kozepes: "Közepes",
     magas: "Magas",
+    elerheto: "Elérhető",
+    zarolt: "Zárolt",
     gathering: "Gyűjtés",
     craft: "Craft",
     building: "Építés",
@@ -31,6 +47,9 @@ export function formatCategoryLabel(categoryKey: string) {
     alap: "Alap",
     halado: "Haladó",
     esemeny: "Esemény",
+    gyakori: "Gyakori",
+    ritka: "Ritka",
+    epikus: "Epikus",
   };
 
   return labels[categoryKey] ?? categoryKey;
