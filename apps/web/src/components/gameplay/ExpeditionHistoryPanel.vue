@@ -23,7 +23,7 @@ defineProps<{
         </div>
         <h4 class="card-title">{{ entry.label }}</h4>
         <div class="detail-list">
-          <div class="detail-row" v-for="reward in entry.rewards" :key="`${entry.id}-${reward.resourceKey}`">
+          <div v-for="reward in entry.rewards" :key="`${entry.id}-${reward.resourceKey}`" class="detail-row">
             <span>{{ reward.resourceKey }}</span>
             <strong>{{ reward.amount }}</strong>
           </div>

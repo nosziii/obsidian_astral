@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { ActivitySnapshot, ExpeditionDefinition, ExpeditionSnapshot } from "@obsidian-astral/shared";
 
+import BasePanel from "../ui/BasePanel.vue";
 import { formatCategoryLabel } from "../../lib/formatters";
 import ActivityTimeline from "./ActivityTimeline.vue";
-import BasePanel from "../ui/BasePanel.vue";
 
 const props = defineProps<{
   activities: ActivitySnapshot[];
@@ -17,6 +17,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   start: [expeditionKey: string];
   claim: [expeditionId: string];
+  select: [expeditionKey: string];
 }>();
 
 function riskTone(risk: ExpeditionDefinition["risk"]) {
@@ -39,7 +40,15 @@ function activityForRun(expeditionId: string) {
 <template>
   <BasePanel title="Expedíciók" subtitle="Aktív műveletek">
     <div class="expedition-sidebar">
-      <article v-for="expedition in catalog" :key="expedition.key" class="action-card expedition-card">
+      <article
+        v-for="expedition in catalog"
+        :key="expedition.key"
+        class="action-card expedition-card"
+        role="button"
+        tabindex="0"
+        @click="emit('select', expedition.key)"
+        @keyup.enter="emit('select', expedition.key)"
+      >
         <div class="tag-row">
           <span class="compact-label">Célpont</span>
           <span class="tag-pill" :class="riskTone(expedition.risk)">{{ formatCategoryLabel(expedition.risk) }}</span>
@@ -70,7 +79,7 @@ function activityForRun(expeditionId: string) {
             playerLevel < expedition.requiredLevel
               ? `${expedition.requiredLevel}. szint kell`
               : pendingAction === `expedition:${expedition.key}`
-                ? "Indítás…"
+                ? "Indítás..."
                 : "Expedíció küldése"
           }}
         </button>
@@ -78,7 +87,15 @@ function activityForRun(expeditionId: string) {
 
       <div class="divider" />
 
-      <article v-for="run in activeRuns" :key="run.id" class="action-card expedition-card">
+      <article
+        v-for="run in activeRuns"
+        :key="run.id"
+        class="action-card expedition-card"
+        role="button"
+        tabindex="0"
+        @click="emit('select', run.key)"
+        @keyup.enter="emit('select', run.key)"
+      >
         <div class="tag-row">
           <span class="compact-label">{{ run.label }}</span>
           <span class="tag-pill" :class="run.status === 'befejezve' ? 'success' : ''">{{ run.status }}</span>
@@ -96,7 +113,7 @@ function activityForRun(expeditionId: string) {
           :disabled="run.status !== 'befejezve' || pendingAction === `claim:${run.id}`"
           @click="emit('claim', run.id)"
         >
-          {{ pendingAction === `claim:${run.id}` ? "Átvétel…" : "Jutalom felvétele" }}
+          {{ pendingAction === `claim:${run.id}` ? "Átvétel..." : "Jutalom felvétele" }}
         </button>
       </article>
     </div>

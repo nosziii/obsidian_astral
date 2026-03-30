@@ -47,8 +47,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 export const gameApi = {
   getState: () => request<GameState>("/api/game-state"),
   expeditionHistory: () => request<ExpeditionHistorySnapshot[]>("/api/expeditions/history"),
-  listChatMessages: (channel: ChatChannel) =>
-    request<ChatMessageSnapshot[]>(`/api/chat?channel=${channel}`),
+  listChatMessages: (channel: ChatChannel) => request<ChatMessageSnapshot[]>(`/api/chat?channel=${channel}`),
   sendChatMessage: (channel: ChatChannel, content: string) =>
     request<ChatMessageSnapshot[]>("/api/chat", {
       method: "POST",
@@ -101,7 +100,10 @@ export const gameApi = {
     }),
   adminOverview: () => request<AdminOverview>("/api/admin/overview"),
   adminPlayerDetail: (playerId: string) => request<AdminPlayerDetail>(`/api/admin/players/${playerId}`),
-  updateAdminPlayer: (playerId: string, input: { level?: number; energy?: number; energyMax?: number; credits?: number; astralite?: number }) =>
+  updateAdminPlayer: (
+    playerId: string,
+    input: { level?: number; energy?: number; energyMax?: number; credits?: number; astralite?: number },
+  ) =>
     request<AdminActionResult>(`/api/admin/players/${playerId}`, {
       method: "PATCH",
       body: JSON.stringify(input),

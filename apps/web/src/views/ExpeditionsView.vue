@@ -2,105 +2,57 @@
 import { computed, ref, watch } from "vue";
 
 import ExpeditionHistoryPanel from "../components/gameplay/ExpeditionHistoryPanel.vue";
+import ExpeditionIntelPanel from "../components/gameplay/ExpeditionIntelPanel.vue";
+import ExpeditionMissionOverview from "../components/gameplay/ExpeditionMissionOverview.vue";
 import ExpeditionPanel from "../components/gameplay/ExpeditionPanel.vue";
 import BasePanel from "../components/ui/BasePanel.vue";
 import { useExpeditionHistory } from "../composables/use-expedition-history";
 import { useGameState } from "../composables/use-game-state";
-import { zoneLayout } from "../lib/zone-layout";
+import { buildCommEntries, buildMissionMetrics, buildRewardPreview, buildThreatSignals } from "../lib/expedition-overview";
+import { formatCategoryLabel } from "../lib/formatters";
 
 const { activityNow, claimExpedition, gameState, pendingAction, startExpedition } = useGameState();
 const { historyEntries, historyError, loadHistory } = useExpeditionHistory();
-const selectedZoneKey = ref<string | null>(null);
-const zoomLevel = ref(1);
+const selectedExpeditionKey = ref<string | null>(null);
 
-const zoneNodes = computed(() => {
-  if (!gameState.value) {
-    return [];
-  }
-
-  return gameState.value.zones.map((zone) => {
-    const layout = zoneLayout.find((item) => item.key === zone.key);
-
-    return {
-      ...zone,
-      x: layout?.x ?? 50,
-      y: layout?.y ?? 50,
-      icon: layout?.icon ?? "✦",
-    };
-  });
-});
+const catalog = computed(() => gameState.value?.expeditionsCatalog ?? []);
 
 watch(
-  zoneNodes,
-  (zones) => {
-    if (!zones.length) {
-      selectedZoneKey.value = null;
+  [catalog, () => gameState.value?.expeditions ?? []],
+  ([items, runs]) => {
+    if (!items.length) {
+      selectedExpeditionKey.value = null;
       return;
     }
 
-    if (!selectedZoneKey.value || !zones.some((item) => item.key === selectedZoneKey.value)) {
-      selectedZoneKey.value = zones[0].key;
+    const activeRunKey = runs[0]?.key ?? null;
+    const hasCurrent = selectedExpeditionKey.value && items.some((item) => item.key === selectedExpeditionKey.value);
+
+    if (!hasCurrent) {
+      selectedExpeditionKey.value = activeRunKey ?? items[0].key;
     }
   },
   { immediate: true },
 );
 
-const selectedZone = computed(() => zoneNodes.value.find((item) => item.key === selectedZoneKey.value) ?? null);
-
-const visibleExpeditions = computed(() => {
-  if (!gameState.value || !selectedZone.value) {
-    return [];
-  }
-
-  return gameState.value.expeditionsCatalog.filter((item) => item.zoneKey === selectedZone.value?.key);
-});
-
-const selectedZoneRewardText = computed(() => {
-  if (!selectedZone.value) {
-    return "Nincs zónabónusz.";
-  }
-
-  return `Jutalomszorzó: x${selectedZone.value.rewardMultiplier.toFixed(2)}`;
-});
-
-const selectedZoneRewardPreview = computed(() => {
-  if (!selectedZone.value) {
-    return [];
-  }
-
-  return visibleExpeditions.value.flatMap((expedition) =>
-    expedition.guaranteedRewards.map((reward) => ({
-      key: `${expedition.key}-${reward.resourceKey}`,
-      label: gameState.value?.resources.find((resource) => resource.key === reward.resourceKey)?.label ?? reward.resourceKey,
-      amount: Math.round(reward.amount * selectedZone.value!.rewardMultiplier),
-    })),
-  );
-});
-
-const mapTransform = computed(() => {
-  const zone = selectedZone.value;
-
-  if (!zone) {
-    return `scale(${zoomLevel.value})`;
-  }
-
-  const translateX = 50 - zone.x;
-  const translateY = 50 - zone.y;
-
-  return `translate(${translateX}%, ${translateY}%) scale(${zoomLevel.value})`;
-});
-
-function increaseZoom() {
-  zoomLevel.value = Math.min(1.8, Number((zoomLevel.value + 0.2).toFixed(1)));
-}
-
-function decreaseZoom() {
-  zoomLevel.value = Math.max(1, Number((zoomLevel.value - 0.2).toFixed(1)));
-}
-
-function centerSelectedZone() {
-  zoomLevel.value = Math.max(1.2, zoomLevel.value);
-}
+const selectedExpedition = computed(() => catalog.value.find((item) => item.key === selectedExpeditionKey.value) ?? null);
+const selectedRun = computed(() => gameState.value?.expeditions.find((item) => item.key === selectedExpeditionKey.value) ?? null);
+const selectedZone = computed(() =>
+  gameState.value?.zones.find((item) => item.key === selectedExpedition.value?.zoneKey) ?? null,
+);
+const selectedHistoryEntry = computed(() => historyEntries.value.find((item) => item.key === selectedExpeditionKey.value) ?? null);
+const missionMetrics = computed(() =>
+  selectedExpedition.value ? buildMissionMetrics(selectedExpedition.value, selectedZone.value, selectedRun.value, activityNow.value) : [],
+);
+const rewardPreview = computed(() =>
+  selectedExpedition.value && gameState.value
+    ? buildRewardPreview(selectedExpedition.value, gameState.value.resources, selectedZone.value, selectedHistoryEntry.value)
+    : [],
+);
+const threatSignals = computed(() => (selectedExpedition.value ? buildThreatSignals(selectedExpedition.value, selectedZone.value) : []));
+const commEntries = computed(() =>
+  selectedExpedition.value ? buildCommEntries(selectedExpedition.value, selectedZone.value, selectedRun.value, activityNow.value) : [],
+);
 
 async function claimRun(expeditionId: string) {
   await claimExpedition(expeditionId);
@@ -109,104 +61,57 @@ async function claimRun(expeditionId: string) {
 </script>
 
 <template>
-  <div v-if="gameState" class="map-layout">
-    <section class="panel map-stage">
-      <div class="sector-title">
-        <p class="eyebrow">Kartográfia</p>
-        <h2 class="sector-heading">Asztrál szektor VII</h2>
-        <p class="muted">Kijelölt zóna: {{ selectedZone?.label ?? "nincs kiválasztva" }}</p>
-      </div>
+  <div v-if="gameState && selectedExpedition" class="operations-layout">
+    <div class="view-stack">
+      <ExpeditionMissionOverview
+        :expedition="selectedExpedition"
+        :metrics="missionMetrics"
+        :now="activityNow"
+        :run="selectedRun"
+        :zone="selectedZone"
+      />
 
-      <div class="map-stats">
-        <div class="map-stat">
-          <span class="compact-label">Felderítés</span>
-          <strong class="value-strong">{{ gameState.professions.find((item) => item.key === "felderites")?.progressPercent ?? 0 }}%</strong>
-        </div>
-        <div class="map-stat">
-          <span class="compact-label">Fókusz</span>
-          <strong class="value-strong" :style="{ color: selectedZone?.risk === 'magas' ? 'var(--danger)' : selectedZone?.risk === 'kozepes' ? 'var(--secondary)' : 'var(--success)' }">
-            {{ selectedZone?.risk ?? "alacsony" }}
-          </strong>
-        </div>
-      </div>
+      <div class="view-grid">
+        <ExpeditionIntelPanel :comms="commEntries" :rewards="rewardPreview" :threats="threatSignals" />
 
-      <div class="map-canvas" :style="{ transform: mapTransform }">
-        <button
-          v-for="zone in zoneNodes"
-          :key="zone.key"
-          class="map-node"
-          :class="{ 'is-active': selectedZoneKey === zone.key }"
-          type="button"
-          :style="{ top: `${zone.y}%`, left: `${zone.x}%` }"
-          @click="selectedZoneKey = zone.key"
-        >
-          <div class="node-diamond" :class="zone.risk === 'magas' ? 'danger' : zone.risk === 'kozepes' ? 'secondary' : ''">
-            <span>{{ zone.icon }}</span>
+        <BasePanel title="Zónajelentés" subtitle="Taktikai kivonat">
+          <div class="detail-list">
+            <div class="detail-row">
+              <span class="compact-label">Kijelölt zóna</span>
+              <strong>{{ selectedZone?.label ?? "Nincs kijelölve" }}</strong>
+            </div>
+            <div class="detail-row">
+              <span class="compact-label">Zónaállapot</span>
+              <strong>{{ selectedZone ? formatCategoryLabel(selectedZone.status) : "Ismeretlen" }}</strong>
+            </div>
+            <div class="detail-row">
+              <span class="compact-label">Jutalomszorzó</span>
+              <strong>x{{ selectedZone?.rewardMultiplier.toFixed(2) ?? "1.00" }}</strong>
+            </div>
+            <div class="detail-row">
+              <span class="compact-label">Ajánlott szint</span>
+              <strong>{{ selectedZone?.recommendedLevel ?? selectedExpedition.requiredLevel }}</strong>
+            </div>
           </div>
-          <div>
-            <p class="eyebrow">{{ zone.label }}</p>
-            <p class="muted">{{ zone.status }}</p>
-          </div>
-        </button>
+          <p class="muted">
+            {{ selectedZone?.description ?? "Válassz expedíciót a kapcsolódó zónarészletekhez." }}
+          </p>
+        </BasePanel>
       </div>
-
-      <div class="map-footer">
-        <div class="data-card">
-          <span class="compact-label">Zónaleírás</span>
-          <strong class="value-strong">{{ selectedZone?.label ?? "Nincs zóna" }}</strong>
-          <p class="muted">{{ selectedZone?.description ?? "Válassz egy zónát a részletekhez." }}</p>
-        </div>
-        <div class="map-controls">
-          <button class="control-button" type="button" @click="increaseZoom">+</button>
-          <button class="control-button" type="button" @click="decreaseZoom">−</button>
-          <button class="control-button" type="button" @click="centerSelectedZone">⌖</button>
-        </div>
-      </div>
-    </section>
+    </div>
 
     <div class="expedition-sidebar">
       <ExpeditionPanel
         :activities="gameState.activities"
-        :catalog="visibleExpeditions"
+        :catalog="catalog"
         :active-runs="gameState.expeditions"
         :now="activityNow"
         :pending-action="pendingAction"
         :player-level="gameState.player.level"
         @claim="claimRun"
+        @select="selectedExpeditionKey = $event"
         @start="startExpedition"
       />
-
-      <BasePanel title="Kijelölt zóna" subtitle="Terepjelentés">
-        <div v-if="selectedZone" class="detail-list">
-          <div class="detail-row">
-            <span class="compact-label">Ajánlott szint</span>
-            <strong>{{ selectedZone.recommendedLevel }}</strong>
-          </div>
-          <div class="detail-row">
-            <span class="compact-label">Kockázat</span>
-            <strong>{{ selectedZone.risk }}</strong>
-          </div>
-          <div class="detail-row">
-            <span class="compact-label">Elérhetőség</span>
-            <strong>{{ selectedZone.status }}</strong>
-          </div>
-          <div class="detail-row">
-            <span class="compact-label">Zónabónusz</span>
-            <strong>{{ selectedZoneRewardText }}</strong>
-          </div>
-          <div class="detail-row">
-            <span class="compact-label">Expedíciók</span>
-            <strong>{{ visibleExpeditions.length }} elérhető</strong>
-          </div>
-        </div>
-
-        <div v-if="selectedZoneRewardPreview.length" class="component-list">
-          <div v-for="item in selectedZoneRewardPreview.slice(0, 4)" :key="item.key" class="component-item">
-            <span>{{ item.label }}</span>
-            <strong>{{ item.amount }}</strong>
-          </div>
-        </div>
-      </BasePanel>
 
       <ExpeditionHistoryPanel :entries="historyEntries" :error-message="historyError" />
     </div>

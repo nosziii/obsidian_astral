@@ -55,7 +55,7 @@ async function handleLogout() {
         <h1 class="brand">Parancsnoki hálózat</h1>
       </div>
 
-        <div v-if="gameState" class="sidebar-profile">
+      <div v-if="gameState" class="sidebar-profile">
         <div class="profile-avatar">{{ initials }}</div>
         <div>
           <p class="profile-name">{{ session?.player.name ?? gameState.player.name }}</p>
@@ -112,7 +112,7 @@ async function handleLogout() {
       </header>
 
       <p v-if="errorMessage" class="status-banner error">{{ errorMessage }}</p>
-      <p v-else-if="isLoading" class="status-banner">Játékállapot betöltése…</p>
+      <p v-else-if="isLoading" class="status-banner">Játékállapot betöltése...</p>
 
       <main class="content-area">
         <RouterView />

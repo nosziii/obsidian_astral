@@ -1,0 +1,220 @@
+.operations-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(320px, 0.8fr);
+  gap: 24px;
+}
+
+.mission-hero {
+  display: grid;
+  gap: 24px;
+}
+
+.mission-hero-copy {
+  display: grid;
+  gap: 18px;
+}
+
+.mission-hero-title {
+  margin: 0;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+}
+
+.mission-track-shell {
+  display: grid;
+  gap: 10px;
+  padding: 20px 22px;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at center, rgba(121, 238, 248, 0.12), transparent 56%),
+    rgba(7, 8, 12, 0.88);
+  border: 1px solid rgba(121, 238, 248, 0.16);
+}
+
+.mission-track-labels {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.mission-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 18px;
+}
+
+.mission-track::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: rgba(121, 238, 248, 0.2);
+  transform: translateY(-50%);
+}
+
+.mission-track-progress {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  transform: translateY(-50%);
+  box-shadow: 0 0 24px rgba(121, 238, 248, 0.34);
+}
+
+.mission-track-node,
+.mission-track-cursor {
+  position: relative;
+  z-index: 1;
+  border-radius: 999px;
+}
+
+.mission-track-node {
+  width: 12px;
+  height: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(13, 15, 20, 0.96);
+}
+
+.mission-track-node.is-complete {
+  border-color: rgba(121, 238, 248, 0.45);
+  background: var(--primary);
+  box-shadow: 0 0 18px rgba(121, 238, 248, 0.38);
+}
+
+.mission-track-cursor {
+  position: absolute;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(121, 238, 248, 0.74);
+  background: rgba(10, 11, 14, 0.96);
+  box-shadow: 0 0 26px rgba(121, 238, 248, 0.34);
+  transform: translate(-50%, -50%);
+}
+
+.mission-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.mission-metric-card {
+  padding: 18px;
+  border-radius: 20px;
+  background: rgba(11, 12, 16, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: grid;
+  gap: 10px;
+}
+
+.mission-metric-card.primary {
+  border-color: rgba(121, 238, 248, 0.22);
+}
+
+.mission-metric-card.secondary {
+  border-color: rgba(167, 132, 255, 0.24);
+}
+
+.mission-metric-card.danger {
+  border-color: rgba(255, 107, 120, 0.24);
+}
+
+.mission-sidebar-grid,
+.loot-list,
+.threat-grid,
+.comm-log {
+  display: grid;
+  gap: 16px;
+}
+
+.loot-card,
+.signal-card,
+.comm-entry {
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: rgba(10, 12, 17, 0.78);
+}
+
+.loot-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  border: 1px solid rgba(121, 238, 248, 0.12);
+}
+
+.signal-card {
+  display: grid;
+  gap: 10px;
+  border-left: 2px solid rgba(121, 238, 248, 0.28);
+}
+
+.signal-card.secondary {
+  border-left-color: rgba(167, 132, 255, 0.42);
+}
+
+.signal-card.danger {
+  border-left-color: rgba(255, 107, 120, 0.42);
+}
+
+.comm-entry {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.comm-timestamp,
+.comm-source {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+}
+
+.comm-timestamp {
+  color: var(--text-muted);
+}
+
+.comm-source {
+  margin: 0 0 6px;
+}
+
+.comm-source.primary {
+  color: var(--primary);
+}
+
+.comm-source.secondary {
+  color: var(--secondary);
+}
+
+.comm-source.danger {
+  color: var(--danger);
+}
+
+@media (max-width: 1280px) {
+  .operations-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .mission-metric-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .comm-entry {
+    grid-template-columns: 1fr;
+  }
+}
