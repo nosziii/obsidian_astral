@@ -27,9 +27,16 @@ Monorepó alapú webes stratégiai RPG prototípus Vue, Node, Prisma, PostgreSQL
 - `WEB_HOST`: Vite bind host
 - `VITE_DEV_SERVER_PORT`: fejlesztői Vite port
 - `VITE_API_BASE_URL`: böngészőből elérhető API cím
+- `VITE_ALLOWED_HOSTS`: vesszővel elválasztott engedélyezett host lista a Vite `allowedHosts` beállításához
 - `CORS_ORIGIN`: engedélyezett frontend origin
 - `POSTGRES_HOST`: dockeres adatbázis host
 - `POSTGRES_INTERNAL_PORT`: dockeres adatbázis belső port
+
+Példa:
+
+```env
+VITE_ALLOWED_HOSTS=localhost,127.0.0.1,kalandjatek.eu
+```
 
 ## Docker
 
