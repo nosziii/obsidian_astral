@@ -13,6 +13,9 @@ Utolsó frissítés: 2026-03-31
 - dashboard kompakt értesítési blokk a korábbi zsúfolt notification center helyett
 - lebegő, csukható chat widget két tabbal: globál és műhely
 - shell mobil navigáció offcanvas menüvel a korábbi széteső mobil layout helyett
+- műhely nézet redesign a `nyersanyagok_gy_jt_s` terv vizuális irányára építve
+- műhely hero fejléc, szűrősáv és kiemelt séma panel
+- receptkártyák és épületfejlesztési kártyák új, tervhűbb vizuális struktúrával
 - admin alapok: overview, rendszerimpulzus, segélycsomag, játékos inspect
 - központi időzített eseményrendszer gyűjtéshez, craftoláshoz és építéshez
 - élő progress megjelenítés a dashboard, műhely és expedíció nézetekben
@@ -40,6 +43,7 @@ Utolsó frissítés: 2026-03-31
 ## Még hiányzik
 
 - további dashboard finomhangolás a következő képi visszajelzések alapján
+- további műhely finomhangolás, ha a tervhez külön craft/building részletező képernyő is érkezik
 - zónaesemények és random encounter rendszer
 - equipment tárgyforrások: drop, craft, jutalomlánc
 - napi küldetések és achievement rendszer

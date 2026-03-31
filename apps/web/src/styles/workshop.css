@@ -1,83 +1,207 @@
 .workshop-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(310px, 0.9fr);
+  grid-template-columns: minmax(0, 1.18fr) minmax(340px, 0.82fr);
+  gap: 28px;
+}
+
+.workshop-command-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
   gap: 24px;
 }
 
-.workshop-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 18px;
+.workshop-command-header__title {
+  margin: 0 0 10px;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: clamp(2.6rem, 5vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.05em;
 }
 
-.workshop-tabs {
+.workshop-command-header__copy {
+  margin: 0;
+  max-width: 760px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.workshop-command-header__filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
+  padding: 6px;
+  border-radius: 14px;
+  background: rgba(19, 19, 20, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.workshop-tab {
-  padding: 10px 14px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.03);
+.workshop-filter {
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
   color: var(--text-dim);
   font-family: "Space Grotesk", system-ui, sans-serif;
-  font-size: 0.78rem;
-  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
+  cursor: pointer;
 }
 
-.workshop-tab.is-active {
+.workshop-filter.is-active {
   background: rgba(121, 238, 248, 0.12);
   color: var(--primary);
 }
 
-.recipe-card {
-  cursor: pointer;
-  transition: border-color 160ms ease, transform 160ms ease;
-}
-
-.recipe-card:hover {
-  transform: translateY(-2px);
-}
-
-.recipe-card-top {
+.workshop-card-grid {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
 }
 
-.recipe-icon {
-  width: 54px;
-  height: 54px;
-  border-radius: 16px;
+.workshop-resource-card {
+  position: relative;
+  display: grid;
+  gap: 20px;
+  padding: 24px;
+  border-radius: 18px;
+  background: rgba(19, 19, 20, 0.9);
+  border: 1px solid transparent;
+  overflow: hidden;
+  cursor: pointer;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.workshop-resource-card:hover,
+.workshop-resource-card.is-active {
+  transform: translateY(-2px);
+  border-color: rgba(121, 238, 248, 0.22);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.24);
+}
+
+.workshop-resource-card::after {
+  content: "";
+  position: absolute;
+  right: -28px;
+  bottom: -28px;
+  width: 140px;
+  height: 140px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(121, 238, 248, 0.08), transparent 68%);
+}
+
+.workshop-resource-card__top,
+.workshop-anomaly-card__header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.workshop-resource-card__icon,
+.workshop-anomaly-card__icon {
+  width: 64px;
+  height: 64px;
   display: grid;
   place-items: center;
+  border-radius: 16px;
   background: rgba(255, 255, 255, 0.04);
-  font-size: 1.35rem;
+  color: var(--primary);
 }
 
-.recipe-icon.secondary {
+.workshop-resource-card__icon.secondary,
+.workshop-anomaly-card__icon.secondary {
   color: var(--secondary);
 }
 
-.recipe-icon.tertiary {
+.workshop-resource-card__icon.tertiary,
+.workshop-anomaly-card__icon.tertiary {
   color: var(--tertiary);
 }
 
-.recipe-status {
-  margin-left: auto;
+.workshop-resource-card__icon.warning {
+  color: var(--warning);
 }
 
-.detail-panel {
+.workshop-resource-card__icon .material-symbols-outlined,
+.workshop-anomaly-card__icon .material-symbols-outlined {
+  font-size: 2rem;
+}
+
+.workshop-resource-card__value,
+.workshop-anomaly-card__value {
+  display: grid;
+  justify-items: end;
+}
+
+.workshop-resource-card__value strong,
+.workshop-anomaly-card__value strong {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 2rem;
+}
+
+.workshop-resource-card__value span,
+.workshop-anomaly-card__value span {
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.workshop-resource-card__copy,
+.workshop-resource-card__meta {
+  position: relative;
+  z-index: 1;
+}
+
+.workshop-resource-card__copy {
+  display: grid;
+  gap: 10px;
+}
+
+.workshop-resource-card__meta,
+.workshop-anomaly-card__metrics {
+  display: grid;
+  gap: 12px;
+}
+
+.workshop-resource-card__actions,
+.workshop-anomaly-card__actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.workshop-resource-card__button,
+.workshop-anomaly-card__button {
+  width: 100%;
+}
+
+.workshop-resource-card__icon-button,
+.workshop-anomaly-card__icon-button {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+}
+
+.workshop-detail-panel {
   display: grid;
   gap: 18px;
 }
 
-.detail-visual {
-  min-height: 180px;
-  border-radius: 22px;
+.workshop-detail-visual {
+  min-height: 220px;
+  border-radius: 24px;
   background:
     linear-gradient(180deg, rgba(121, 238, 248, 0.08), transparent),
     radial-gradient(circle at center, rgba(167, 132, 255, 0.18), transparent 55%),
@@ -85,12 +209,12 @@
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.component-list {
+.workshop-component-list {
   display: grid;
   gap: 10px;
 }
 
-.component-item {
+.workshop-component-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -100,8 +224,71 @@
   background: rgba(255, 255, 255, 0.03);
 }
 
-@media (max-width: 1280px) {
+.workshop-detail-cta {
+  min-height: 52px;
+}
+
+.workshop-anomaly-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 22px;
+}
+
+.workshop-anomaly-card {
+  display: grid;
+  gap: 18px;
+  padding: 28px;
+  border-radius: 24px;
+  background: rgba(32, 31, 33, 0.96);
+  border: 1px solid rgba(121, 238, 248, 0.14);
+  box-shadow: 0 0 18px rgba(121, 238, 248, 0.08);
+}
+
+.workshop-anomaly-card.secondary {
+  border-color: rgba(172, 137, 255, 0.18);
+  box-shadow: 0 0 18px rgba(172, 137, 255, 0.08);
+}
+
+.workshop-anomaly-card.tertiary {
+  border-color: rgba(244, 93, 221, 0.18);
+  box-shadow: 0 0 18px rgba(244, 93, 221, 0.08);
+}
+
+.workshop-anomaly-card__title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.workshop-anomaly-card__metric {
+  display: grid;
+  gap: 6px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(19, 19, 20, 0.66);
+}
+
+@media (max-width: 1360px) {
   .workshop-layout {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 960px) {
+  .workshop-command-header {
+    flex-direction: column;
+    align-items: start;
+  }
+}
+
+@media (max-width: 720px) {
+  .workshop-card-grid,
+  .workshop-anomaly-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .workshop-resource-card,
+  .workshop-anomaly-card {
+    padding: 22px;
   }
 }

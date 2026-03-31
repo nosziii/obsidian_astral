@@ -20,11 +20,11 @@ function resourceLabel(resourceKey: string) {
 }
 
 function recipeIcon(category: RecipeDefinition["category"]) {
-  const icons = {
-    fegyver: "⚔",
-    pancel: "🛡",
-    fogyoeszkoz: "✚",
-    anyag: "⬡",
+  const icons: Record<RecipeDefinition["category"], string> = {
+    fegyver: "swords",
+    pancel: "shield",
+    fogyoeszkoz: "healing",
+    anyag: "deployed_code",
   };
 
   return icons[category];
@@ -36,14 +36,14 @@ function recipeTone(category: RecipeDefinition["category"]) {
   }
 
   if (category === "pancel") {
-    return "tertiary";
-  }
-
-  if (category === "fogyoeszkoz") {
     return "secondary";
   }
 
-  return "";
+  if (category === "fogyoeszkoz") {
+    return "tertiary";
+  }
+
+  return "warning";
 }
 
 function activityFor(recipeKey: string) {
@@ -52,41 +52,51 @@ function activityFor(recipeKey: string) {
 </script>
 
 <template>
-  <div class="card-list">
+  <div class="workshop-card-grid">
     <article
       v-for="recipe in recipes"
       :key="recipe.key"
-      class="action-card recipe-card"
+      class="workshop-resource-card"
       :class="{ 'is-active': selectedRecipeKey === recipe.key }"
       @click="emit('select', recipe.key)"
     >
-      <div class="recipe-card-top">
-        <div class="recipe-icon" :class="recipeTone(recipe.category)">{{ recipeIcon(recipe.category) }}</div>
-        <div>
-          <div class="tag-row">
-            <span class="tag-pill">{{ formatCategoryLabel(recipe.category) }}</span>
-            <span class="tag-pill tertiary recipe-status">szint {{ recipe.requiredLevel }}</span>
-            <span v-if="activityFor(recipe.key)" class="tag-pill success">Folyamatban</span>
-          </div>
-          <h4 class="card-title">{{ recipe.label }}</h4>
-          <p class="muted">{{ recipe.description }}</p>
-          <p class="compact-label">Állomás: {{ recipe.station }}</p>
+      <div class="workshop-resource-card__top">
+        <div class="workshop-resource-card__icon" :class="recipeTone(recipe.category)">
+          <span class="material-symbols-outlined">{{ recipeIcon(recipe.category) }}</span>
+        </div>
+        <div class="workshop-resource-card__value">
+          <strong>{{ recipe.rewardXp }}</strong>
+          <span>xp / craft</span>
         </div>
       </div>
 
-      <div class="detail-list">
+      <div class="workshop-resource-card__copy">
+        <div class="tag-row">
+          <span class="tag-pill" :class="recipeTone(recipe.category)">{{ formatCategoryLabel(recipe.category) }}</span>
+          <span v-if="activityFor(recipe.key)" class="tag-pill success">Folyamatban</span>
+        </div>
+        <h4 class="card-title">{{ recipe.label }}</h4>
+        <p class="muted">{{ recipe.description }}</p>
+      </div>
+
+      <div class="workshop-resource-card__meta">
         <div class="detail-row">
-          <span class="compact-label">Kell</span>
-          <strong>{{ recipe.ingredients.map((item) => `${item.amount} ${resourceLabel(item.resourceKey)}`).join(", ") }}</strong>
+          <span class="compact-label">Állomás</span>
+          <strong>{{ recipe.station }}</strong>
         </div>
         <div class="detail-row">
-          <span class="compact-label">Ad</span>
+          <span class="compact-label">Output</span>
           <strong>{{ recipe.produces.map((item) => `${item.amount} ${resourceLabel(item.resourceKey)}`).join(", ") }}</strong>
         </div>
-        <div class="detail-row" v-if="playerLevel < recipe.requiredLevel">
-          <span class="compact-label">Zárolás</span>
-          <strong>{{ recipe.requiredLevel }}. szinttől</strong>
-        </div>
+      </div>
+
+      <div class="workshop-resource-card__actions">
+        <button class="primary-button workshop-resource-card__button" type="button">
+          {{ props.playerLevel < recipe.requiredLevel ? `${recipe.requiredLevel}. szint kell` : "Részletek" }}
+        </button>
+        <button class="ghost-button workshop-resource-card__icon-button" type="button">
+          <span class="material-symbols-outlined">analytics</span>
+        </button>
       </div>
     </article>
   </div>
