@@ -1,39 +1,40 @@
 import cors from "cors";
 import express from "express";
 import {
-  adminCancelActivitySchema,
   adminBuildingMutationSchema,
-  adminInventoryMutationSchema,
-  chatMessageCreateSchema,
+  adminCancelActivitySchema,
   adminGrantPackSchema,
+  adminInventoryMutationSchema,
   adminPlayerUpdateSchema,
-  notificationReadSchema,
-  loginSchema,
-  equipmentUpdateSchema,
-  profileUpdateSchema,
-  registerSchema,
+  chatMessageCreateSchema,
   craftActionSchema,
+  equipmentUpdateSchema,
   expeditionClaimSchema,
   expeditionStartSchema,
   gatherActionSchema,
+  loginSchema,
+  notificationListQuerySchema,
+  notificationReadSchema,
+  profileUpdateSchema,
+  registerSchema,
   upgradeBuildingSchema,
 } from "@obsidian-astral/shared";
 
 import { config } from "./config.js";
 import { GameRuleError } from "./lib/errors.js";
 import { attachAuthSession, requireAuth, requireRole } from "./lib/request-auth.js";
-import { getAdminPlayerDetail } from "./services/admin-player-service.js";
-import { mutateAdminPlayerInventory } from "./services/admin-player-inventory-service.js";
-import { updateAdminPlayerBuilding } from "./services/admin-player-building-service.js";
-import { cancelAdminPlayerActivity, updateAdminPlayer } from "./services/admin-player-mutation-service.js";
-import { createChatMessage, listChatMessages } from "./services/chat-service.js";
-import { listExpeditionHistory } from "./services/expedition-history-service.js";
-import { getAdminOverview, grantStarterPack, triggerSystemPulse } from "./services/admin-service.js";
+import { getGameState } from "./services/player-service.js";
 import { getSessionByToken, loginAccount, logoutAccount, registerAccount, updateProfile } from "./services/auth-service.js";
 import { equipItem } from "./services/equipment-service.js";
 import { claimExpedition, craftRecipe, gatherResources, startExpedition, upgradeBuilding } from "./services/game-service.js";
-import { listNotifications, markAllNotificationsRead, markNotificationRead } from "./services/notification-service.js";
-import { getGameState } from "./services/player-service.js";
+import { createChatMessage, listChatMessages } from "./services/chat-service.js";
+import { listExpeditionHistory } from "./services/expedition-history-service.js";
+import { markAllNotificationsRead, markNotificationRead, listNotifications } from "./services/notification-service.js";
+import { getAdminOverview, grantStarterPack, triggerSystemPulse } from "./services/admin-service.js";
+import { getAdminPlayerDetail } from "./services/admin-player-service.js";
+import { updateAdminPlayer, cancelAdminPlayerActivity } from "./services/admin-player-mutation-service.js";
+import { mutateAdminPlayerInventory } from "./services/admin-player-inventory-service.js";
+import { updateAdminPlayerBuilding } from "./services/admin-player-building-service.js";
 
 export function createServer() {
   const app = express();
@@ -66,8 +67,7 @@ export function createServer() {
 
   app.get("/api/auth/session", async (request, response, next) => {
     try {
-      const token = request.authSession?.token ?? null;
-      response.json(await getSessionByToken(token));
+      response.json(await getSessionByToken(request.authSession?.token ?? null));
     } catch (error) {
       next(error);
     }
@@ -102,9 +102,9 @@ export function createServer() {
     }
   });
 
-  app.get("/api/game-state", async (_request, response, next) => {
+  app.get("/api/game-state", async (request, response, next) => {
     try {
-      response.json(await getGameState(requireAuth(_request).player.id));
+      response.json(await getGameState(requireAuth(request).player.id));
     } catch (error) {
       next(error);
     }
@@ -137,6 +137,43 @@ export function createServer() {
   app.get("/api/expeditions/history", async (request, response, next) => {
     try {
       response.json(await listExpeditionHistory(requireAuth(request).player.id));
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  app.get("/api/notifications", async (request, response, next) => {
+    try {
+      const query = notificationListQuerySchema.parse(request.query);
+      response.json(
+        await listNotifications(requireAuth(request).player.id, {
+          kind: query.kind,
+          unreadOnly: query.unreadOnly,
+        }),
+      );
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  app.post("/api/notifications/:notificationId/read", async (request, response, next) => {
+    try {
+      const body = notificationReadSchema.parse(request.params);
+      response.json(await markNotificationRead(requireAuth(request).player.id, body.notificationId));
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  app.post("/api/notifications/read-all", async (request, response, next) => {
+    try {
+      const query = notificationListQuerySchema.parse(request.query);
+      response.json(
+        await markAllNotificationsRead(requireAuth(request).player.id, {
+          kind: query.kind,
+          unreadOnly: query.unreadOnly,
+        }),
+      );
     } catch (error) {
       next(error);
     }
@@ -207,9 +244,9 @@ export function createServer() {
 
   app.patch("/api/admin/players/:playerId", async (request, response, next) => {
     try {
-      requireRole(request, "admin");
+      const adminSession = requireRole(request, "admin");
       const body = adminPlayerUpdateSchema.parse(request.body);
-      response.json(await updateAdminPlayer(request.params.playerId, body));
+      response.json(await updateAdminPlayer(adminSession.player, request.params.playerId, body));
     } catch (error) {
       next(error);
     }
@@ -217,9 +254,9 @@ export function createServer() {
 
   app.post("/api/admin/players/:playerId/cancel-activity", async (request, response, next) => {
     try {
-      requireRole(request, "admin");
+      const adminSession = requireRole(request, "admin");
       const body = adminCancelActivitySchema.parse(request.body);
-      response.json(await cancelAdminPlayerActivity(request.params.playerId, body.activityId));
+      response.json(await cancelAdminPlayerActivity(adminSession.player, request.params.playerId, body.activityId));
     } catch (error) {
       next(error);
     }
@@ -227,34 +264,9 @@ export function createServer() {
 
   app.post("/api/admin/players/:playerId/inventory", async (request, response, next) => {
     try {
-      requireRole(request, "admin");
+      const adminSession = requireRole(request, "admin");
       const body = adminInventoryMutationSchema.parse(request.body);
-      response.json(await mutateAdminPlayerInventory(request.params.playerId, body));
-    } catch (error) {
-      next(error);
-    }
-  });
-
-  app.get("/api/notifications", async (request, response, next) => {
-    try {
-      response.json(await listNotifications(requireAuth(request).player.id));
-    } catch (error) {
-      next(error);
-    }
-  });
-
-  app.post("/api/notifications/:notificationId/read", async (request, response, next) => {
-    try {
-      const body = notificationReadSchema.parse(request.params);
-      response.json(await markNotificationRead(requireAuth(request).player.id, body.notificationId));
-    } catch (error) {
-      next(error);
-    }
-  });
-
-  app.post("/api/notifications/read-all", async (request, response, next) => {
-    try {
-      response.json(await markAllNotificationsRead(requireAuth(request).player.id));
+      response.json(await mutateAdminPlayerInventory(adminSession.player, request.params.playerId, body));
     } catch (error) {
       next(error);
     }
@@ -262,9 +274,9 @@ export function createServer() {
 
   app.post("/api/admin/players/:playerId/buildings", async (request, response, next) => {
     try {
-      requireRole(request, "admin");
+      const adminSession = requireRole(request, "admin");
       const body = adminBuildingMutationSchema.parse(request.body);
-      response.json(await updateAdminPlayerBuilding(request.params.playerId, body));
+      response.json(await updateAdminPlayerBuilding(adminSession.player, request.params.playerId, body));
     } catch (error) {
       next(error);
     }
@@ -272,8 +284,7 @@ export function createServer() {
 
   app.post("/api/admin/system-pulse", async (request, response, next) => {
     try {
-      requireRole(request, "admin");
-      response.json(await triggerSystemPulse());
+      response.json(await triggerSystemPulse(requireRole(request, "admin").player));
     } catch (error) {
       next(error);
     }
@@ -281,9 +292,9 @@ export function createServer() {
 
   app.post("/api/admin/grant-pack", async (request, response, next) => {
     try {
-      requireRole(request, "admin");
+      const adminSession = requireRole(request, "admin");
       const body = adminGrantPackSchema.parse(request.body);
-      response.json(await grantStarterPack(body.playerId));
+      response.json(await grantStarterPack(adminSession.player, body.playerId));
     } catch (error) {
       next(error);
     }

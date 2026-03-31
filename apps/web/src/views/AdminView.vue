@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from "vue";
 import type { AdminPlayerUpdateInput } from "@obsidian-astral/shared";
 
+import AdminAuditLogPanel from "../components/admin/AdminAuditLogPanel.vue";
 import AdminBuildingEditor from "../components/admin/AdminBuildingEditor.vue";
 import AdminInventoryEditor from "../components/admin/AdminInventoryEditor.vue";
 import AdminPlayerEditor from "../components/admin/AdminPlayerEditor.vue";
@@ -221,6 +222,7 @@ function formatRole(role: "jatekos" | "admin") {
       </div>
 
       <AdminBuildingEditor :buildings="adminPlayerDetail.buildings" @save="updateBuilding" />
+      <AdminAuditLogPanel :logs="adminPlayerDetail.auditLogs" />
     </BasePanel>
   </div>
 </template>

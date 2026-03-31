@@ -2,10 +2,11 @@ import type { AdminPlayerDetail } from "@obsidian-astral/shared";
 
 import { prisma } from "../db.js";
 import { buildingMap } from "../lib/catalog.js";
+import { listAdminAuditLogs } from "./admin-audit-service.js";
 import { getGameState } from "./player-service.js";
 
 export async function getAdminPlayerDetail(playerId: string): Promise<AdminPlayerDetail> {
-  const [player, gameState] = await Promise.all([
+  const [player, gameState, auditLogs] = await Promise.all([
     prisma.player.findUniqueOrThrow({
       where: { id: playerId },
       select: {
@@ -25,6 +26,7 @@ export async function getAdminPlayerDetail(playerId: string): Promise<AdminPlaye
       },
     }),
     getGameState(playerId),
+    listAdminAuditLogs(playerId),
   ]);
 
   return {
@@ -56,5 +58,6 @@ export async function getAdminPlayerDetail(playerId: string): Promise<AdminPlaye
       };
     }),
     activities: gameState.activities,
+    auditLogs,
   };
 }

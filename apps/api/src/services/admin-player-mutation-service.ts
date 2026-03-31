@@ -2,9 +2,19 @@ import type { AdminActionResult, AdminPlayerUpdateInput } from "@obsidian-astral
 
 import { prisma } from "../db.js";
 import { GameRuleError } from "../lib/errors.js";
+import { createAdminAuditLog } from "./admin-audit-service.js";
 import { createNotification } from "./notification-service.js";
 
-export async function updateAdminPlayer(playerId: string, input: AdminPlayerUpdateInput): Promise<AdminActionResult> {
+interface AdminActor {
+  id: string;
+  name: string;
+}
+
+export async function updateAdminPlayer(
+  actor: AdminActor,
+  playerId: string,
+  input: AdminPlayerUpdateInput,
+): Promise<AdminActionResult> {
   const player = await prisma.player.findUnique({
     where: { id: playerId },
   });
@@ -37,6 +47,24 @@ export async function updateAdminPlayer(playerId: string, input: AdminPlayerUpda
     });
   }
 
+  await createAdminAuditLog({
+    actorPlayerId: actor.id,
+    actorName: actor.name,
+    targetPlayerId: player.id,
+    targetName: player.name,
+    actionKind: "player_update",
+    summary: `${actor.name} frissítette ${player.name} fiókadatait.`,
+    metadata: {
+      level: input.level,
+      energy: input.energy,
+      energyMax: input.energyMax,
+      credits: input.credits,
+      astralite: input.astralite,
+      role: nextRole,
+      isSuspended: nextSuspended,
+    },
+  });
+
   if (input.role !== undefined || input.isSuspended !== undefined) {
     await createNotification({
       playerId,
@@ -55,7 +83,20 @@ export async function updateAdminPlayer(playerId: string, input: AdminPlayerUpda
   };
 }
 
-export async function cancelAdminPlayerActivity(playerId: string, activityId: string): Promise<AdminActionResult> {
+export async function cancelAdminPlayerActivity(
+  actor: AdminActor,
+  playerId: string,
+  activityId: string,
+): Promise<AdminActionResult> {
+  const player = await prisma.player.findUnique({
+    where: { id: playerId },
+    select: { id: true, name: true },
+  });
+
+  if (!player) {
+    throw new GameRuleError("A játékos nem található.", 404);
+  }
+
   const timedAction = await prisma.timedAction.findFirst({
     where: {
       id: activityId,
@@ -66,6 +107,20 @@ export async function cancelAdminPlayerActivity(playerId: string, activityId: st
   if (timedAction) {
     await prisma.timedAction.delete({
       where: { id: activityId },
+    });
+
+    await createAdminAuditLog({
+      actorPlayerId: actor.id,
+      actorName: actor.name,
+      targetPlayerId: player.id,
+      targetName: player.name,
+      actionKind: "activity_cancel",
+      summary: `${actor.name} leállított egy időzített műveletet ennél a játékosnál: ${player.name}.`,
+      metadata: {
+        activityId,
+        kind: timedAction.kind,
+        targetKey: timedAction.targetKey,
+      },
     });
 
     return {
@@ -87,6 +142,19 @@ export async function cancelAdminPlayerActivity(playerId: string, activityId: st
 
   await prisma.expeditionRun.delete({
     where: { id: activityId },
+  });
+
+  await createAdminAuditLog({
+    actorPlayerId: actor.id,
+    actorName: actor.name,
+    targetPlayerId: player.id,
+    targetName: player.name,
+    actionKind: "expedition_cancel",
+    summary: `${actor.name} megszakított egy expedíciót ennél a játékosnál: ${player.name}.`,
+    metadata: {
+      activityId,
+      expeditionKey: expedition.expeditionKey,
+    },
   });
 
   return {

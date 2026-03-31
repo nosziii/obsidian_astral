@@ -10,6 +10,7 @@ import type {
   ChatMessageSnapshot,
   ExpeditionHistorySnapshot,
   GameState,
+  NotificationListInput,
   NotificationSnapshot,
   SessionPlayer,
 } from "@obsidian-astral/shared";
@@ -20,6 +21,21 @@ let authToken: string | null = null;
 
 export function setApiAuthToken(token: string | null) {
   authToken = token;
+}
+
+function buildQuery(params: Record<string, string | boolean | undefined> | NotificationListInput) {
+  const searchParams = new URLSearchParams();
+
+  Object.entries(params).forEach(([key, value]) => {
+    if (value === undefined) {
+      return;
+    }
+
+    searchParams.set(key, String(value));
+  });
+
+  const query = searchParams.toString();
+  return query ? `?${query}` : "";
 }
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
@@ -56,13 +72,14 @@ export const gameApi = {
       method: "POST",
       body: JSON.stringify({ channel, content }),
     }),
-  listNotifications: () => request<NotificationSnapshot[]>("/api/notifications"),
+  listNotifications: (input: NotificationListInput = {}) =>
+    request<NotificationSnapshot[]>(`/api/notifications${buildQuery(input)}`),
   markNotificationRead: (notificationId: string) =>
     request<AdminActionResult>(`/api/notifications/${notificationId}/read`, {
       method: "POST",
     }),
-  markAllNotificationsRead: () =>
-    request<AdminActionResult>("/api/notifications/read-all", {
+  markAllNotificationsRead: (input: NotificationListInput = {}) =>
+    request<AdminActionResult>(`/api/notifications/read-all${buildQuery(input)}`, {
       method: "POST",
     }),
   gather: (actionKey: string) =>

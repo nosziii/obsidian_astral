@@ -1,8 +1,14 @@
 import type { AdminActionResult, AdminOverview, AdminPlayerSummary, UserRole } from "@obsidian-astral/shared";
 
 import { prisma } from "../db.js";
+import { createAdminAuditLog } from "./admin-audit-service.js";
 import { changeInventory } from "./inventory-service.js";
 import { createNotification } from "./notification-service.js";
+
+interface AdminActor {
+  id: string;
+  name: string;
+}
 
 function toAdminPlayerSummary(player: {
   id: string;
@@ -57,10 +63,11 @@ export async function getAdminOverview(): Promise<AdminOverview> {
   };
 }
 
-export async function triggerSystemPulse(): Promise<AdminActionResult> {
+export async function triggerSystemPulse(actor: AdminActor): Promise<AdminActionResult> {
   const players = await prisma.player.findMany({
     select: {
       id: true,
+      name: true,
       energyMax: true,
     },
   });
@@ -78,14 +85,27 @@ export async function triggerSystemPulse(): Promise<AdminActionResult> {
 
   await Promise.all(
     players.map((player) =>
-      createNotification({
-        playerId: player.id,
-        kind: "admin",
-        title: "Rendszerimpulzus végrehajtva",
-        body: "Az admin központ teljesen visszatöltötte az energiaállapotodat.",
-        tone: "secondary",
-        actionLabel: "Dashboard",
-      }),
+      Promise.all([
+        createNotification({
+          playerId: player.id,
+          kind: "admin",
+          title: "Rendszerimpulzus végrehajtva",
+          body: "Az admin központ teljesen visszatöltötte az energiaállapotodat.",
+          tone: "secondary",
+          actionLabel: "Dashboard",
+        }),
+        createAdminAuditLog({
+          actorPlayerId: actor.id,
+          actorName: actor.name,
+          targetPlayerId: player.id,
+          targetName: player.name,
+          actionKind: "system_pulse",
+          summary: `${actor.name} energia-visszatöltést futtatott ennél a játékosnál: ${player.name}.`,
+          metadata: {
+            energyMax: player.energyMax,
+          },
+        }),
+      ]),
     ),
   );
 
@@ -94,7 +114,7 @@ export async function triggerSystemPulse(): Promise<AdminActionResult> {
   };
 }
 
-export async function grantStarterPack(playerId: string): Promise<AdminActionResult> {
+export async function grantStarterPack(actor: AdminActor, playerId: string): Promise<AdminActionResult> {
   const player = await prisma.player.findUnique({
     where: { id: playerId },
   });
@@ -129,6 +149,20 @@ export async function grantStarterPack(playerId: string): Promise<AdminActionRes
     body: "Az admin központ kreditekkel, asztralittal és alapanyagokkal töltötte fel a készletedet.",
     tone: "primary",
     actionLabel: "Készlet",
+  });
+
+  await createAdminAuditLog({
+    actorPlayerId: actor.id,
+    actorName: actor.name,
+    targetPlayerId: player.id,
+    targetName: player.name,
+    actionKind: "starter_pack",
+    summary: `${actor.name} segélycsomagot adott ennek a játékosnak: ${player.name}.`,
+    metadata: {
+      credits: 250,
+      astralite: 35,
+      resources: ["fa", "vaserc", "gyogynoveny"],
+    },
   });
 
   return {

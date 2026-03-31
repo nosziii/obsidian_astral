@@ -1,4 +1,4 @@
-import type { AdminActionResult, NotificationSnapshot, NotificationTone } from "@obsidian-astral/shared";
+import type { AdminActionResult, NotificationListInput, NotificationSnapshot, NotificationTone } from "@obsidian-astral/shared";
 
 import { prisma } from "../db.js";
 import { expeditionMap } from "../lib/catalog.js";
@@ -76,7 +76,7 @@ export async function createNotification(input: NotificationInput) {
   return toNotificationSnapshot(notification);
 }
 
-export async function listNotifications(playerId: string): Promise<NotificationSnapshot[]> {
+async function ensureExpeditionReadyNotifications(playerId: string) {
   const completedExpeditions = await prisma.expeditionRun.findMany({
     where: {
       playerId,
@@ -102,11 +102,19 @@ export async function listNotifications(playerId: string): Promise<NotificationS
       });
     }),
   );
+}
+
+export async function listNotifications(playerId: string, filters: NotificationListInput = {}): Promise<NotificationSnapshot[]> {
+  await ensureExpeditionReadyNotifications(playerId);
 
   const notifications = await prisma.notification.findMany({
-    where: { playerId },
+    where: {
+      playerId,
+      kind: filters.kind && filters.kind !== "osszes" ? filters.kind : undefined,
+      readAt: filters.unreadOnly ? null : undefined,
+    },
     orderBy: [{ readAt: "asc" }, { createdAt: "desc" }],
-    take: 8,
+    take: 12,
   });
 
   return notifications.map(toNotificationSnapshot);
@@ -136,10 +144,11 @@ export async function markNotificationRead(playerId: string, notificationId: str
   };
 }
 
-export async function markAllNotificationsRead(playerId: string): Promise<AdminActionResult> {
+export async function markAllNotificationsRead(playerId: string, filters: NotificationListInput = {}): Promise<AdminActionResult> {
   await prisma.notification.updateMany({
     where: {
       playerId,
+      kind: filters.kind && filters.kind !== "osszes" ? filters.kind : undefined,
       readAt: null,
     },
     data: {
@@ -148,6 +157,6 @@ export async function markAllNotificationsRead(playerId: string): Promise<AdminA
   });
 
   return {
-    message: "Az összes értesítés olvasottra lett jelölve.",
+    message: "Az összes szűrt értesítés olvasottra lett jelölve.",
   };
 }

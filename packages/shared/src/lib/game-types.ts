@@ -8,6 +8,7 @@ export type ActivityStatus = "folyamatban" | "befejezve";
 export type ChatChannel = "global" | "workshop";
 export type NotificationTone = "primary" | "secondary" | "danger";
 export type NotificationKind = "rendszer" | "gazdasag" | "expedicio" | "admin";
+export type NotificationFilterValue = "osszes" | NotificationKind;
 export type ProfessionKey =
   | "favagas"
   | "banyaszat"
@@ -210,6 +211,20 @@ export interface NotificationSnapshot {
   readAt: string | null;
 }
 
+export interface NotificationListInput {
+  kind?: NotificationFilterValue;
+  unreadOnly?: boolean;
+}
+
+export interface AdminAuditLogSnapshot {
+  id: string;
+  actorName: string;
+  targetName: string;
+  actionKind: string;
+  summary: string;
+  createdAt: string;
+}
+
 export interface GameState {
   player: PlayerSnapshot;
   inventory: InventorySnapshot[];
@@ -275,6 +290,7 @@ export interface AdminPlayerDetail {
   inventory: InventorySnapshot[];
   buildings: AdminBuildingDetail[];
   activities: ActivitySnapshot[];
+  auditLogs: AdminAuditLogSnapshot[];
 }
 
 export interface AdminPlayerUpdateInput {

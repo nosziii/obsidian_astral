@@ -121,22 +121,37 @@ model ChatMessage {
 }
 
 model Notification {
-  id          String   @id @default(cuid())
-  playerId    String
+  id           String   @id @default(cuid())
+  playerId     String
   referenceKey String?
-  kind        String
-  title       String
-  body        String
-  tone        String
-  actionLabel String
-  readAt      DateTime?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  player      Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  kind         String
+  title        String
+  body         String
+  tone         String
+  actionLabel  String
+  readAt       DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  player       Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
 
   @@index([playerId, createdAt])
   @@index([playerId, readAt, createdAt])
   @@unique([playerId, referenceKey])
+}
+
+model AdminAuditLog {
+  id           String   @id @default(cuid())
+  actorPlayerId String
+  actorName    String
+  targetPlayerId String
+  targetName   String
+  actionKind   String
+  summary      String
+  metadata     Json
+  createdAt    DateTime @default(now())
+
+  @@index([targetPlayerId, createdAt])
+  @@index([actorPlayerId, createdAt])
 }
 
 model TimedAction {

@@ -83,3 +83,11 @@ export const adminBuildingMutationSchema = z.object({
 export const notificationReadSchema = z.object({
   notificationId: z.string().min(1),
 });
+
+export const notificationListQuerySchema = z.object({
+  kind: z.enum(["osszes", "rendszer", "gazdasag", "expedicio", "admin"]).optional(),
+  unreadOnly: z
+    .union([z.literal("true"), z.literal("false"), z.boolean()])
+    .optional()
+    .transform((value) => value === true || value === "true"),
+});

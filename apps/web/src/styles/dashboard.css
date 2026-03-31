@@ -295,6 +295,26 @@
   margin-top: 8px;
 }
 
+.notification-toolbar {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.notification-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-dim);
+  font-size: 0.82rem;
+}
+
+.notification-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(220px, 0.95fr);
+  gap: 14px;
+}
+
 .notification-list {
   display: grid;
   gap: 12px;
@@ -306,7 +326,18 @@
   padding: 16px 18px;
   border-radius: 18px;
   background: var(--surface-soft);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   border-left: 2px solid rgba(121, 238, 248, 0.26);
+}
+
+.notification-card-button-reset {
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.notification-card-button-reset:hover {
+  border-color: rgba(121, 238, 248, 0.16);
 }
 
 .notification-card.secondary {
@@ -319,6 +350,11 @@
 
 .notification-card.is-read {
   opacity: 0.72;
+}
+
+.notification-card.is-active {
+  border-color: rgba(121, 238, 248, 0.22);
+  box-shadow: inset 0 0 0 1px rgba(121, 238, 248, 0.12);
 }
 
 .notification-card-header {
@@ -335,6 +371,18 @@
 
 .notification-card-button {
   justify-self: start;
+}
+
+.notification-detail-card {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  padding: 18px;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at top right, rgba(121, 238, 248, 0.12), transparent 34%),
+    rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .log-dot {
@@ -422,7 +470,8 @@
 
 @media (max-width: 900px) {
   .hero,
-  .hero-metrics {
+  .hero-metrics,
+  .notification-layout {
     grid-template-columns: 1fr;
   }
 

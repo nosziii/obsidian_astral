@@ -1,6 +1,6 @@
 # Fejlesztési állapot
 
-Utolsó frissítés: 2026-03-30
+Utolsó frissítés: 2026-03-31
 
 ## Elkészült
 
@@ -14,17 +14,18 @@ Utolsó frissítés: 2026-03-30
 - interaktív zónatérkép és zónához kötött expedíciószűrés
 - expedíciós napló és részletes expedíciós run overview képernyő
 - dashboard értesítési központ valódi backend állapotkezeléssel
+- notification center kategóriaszűrése és részletes kijelölt nézete
 - dashboard queue és élő követés layout javítása
 - admin épület editor külön szerkesztőfelülettel és backend művelettel
 - admin role váltás és account moderation
-- admin játékosrészletek: készlet, épületek, aktivitások
+- admin audit trail az admin beavatkozásokhoz
+- admin játékosrészletek: készlet, épületek, aktivitások, audit napló
 - admin készletmódosítás és alap játékosérték-szerkesztés
 - env és docker alapú konfiguráció rendezése
 
 ## Folyamatban
 
 - expedíciós és zónarendszer mélyítése
-- admin részletes beavatkozások bővítése
 - design alapú nézetek fokozatos átültetése kisebb, jól szeparált komponensekre
 - equipment tárgyforrások előkészítése drop és craft irányba
 
@@ -33,5 +34,5 @@ Utolsó frissítés: 2026-03-30
 - zónaesemények és random encounter rendszer
 - equipment tárgyforrások: drop, craft, jutalomlánc
 - napi küldetések és achievement rendszer
-- notification center további szűrések és kategóriaalapú nézetek
-- részletes admin account moderation napló
+- notification center további interactionök célzott navigációval
+- részletes admin account moderation export és szűrhető audit nézet

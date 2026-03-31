@@ -11,8 +11,19 @@ import { useNotifications } from "../composables/use-notifications";
 import { formatCategoryLabel } from "../lib/formatters";
 
 const { activityNow, gameState, gather, pendingAction } = useGameState();
-const { notifications, notificationsError, pendingNotificationAction, markNotificationRead, markAllNotificationsRead } =
-  useNotifications();
+const {
+  notifications,
+  notificationsError,
+  selectedNotification,
+  activeKind,
+  unreadOnly,
+  pendingNotificationAction,
+  selectNotification,
+  setNotificationKindFilter,
+  setNotificationUnreadFilter,
+  markNotificationRead,
+  markAllNotificationsRead,
+} = useNotifications();
 
 function zoneStatusClass(status: string) {
   if (status === "zarolt") {
@@ -48,7 +59,13 @@ function zoneStatusClass(status: string) {
         <ActivityFeed :activities="gameState.activities" :now="activityNow" />
         <NotificationCenter
           :notifications="notifications"
+          :selected-notification="selectedNotification"
+          :active-kind="activeKind"
+          :unread-only="unreadOnly"
           :pending-action="pendingNotificationAction"
+          @select-notification="selectNotification"
+          @set-kind-filter="setNotificationKindFilter"
+          @set-unread-filter="setNotificationUnreadFilter"
           @mark-read="markNotificationRead"
           @mark-all-read="markAllNotificationsRead"
         />
