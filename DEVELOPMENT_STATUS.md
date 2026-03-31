@@ -6,6 +6,7 @@ Utolsó frissítés: 2026-03-31
 
 - frontend szerkezeti és vizuális rendbetétel a tervfájlok alapján
 - auth alapok: regisztráció, bejelentkezés, profil, session, route védelem
+- login oldal redesign a konkrét HTML terv alapján, lokális háttér assetekkel
 - admin alapok: overview, rendszerimpulzus, segélycsomag, játékos inspect
 - központi időzített eseményrendszer gyűjtéshez, craftoláshoz és építéshez
 - élő progress megjelenítés a dashboard, műhely és expedíció nézetekben
@@ -22,15 +23,17 @@ Utolsó frissítés: 2026-03-31
 - admin játékosrészletek: készlet, épületek, aktivitások, audit napló
 - admin készletmódosítás és alap játékosérték-szerkesztés
 - env és docker alapú konfiguráció rendezése
+- külön production Docker Compose stack nginx alapú web kiszolgálással
 
 ## Folyamatban
 
+- további design alapú nézetek pontos átültetése a megadott HTML és képi tervek alapján
 - expedíciós és zónarendszer mélyítése
-- design alapú nézetek fokozatos átültetése kisebb, jól szeparált komponensekre
 - equipment tárgyforrások előkészítése drop és craft irányba
 
 ## Még hiányzik
 
+- regisztrációs oldal tervhű átültetése a login oldal mintájára
 - zónaesemények és random encounter rendszer
 - equipment tárgyforrások: drop, craft, jutalomlánc
 - napi küldetések és achievement rendszer

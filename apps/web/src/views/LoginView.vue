@@ -2,8 +2,8 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 
-import { clearGameState } from "../composables/use-game-state";
 import { useAuth } from "../composables/use-auth";
+import { clearGameState } from "../composables/use-game-state";
 
 const router = useRouter();
 const { login } = useAuth();
@@ -11,6 +11,7 @@ const { login } = useAuth();
 const email = ref("");
 const password = ref("");
 const rememberMe = ref(true);
+const showPassword = ref(false);
 const errorMessage = ref("");
 const isSubmitting = ref(false);
 
@@ -33,52 +34,124 @@ async function submit() {
 </script>
 
 <template>
-  <section class="auth-card panel">
-    <div class="auth-brand">
-      <p class="eyebrow">System intelligence v21.44.0</p>
-      <h1 class="brand auth-title">Obsidian Astral</h1>
-      <p class="muted">Terminal Access a Sector 7 parancsnoki hálózathoz.</p>
+  <section class="login-scene">
+    <div class="login-scene__backdrop" aria-hidden="true">
+      <div class="login-scene__gradient"></div>
+      <img class="login-scene__nebula" src="/auth/nebula-bg.webp" alt="" />
+      <div class="login-scene__shard login-scene__shard--left"></div>
+      <div class="login-scene__shard login-scene__shard--right"></div>
+      <div class="login-scene__shard login-scene__shard--top"></div>
+      <div class="login-scene__texture"></div>
+      <div class="login-scene__vignette"></div>
     </div>
 
-    <form class="auth-form" @submit.prevent="submit">
-      <label class="field-label" for="login-email">Parancsnoki e-mail</label>
-      <input
-        id="login-email"
-        v-model="email"
-        class="auth-input"
-        type="email"
-        autocomplete="email"
-        placeholder="commander@astral.hu"
-      />
+    <div class="login-brand">
+      <div class="login-brand__row">
+        <span class="material-symbols-outlined login-brand__icon">rocket_launch</span>
+        <h1 class="login-brand__title">Obsidian Astral</h1>
+      </div>
+      <p class="login-brand__version">System Intelligence v21.44.0</p>
+    </div>
 
-      <label class="field-label" for="login-password">Hozzáférési kulcs</label>
-      <input
-        id="login-password"
-        v-model="password"
-        class="auth-input"
-        type="password"
-        autocomplete="current-password"
-        placeholder="••••••••"
-      />
+    <section class="login-panel" aria-label="Terminal Access">
+      <div class="login-panel__line"></div>
 
-      <div class="auth-meta">
-        <label class="checkbox-line">
-          <input v-model="rememberMe" type="checkbox" />
-          <span>Kapcsolat megtartása</span>
+      <header class="login-panel__header">
+        <h2 class="login-panel__title">Terminal Access</h2>
+        <p class="login-panel__subtitle">Establish a secure link with Sector 7 Command</p>
+      </header>
+
+      <form class="login-form" @submit.prevent="submit">
+        <label class="login-field">
+          <span class="login-field__label">Commander E-mail</span>
+          <span class="login-field__control">
+            <span class="material-symbols-outlined login-field__icon">alternate_email</span>
+            <input
+              id="login-email"
+              v-model="email"
+              class="login-field__input"
+              type="email"
+              autocomplete="email"
+              placeholder="admin@obsidianastral.local"
+            />
+          </span>
         </label>
-        <RouterLink class="support-link" to="/auth/register">Új belépő?</RouterLink>
+
+        <label class="login-field">
+          <span class="login-field__label">Access Code</span>
+          <span class="login-field__control">
+            <span class="material-symbols-outlined login-field__icon">key</span>
+            <input
+              id="login-password"
+              v-model="password"
+              class="login-field__input login-field__input--password"
+              :type="showPassword ? 'text' : 'password'"
+              autocomplete="current-password"
+              placeholder="••••••••••••"
+            />
+            <button
+              class="login-field__toggle"
+              type="button"
+              :aria-label="showPassword ? 'Jelszó elrejtése' : 'Jelszó megjelenítése'"
+              @click="showPassword = !showPassword"
+            >
+              <span class="material-symbols-outlined">{{ showPassword ? "visibility" : "visibility_off" }}</span>
+            </button>
+          </span>
+        </label>
+
+        <div class="login-form__meta">
+          <label class="login-checkbox">
+            <input v-model="rememberMe" type="checkbox" />
+            <span>Stay Connected</span>
+          </label>
+          <RouterLink class="login-form__link" to="/auth/register">Frequency Lost?</RouterLink>
+        </div>
+
+        <p v-if="errorMessage" class="status-banner error">{{ errorMessage }}</p>
+
+        <button class="login-submit" type="submit" :disabled="isSubmitting">
+          <span>{{ isSubmitting ? "Connecting..." : "Enter the Void" }}</span>
+          <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+      </form>
+
+      <div class="login-panel__divider">
+        <span></span>
+        <p>External Uplinks</p>
+        <span></span>
       </div>
 
-      <p v-if="errorMessage" class="status-banner error">{{ errorMessage }}</p>
+      <div class="login-uplinks">
+        <button class="login-uplink login-uplink--discord" type="button">
+          <span class="material-symbols-outlined">chat</span>
+          <span>Discord</span>
+        </button>
+        <button class="login-uplink login-uplink--google" type="button">
+          <span class="material-symbols-outlined">cloud</span>
+          <span>Google</span>
+        </button>
+      </div>
+    </section>
 
-      <button class="primary-button auth-submit" type="submit" :disabled="isSubmitting">
-        {{ isSubmitting ? "Kapcsolódás..." : "Belépés az állomásra" }}
-      </button>
-    </form>
-
-    <div class="auth-footer">
-      <p class="compact-label">Demo fiókok seed után</p>
-      <p class="muted">`player@obsidianastral.local` / `Player1234` és `admin@obsidianastral.local` / `Admin1234`</p>
+    <div class="login-secondary">
+      <p>New to the Sector?</p>
+      <RouterLink class="login-secondary__button" to="/auth/register">
+        <span>Join the Fleet</span>
+        <span class="material-symbols-outlined">person_add</span>
+      </RouterLink>
     </div>
+
+    <footer class="login-footer">
+      <nav class="login-footer__links" aria-label="Segédlinkek">
+        <a href="#" @click.prevent>Privacy Protocol</a>
+        <a href="#" @click.prevent>Terms of Engagement</a>
+      </nav>
+      <p class="login-footer__copy">© 2144 Obsidian Astral Holdings. All frequencies encrypted.</p>
+      <div class="login-footer__actions" aria-hidden="true">
+        <span class="material-symbols-outlined">language</span>
+        <span class="material-symbols-outlined">contact_support</span>
+      </div>
+    </footer>
   </section>
 </template>
