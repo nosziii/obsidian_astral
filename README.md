@@ -26,17 +26,31 @@ Monorepó alapú webes stratégiai RPG prototípus Vue, Node, Prisma, PostgreSQL
 - `WEB_PORT`: web kliens port
 - `WEB_HOST`: Vite bind host
 - `VITE_DEV_SERVER_PORT`: fejlesztői Vite port
-- `VITE_API_BASE_URL`: böngészőből elérhető API cím
+- `VITE_API_BASE_URL`: böngészőből elérhető API cím; ha üres, a kliens ugyanazon a hoston próbálja elérni az API-t
 - `VITE_ALLOWED_HOSTS`: vesszővel elválasztott engedélyezett host lista a Vite `allowedHosts` beállításához
-- `CORS_ORIGIN`: engedélyezett frontend origin
+- `VITE_HMR_PROTOCOL`: Vite HMR websocket protokoll, például `ws` vagy `wss`
+- `VITE_HMR_HOST`: Vite HMR websocket host
+- `VITE_HMR_PORT`: a Vite szerver websocket portja
+- `VITE_HMR_CLIENT_PORT`: a böngésző felől használt websocket port
+- `CORS_ORIGIN`: vesszővel elválasztott engedélyezett frontend origin lista az API-hoz
 - `POSTGRES_HOST`: dockeres adatbázis host
 - `POSTGRES_INTERNAL_PORT`: dockeres adatbázis belső port
 
-Példa:
+## Deploy példa
+
+Ha a kliens `https://kalandjatek.eu` alatt fut, az API pedig ugyanazon a domainen reverse proxy mögött érhető el:
 
 ```env
-VITE_ALLOWED_HOSTS=localhost,127.0.0.1,kalandjatek.eu
+VITE_API_BASE_URL=
+VITE_ALLOWED_HOSTS=kalandjatek.eu,localhost,127.0.0.1
+VITE_HMR_PROTOCOL=wss
+VITE_HMR_HOST=kalandjatek.eu
+VITE_HMR_PORT=443
+VITE_HMR_CLIENT_PORT=443
+CORS_ORIGIN=https://kalandjatek.eu,http://localhost:4173
 ```
+
+Ha nincs szükséged távoli HMR-re, akkor érdemesebb production buildet kiszolgálni, nem a Vite dev servert.
 
 ## Docker
 

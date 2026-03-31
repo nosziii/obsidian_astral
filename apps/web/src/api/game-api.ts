@@ -15,7 +15,8 @@ import type {
   SessionPlayer,
 } from "@obsidian-astral/shared";
 
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:4000";
+const configuredApiBaseUrl = import.meta.env.VITE_API_BASE_URL?.trim() ?? "";
+const apiBaseUrl = configuredApiBaseUrl;
 
 let authToken: string | null = null;
 

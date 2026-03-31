@@ -42,10 +42,24 @@ async function submit() {
 
     <form class="auth-form" @submit.prevent="submit">
       <label class="field-label" for="login-email">Parancsnoki e-mail</label>
-      <input id="login-email" v-model="email" class="auth-input" type="email" placeholder="commander@astral.hu" />
+      <input
+        id="login-email"
+        v-model="email"
+        class="auth-input"
+        type="email"
+        autocomplete="email"
+        placeholder="commander@astral.hu"
+      />
 
       <label class="field-label" for="login-password">Hozzáférési kulcs</label>
-      <input id="login-password" v-model="password" class="auth-input" type="password" placeholder="••••••••" />
+      <input
+        id="login-password"
+        v-model="password"
+        class="auth-input"
+        type="password"
+        autocomplete="current-password"
+        placeholder="••••••••"
+      />
 
       <div class="auth-meta">
         <label class="checkbox-line">
@@ -58,7 +72,7 @@ async function submit() {
       <p v-if="errorMessage" class="status-banner error">{{ errorMessage }}</p>
 
       <button class="primary-button auth-submit" type="submit" :disabled="isSubmitting">
-        {{ isSubmitting ? "Kapcsolódás…" : "Belépés az állomásra" }}
+        {{ isSubmitting ? "Kapcsolódás..." : "Belépés az állomásra" }}
       </button>
     </form>
 

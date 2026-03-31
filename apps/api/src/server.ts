@@ -39,7 +39,18 @@ import { updateAdminPlayerBuilding } from "./services/admin-player-building-serv
 export function createServer() {
   const app = express();
 
-  app.use(cors({ origin: config.corsOrigin }));
+  app.use(
+    cors({
+      origin(origin, callback) {
+        if (!origin || config.corsOrigins.includes("*") || config.corsOrigins.includes(origin)) {
+          callback(null, true);
+          return;
+        }
+
+        callback(new GameRuleError("Az origin nincs engedélyezve ehhez az API-hoz.", 403));
+      },
+    }),
+  );
   app.use(express.json());
   app.use(attachAuthSession);
 
