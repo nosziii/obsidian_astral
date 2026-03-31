@@ -7,6 +7,7 @@ Utolsó frissítés: 2026-03-31
 - frontend szerkezeti és vizuális rendbetétel a tervfájlok alapján
 - auth alapok: regisztráció, bejelentkezés, profil, session, route védelem
 - login oldal redesign a konkrét HTML terv alapján, lokális háttér assetekkel
+- regisztrációs oldal tervhű auth panelként, közös háttérrel és animált login-regisztráció váltással
 - admin alapok: overview, rendszerimpulzus, segélycsomag, játékos inspect
 - központi időzített eseményrendszer gyűjtéshez, craftoláshoz és építéshez
 - élő progress megjelenítés a dashboard, műhely és expedíció nézetekben
@@ -33,7 +34,7 @@ Utolsó frissítés: 2026-03-31
 
 ## Még hiányzik
 
-- regisztrációs oldal tervhű átültetése a login oldal mintájára
+- további auth finomhangolás a következő tervfájlok alapján, ha a regisztrációhoz jön külön részletes design
 - zónaesemények és random encounter rendszer
 - equipment tárgyforrások: drop, craft, jutalomlánc
 - napi küldetések és achievement rendszer
