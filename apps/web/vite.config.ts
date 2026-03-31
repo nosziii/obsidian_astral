@@ -1,4 +1,6 @@
 import vue from "@vitejs/plugin-vue";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { defineConfig, loadEnv } from "vite";
 
 function normalizeAllowedHosts(value: string | undefined) {
@@ -64,6 +66,9 @@ function normalizeApiProxyTarget(env: Record<string, string>) {
   return target || undefined;
 }
 
+const sharedSourceEntry = fileURLToPath(new URL("../../packages/shared/src/index.ts", import.meta.url));
+const sharedSourceDirectory = path.dirname(sharedSourceEntry);
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   const allowedHosts = normalizeAllowedHosts(env.VITE_ALLOWED_HOSTS);
@@ -72,6 +77,12 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [vue()],
+    resolve: {
+      alias: {
+        "@obsidian-astral/shared": sharedSourceEntry,
+        "@obsidian-astral/shared/": `${sharedSourceDirectory}/`,
+      },
+    },
     server: {
       port: Number(env.VITE_DEV_SERVER_PORT ?? env.WEB_PORT ?? 4173),
       host: env.WEB_HOST ?? "0.0.0.0",
