@@ -39,6 +39,7 @@ export function formatCategoryLabel(categoryKey: string) {
     kozepes: "Közepes",
     magas: "Magas",
     elerheto: "Elérhető",
+    hamarosan: "Hamarosan",
     zarolt: "Zárolt",
     gathering: "Gyűjtés",
     craft: "Craft",

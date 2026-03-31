@@ -8,17 +8,17 @@ const props = defineProps<{
 }>();
 
 const tileMeta = [
-  { icon: "🌲", tone: "", fallbackRate: "+12/óra" },
-  { icon: "🪨", tone: "secondary", fallbackRate: "+4/óra" },
-  { icon: "⛏", tone: "tertiary", fallbackRate: "+22/óra" },
-  { icon: "✦", tone: "warning", fallbackRate: "+1/óra" },
+  { icon: "forest", tone: "", fallbackRate: "+12/óra" },
+  { icon: "architecture", tone: "secondary", fallbackRate: "+4/óra" },
+  { icon: "precision_manufacturing", tone: "tertiary", fallbackRate: "+22/óra" },
+  { icon: "savings", tone: "warning", fallbackRate: "+1/óra" },
 ];
 
 const tiles = computed(() =>
   props.inventory.slice(0, 4).map((entry, index) => ({
     ...entry,
     label: props.resources.find((item) => item.key === entry.resourceKey)?.label ?? entry.resourceKey,
-    icon: tileMeta[index]?.icon ?? "⬢",
+    icon: tileMeta[index]?.icon ?? "deployed_code",
     tone: tileMeta[index]?.tone ?? "",
     rate: tileMeta[index]?.fallbackRate ?? "+0/óra",
   })),
@@ -29,7 +29,9 @@ const tiles = computed(() =>
   <div class="resource-grid">
     <article v-for="tile in tiles" :key="tile.resourceKey" class="data-card resource-card">
       <div class="resource-card-header">
-        <div class="resource-icon" :class="tile.tone">{{ tile.icon }}</div>
+        <div class="resource-icon" :class="tile.tone">
+          <span class="material-symbols-outlined">{{ tile.icon }}</span>
+        </div>
         <span class="resource-rate">{{ tile.rate }}</span>
       </div>
       <div>

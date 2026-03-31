@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
 import { RouterLink, RouterView, useRoute, useRouter } from "vue-router";
 
 import { useAuth } from "../../composables/use-auth";
@@ -10,10 +10,12 @@ const route = useRoute();
 const router = useRouter();
 const { errorMessage, gameState, isLoading, refresh } = useGameState();
 const { logout, session } = useAuth();
+const isMobileNavOpen = ref(false);
 
 const navigationItems = computed(() =>
   protectedRoutes.filter((item) => !(item.meta?.adminOnly && session.value?.player.role !== "admin")),
 );
+
 const activeLabel = computed(() => route.meta.label ?? "Dashboard");
 
 const initials = computed(() =>
@@ -41,6 +43,13 @@ const topbarMetrics = computed(() => {
   ];
 });
 
+watch(
+  () => route.fullPath,
+  () => {
+    isMobileNavOpen.value = false;
+  },
+);
+
 async function handleLogout() {
   await logout();
   await router.push("/auth/login");
@@ -49,7 +58,9 @@ async function handleLogout() {
 
 <template>
   <div class="app-shell">
-    <aside class="sidebar">
+    <button class="mobile-nav-backdrop" :class="{ 'is-open': isMobileNavOpen }" type="button" @click="isMobileNavOpen = false" />
+
+    <aside class="sidebar" :class="{ 'is-open': isMobileNavOpen }">
       <div class="sidebar-header">
         <p class="eyebrow">Obsidian Astral</p>
         <h1 class="brand">Parancsnoki hálózat</h1>
@@ -73,7 +84,8 @@ async function handleLogout() {
           class="nav-link"
           active-class="is-active"
         >
-          {{ item.meta?.label }}
+          <span class="material-symbols-outlined nav-link__icon">{{ item.meta?.icon }}</span>
+          <span>{{ item.meta?.label }}</span>
         </RouterLink>
       </nav>
 
@@ -85,9 +97,15 @@ async function handleLogout() {
 
     <div class="main-column">
       <header class="topbar">
-        <div>
-          <p class="eyebrow">Aktív nézet</p>
-          <h2 class="page-title">{{ activeLabel }}</h2>
+        <div class="topbar-leading">
+          <button class="mobile-nav-toggle" type="button" @click="isMobileNavOpen = !isMobileNavOpen">
+            <span class="material-symbols-outlined">{{ isMobileNavOpen ? "close" : "menu" }}</span>
+          </button>
+
+          <div>
+            <p class="eyebrow">Aktív nézet</p>
+            <h2 class="page-title">{{ activeLabel }}</h2>
+          </div>
         </div>
 
         <div class="topbar-stats">

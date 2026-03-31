@@ -3,6 +3,10 @@
   padding-left: 272px;
 }
 
+.mobile-nav-backdrop {
+  display: none;
+}
+
 .sidebar {
   position: fixed;
   inset: 0 auto 0 0;
@@ -87,14 +91,13 @@
   transition: background-color 160ms ease, color 160ms ease;
 }
 
-.nav-link::before {
-  content: "";
+.nav-link__icon {
   width: 18px;
   height: 18px;
+  display: grid;
+  place-items: center;
   border-radius: 5px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.04);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+  color: inherit;
 }
 
 .nav-link:hover,
@@ -140,6 +143,23 @@
   border: 1px solid rgba(255, 255, 255, 0.04);
   border-radius: 22px;
   backdrop-filter: blur(18px);
+}
+
+.topbar-leading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.mobile-nav-toggle {
+  display: none;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  background: rgba(22, 24, 30, 0.96);
+  color: var(--text-main);
 }
 
 .page-title {
@@ -202,20 +222,42 @@
     padding-left: 0;
   }
 
-  .sidebar {
-    position: relative;
-    width: auto;
-    inset: auto;
-    border-right: 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  .mobile-nav-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 18;
+    display: block;
+    border: 0;
+    background: rgba(0, 0, 0, 0.46);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms ease;
   }
 
-  .main-column {
-    padding-top: 12px;
+  .mobile-nav-backdrop.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 220ms ease;
+  }
+
+  .sidebar.is-open {
+    transform: translateX(0);
+  }
+
+  .mobile-nav-toggle {
+    display: grid;
   }
 }
 
 @media (max-width: 720px) {
+  .sidebar {
+    width: min(88vw, 320px);
+  }
+
   .sidebar-profile {
     margin-right: 14px;
     margin-left: 14px;
@@ -239,7 +281,7 @@
   .topbar {
     position: static;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
   }
 
   .topbar-stats {

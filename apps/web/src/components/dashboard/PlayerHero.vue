@@ -47,7 +47,7 @@ const metrics = computed(() => [
         <h2 class="hero-title">{{ player.name }}</h2>
         <p class="muted">
           Stratégiai irányítópult a túléléshez, craftoláshoz és expedíciós vezényléshez.
-          A jelenlegi build most már a terv szerkezetéhez igazodik.
+          A jelenlegi dashboard már a terv ritmusához igazított, szellősebb szerkezetben fut.
         </p>
       </div>
 

@@ -1,51 +1,28 @@
 <script setup lang="ts">
-import ActivityFeed from "../components/gameplay/ActivityFeed.vue";
-import ChatPanel from "../components/gameplay/ChatPanel.vue";
-import GatheringPanel from "../components/gameplay/GatheringPanel.vue";
-import NotificationCenter from "../components/gameplay/NotificationCenter.vue";
 import PlayerHero from "../components/dashboard/PlayerHero.vue";
 import ResourceGrid from "../components/dashboard/ResourceGrid.vue";
+import ActivityFeed from "../components/gameplay/ActivityFeed.vue";
+import ChatDock from "../components/gameplay/ChatDock.vue";
+import GatheringPanel from "../components/gameplay/GatheringPanel.vue";
+import NotificationDigest from "../components/gameplay/NotificationDigest.vue";
+import ZoneStatusPanel from "../components/gameplay/ZoneStatusPanel.vue";
 import BasePanel from "../components/ui/BasePanel.vue";
 import { useGameState } from "../composables/use-game-state";
 import { useNotifications } from "../composables/use-notifications";
-import { formatCategoryLabel } from "../lib/formatters";
 
 const { activityNow, gameState, gather, pendingAction } = useGameState();
-const {
-  notifications,
-  notificationsError,
-  selectedNotification,
-  activeKind,
-  unreadOnly,
-  pendingNotificationAction,
-  selectNotification,
-  setNotificationKindFilter,
-  setNotificationUnreadFilter,
-  markNotificationRead,
-  markAllNotificationsRead,
-} = useNotifications();
-
-function zoneStatusClass(status: string) {
-  if (status === "zarolt") {
-    return "danger";
-  }
-
-  if (status === "hamarosan") {
-    return "secondary";
-  }
-
-  return "success";
-}
+const { notifications, notificationsError, pendingNotificationAction, markNotificationRead, markAllNotificationsRead } =
+  useNotifications();
 </script>
 
 <template>
-  <div v-if="gameState" class="view-stack">
+  <div v-if="gameState" class="view-stack dashboard-view">
     <div class="dashboard-grid">
       <PlayerHero :player="gameState.player" />
       <ResourceGrid :inventory="gameState.inventory" :resources="gameState.resources" />
     </div>
 
-    <div class="dashboard-operations">
+    <div class="dashboard-command-grid">
       <GatheringPanel
         :activities="gameState.activities"
         :items="gameState.gatherings"
@@ -55,30 +32,23 @@ function zoneStatusClass(status: string) {
         @gather="gather"
       />
 
-      <div class="dashboard-sidebar-stack">
+      <div class="dashboard-command-sidebar">
         <ActivityFeed :activities="gameState.activities" :now="activityNow" />
-        <NotificationCenter
-          :notifications="notifications"
-          :selected-notification="selectedNotification"
-          :active-kind="activeKind"
-          :unread-only="unreadOnly"
-          :pending-action="pendingNotificationAction"
-          @select-notification="selectNotification"
-          @set-kind-filter="setNotificationKindFilter"
-          @set-unread-filter="setNotificationUnreadFilter"
-          @mark-read="markNotificationRead"
-          @mark-all-read="markAllNotificationsRead"
-        />
-        <p v-if="notificationsError" class="muted">{{ notificationsError }}</p>
+        <ZoneStatusPanel :zones="gameState.zones" />
       </div>
     </div>
 
-    <div class="view-grid">
-      <ChatPanel channel="global" subtitle="Global chat" title="Belső kommunikáció" />
+    <div class="dashboard-insights-grid">
+      <NotificationDigest
+        :notifications="notifications"
+        :pending-action="pendingNotificationAction"
+        @mark-read="markNotificationRead"
+        @mark-all-read="markAllNotificationsRead"
+      />
 
       <BasePanel title="Passzív termelés" subtitle="Bázis output">
-        <div class="card-list">
-          <article v-for="entry in gameState.passiveProduction" :key="entry.buildingKey" class="action-card">
+        <div class="card-list passive-production-grid">
+          <article v-for="entry in gameState.passiveProduction" :key="entry.buildingKey" class="action-card passive-production-card">
             <div class="tag-row">
               <span class="tag-pill">{{ entry.label }}</span>
               <span class="chip">szint {{ entry.level }}</span>
@@ -94,19 +64,8 @@ function zoneStatusClass(status: string) {
       </BasePanel>
     </div>
 
-    <BasePanel title="Zónastátusz" subtitle="Előrehaladás">
-      <div class="card-list">
-        <article v-for="zone in gameState.zones" :key="zone.key" class="action-card">
-          <div class="tag-row">
-            <span class="tag-pill" :class="zoneStatusClass(zone.status)">
-              {{ formatCategoryLabel(zone.status) }}
-            </span>
-            <span class="compact-label">ajánlott {{ zone.recommendedLevel }}. szint</span>
-          </div>
-          <h4 class="card-title">{{ zone.label }}</h4>
-          <p class="muted">{{ zone.description }}</p>
-        </article>
-      </div>
-    </BasePanel>
+    <p v-if="notificationsError" class="muted">{{ notificationsError }}</p>
+
+    <ChatDock />
   </div>
 </template>

@@ -8,6 +8,11 @@ Utolsó frissítés: 2026-03-31
 - auth alapok: regisztráció, bejelentkezés, profil, session, route védelem
 - login oldal redesign a konkrét HTML terv alapján, lokális háttér assetekkel
 - regisztrációs oldal tervhű auth panelként, közös háttérrel és animált login-regisztráció váltással
+- dashboard layout átrendezése szellősebb, jobban tagolt szerkezetre
+- dashboard jobb oldali összefoglaló sáv aktív eseményekkel és zónastátusszal
+- dashboard kompakt értesítési blokk a korábbi zsúfolt notification center helyett
+- lebegő, csukható chat widget két tabbal: globál és műhely
+- shell mobil navigáció offcanvas menüvel a korábbi széteső mobil layout helyett
 - admin alapok: overview, rendszerimpulzus, segélycsomag, játékos inspect
 - központi időzített eseményrendszer gyűjtéshez, craftoláshoz és építéshez
 - élő progress megjelenítés a dashboard, műhely és expedíció nézetekben
@@ -34,7 +39,7 @@ Utolsó frissítés: 2026-03-31
 
 ## Még hiányzik
 
-- további auth finomhangolás a következő tervfájlok alapján, ha a regisztrációhoz jön külön részletes design
+- további dashboard finomhangolás a következő képi visszajelzések alapján
 - zónaesemények és random encounter rendszer
 - equipment tárgyforrások: drop, craft, jutalomlánc
 - napi küldetések és achievement rendszer

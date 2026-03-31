@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { ActivitySnapshot, GatheringDefinition } from "@obsidian-astral/shared";
 
-import BasePanel from "../ui/BasePanel.vue";
 import { formatProfessionLabel } from "../../lib/formatters";
+import BasePanel from "../ui/BasePanel.vue";
 import ActivityTimeline from "./ActivityTimeline.vue";
 
 const props = defineProps<{
@@ -27,7 +27,9 @@ function activityFor(actionKey: string) {
     <div class="card-list gathering-grid">
       <article v-for="item in items" :key="item.key" class="action-card gathering-card">
         <div class="gathering-card-main">
-          <div class="progress-icon">⚒</div>
+          <div class="progress-icon">
+            <span class="material-symbols-outlined">handyman</span>
+          </div>
 
           <div class="gathering-card-copy">
             <div class="gathering-card-head">

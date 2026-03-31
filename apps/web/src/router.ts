@@ -13,12 +13,12 @@ import RegisterView from "./views/RegisterView.vue";
 import WorkshopView from "./views/WorkshopView.vue";
 
 export const protectedRoutes = [
-  { path: "dashboard", component: DashboardView, meta: { label: "Dashboard" } },
-  { path: "workshop", component: WorkshopView, meta: { label: "Műhely" } },
-  { path: "expeditions", component: ExpeditionsView, meta: { label: "Expedíciók" } },
-  { path: "character", component: CharacterView, meta: { label: "Karakter" } },
-  { path: "profile", component: ProfileView, meta: { label: "Profil" } },
-  { path: "admin", component: AdminView, meta: { label: "Admin", adminOnly: true } },
+  { path: "dashboard", component: DashboardView, meta: { label: "Dashboard", icon: "dashboard" } },
+  { path: "workshop", component: WorkshopView, meta: { label: "Műhely", icon: "handyman" } },
+  { path: "expeditions", component: ExpeditionsView, meta: { label: "Expedíciók", icon: "map" } },
+  { path: "character", component: CharacterView, meta: { label: "Karakter", icon: "person" } },
+  { path: "profile", component: ProfileView, meta: { label: "Profil", icon: "badge" } },
+  { path: "admin", component: AdminView, meta: { label: "Admin", adminOnly: true, icon: "shield_person" } },
 ];
 
 export const router = createRouter({
