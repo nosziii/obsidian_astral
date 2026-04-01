@@ -1252,3 +1252,1023 @@
     bottom: 16px;
   }
 }
+
+.landing-feature-card,
+.landing-clan-card,
+.public-rules__support,
+.public-rules__card,
+.public-rules__policy-grid article,
+.public-rules__report,
+.public-guide__status,
+.public-guide__world-cards article,
+.public-guide__resource-card,
+.public-guide__combat-cards article,
+.public-guide__progress-card,
+.public-guide__clan-bar {
+  background: rgba(19, 19, 20, 0.92);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.landing-feature-card {
+  min-height: 250px;
+  padding: 32px;
+  transition: background 220ms ease, transform 220ms ease;
+}
+
+.landing-feature-card:hover,
+.landing-clan-card:hover {
+  background: #1a191b;
+  transform: translateY(-2px);
+}
+
+.landing-feature-card--wide {
+  grid-column: span 2;
+}
+
+.landing-feature-card--image {
+  position: relative;
+  overflow: hidden;
+}
+
+.landing-feature-card--image img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.1;
+  transition: opacity 260ms ease;
+}
+
+.landing-feature-card--image:hover img {
+  opacity: 0.18;
+}
+
+.landing-feature-card__content {
+  position: relative;
+  z-index: 1;
+  max-width: 270px;
+}
+
+.landing-feature-card .material-symbols-outlined {
+  display: block;
+  margin-bottom: 24px;
+  font-size: 2.25rem;
+}
+
+.landing-feature-card h3,
+.landing-clan-card h3,
+.public-rules__card h2,
+.public-rules__policy h3,
+.public-rules__report h3,
+.public-guide__section-head h2,
+.public-guide__world-cards h3,
+.public-guide__resource-main h3,
+.public-guide__combat-cards h3,
+.public-guide__clan-bar h3 {
+  margin: 0;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.landing-feature-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+}
+
+.landing-feature-card p,
+.landing-clan-card p,
+.public-rules__hero p,
+.public-rules__card p,
+.public-rules__policy p,
+.public-rules__report p,
+.public-guide__hero p,
+.public-guide__world-cards p,
+.public-guide__resource-copy p,
+.public-guide__resource-card p,
+.public-guide__combat-cards p,
+.public-guide__progress-card li,
+.public-guide__clan-bar p {
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.landing-feature-card--wide .material-symbols-outlined,
+.landing-feature-card--wide h3 {
+  color: var(--primary);
+}
+
+.landing-feature-card--image .material-symbols-outlined,
+.landing-feature-card--image h3 {
+  color: var(--secondary);
+}
+
+.landing-feature-card--combat .material-symbols-outlined,
+.landing-feature-card--combat h3 {
+  color: var(--tertiary);
+}
+
+.landing-clan-card {
+  grid-column: span 4;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 0.8fr);
+  gap: 32px;
+  align-items: center;
+  padding: 40px;
+  transition: background 220ms ease, transform 220ms ease;
+}
+
+.landing-clan-card__copy {
+  max-width: 640px;
+}
+
+.landing-clan-card__copy h3 {
+  margin-top: 18px;
+  font-size: 2.5rem;
+}
+
+.landing-clan-card__copy p {
+  margin-top: 14px;
+  font-size: 1.02rem;
+}
+
+.landing-clan-card__copy a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+  color: var(--primary);
+  text-decoration: none;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: gap 180ms ease;
+}
+
+.landing-clan-card:hover .landing-clan-card__copy a {
+  gap: 16px;
+}
+
+.landing-clan-card__icons {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.landing-clan-card__icons div {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  background: #262627;
+  box-shadow: inset 0 0 0 1px rgba(72, 72, 73, 0.24);
+}
+
+.landing-clan-card__icons .material-symbols-outlined {
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.landing-highlights {
+  padding: 64px 32px 72px;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.public-rules {
+  padding-top: 128px;
+  padding-bottom: 96px;
+}
+
+.public-rules__grid {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 48px;
+}
+
+.public-rules__sidebar-inner {
+  position: sticky;
+  top: 120px;
+  display: grid;
+  gap: 28px;
+}
+
+.public-rules__sidebar-title,
+.public-guide__segments-title {
+  margin: 0 0 22px;
+  color: var(--text-muted);
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.public-rules__nav,
+.public-guide__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.public-rules__nav a,
+.public-guide__nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  padding: 0 16px;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+
+.public-rules__nav a span:last-child,
+.public-guide__nav a span:last-child {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 0.84rem;
+  font-weight: 500;
+}
+
+.public-rules__nav a.is-active,
+.public-guide__nav a.is-active {
+  color: var(--primary);
+  background: #201f21;
+  border-left-color: var(--primary);
+}
+
+.public-rules__nav a:hover,
+.public-guide__nav a:hover {
+  color: var(--text-main);
+  background: #131314;
+}
+
+.public-rules__nav-gap {
+  margin-top: 12px;
+}
+
+.public-rules__support {
+  padding: 24px;
+}
+
+.public-rules__support-eyebrow,
+.public-guide__status-title {
+  margin: 0 0 10px;
+  color: var(--secondary);
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.public-rules__support p:last-of-type {
+  margin: 0 0 18px;
+  font-size: 0.78rem;
+}
+
+.public-rules__hero h1 {
+  margin: 0;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: clamp(3.4rem, 7vw, 5.8rem);
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  text-transform: uppercase;
+}
+
+.public-rules__hero h1 span {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.public-rules__hero p {
+  max-width: 780px;
+  margin-top: 24px;
+  font-size: 1.08rem;
+}
+
+.public-rules__cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.public-rules__card {
+  position: relative;
+  overflow: hidden;
+  min-height: 340px;
+  padding: 32px;
+  transition: background 220ms ease;
+}
+
+.public-rules__card:hover {
+  background: #1a191b;
+}
+
+.public-rules__card::after {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  font-family: "Material Symbols Outlined";
+  font-size: 5rem;
+  opacity: 0.1;
+}
+
+.public-rules__card--primary::after {
+  content: "sports_esports";
+  color: var(--primary);
+}
+
+.public-rules__card--secondary::after {
+  content: "forum";
+  color: var(--secondary);
+}
+
+.public-rules__card--tertiary::after {
+  content: "account_balance";
+  color: var(--tertiary);
+}
+
+.public-rules__card--accent::after {
+  content: "shield_lock";
+  color: var(--primary-dim);
+}
+
+.public-rules__card-icon {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 24px;
+}
+
+.public-rules__card--primary .public-rules__card-icon,
+.public-rules__card--primary h2,
+.public-rules__card--primary li span {
+  color: var(--primary);
+}
+
+.public-rules__card--secondary .public-rules__card-icon,
+.public-rules__card--secondary h2,
+.public-rules__card--secondary li span {
+  color: var(--secondary);
+}
+
+.public-rules__card--tertiary .public-rules__card-icon,
+.public-rules__card--tertiary h2,
+.public-rules__card--tertiary li span {
+  color: var(--tertiary);
+}
+
+.public-rules__card--accent .public-rules__card-icon,
+.public-rules__card--accent h2,
+.public-rules__card--accent li span {
+  color: var(--primary-dim);
+}
+
+.public-rules__card h2 {
+  margin-bottom: 18px;
+  font-size: 1.5rem;
+}
+
+.public-rules__card ul {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.public-rules__card li {
+  display: flex;
+  gap: 12px;
+}
+
+.public-rules__card li span {
+  font-weight: 700;
+}
+
+.public-rules__card li p {
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+.public-rules__policy {
+  margin-top: 52px;
+  padding-left: 32px;
+  border-left: 1px solid rgba(118, 117, 118, 0.45);
+}
+
+.public-rules__policy-copy h3 {
+  margin-bottom: 18px;
+  font-size: 1.85rem;
+}
+
+.public-rules__policy-copy p {
+  max-width: 760px;
+  font-size: 0.94rem;
+}
+
+.public-rules__policy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.public-rules__policy-grid article {
+  padding: 18px;
+}
+
+.public-rules__policy-grid article p {
+  margin: 0;
+  font-size: 0.76rem;
+}
+
+.public-rules__policy-grid .eyebrow {
+  margin-bottom: 10px;
+  color: var(--primary);
+}
+
+.public-rules__policy-grid article:nth-child(2) .eyebrow {
+  color: var(--secondary);
+}
+
+.public-rules__policy-grid article:nth-child(3) .eyebrow {
+  color: var(--error);
+}
+
+.public-rules__report {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  margin-top: 48px;
+  padding: 32px;
+}
+
+.public-rules__report h3 {
+  margin-bottom: 10px;
+  font-size: 1.75rem;
+}
+
+.public-guide__layout {
+  display: flex;
+  gap: 32px;
+  max-width: 1600px;
+}
+
+.public-guide__sidebar {
+  width: 288px;
+  flex: 0 0 288px;
+}
+
+.public-guide__sidebar-inner {
+  position: sticky;
+  top: 96px;
+  height: calc(100vh - 120px);
+  overflow-y: auto;
+  padding-right: 16px;
+}
+
+.public-guide__status {
+  margin-top: 24px;
+  padding: 18px;
+  border: 1px solid rgba(143, 245, 255, 0.2);
+  background: rgba(143, 245, 255, 0.05);
+}
+
+.public-guide__status-live {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.public-guide__status-live span {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--primary);
+  animation: publicPulseRings 2.2s ease-in-out infinite;
+}
+
+.public-guide__status-live strong,
+.public-guide__status-meta {
+  color: rgba(143, 245, 255, 0.8);
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.public-guide__status-track {
+  height: 4px;
+  background: #262627;
+  overflow: hidden;
+}
+
+.public-guide__status-fill {
+  width: 67%;
+  height: 100%;
+  background: var(--primary);
+  box-shadow: 0 0 8px #8ff5ff;
+}
+
+.public-guide__content {
+  flex: 1;
+  min-width: 0;
+  padding-bottom: 96px;
+}
+
+.public-guide__hero h1 {
+  margin: 0;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: clamp(3.4rem, 6vw, 5.4rem);
+  font-weight: 700;
+  letter-spacing: -0.06em;
+}
+
+.public-guide__hero p {
+  max-width: 800px;
+  margin-top: 16px;
+  font-size: 1.06rem;
+}
+
+.public-guide__section {
+  margin-top: 72px;
+}
+
+.public-guide__section-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(72, 72, 73, 0.55);
+}
+
+.public-guide__section-head h2 {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+
+.public-guide__section-head h2 .material-symbols-outlined {
+  font-size: 2.25rem;
+}
+
+.public-guide__section-head span:last-child {
+  color: rgba(143, 245, 255, 0.4);
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.public-guide__world-frame {
+  position: relative;
+  overflow: hidden;
+  margin-top: 24px;
+  aspect-ratio: 21 / 9;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.public-guide__world-frame img,
+.public-guide__world-overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.public-guide__world-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 700ms ease;
+}
+
+.public-guide__world-frame:hover img {
+  transform: scale(1.05);
+}
+
+.public-guide__world-overlay {
+  background: linear-gradient(180deg, transparent 0%, rgba(14, 14, 15, 0.1) 40%, rgba(14, 14, 15, 0.95) 100%);
+}
+
+.public-guide__world-cards {
+  position: absolute;
+  right: 32px;
+  bottom: 32px;
+  left: 32px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.public-guide__world-cards article {
+  padding: 18px;
+  backdrop-filter: blur(12px);
+}
+
+.public-guide__world-cards article:nth-child(1) h3 {
+  color: var(--primary);
+}
+
+.public-guide__world-cards article:nth-child(2) h3 {
+  color: var(--secondary);
+}
+
+.public-guide__world-cards article:nth-child(3) h3 {
+  color: var(--tertiary);
+}
+
+.public-guide__world-cards p {
+  margin-top: 6px;
+  font-size: 0.78rem;
+}
+
+.public-guide__resource-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 460px;
+  gap: 32px;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.public-guide__resource-list {
+  display: grid;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.public-guide__resource-list article {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: #131314;
+  border-left: 4px solid transparent;
+}
+
+.public-guide__resource-list article:nth-child(1) {
+  border-left-color: var(--primary);
+}
+
+.public-guide__resource-list article:nth-child(2) {
+  border-left-color: var(--secondary);
+}
+
+.public-guide__resource-list article:nth-child(3) {
+  border-left-color: var(--tertiary);
+}
+
+.public-guide__resource-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  background: rgba(143, 245, 255, 0.12);
+}
+
+.public-guide__resource-list article:nth-child(2) .public-guide__resource-icon {
+  background: rgba(172, 137, 255, 0.14);
+}
+
+.public-guide__resource-list article:nth-child(3) .public-guide__resource-icon {
+  background: rgba(255, 89, 227, 0.12);
+}
+
+.public-guide__resource-icon .material-symbols-outlined,
+.public-guide__resource-list article:nth-child(1) h3,
+.public-guide__resource-list article:nth-child(1) .public-guide__resource-rarity {
+  color: var(--primary);
+}
+
+.public-guide__resource-list article:nth-child(2) .material-symbols-outlined,
+.public-guide__resource-list article:nth-child(2) h3,
+.public-guide__resource-list article:nth-child(2) .public-guide__resource-rarity {
+  color: var(--secondary);
+}
+
+.public-guide__resource-list article:nth-child(3) .material-symbols-outlined,
+.public-guide__resource-list article:nth-child(3) h3,
+.public-guide__resource-list article:nth-child(3) .public-guide__resource-rarity {
+  color: var(--tertiary);
+}
+
+.public-guide__resource-main {
+  flex: 1;
+}
+
+.public-guide__resource-main h3 {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.public-guide__resource-track {
+  height: 4px;
+  margin-top: 10px;
+  background: #262627;
+  overflow: hidden;
+}
+
+.public-guide__resource-fill {
+  width: 85%;
+  height: 100%;
+  background: var(--primary);
+}
+
+.public-guide__resource-fill--secondary {
+  width: 40%;
+  background: var(--secondary);
+}
+
+.public-guide__resource-fill--tertiary {
+  width: 15%;
+  background: var(--tertiary);
+}
+
+.public-guide__resource-rarity {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.public-guide__resource-card {
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    inset 0 0 0 1px rgba(172, 137, 255, 0.14),
+    0 0 24px rgba(172, 137, 255, 0.08);
+}
+
+.public-guide__resource-card::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  background: linear-gradient(90deg, rgba(143, 245, 255, 0.16), rgba(172, 137, 255, 0.16));
+  filter: blur(10px);
+  opacity: 0.24;
+}
+
+.public-guide__resource-card img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  opacity: 0.85;
+}
+
+.public-guide__resource-card-body {
+  position: relative;
+  z-index: 1;
+  padding: 24px;
+  background: #201f21;
+}
+
+.public-guide__resource-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  color: var(--text-muted);
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.public-guide__combat-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.public-guide__combat-cards article {
+  padding: 32px;
+  text-align: center;
+  border: 1px solid rgba(72, 72, 73, 0.3);
+}
+
+.public-guide__combat-icon {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 16px;
+  border-radius: 999px;
+}
+
+.public-guide__combat-icon .material-symbols-outlined {
+  font-size: 2rem;
+}
+
+.public-guide__combat-icon--error {
+  background: rgba(159, 5, 25, 0.18);
+  color: var(--error);
+}
+
+.public-guide__combat-icon--primary {
+  background: rgba(143, 245, 255, 0.14);
+  color: var(--primary);
+}
+
+.public-guide__combat-icon--secondary {
+  background: rgba(172, 137, 255, 0.18);
+  color: var(--secondary);
+}
+
+.public-guide__combat-cards h3 {
+  margin-bottom: 10px;
+  font-size: 1.28rem;
+  text-transform: uppercase;
+}
+
+.public-guide__combat-cards strong {
+  display: block;
+  margin-top: 18px;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 2rem;
+}
+
+.public-guide__combat-cards strong span {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.public-guide__progress-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px;
+  margin-top: 24px;
+  padding: 32px;
+}
+
+.public-guide__progress-watermark {
+  position: absolute;
+  top: 18px;
+  right: -32px;
+  transform: rotate(90deg);
+  color: rgba(173, 170, 171, 0.12);
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.public-guide__progress-level {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.public-guide__progress-level strong {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 1.8rem;
+}
+
+.public-guide__progress-level span {
+  flex: 1;
+  height: 1px;
+  background: rgba(118, 117, 118, 0.6);
+}
+
+.public-guide__progress-title {
+  margin: 12px 0 0;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.public-guide__progress-title--primary {
+  color: var(--primary);
+}
+
+.public-guide__progress-title--secondary {
+  color: var(--secondary);
+}
+
+.public-guide__progress-title--tertiary {
+  color: var(--tertiary);
+}
+
+.public-guide__progress-card ul {
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.public-guide__progress-card li {
+  position: relative;
+  padding-left: 14px;
+  font-family: Consolas, monospace;
+  font-size: 0.78rem;
+}
+
+.public-guide__progress-card li + li {
+  margin-top: 8px;
+}
+
+.public-guide__progress-card li::before {
+  content: "";
+  position: absolute;
+  top: 9px;
+  left: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--primary);
+}
+
+.public-guide__progress-card article:nth-child(2) li::before {
+  background: var(--secondary);
+}
+
+.public-guide__progress-card article:nth-child(3) li::before {
+  background: var(--tertiary);
+}
+
+.public-guide__progress-card article.is-muted {
+  opacity: 0.5;
+}
+
+.public-guide__clan-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 24px;
+  padding: 32px;
+}
+
+.public-guide__clan-bar h3 {
+  margin-bottom: 10px;
+  font-size: 1.6rem;
+}
+
+@media (max-width: 1180px) {
+  .public-rules__grid,
+  .public-guide__layout,
+  .public-rules__cards,
+  .public-rules__policy-grid,
+  .public-guide__resource-layout,
+  .public-guide__combat-cards,
+  .public-guide__progress-card {
+    grid-template-columns: 1fr;
+  }
+
+  .public-guide__layout {
+    display: grid;
+  }
+
+  .public-rules__sidebar,
+  .public-guide__sidebar {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .landing-feature-card--wide,
+  .landing-clan-card {
+    grid-column: auto;
+  }
+
+  .landing-clan-card,
+  .public-rules__report,
+  .public-guide__clan-bar {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .public-rules__cards,
+  .public-rules__policy-grid,
+  .public-guide__world-cards,
+  .public-guide__combat-cards,
+  .public-guide__progress-card {
+    grid-template-columns: 1fr;
+  }
+
+  .public-guide__world-cards {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+  }
+}

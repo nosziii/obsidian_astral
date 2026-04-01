@@ -8,11 +8,9 @@ import { RouterLink } from "vue-router";
       <div class="landing-shell">
         <div class="landing-hero__content">
           <div class="landing-hero__copy">
-            <span class="eyebrow landing-hero__eyebrow">System intelligence v21.44.0</span>
-            <h1 class="landing-hero__title">Obsidian Astral</h1>
-            <p class="landing-hero__subtitle">
-              Hódítsd meg a végtelent. <span>Kovácsold meg a legendádat.</span>
-            </p>
+            <span class="eyebrow landing-hero__eyebrow">Initialization successful</span>
+            <h1 class="landing-hero__title">OBSIDIAN <br /> ASTRAL</h1>
+            <p class="landing-hero__subtitle">Hódítsd meg a végtelent. <span>Kovácsold meg a legendádat.</span></p>
 
             <div class="landing-hero__actions">
               <RouterLink class="primary-button landing-hero__primary" to="/auth/register">Belépés a szektorba</RouterLink>
@@ -30,7 +28,7 @@ import { RouterLink } from "vue-router";
               </article>
               <article>
                 <span class="compact-label">Jelenlegi epoch</span>
-                <strong>Astral-9</strong>
+                <strong>ASTRAL-9</strong>
               </article>
             </div>
           </div>
@@ -42,7 +40,7 @@ import { RouterLink } from "vue-router";
 
             <div class="landing-hero__badge">
               <div class="landing-hero__badge-icon">
-                <span class="material-symbols-outlined">verified_user</span>
+                <span class="material-symbols-outlined">security</span>
               </div>
               <div>
                 <strong>Identity verified</strong>
@@ -62,16 +60,14 @@ import { RouterLink } from "vue-router";
         </header>
 
         <div class="landing-features__grid">
-          <article class="landing-card landing-card--wide landing-card--cyan">
-            <div class="landing-card__body">
-              <span class="material-symbols-outlined">manufacturing</span>
-              <h3>Mély nyersanyag-kitermelés</h3>
-              <p>Ritka obszidián izotópok, veszélyes mezők és magas hozamú műveleti ciklusok.</p>
-            </div>
+          <article class="landing-feature-card landing-feature-card--wide">
+            <span class="material-symbols-outlined">manufacturing</span>
+            <h3>Mély nyersanyag-kitermelés</h3>
+            <p>Ritka obszidián izotópok, veszélyes mezők és magas hozamú műveleti ciklusok.</p>
           </article>
 
-          <article class="landing-card landing-card--image landing-card--purple">
-            <div class="landing-card__body">
+          <article class="landing-feature-card landing-feature-card--image">
+            <div class="landing-feature-card__content">
               <span class="material-symbols-outlined">precision_manufacturing</span>
               <h3>Fejlett craftolás</h3>
               <p>Fegyverek, modulok és technológiai ereklyék többfázisú gyártása.</p>
@@ -79,25 +75,26 @@ import { RouterLink } from "vue-router";
             <img alt="Crafting interface" src="/landing/crafting-ui.webp" />
           </article>
 
-          <article class="landing-card landing-card--pink">
-            <div class="landing-card__body">
-              <span class="material-symbols-outlined">swords</span>
-              <h3>Taktikai harc</h3>
-              <p>Precíz ütközetek, felszerelésalapú erőforrásmenedzsment és célzott döntések.</p>
-            </div>
+          <article class="landing-feature-card landing-feature-card--combat">
+            <span class="material-symbols-outlined">swords</span>
+            <h3>Taktikai harc</h3>
+            <p>Precíz ütközetek, felszerelésalapú erőforrásmenedzsment és célzott döntések.</p>
           </article>
 
-          <article id="clans" class="landing-clan">
-            <div class="landing-clan__copy">
+          <article id="clans" class="landing-clan-card">
+            <div class="landing-clan-card__copy">
               <span class="chip">Globális kontroll</span>
               <h3>Klánszuverenitás</h3>
               <p>
                 Saját orbitális bázisok, adóztatott kereskedelmi útvonalak és tartós befolyás a szektorok felett.
               </p>
-              <RouterLink to="/guide">Leírás megnyitása</RouterLink>
+              <RouterLink to="/guide">
+                Saját klán alapítása
+                <span class="material-symbols-outlined">arrow_forward</span>
+              </RouterLink>
             </div>
 
-            <div class="landing-clan__icons" aria-hidden="true">
+            <div class="landing-clan-card__icons" aria-hidden="true">
               <div><span class="material-symbols-outlined">groups</span></div>
               <div><span class="material-symbols-outlined">hub</span></div>
               <div><span class="material-symbols-outlined">language</span></div>
@@ -115,7 +112,7 @@ import { RouterLink } from "vue-router";
         <div class="landing-shell landing-world__content">
           <div class="landing-world__copy">
             <span class="eyebrow">Szektor-felfedezés</span>
-            <h2>Vulkanikus <span>kristálycsúcsok</span></h2>
+            <h2>The volcanic <br /><span>crystal peaks</span></h2>
             <p>
               Navigálj az instabil tektonikus lemezek között, ahol a légkör halálos, de a jutalom felbecsülhetetlen.
             </p>
@@ -135,7 +132,7 @@ import { RouterLink } from "vue-router";
       </div>
     </section>
 
-    <section class="landing-highlights tonal-panel">
+    <section class="landing-highlights">
       <div class="landing-shell landing-highlights__grid">
         <article>
           <div></div>
@@ -157,12 +154,10 @@ import { RouterLink } from "vue-router";
 
     <section class="landing-cta">
       <div class="landing-cta__rings"></div>
-
       <div class="landing-shell">
         <div class="landing-cta__content">
-          <h2>Csatlakozz az <span>Astral-hálózathoz</span></h2>
+          <h2>Join the <br /><span>Nebulous Vanguard</span></h2>
           <p>A végtelen hív. Most döntöd el, hogy uralod, vagy elveszel benne.</p>
-
           <div class="landing-hero__actions landing-cta__actions">
             <RouterLink class="primary-button" to="/auth/register">Karakter létrehozása</RouterLink>
             <RouterLink class="ghost-button" to="/guide">Leírás megnyitása</RouterLink>
@@ -172,7 +167,7 @@ import { RouterLink } from "vue-router";
     </section>
 
     <a class="landing-fab" aria-label="Ugrás a tetejére" href="#top">
-      <span class="material-symbols-outlined">north_east</span>
+      <span class="material-symbols-outlined">expand_less</span>
     </a>
   </main>
 </template>
