@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { ref, watchEffect } from "vue";
 
-import BasePanel from "../components/ui/BasePanel.vue";
+import ProfileCommandHero from "../components/profile/ProfileCommandHero.vue";
+import ProfileIdentityForm from "../components/profile/ProfileIdentityForm.vue";
 import { useAuth } from "../composables/use-auth";
+import { useGameState } from "../composables/use-game-state";
+import { buildProfileSignals, buildProfileStrands } from "../lib/character-overview";
 
 const { saveProfile, session } = useAuth();
+const { gameState } = useGameState();
 
 const name = ref("");
 const bio = ref("");
@@ -36,46 +40,39 @@ async function submit() {
 </script>
 
 <template>
-  <div class="view-stack">
-    <section class="profile-hero panel">
-      <div class="profile-hero-card">
-        <div class="profile-hero-avatar">{{ session?.player.name.slice(0, 2).toUpperCase() }}</div>
-        <div>
-          <p class="eyebrow">{{ session?.player.fleet }}</p>
-          <h1 class="profile-headline">{{ session?.player.name }}</h1>
-          <p class="muted">{{ session?.player.bio }}</p>
+  <div class="profile-layout">
+    <ProfileCommandHero :game-state="gameState" :session="session?.player ?? null" :signals="buildProfileSignals(gameState, gameState?.zones ?? [])" />
+
+    <div class="profile-layout__grid">
+      <section class="profile-strands panel section-panel">
+        <header class="section-header">
+          <div>
+            <p class="eyebrow">Unlocked Data Strands</p>
+            <h3 class="section-title">Aktív fejlődési csatornák</h3>
+          </div>
+        </header>
+
+        <div class="profile-strands__list">
+          <article v-for="strand in buildProfileStrands(gameState)" :key="strand.key" class="profile-strand">
+            <strong>{{ strand.label }}</strong>
+            <span>{{ strand.detail }}</span>
+          </article>
+          <p v-if="!buildProfileStrands(gameState).length" class="muted">A parancsnoki profilhoz még nem tartozik kibontott szál.</p>
         </div>
-      </div>
-      <div class="profile-hero-meta">
-        <div class="data-card">
-          <span class="compact-label">Szerep</span>
-          <strong class="value-strong">{{ session?.player.role }}</strong>
-        </div>
-        <div class="data-card">
-          <span class="compact-label">Parancsnoki szint</span>
-          <strong class="value-strong">{{ session?.player.level }}</strong>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <BasePanel title="Fiókprofil" subtitle="Identity">
-      <form class="profile-form" @submit.prevent="submit">
-        <label class="field-label" for="profile-name">Parancsnoki név</label>
-        <input id="profile-name" v-model="name" class="auth-input" type="text" />
-
-        <label class="field-label" for="profile-fleet">Flotta</label>
-        <input id="profile-fleet" v-model="fleet" class="auth-input" type="text" />
-
-        <label class="field-label" for="profile-bio">Bemutatkozás</label>
-        <textarea id="profile-bio" v-model="bio" class="auth-textarea" rows="5" />
-
-        <p v-if="statusMessage" class="status-banner">{{ statusMessage }}</p>
-        <p v-if="errorMessage" class="status-banner error">{{ errorMessage }}</p>
-
-        <button class="primary-button" type="submit" :disabled="isSaving">
-          {{ isSaving ? "Mentés…" : "Profil mentése" }}
-        </button>
-      </form>
-    </BasePanel>
+      <ProfileIdentityForm
+        :bio="bio"
+        :error-message="errorMessage"
+        :fleet="fleet"
+        :is-saving="isSaving"
+        :name="name"
+        :status-message="statusMessage"
+        @submit="submit"
+        @update:bio="bio = $event"
+        @update:fleet="fleet = $event"
+        @update:name="name = $event"
+      />
+    </div>
   </div>
 </template>

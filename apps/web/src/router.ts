@@ -8,12 +8,14 @@ import CharacterView from "./views/CharacterView.vue";
 import DashboardView from "./views/DashboardView.vue";
 import ExpeditionsView from "./views/ExpeditionsView.vue";
 import LoginView from "./views/LoginView.vue";
+import MapView from "./views/MapView.vue";
 import ProfileView from "./views/ProfileView.vue";
 import RegisterView from "./views/RegisterView.vue";
 import WorkshopView from "./views/WorkshopView.vue";
 
 export const protectedRoutes = [
   { path: "dashboard", component: DashboardView, meta: { label: "Dashboard", icon: "dashboard" } },
+  { path: "map", component: MapView, meta: { label: "Térkép", icon: "public" } },
   { path: "workshop", component: WorkshopView, meta: { label: "Műhely", icon: "handyman" } },
   { path: "expeditions", component: ExpeditionsView, meta: { label: "Expedíciók", icon: "map" } },
   { path: "character", component: CharacterView, meta: { label: "Karakter", icon: "person" } },
@@ -37,10 +39,7 @@ export const router = createRouter({
       path: "/",
       component: AppShell,
       meta: { requiresAuth: true },
-      children: [
-        { path: "", redirect: "/dashboard" },
-        ...protectedRoutes,
-      ],
+      children: [{ path: "", redirect: "/dashboard" }, ...protectedRoutes],
     },
   ],
 });

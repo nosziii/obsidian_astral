@@ -51,6 +51,7 @@ export function formatCategoryLabel(categoryKey: string) {
     gyakori: "Gyakori",
     ritka: "Ritka",
     epikus: "Epikus",
+    kiegeszito: "Kiegészítő",
   };
 
   return labels[categoryKey] ?? categoryKey;

@@ -20,6 +20,10 @@ Utolsó frissítés: 2026-04-01
 - külön csapatstátusz, loot secured, mission comms és threat radar blokkok expedícióhoz
 - központi mission panel idővonallal, pulzáló kurzorral és taktikai metrikákkal
 - design system finomhangolás kisebb rádiuszokkal, tonális üvegfelületekkel és közös mikromozgás utilitykkel
+- karakter nézet paperdoll alapú redesign a felszereléses tervek vizuális logikájára építve
+- külön inventory grid, taktikai item fókuszpanel és slotvezérelt felszerelési áttekintés
+- profil nézet redesign parancsnoki hero blokkal és külön identitás-szinkron panellel
+- új világtérkép nézet zónacsomópontokkal és expedíciós intel oldalsávval
 - admin alapok: overview, rendszerimpulzus, segélycsomag, játékos inspect
 - központi időzített eseményrendszer gyűjtéshez, craftoláshoz és építéshez
 - élő progress megjelenítés a dashboard, műhely és expedíció nézetekben
