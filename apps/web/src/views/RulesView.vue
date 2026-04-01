@@ -1,6 +1,6 @@
 <template>
-  <main class="public-docs">
-    <div class="public-docs__grid">
+  <main id="top" class="public-docs">
+    <div class="public-docs-shell public-docs__grid">
       <aside class="public-docs__sidebar">
         <div class="public-docs__sidebar-inner">
           <div>
@@ -25,8 +25,8 @@
 
       <section class="public-docs__content">
         <header class="public-docs__hero">
-          <span class="eyebrow">Regulatory Framework v4.2</span>
-          <h1>Szabályzat</h1>
+          <span class="eyebrow">Regulatory framework v4.2</span>
+          <h1>Rules of <span>engagement</span></h1>
           <p>
             Az Obsidian Astral perzisztens világa a tiszteletre, versenyre és technológiai fegyelemre épül. A
             belépéssel a Hegemony Protocol szabályait fogadod el.
@@ -77,6 +77,10 @@
 
         <section id="szankcio" class="public-docs__policy">
           <h2>Szankciós rend</h2>
+          <p>
+            Az ítéletek fokozatosak, de az infrastruktúrát vagy közösséget veszélyeztető visszaélések esetén azonnali
+            végrehajtás lép életbe.
+          </p>
           <div class="public-docs__policy-grid">
             <article class="tonal-panel">
               <p class="eyebrow">Tier 1</p>

@@ -1,6 +1,6 @@
 <template>
-  <main class="public-docs public-guide">
-    <div class="public-docs__grid">
+  <main id="top" class="public-docs public-guide">
+    <div class="public-docs-shell public-docs__grid">
       <aside class="public-docs__sidebar">
         <div class="public-docs__sidebar-inner">
           <div>
@@ -175,7 +175,26 @@
             </article>
           </div>
         </section>
+
+        <section id="clans" class="public-guide__section">
+          <header class="public-guide__section-header">
+            <h2><span class="material-symbols-outlined">groups</span>Klánok</h2>
+            <span>FACTION_NET_04</span>
+          </header>
+
+          <div class="public-docs__report tonal-panel">
+            <div>
+              <h2>Szövetségi hierarchia</h2>
+              <p>A klánok közös raktárat, zónabefolyást, háborús célokat és kommunikációs csatornákat osztanak meg.</p>
+            </div>
+            <button class="ghost-button" type="button">Klánrendszer megnyitása</button>
+          </div>
+        </section>
       </section>
     </div>
+
+    <a class="public-docs__fab" aria-label="Ugrás a tetejére" href="#top">
+      <span class="material-symbols-outlined">north_east</span>
+    </a>
   </main>
 </template>

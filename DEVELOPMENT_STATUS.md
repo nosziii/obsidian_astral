@@ -46,6 +46,7 @@ Utolsó frissítés: 2026-04-01
 - env és docker alapú konfiguráció rendezése
 - külön production Docker Compose stack nginx alapú web kiszolgálással
 - shared tartalmi réteg UTF-8 tisztítása a hibás ékezetek megszüntetéséhez
+- publikus landing, szabályzat és játékleírás oldalak tervhűbb, szorosabb újraépítése a megadott forrásdizájn alapján
 
 ## Folyamatban
 

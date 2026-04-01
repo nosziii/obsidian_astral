@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import { RouterLink } from "vue-router";
+</script>
+
 <template>
   <footer class="public-footer">
     <div class="public-footer__content">
@@ -20,7 +24,3 @@
     </div>
   </footer>
 </template>
-
-<script setup lang="ts">
-import { RouterLink } from "vue-router";
-</script>
