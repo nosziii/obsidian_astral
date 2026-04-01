@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
 
 import AuthPanelCard from "../components/auth/AuthPanelCard.vue";
 import { useAuth } from "../composables/use-auth";

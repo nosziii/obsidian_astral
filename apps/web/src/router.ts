@@ -3,17 +3,21 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import AppShell from "./components/layout/AppShell.vue";
 import AuthLayout from "./components/layout/AuthLayout.vue";
+import PublicLayout from "./components/layout/PublicLayout.vue";
 import { loadAuthSession, useAuth } from "./composables/use-auth";
 import AdminView from "./views/AdminView.vue";
 import CharacterView from "./views/CharacterView.vue";
 import CommunicationView from "./views/CommunicationView.vue";
 import DashboardView from "./views/DashboardView.vue";
 import ExpeditionsView from "./views/ExpeditionsView.vue";
+import GuideView from "./views/GuideView.vue";
+import LandingView from "./views/LandingView.vue";
 import LoginView from "./views/LoginView.vue";
 import MapView from "./views/MapView.vue";
 import MarketplaceView from "./views/MarketplaceView.vue";
 import ProfileView from "./views/ProfileView.vue";
 import RegisterView from "./views/RegisterView.vue";
+import RulesView from "./views/RulesView.vue";
 import WorkshopView from "./views/WorkshopView.vue";
 
 export interface NavigationChild {
@@ -77,6 +81,15 @@ export const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
+      path: "/",
+      component: PublicLayout,
+      children: [
+        { path: "", component: LandingView, meta: { publicLanding: true } },
+        { path: "rules", component: RulesView, meta: { publicDocs: true } },
+        { path: "guide", component: GuideView, meta: { publicDocs: true } },
+      ],
+    },
+    {
       path: "/auth",
       component: AuthLayout,
       meta: { guestOnly: true },
@@ -89,7 +102,7 @@ export const router = createRouter({
       path: "/",
       component: AppShell,
       meta: { requiresAuth: true },
-      children: [{ path: "", redirect: "/dashboard" }, ...protectedRoutes],
+      children: [{ path: "dashboard", redirect: "/dashboard" }, ...protectedRoutes],
     },
   ],
 });
@@ -105,6 +118,10 @@ router.beforeEach(async (to) => {
 
   const { session } = useAuth();
   const currentSession = session.value;
+
+  if (to.meta.publicLanding && currentSession) {
+    return "/dashboard";
+  }
 
   if (to.meta.requiresAuth && !currentSession) {
     return "/auth/login";

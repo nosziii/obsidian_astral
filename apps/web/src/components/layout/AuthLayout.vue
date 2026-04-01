@@ -27,8 +27,9 @@
 
       <footer class="auth-footer-bar">
         <nav class="auth-footer-bar__links" aria-label="Segédlinkek">
-          <a href="#" @click.prevent>Privacy Protocol</a>
-          <a href="#" @click.prevent>Terms of Engagement</a>
+          <RouterLink to="/">Kezdőlap</RouterLink>
+          <RouterLink to="/rules">Szabályzat</RouterLink>
+          <RouterLink to="/guide">Leírás</RouterLink>
         </nav>
         <p class="auth-footer-bar__copy">© 2144 Obsidian Astral Holdings. All frequencies encrypted.</p>
         <div class="auth-footer-bar__actions" aria-hidden="true">
@@ -41,5 +42,5 @@
 </template>
 
 <script setup lang="ts">
-import { RouterView } from "vue-router";
+import { RouterLink, RouterView } from "vue-router";
 </script>
