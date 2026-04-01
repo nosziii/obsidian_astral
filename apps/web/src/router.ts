@@ -1,3 +1,4 @@
+import type { RouteLocationRaw, RouteRecordRaw } from "vue-router";
 import { createRouter, createWebHistory } from "vue-router";
 
 import AppShell from "./components/layout/AppShell.vue";
@@ -5,6 +6,7 @@ import AuthLayout from "./components/layout/AuthLayout.vue";
 import { loadAuthSession, useAuth } from "./composables/use-auth";
 import AdminView from "./views/AdminView.vue";
 import CharacterView from "./views/CharacterView.vue";
+import CommunicationView from "./views/CommunicationView.vue";
 import DashboardView from "./views/DashboardView.vue";
 import ExpeditionsView from "./views/ExpeditionsView.vue";
 import LoginView from "./views/LoginView.vue";
@@ -13,14 +15,60 @@ import ProfileView from "./views/ProfileView.vue";
 import RegisterView from "./views/RegisterView.vue";
 import WorkshopView from "./views/WorkshopView.vue";
 
-export const protectedRoutes = [
+export interface NavigationChild {
+  label: string;
+  icon: string;
+  to: RouteLocationRaw;
+}
+
+export interface NavigationMeta {
+  label: string;
+  icon: string;
+  adminOnly?: boolean;
+  navChildren?: NavigationChild[];
+}
+
+export type ProtectedRouteRecord = RouteRecordRaw & {
+  path: string;
+  meta: NavigationMeta;
+};
+
+export const protectedRoutes: ProtectedRouteRecord[] = [
   { path: "dashboard", component: DashboardView, meta: { label: "Dashboard", icon: "dashboard" } },
+  {
+    path: "communication",
+    component: CommunicationView,
+    meta: {
+      label: "Communication",
+      icon: "hub",
+      navChildren: [
+        { label: "Hub", icon: "neurology", to: { path: "/communication", query: { section: "mails" } } },
+        { label: "Globál chat", icon: "public", to: { path: "/communication", query: { section: "global" } } },
+        { label: "Műhely chat", icon: "handyman", to: { path: "/communication", query: { section: "workshop" } } },
+        { label: "Riasztások", icon: "warning", to: { path: "/communication", query: { section: "alerts" } } },
+      ],
+    },
+  },
   { path: "map", component: MapView, meta: { label: "Térkép", icon: "public" } },
   { path: "workshop", component: WorkshopView, meta: { label: "Műhely", icon: "handyman" } },
   { path: "expeditions", component: ExpeditionsView, meta: { label: "Expedíciók", icon: "map" } },
   { path: "character", component: CharacterView, meta: { label: "Karakter", icon: "person" } },
   { path: "profile", component: ProfileView, meta: { label: "Profil", icon: "badge" } },
-  { path: "admin", component: AdminView, meta: { label: "Admin", adminOnly: true, icon: "shield_person" } },
+  {
+    path: "admin",
+    component: AdminView,
+    meta: {
+      label: "Admin",
+      adminOnly: true,
+      icon: "shield_person",
+      navChildren: [
+        { label: "Áttekintés", icon: "grid_view", to: { path: "/admin", query: { section: "overview" } } },
+        { label: "Moderáció", icon: "admin_panel_settings", to: { path: "/admin", query: { section: "moderation" } } },
+        { label: "Épületek", icon: "apartment", to: { path: "/admin", query: { section: "buildings" } } },
+        { label: "Audit", icon: "fact_check", to: { path: "/admin", query: { section: "audit" } } },
+      ],
+    },
+  },
 ];
 
 export const router = createRouter({

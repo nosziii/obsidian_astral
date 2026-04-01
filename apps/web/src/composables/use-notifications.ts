@@ -54,7 +54,7 @@ async function runNotificationAction(actionKey: string, operation: () => Promise
     await operation();
     await loadNotifications();
   } catch (error) {
-    notificationsError.value = error instanceof Error ? error.message : "Az értesítés művelet nem sikerült.";
+    notificationsError.value = error instanceof Error ? error.message : "Az értesítési művelet nem sikerült.";
   } finally {
     notificationsPending.value = null;
   }

@@ -24,6 +24,9 @@ Utolsó frissítés: 2026-04-01
 - külön inventory grid, taktikai item fókuszpanel és slotvezérelt felszerelési áttekintés
 - profil nézet redesign parancsnoki hero blokkal és külön identitás-szinkron panellel
 - új világtérkép nézet zónacsomópontokkal és expedíciós intel oldalsávval
+- külön Communication hub oldal neural üzenet, chat és riasztási kezeléssel
+- sidebar almenük a Communication és Admin főpontok alatt
+- admin nézet szekciózott működéssel: áttekintés, moderáció, épületek, audit
 - admin alapok: overview, rendszerimpulzus, segélycsomag, játékos inspect
 - központi időzített eseményrendszer gyűjtéshez, craftoláshoz és építéshez
 - élő progress megjelenítés a dashboard, műhely és expedíció nézetekben

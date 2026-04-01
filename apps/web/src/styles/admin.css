@@ -12,6 +12,34 @@
   flex-wrap: wrap;
 }
 
+.admin-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.admin-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 14px;
+  border: 1px solid var(--ghost-border);
+  border-radius: var(--radius-md);
+  background: rgba(26, 28, 34, 0.62);
+  color: var(--text-muted);
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.admin-tab.is-active {
+  color: var(--primary);
+  box-shadow: var(--ambient-glow-primary);
+}
+
 .admin-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
