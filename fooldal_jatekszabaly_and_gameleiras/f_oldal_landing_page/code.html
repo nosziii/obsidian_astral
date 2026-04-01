@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Obsidian Astral | Conquer the Void</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(38, 38, 39, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .text-glow-cyan {
+            text-shadow: 0 0 15px rgba(143, 245, 255, 0.5);
+        }
+        .bg-void-gradient {
+            background: radial-gradient(circle at center, #131314 0%, #0e0e0f 100%);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "secondary-container": "#7000ff",
+                "error-container": "#9f0519",
+                "tertiary-fixed": "#ff85e4",
+                "tertiary-container": "#ff05e5",
+                "surface-container-low": "#131314",
+                "surface-container-highest": "#262627",
+                "on-error-container": "#ffa8a3",
+                "tertiary-fixed-dim": "#ff68e3",
+                "on-surface": "#ffffff",
+                "surface-container-high": "#201f21",
+                "primary-dim": "#00deec",
+                "primary": "#8ff5ff",
+                "outline": "#767576",
+                "secondary": "#ac89ff",
+                "on-secondary-fixed": "#41009a",
+                "on-primary": "#005d63",
+                "primary-container": "#00eefc",
+                "on-tertiary-fixed": "#33002d",
+                "tertiary": "#ff59e3",
+                "primary-fixed-dim": "#00deec",
+                "surface-variant": "#262627",
+                "on-background": "#ffffff",
+                "on-primary-fixed": "#003f43",
+                "on-secondary-container": "#f8f1ff",
+                "secondary-dim": "#874cff",
+                "surface-bright": "#2c2c2d",
+                "on-secondary": "#290067",
+                "background": "#0e0e0f",
+                "on-secondary-fixed-variant": "#6300e2",
+                "inverse-surface": "#fcf8f9",
+                "inverse-on-surface": "#565556",
+                "primary-fixed": "#00eefc",
+                "error": "#ff716c",
+                "surface-tint": "#8ff5ff",
+                "surface-container": "#1a191b",
+                "secondary-fixed-dim": "#ceb9ff",
+                "on-surface-variant": "#adaaab",
+                "error-dim": "#d7383b",
+                "on-primary-container": "#005359",
+                "inverse-primary": "#006a71",
+                "on-error": "#490006",
+                "outline-variant": "#484849",
+                "on-tertiary-fixed-variant": "#6d0061",
+                "tertiary-dim": "#ff59e3",
+                "secondary-fixed": "#dac9ff",
+                "on-tertiary-container": "#1b0017",
+                "on-tertiary": "#42003a",
+                "surface-container-lowest": "#000000",
+                "surface-dim": "#0e0e0f",
+                "surface": "#0e0e0f",
+                "on-primary-fixed-variant": "#005e64"
+              },
+              fontFamily: {
+                "headline": ["Space Grotesk"],
+                "body": ["Manrope"],
+                "label": ["Space Grotesk"]
+              },
+              borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary selection:text-on-primary">
+<!-- Top Navigation Anchor -->
+<nav class="fixed top-0 w-full z-50 bg-black/40 backdrop-blur-xl border-b border-white/5 flex justify-between items-center px-8 py-4 shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
+<div class="text-2xl font-bold tracking-tighter text-cyan-400 drop-shadow-[0_0_8px_rgba(143,245,255,0.6)] font-headline">
+            Obsidian Astral
+        </div>
+<div class="hidden md:flex items-center gap-10">
+<a class="text-cyan-400 border-b-2 border-cyan-400 pb-1 font-label uppercase tracking-widest text-[11px] transition-all duration-300" href="#">Features</a>
+<a class="text-slate-400 font-medium font-label uppercase tracking-widest text-[11px] hover:text-white hover:bg-white/5 transition-all duration-300" href="#">Clans</a>
+<a class="text-slate-400 font-medium font-label uppercase tracking-widest text-[11px] hover:text-white hover:bg-white/5 transition-all duration-300" href="#">Manual</a>
+<a class="text-slate-400 font-medium font-label uppercase tracking-widest text-[11px] hover:text-white hover:bg-white/5 transition-all duration-300" href="#">Guide</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-5 py-2 text-slate-400 font-label uppercase tracking-widest text-[11px] hover:text-white transition-all duration-300">Login</button>
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-lg font-label uppercase tracking-widest text-[11px] font-bold scale-95 active:scale-90 transition-transform shadow-[0_0_20px_rgba(143,245,255,0.3)]">Register</button>
+</div>
+</nav>
+<main>
+<!-- Hero Section -->
+<section class="relative min-h-screen flex items-center pt-20 overflow-hidden bg-surface-container-lowest">
+<!-- Decorative Light Bleeds -->
+<div class="absolute top-1/4 -left-20 w-96 h-96 bg-primary/10 blur-[120px] rounded-full"></div>
+<div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-secondary/10 blur-[120px] rounded-full"></div>
+<div class="max-w-7xl mx-auto px-8 w-full grid md:grid-cols-2 gap-12 items-center relative z-10">
+<div class="space-y-8">
+<div class="space-y-2">
+<span class="font-label text-primary tracking-[0.3em] text-[10px] uppercase">Initialization Successful</span>
+<h1 class="text-7xl md:text-8xl font-headline font-bold tracking-tighter text-on-surface text-glow-cyan leading-tight">
+                            OBSIDIAN <br/> ASTRAL
+                        </h1>
+</div>
+<p class="text-xl md:text-2xl text-on-surface-variant max-w-lg font-light tracking-wide">
+                        CONQUER THE VOID. <span class="text-secondary font-medium">CRAFT YOUR LEGEND.</span>
+</p>
+<div class="flex flex-wrap gap-6 pt-4">
+<button class="group relative px-8 py-4 bg-primary text-on-primary font-headline font-bold uppercase tracking-widest text-xs overflow-hidden rounded-md transition-all hover:shadow-[0_0_40px_rgba(143,245,255,0.4)]">
+<span class="relative z-10">Enter the Void</span>
+<div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+</button>
+<button class="px-8 py-4 border border-outline-variant text-on-surface font-headline font-bold uppercase tracking-widest text-xs rounded-md hover:bg-surface-container-high transition-all">
+                            Sign In
+                        </button>
+</div>
+<!-- Micro-Details HUD -->
+<div class="flex gap-12 pt-12 border-t border-white/5">
+<div class="space-y-1">
+<div class="text-slate-500 font-label text-[10px] uppercase tracking-tighter">Active Pilots</div>
+<div class="text-2xl font-headline font-medium text-primary-dim">14.2K+</div>
+</div>
+<div class="space-y-1">
+<div class="text-slate-500 font-label text-[10px] uppercase tracking-tighter">Systems Discovered</div>
+<div class="text-2xl font-headline font-medium text-secondary-dim">892</div>
+</div>
+<div class="space-y-1">
+<div class="text-slate-500 font-label text-[10px] uppercase tracking-tighter">Current Epoch</div>
+<div class="text-2xl font-headline font-medium text-tertiary-dim">ASTRAL-9</div>
+</div>
+</div>
+</div>
+<div class="relative">
+<div class="absolute -inset-4 bg-gradient-to-tr from-primary/20 to-secondary/20 blur-2xl opacity-30"></div>
+<img alt="Tactical Commander" class="relative w-full aspect-square object-cover rounded-xl border border-white/10 grayscale-[0.2] hover:grayscale-0 transition-all duration-700 shadow-2xl" data-alt="Cinematic portrait of a tactical futuristic commander in dark obsidian armor with glowing cyan visors and intricate neon details" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLnVrEBBjXqliLWkHeSjH6FTb4mEa9JWL0THbPFd30AuiNOUGUmzSr8HT-qUVQ8kyF1HrhKUsBqo7_ToQgwdgQ0J_3ENTne0_ARwfuWfPGFXTRyZr7qZZweBQDn1sfcP5zkor9DX5s8sjpPlsQ3pDG0Udq63qNbM55l8dnQ4660Eqv7dTttBlHTlReGAmQkoREnChkC9I45fmaU24i-aZDKcKKk_Ek_Bh3jgPBefmB99cuIJMU2pr00IWsamESloNUrgpOEmBDBZpz"/>
+<!-- Tech Overlay UI -->
+<div class="absolute -bottom-6 -left-6 glass-panel p-6 border border-white/10 rounded-lg hidden lg:block">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full border-2 border-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">security</span>
+</div>
+<div>
+<div class="text-on-surface font-bold text-sm">IDENTITY VERIFIED</div>
+<div class="text-slate-500 font-label text-[10px] uppercase tracking-widest">Sector 7 Guard</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Features Bento Grid -->
+<section class="py-32 bg-surface">
+<div class="max-w-7xl mx-auto px-8">
+<div class="text-center mb-20 space-y-4">
+<h2 class="text-4xl md:text-5xl font-headline font-bold tracking-tighter">CORE SYSTEMS</h2>
+<div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4">
+<!-- Feature 1: Gathering -->
+<div class="md:col-span-2 md:row-span-1 glass-panel p-8 border border-white/5 rounded-xl hover:bg-surface-container-high transition-all group">
+<span class="material-symbols-outlined text-4xl text-primary mb-6 block group-hover:scale-110 transition-transform">manufacturing</span>
+<h3 class="text-2xl font-headline font-bold mb-3">Deep Resource Gathering</h3>
+<p class="text-on-surface-variant leading-relaxed">Extract rare obsidian isotopes from the crust of collapsing neutron stars. High-risk, high-frequency yield operations.</p>
+</div>
+<!-- Feature 2: Crafting -->
+<div class="md:col-span-1 glass-panel p-8 border border-white/5 rounded-xl hover:bg-surface-container-high transition-all group overflow-hidden relative">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-4xl text-secondary mb-6 block">precision_manufacturing</span>
+<h3 class="text-xl font-headline font-bold mb-2">Advanced Crafting</h3>
+<p class="text-sm text-on-surface-variant">Forge tactical gear using molecular restructuring.</p>
+</div>
+<img alt="Crafting UI" class="absolute top-0 right-0 w-1/2 h-full object-cover opacity-10 group-hover:opacity-20 transition-opacity" data-alt="Hyper-realistic close-up of a high-tech glowing crafting interface with floating crystalline blueprints and energy arcs" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAC0oHZAI34dF6fH3N-JacgARkvPfsYq3Iu-jf_ZV1zOhOmw2dhCPev3XoUOAOzyK7KIe6kgbjRYtUXxg-NjAZ9A7tW_QY-LYoYPIJmo2SwnbfUERBnuWDzzo2ooEdFvh0XLpzLSvW9olDfbphjxru_TCV3B-KZtnlzkz2gaZiFjMaxdj1t1M79ihMZJ6jQHLFjH6Y8e3gcsblcHhj_F2m0lFt48jqDovGxyx72rGupF9upCbhhp20-TzIjluE41_GqD3Ph6jO6fVvd"/>
+</div>
+<!-- Feature 3: Combat -->
+<div class="md:col-span-1 glass-panel p-8 border border-white/5 rounded-xl hover:bg-surface-container-high transition-all group">
+<span class="material-symbols-outlined text-4xl text-tertiary mb-6 block">swords</span>
+<h3 class="text-xl font-headline font-bold mb-2">Tactical Combat</h3>
+<p class="text-sm text-on-surface-variant">Execute precision strikes with gravity-defying weaponry.</p>
+</div>
+<!-- Feature 4: Clans -->
+<div class="md:col-span-4 glass-panel p-10 border border-white/5 rounded-xl hover:bg-surface-container-high transition-all flex flex-col md:flex-row gap-8 items-center">
+<div class="flex-1 space-y-4">
+<div class="inline-block px-3 py-1 bg-secondary/20 text-secondary rounded-full text-[10px] font-label font-bold tracking-widest uppercase">Global Control</div>
+<h3 class="text-4xl font-headline font-bold">Clan Sovereignty</h3>
+<p class="text-on-surface-variant text-lg">Establish territory in the uncharted sectors. Build massive orbital stations and tax trade routes to maintain your galactic hegemony.</p>
+<button class="text-primary font-label text-xs tracking-widest uppercase flex items-center gap-2 group-hover:gap-4 transition-all">Establish Your Clan <span class="material-symbols-outlined">arrow_forward</span></button>
+</div>
+<div class="flex-1 grid grid-cols-3 gap-4 w-full">
+<div class="aspect-square bg-surface-container-highest rounded-lg border border-white/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl opacity-40">groups</span>
+</div>
+<div class="aspect-square bg-surface-container-highest rounded-lg border border-white/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl opacity-40">hub</span>
+</div>
+<div class="aspect-square bg-surface-container-highest rounded-lg border border-white/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl opacity-40">language</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- World Atmosphere Section -->
+<section class="py-0 relative">
+<div class="sticky top-0 h-screen flex items-center overflow-hidden">
+<img alt="Volcanic Zone" class="absolute inset-0 w-full h-full object-cover grayscale-[0.5] brightness-50" data-alt="Epic landscape of a volcanic planet with rivers of glowing purple lava and massive crystal peaks under a dark nebula sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4rkApJFGrqV3wIEgZsZfTAalq9qXWLWAF5NVGeT7rzFYf0oW6_brDVTnhHKrP2GGQXEwuB8ZwVQ6tQpjciSykI0mkzZn8_7w5Xkkimt63YhfiSqIxMR67XFtfpEp2HQOkDghgbsXipXWkv_FG9IFeVN-jmAp3hsYAHpwhbVCLts6zgN_6tQUZwh7zKm1nBmA0pjzM2ZdBASJ5UZk8apVxo6aThIwTi7HJFzpZKqsEljaVt0osfQdc_mXoZEoSx5dDqOyQLRU_ryX5"/>
+<div class="absolute inset-0 bg-gradient-to-b from-surface via-transparent to-surface"></div>
+<div class="max-w-7xl mx-auto px-8 w-full relative z-10">
+<div class="max-w-xl space-y-6">
+<span class="font-label text-tertiary tracking-[0.4em] text-xs uppercase">Sector Discovery</span>
+<h2 class="text-5xl md:text-7xl font-headline font-bold tracking-tighter leading-none">THE VOLCANIC <br/><span class="text-tertiary">CRYSTAL PEAKS</span></h2>
+<p class="text-on-surface-variant text-lg font-light leading-relaxed">
+                            Navigate the shifting tectonic plates of Sector-14. A world where the atmospheric pressure is lethal and the riches are infinite. Only the brave dare to touch the surface.
+                        </p>
+<div class="flex items-center gap-8 pt-8">
+<div class="flex flex-col">
+<span class="text-xs font-label text-slate-500 uppercase tracking-widest">Temperature</span>
+<span class="text-2xl font-headline font-bold text-white">1,400°C</span>
+</div>
+<div class="h-10 w-[1px] bg-white/10"></div>
+<div class="flex flex-col">
+<span class="text-xs font-label text-slate-500 uppercase tracking-widest">Atmosphere</span>
+<span class="text-2xl font-headline font-bold text-white">Hazardous</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Second Zone (Scrollable content) -->
+<div class="relative z-20 py-40 bg-surface-container-lowest/80 backdrop-blur-md border-y border-white/5">
+<div class="max-w-7xl mx-auto px-8 grid md:grid-cols-3 gap-12">
+<div class="space-y-4">
+<div class="h-1 w-12 bg-primary"></div>
+<h4 class="text-xl font-headline font-bold">Uncharted Frontiers</h4>
+<p class="text-sm text-on-surface-variant">Every server launch generates a new seed of the Astral Plane, ensuring no two conquests are ever the same.</p>
+</div>
+<div class="space-y-4">
+<div class="h-1 w-12 bg-secondary"></div>
+<h4 class="text-xl font-headline font-bold">Dynamic Ecosystems</h4>
+<p class="text-sm text-on-surface-variant">From the Frozen Moons of Altair to the Verdant Bioluminescent Jungles, master the environment to survive.</p>
+</div>
+<div class="space-y-4">
+<div class="h-1 w-12 bg-tertiary"></div>
+<h4 class="text-xl font-headline font-bold">Persistent World</h4>
+<p class="text-sm text-on-surface-variant">The actions of a single player can ripple across the entire galactic economy. Your legend is permanent.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="py-40 bg-void-gradient relative overflow-hidden">
+<!-- Decorative Elements -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-primary/10 rounded-full animate-pulse"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] border border-secondary/5 rounded-full"></div>
+<div class="max-w-4xl mx-auto px-8 text-center relative z-10">
+<h2 class="text-5xl md:text-7xl font-headline font-extrabold tracking-tighter mb-8 leading-tight">
+                    JOIN THE <br/> <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">NEBULOUS VANGUARD</span>
+</h2>
+<p class="text-xl text-on-surface-variant mb-12 font-light max-w-2xl mx-auto">
+                    The void is calling. Will you be the one to master the obsidian heights or vanish into the stellar dust? Your journey begins now.
+                </p>
+<div class="flex flex-col md:flex-row items-center justify-center gap-6">
+<button class="w-full md:w-auto px-12 py-5 bg-primary text-on-primary font-headline font-bold uppercase tracking-widest text-sm rounded-lg shadow-[0_10px_40px_rgba(0,238,252,0.3)] hover:scale-105 active:scale-95 transition-all">
+                        Create Your Character
+                    </button>
+<button class="w-full md:w-auto px-12 py-5 border border-outline-variant text-on-surface font-headline font-bold uppercase tracking-widest text-sm rounded-lg hover:bg-surface-container-highest transition-all">
+                        Explore Wiki
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Anchor -->
+<footer class="bg-black border-t border-zinc-900 py-12 px-8">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex flex-col items-center md:items-start gap-2">
+<div class="text-lg font-bold text-slate-200 font-headline">Obsidian Astral</div>
+<div class="text-slate-500 font-label text-xs tracking-wide">© 2144 Obsidian Astral. All rights reserved. Galactic Hegemony Protocol.</div>
+</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="text-slate-500 font-label text-xs tracking-wide hover:text-cyan-400 underline decoration-cyan-400/30 transition-opacity opacity-80 hover:opacity-100" href="#">Terms of Service</a>
+<a class="text-slate-500 font-label text-xs tracking-wide hover:text-cyan-400 underline decoration-cyan-400/30 transition-opacity opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+<a class="text-slate-500 font-label text-xs tracking-wide hover:text-cyan-400 underline decoration-cyan-400/30 transition-opacity opacity-80 hover:opacity-100" href="#">Game Manual</a>
+<a class="text-slate-500 font-label text-xs tracking-wide hover:text-cyan-400 underline decoration-cyan-400/30 transition-opacity opacity-80 hover:opacity-100" href="#">System Status</a>
+</div>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full glass-panel border border-white/10 flex items-center justify-center hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">public</span>
+</a>
+<a class="w-10 h-10 rounded-full glass-panel border border-white/10 flex items-center justify-center hover:text-secondary transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">terminal</span>
+</a>
+</div>
+</div>
+</footer>
+<!-- Back to top floating button (Contextual suppression applied elsewhere, but here for utility) -->
+<button class="fixed bottom-8 right-8 w-12 h-12 bg-secondary text-white rounded-full flex items-center justify-center shadow-[0_0_32px_rgba(172,137,255,0.2)] hover:scale-110 active:scale-95 transition-all z-40">
+<span class="material-symbols-outlined">expand_less</span>
+</button>
+</body></html>

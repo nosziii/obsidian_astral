@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="hu"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary-container": "#7000ff",
+              "error-container": "#9f0519",
+              "tertiary-fixed": "#ff85e4",
+              "tertiary-container": "#ff05e5",
+              "surface-container-low": "#131314",
+              "surface-container-highest": "#262627",
+              "on-error-container": "#ffa8a3",
+              "tertiary-fixed-dim": "#ff68e3",
+              "on-surface": "#ffffff",
+              "surface-container-high": "#201f21",
+              "primary-dim": "#00deec",
+              "primary": "#8ff5ff",
+              "outline": "#767576",
+              "secondary": "#ac89ff",
+              "on-secondary-fixed": "#41009a",
+              "on-primary": "#005d63",
+              "primary-container": "#00eefc",
+              "on-tertiary-fixed": "#33002d",
+              "tertiary": "#ff59e3",
+              "primary-fixed-dim": "#00deec",
+              "surface-variant": "#262627",
+              "on-background": "#ffffff",
+              "on-primary-fixed": "#003f43",
+              "on-secondary-container": "#f8f1ff",
+              "secondary-dim": "#874cff",
+              "surface-bright": "#2c2c2d",
+              "on-secondary": "#290067",
+              "background": "#0e0e0f",
+              "on-secondary-fixed-variant": "#6300e2",
+              "inverse-surface": "#fcf8f9",
+              "inverse-on-surface": "#565556",
+              "primary-fixed": "#00eefc",
+              "error": "#ff716c",
+              "surface-tint": "#8ff5ff",
+              "surface-container": "#1a191b",
+              "secondary-fixed-dim": "#ceb9ff",
+              "on-surface-variant": "#adaaab",
+              "error-dim": "#d7383b",
+              "on-primary-container": "#005359",
+              "inverse-primary": "#006a71",
+              "on-error": "#490006",
+              "outline-variant": "#484849",
+              "on-tertiary-fixed-variant": "#6d0061",
+              "tertiary-dim": "#ff59e3",
+              "secondary-fixed": "#dac9ff",
+              "on-tertiary-container": "#1b0017",
+              "on-tertiary": "#42003a",
+              "surface-container-lowest": "#000000",
+              "surface-dim": "#0e0e0f",
+              "surface": "#0e0e0f",
+              "on-primary-fixed-variant": "#005e64"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Manrope"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .glass-panel {
+        background: rgba(38, 38, 39, 0.4);
+        backdrop-filter: blur(12px);
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .rules-scroll-area::-webkit-scrollbar {
+        width: 4px;
+      }
+      .rules-scroll-area::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .rules-scroll-area::-webkit-scrollbar-thumb {
+        background: #201f21;
+        border-radius: 10px;
+      }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary/30">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-black/40 backdrop-blur-xl border-b border-white/5 flex justify-between items-center w-full px-8 py-4 max-w-full shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
+<div class="text-2xl font-bold tracking-tighter text-cyan-400 drop-shadow-[0_0_8px_rgba(143,245,255,0.6)] font-headline">
+            Obsidian Astral
+        </div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-slate-400 font-medium font-label uppercase tracking-widest text-[11px] hover:text-white hover:bg-white/5 transition-all duration-300 px-2 py-1" href="#">Features</a>
+<a class="text-slate-400 font-medium font-label uppercase tracking-widest text-[11px] hover:text-white hover:bg-white/5 transition-all duration-300 px-2 py-1" href="#">Clans</a>
+<a class="text-cyan-400 border-b-2 border-cyan-400 pb-1 font-label uppercase tracking-widest text-[11px]" href="#">Manual</a>
+<a class="text-slate-400 font-medium font-label uppercase tracking-widest text-[11px] hover:text-white hover:bg-white/5 transition-all duration-300 px-2 py-1" href="#">Guide</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-slate-400 font-label uppercase tracking-widest text-[11px] hover:text-white transition-colors">Login</button>
+<button class="bg-primary text-on-primary font-label font-bold uppercase tracking-widest text-[11px] px-6 py-2.5 rounded-none hover:bg-primary-dim transition-all scale-95 active:scale-90">Register</button>
+</div>
+</nav>
+<main class="pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12">
+<!-- Side Navigation -->
+<aside class="md:col-span-3 hidden md:block">
+<div class="sticky top-32 space-y-8">
+<div>
+<h3 class="font-headline text-[10px] uppercase tracking-[0.2em] text-on-surface-variant mb-6">Documentation</h3>
+<nav class="flex flex-col gap-1">
+<a class="group flex items-center gap-3 py-2 px-4 bg-surface-container-high border-l-2 border-primary text-primary transition-all" href="#code-of-conduct">
+<span class="material-symbols-outlined text-sm">gavel</span>
+<span class="font-headline text-sm font-medium">Code of Conduct</span>
+</a>
+<a class="group flex items-center gap-3 py-2 px-4 hover:bg-surface-container-low border-l-2 border-transparent hover:border-outline text-on-surface-variant hover:text-on-surface transition-all" href="#fair-play">
+<span class="material-symbols-outlined text-sm">sports_esports</span>
+<span class="font-headline text-sm font-medium">Fair Play</span>
+</a>
+<a class="group flex items-center gap-3 py-2 px-4 hover:bg-surface-container-low border-l-2 border-transparent hover:border-outline text-on-surface-variant hover:text-on-surface transition-all" href="#economy">
+<span class="material-symbols-outlined text-sm">account_balance</span>
+<span class="font-headline text-sm font-medium">Economy Integrity</span>
+</a>
+<a class="group flex items-center gap-3 py-2 px-4 hover:bg-surface-container-low border-l-2 border-transparent hover:border-outline text-on-surface-variant hover:text-on-surface transition-all" href="#security">
+<span class="material-symbols-outlined text-sm">shield_lock</span>
+<span class="font-headline text-sm font-medium">Security Protocols</span>
+</a>
+<a class="group flex items-center gap-3 py-2 px-4 hover:bg-surface-container-low border-l-2 border-transparent hover:border-outline text-on-surface-variant hover:text-on-surface transition-all mt-4" href="#banning-policy">
+<span class="material-symbols-outlined text-sm">block</span>
+<span class="font-headline text-sm font-medium">Banning Policy</span>
+</a>
+<a class="group flex items-center gap-3 py-2 px-4 hover:bg-surface-container-low border-l-2 border-transparent hover:border-outline text-on-surface-variant hover:text-on-surface transition-all" href="#reporting">
+<span class="material-symbols-outlined text-sm">flag</span>
+<span class="font-headline text-sm font-medium">Reporting</span>
+</a>
+</nav>
+</div>
+<div class="p-6 bg-surface-container-low border border-outline-variant/20">
+<p class="font-headline text-[10px] uppercase tracking-widest text-secondary mb-2">Need Support?</p>
+<p class="text-xs text-on-surface-variant leading-relaxed mb-4">Our Enforcer Council is available 24/7 for urgent disputes.</p>
+<button class="w-full py-2 bg-surface-container-highest text-on-surface font-headline text-[10px] uppercase tracking-widest hover:bg-secondary hover:text-on-secondary transition-colors">Open Ticket</button>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<div class="md:col-span-9 space-y-16">
+<!-- Header Section -->
+<section class="relative" id="header">
+<div class="absolute -top-12 -left-12 w-64 h-64 bg-primary/5 blur-[120px] rounded-full"></div>
+<div class="relative">
+<span class="font-headline text-[11px] uppercase tracking-[0.3em] text-primary mb-4 block">Regulatory Framework v4.2</span>
+<h1 class="font-headline text-5xl md:text-7xl font-bold tracking-tighter text-on-surface mb-8">RULES OF <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">ENGAGEMENT</span></h1>
+<p class="text-lg text-on-surface-variant max-w-2xl leading-relaxed font-light">
+                        The Obsidian Astral is a persistent universe built on respect, competition, and technological excellence. By entering the void, you agree to uphold the Hegemony Protocol and act with honor within the digital frontier.
+                    </p>
+</div>
+</section>
+<!-- Rules Categories Bento-style Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-6" id="rules-grid">
+<!-- Fair Play -->
+<div class="p-8 bg-surface-container-low relative overflow-hidden group hover:bg-surface-container transition-colors duration-500" id="fair-play">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
+<span class="material-symbols-outlined text-8xl text-primary">sports_esports</span>
+</div>
+<div class="relative z-10">
+<div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-none mb-6">
+<span class="material-symbols-outlined text-primary">sports_esports</span>
+</div>
+<h2 class="font-headline text-xl font-bold mb-4 tracking-tight">Fair Play &amp; Combat</h2>
+<ul class="space-y-4 text-on-surface-variant text-sm leading-relaxed">
+<li class="flex gap-3">
+<span class="text-primary font-bold">01.</span>
+<span>Exploiting game mechanics to gain an unintended tactical advantage over other Pilots is strictly prohibited.</span>
+</li>
+<li class="flex gap-3">
+<span class="text-primary font-bold">02.</span>
+<span>Automation of combat via third-party scripts or neural-link overlays will result in immediate exile.</span>
+</li>
+<li class="flex gap-3">
+<span class="text-primary font-bold">03.</span>
+<span>Win-trading or "Ghosting" during Clan Wars is considered treason against the Astral Hegemony.</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Communication -->
+<div class="p-8 bg-surface-container-low relative overflow-hidden group hover:bg-surface-container transition-colors duration-500" id="communication">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
+<span class="material-symbols-outlined text-8xl text-secondary">forum</span>
+</div>
+<div class="relative z-10">
+<div class="w-10 h-10 flex items-center justify-center bg-secondary/10 rounded-none mb-6">
+<span class="material-symbols-outlined text-secondary">forum</span>
+</div>
+<h2 class="font-headline text-xl font-bold mb-4 tracking-tight">System Comms</h2>
+<ul class="space-y-4 text-on-surface-variant text-sm leading-relaxed">
+<li class="flex gap-3">
+<span class="text-secondary font-bold">01.</span>
+<span>Hate speech, harassment, or targeting individuals based on their biological or digital origin is not tolerated.</span>
+</li>
+<li class="flex gap-3">
+<span class="text-secondary font-bold">02.</span>
+<span>Spamming global broadcast frequencies or advertising external black markets is prohibited.</span>
+</li>
+<li class="flex gap-3">
+<span class="text-secondary font-bold">03.</span>
+<span>Impersonating Astral Hegemony Enforcers or System Administrators will result in permanent comms black-out.</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Economy -->
+<div class="p-8 bg-surface-container-low relative overflow-hidden group hover:bg-surface-container transition-colors duration-500" id="economy">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
+<span class="material-symbols-outlined text-8xl text-tertiary">account_balance</span>
+</div>
+<div class="relative z-10">
+<div class="w-10 h-10 flex items-center justify-center bg-tertiary/10 rounded-none mb-6">
+<span class="material-symbols-outlined text-tertiary">account_balance</span>
+</div>
+<h2 class="font-headline text-xl font-bold mb-4 tracking-tight">Economy Integrity</h2>
+<ul class="space-y-4 text-on-surface-variant text-sm leading-relaxed">
+<li class="flex gap-3">
+<span class="text-tertiary font-bold">01.</span>
+<span>Real-Money Trading (RMT) of Astral Credits or Rare Artifacts outside the official Hegemony Exchange is banned.</span>
+</li>
+<li class="flex gap-3">
+<span class="text-tertiary font-bold">02.</span>
+<span>Market manipulation through large-scale botting or coordinated artificial scarcity is a severe offense.</span>
+</li>
+<li class="flex gap-3">
+<span class="text-tertiary font-bold">03.</span>
+<span>Account selling or transferring Pilot identity is restricted for the security of the clan ecosystem.</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Security -->
+<div class="p-8 bg-surface-container-low relative overflow-hidden group hover:bg-surface-container transition-colors duration-500" id="security">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
+<span class="material-symbols-outlined text-8xl text-primary-dim">shield_lock</span>
+</div>
+<div class="relative z-10">
+<div class="w-10 h-10 flex items-center justify-center bg-primary-dim/10 rounded-none mb-6">
+<span class="material-symbols-outlined text-primary-dim">shield_lock</span>
+</div>
+<h2 class="font-headline text-xl font-bold mb-4 tracking-tight">Security Protocols</h2>
+<ul class="space-y-4 text-on-surface-variant text-sm leading-relaxed">
+<li class="flex gap-3">
+<span class="text-primary-dim font-bold">01.</span>
+<span>Attempting to breach the Astral server core or reverse-engineer client code is a Level 5 Violation.</span>
+</li>
+<li class="flex gap-3">
+<span class="text-primary-dim font-bold">02.</span>
+<span>Sharing credential hacking tools or malicious link injections within the community is grounds for total IP ban.</span>
+</li>
+<li class="flex gap-3">
+<span class="text-primary-dim font-bold">03.</span>
+<span>Failure to report a discovered critical system vulnerability ("Zero-Day") for personal gain is punishable.</span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Policy & Reporting Sections -->
+<section class="space-y-12">
+<div class="border-l border-outline-variant pl-8" id="banning-policy">
+<h3 class="font-headline text-2xl font-bold mb-6 tracking-tight">Banning Policy &amp; Escalation</h3>
+<div class="space-y-6 text-on-surface-variant max-w-3xl">
+<p class="leading-relaxed">The Obsidian Astral employs a three-tier enforcement system designed to rehabilitate where possible and excise where necessary.</p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="p-4 bg-surface-container-high">
+<p class="font-headline text-[10px] uppercase tracking-widest text-primary mb-2">Tier 1: Warning</p>
+<p class="text-xs">Initial breach results in a 24-hour suspension and formal reprimand on the Pilot's record.</p>
+</div>
+<div class="p-4 bg-surface-container-high">
+<p class="font-headline text-[10px] uppercase tracking-widest text-secondary mb-2">Tier 2: Quarantine</p>
+<p class="text-xs">Repeat offenses lead to a 7-day server lockout and 50% credit forfeiture.</p>
+</div>
+<div class="p-4 bg-surface-container-high">
+<p class="font-headline text-[10px] uppercase tracking-widest text-error mb-2">Tier 3: Exile</p>
+<p class="text-xs">Permanent termination of all assets and access. No appeal process for Level 3 violations.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-high p-8 flex flex-col md:flex-row items-center justify-between gap-8" id="reporting">
+<div class="max-w-md">
+<h3 class="font-headline text-2xl font-bold mb-3 tracking-tight">See something? Report it.</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Help us maintain the purity of the Obsidian Astral. All reports are encrypted and reviewed by human moderators.</p>
+</div>
+<button class="px-8 py-4 bg-transparent border border-primary text-primary font-headline text-[11px] uppercase tracking-[0.2em] hover:bg-primary/5 transition-all">Submit Violation Report</button>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-black border-t border-zinc-900 w-full py-12 px-8">
+<div class="flex flex-col md:flex-row justify-between items-center gap-6 max-w-7xl mx-auto">
+<div class="text-lg font-bold text-slate-200 font-headline">Obsidian Astral</div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="font-label text-xs tracking-wide text-slate-500 hover:text-cyan-400 underline decoration-cyan-400/30 transition-opacity opacity-80 hover:opacity-100" href="#">Terms of Service</a>
+<a class="font-label text-xs tracking-wide text-slate-500 hover:text-cyan-400 underline decoration-cyan-400/30 transition-opacity opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+<a class="font-label text-xs tracking-wide text-slate-500 hover:text-cyan-400 underline decoration-cyan-400/30 transition-opacity opacity-80 hover:opacity-100" href="#">Game Manual</a>
+<a class="font-label text-xs tracking-wide text-slate-500 hover:text-cyan-400 underline decoration-cyan-400/30 transition-opacity opacity-80 hover:opacity-100" href="#">System Status</a>
+</div>
+<div class="font-label text-xs tracking-wide text-slate-500 opacity-60">
+                © 2144 Obsidian Astral. All rights reserved. Galactic Hegemony Protocol.
+            </div>
+</div>
+</footer>
+</body></html>

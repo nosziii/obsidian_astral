@@ -205,7 +205,7 @@ function formatRole(role: "jatekos" | "admin") {
             <span>{{ player.name }}</span>
             <span>{{ player.email }}</span>
             <span>{{ formatRole(player.role) }}</span>
-            <span>{{ player.isSuspended ? 'Korlátozott' : 'Aktív' }}</span>
+            <span>{{ player.isSuspended ? "Korlátozott" : "Aktív" }}</span>
             <span>{{ player.level }}</span>
             <div class="admin-row-actions">
               <button class="ghost-button admin-inline-button" type="button" @click="selectPlayer(player.id)">Részletek</button>

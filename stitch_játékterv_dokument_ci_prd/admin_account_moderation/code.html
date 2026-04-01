@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sentinels Oversight | Admin Moderation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-bright": "#2c2c2d",
+                        "primary-container": "#00eefc",
+                        "surface-container-high": "#201f21",
+                        "inverse-primary": "#006a71",
+                        "inverse-surface": "#fcf8f9",
+                        "surface-container": "#1a191b",
+                        "secondary-fixed-dim": "#ceb9ff",
+                        "error": "#ff716c",
+                        "primary-fixed": "#00eefc",
+                        "tertiary-fixed-dim": "#ff68e3",
+                        "tertiary": "#ff59e3",
+                        "surface-dim": "#0e0e0f",
+                        "tertiary-dim": "#ff59e3",
+                        "secondary-container": "#7000ff",
+                        "on-surface": "#ffffff",
+                        "surface-tint": "#8ff5ff",
+                        "secondary-dim": "#874cff",
+                        "on-secondary-fixed": "#41009a",
+                        "on-primary-fixed": "#003f43",
+                        "tertiary-fixed": "#ff85e4",
+                        "on-background": "#ffffff",
+                        "tertiary-container": "#ff05e5",
+                        "secondary-fixed": "#dac9ff",
+                        "outline": "#767576",
+                        "surface": "#0e0e0f",
+                        "on-primary": "#005d63",
+                        "on-tertiary-fixed-variant": "#6d0061",
+                        "on-surface-variant": "#adaaab",
+                        "on-primary-container": "#005359",
+                        "surface-container-highest": "#262627",
+                        "secondary": "#ac89ff",
+                        "surface-container-lowest": "#000000",
+                        "on-secondary": "#290067",
+                        "on-tertiary": "#42003a",
+                        "surface-variant": "#262627",
+                        "primary-fixed-dim": "#00deec",
+                        "background": "#0e0e0f",
+                        "on-error-container": "#ffa8a3",
+                        "on-error": "#490006",
+                        "on-tertiary-container": "#1b0017",
+                        "surface-container-low": "#131314",
+                        "primary": "#8ff5ff",
+                        "inverse-on-surface": "#565556",
+                        "on-secondary-fixed-variant": "#6300e2",
+                        "on-primary-fixed-variant": "#005e64",
+                        "error-container": "#9f0519",
+                        "error-dim": "#d7383b",
+                        "primary-dim": "#00deec",
+                        "on-secondary-container": "#f8f1ff",
+                        "on-tertiary-fixed": "#33002d",
+                        "outline-variant": "#484849"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Manrope"],
+                        "label": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #0e0e0f; }
+        ::-webkit-scrollbar-thumb { background: #201f21; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8ff5ff; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30">
+<!-- Top Navigation -->
+<header class="fixed top-0 w-full z-50 h-16 bg-[#0e0e0f]/80 backdrop-blur-xl flex justify-between items-center px-6 shadow-[0_0_32px_rgba(143,245,255,0.08)] bg-gradient-to-b from-[#131314] to-transparent">
+<div class="flex items-center gap-4">
+<span class="text-2xl font-black text-[#8ff5ff] tracking-tighter font-headline">SENTINELS OVERSIGHT</span>
+<nav class="hidden md:flex gap-6 ml-8">
+<a class="font-headline uppercase tracking-[0.1em] text-[0.6875rem] text-[#8ff5ff] border-b-2 border-[#8ff5ff] pb-1" href="#">Command</a>
+<a class="font-headline uppercase tracking-[0.1em] text-[0.6875rem] text-[#adaaab] hover:text-[#8ff5ff] transition-colors" href="#">Neural Link</a>
+<a class="font-headline uppercase tracking-[0.1em] text-[0.6875rem] text-[#adaaab] hover:text-[#8ff5ff] transition-colors" href="#">Data Vault</a>
+<a class="font-headline uppercase tracking-[0.1em] text-[0.6875rem] text-[#adaaab] hover:text-[#8ff5ff] transition-colors" href="#">Fabricator</a>
+<a class="font-headline uppercase tracking-[0.1em] text-[0.6875rem] text-[#adaaab] hover:text-[#8ff5ff] transition-colors" href="#">Overseer</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden sm:block">
+<input class="bg-surface-container-low border-b-2 border-outline-variant focus:border-primary transition-all text-[0.6875rem] font-headline tracking-widest px-4 py-1 w-64 text-on-surface placeholder:text-outline" placeholder="SEARCH NEURAL RECORDS..." type="text"/>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-primary text-lg">search</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-colors">mail</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-colors">notifications</span>
+<div class="w-8 h-8 rounded-full border border-primary/30 overflow-hidden">
+<img alt="Admin Avatar" class="w-full h-full object-cover" data-alt="Holographic portrait of a high-tech female operator with cyan glowing neural implants and tactical gear" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7Ujh3aPR3XMhKIUS_ebwxslwQzvnRv07_Y2uYoGCP6uDFz-j1VkvJUmv4yveyUCL7qrxFxH1j8HKk4tmebNCCoNmGYQNTQQSIU2Bn8tHkNnBSxChjBtHB5WlL6pQPGem5UAdx7Zn7xkzBwy7sWouqKIIgcZHOImQEciXe18POsSwVkJA3R2FffqlUWTIDTu7-jBq7bNRt2LcDIiWz0jrTZqPg3v5fUwSeTZySU015YDFFBSXdlcKZmaDnC9u71sQKlx54Hw8VKOYh"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Sidebar -->
+<aside class="fixed left-0 top-0 h-screen w-64 z-40 bg-[#0e0e0f]/90 backdrop-blur-2xl flex flex-col border-r border-[#201f21]/30 pt-20 hidden lg:flex shadow-[10px_0_30px_rgba(0,0,0,0.5)]">
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-10 h-10 bg-surface-container-high rounded-lg flex items-center justify-center border border-primary/20">
+<span class="material-symbols-outlined text-primary">terminal</span>
+</div>
+<div>
+<p class="font-headline text-sm font-bold tracking-tight text-on-surface">ADM. KALE</p>
+<p class="font-headline text-[0.65rem] text-on-surface-variant tracking-wider">Level 48 Fleet Lead</p>
+</div>
+</div>
+<nav class="flex-1">
+<a class="flex items-center gap-3 bg-gradient-to-r from-[#8ff5ff]/20 to-transparent text-[#8ff5ff] border-l-4 border-[#8ff5ff] px-6 py-3 font-headline text-sm transition-all" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span>Command</span>
+</a>
+<a class="flex items-center gap-3 text-[#adaaab] px-6 py-3 hover:text-white hover:bg-[#201f21] font-headline text-sm transition-all" href="#">
+<span class="material-symbols-outlined">forum</span>
+<span>Neural Link</span>
+</a>
+<a class="flex items-center gap-3 text-[#adaaab] px-6 py-3 hover:text-white hover:bg-[#201f21] font-headline text-sm transition-all" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span>Data Vault</span>
+</a>
+<a class="flex items-center gap-3 text-[#adaaab] px-6 py-3 hover:text-white hover:bg-[#201f21] font-headline text-sm transition-all" href="#">
+<span class="material-symbols-outlined">build</span>
+<span>Fabricator</span>
+</a>
+<a class="flex items-center gap-3 text-[#adaaab] px-6 py-3 hover:text-white hover:bg-[#201f21] font-headline text-sm transition-all" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span>Overseer</span>
+</a>
+</nav>
+<div class="p-6">
+<button class="w-full bg-primary text-on-primary py-3 rounded-lg font-headline font-bold text-xs tracking-[0.2em] shadow-[0_0_20px_rgba(143,245,255,0.2)] hover:scale-105 transition-transform active:scale-95">
+                DEPLOY MISSION
+            </button>
+</div>
+<div class="border-t border-outline-variant/10 p-4">
+<a class="flex items-center gap-3 text-on-surface-variant px-2 py-2 hover:text-white text-xs transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">help</span>
+<span>Support</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-2 py-2 hover:text-white text-xs transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">logout</span>
+<span>Log Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="lg:ml-64 pt-20 px-6 pb-12 min-h-screen">
+<div class="max-w-7xl mx-auto grid grid-cols-12 gap-6">
+<!-- Header Stats -->
+<div class="col-span-12 grid grid-cols-2 md:grid-cols-4 gap-4 mb-2">
+<div class="bg-surface-container p-4 rounded-xl border-b border-primary/10">
+<p class="font-label text-[0.6rem] uppercase tracking-widest text-on-surface-variant mb-1">Active Users</p>
+<p class="font-headline text-2xl font-bold text-primary">12,482</p>
+<div class="h-1 w-full bg-surface-container-highest mt-2 overflow-hidden">
+<div class="h-full bg-primary w-[85%]"></div>
+</div>
+</div>
+<div class="bg-surface-container p-4 rounded-xl border-b border-secondary/10">
+<p class="font-label text-[0.6rem] uppercase tracking-widest text-on-surface-variant mb-1">Pending Reports</p>
+<p class="font-headline text-2xl font-bold text-secondary">142</p>
+<div class="h-1 w-full bg-surface-container-highest mt-2 overflow-hidden">
+<div class="h-full bg-secondary w-[40%]"></div>
+</div>
+</div>
+<div class="bg-surface-container p-4 rounded-xl border-b border-tertiary/10">
+<p class="font-label text-[0.6rem] uppercase tracking-widest text-on-surface-variant mb-1">Critical Violations</p>
+<p class="font-headline text-2xl font-bold text-tertiary">14</p>
+<div class="h-1 w-full bg-surface-container-highest mt-2 overflow-hidden">
+<div class="h-full bg-tertiary w-[15%] shadow-[0_0_8px_#ff59e3]"></div>
+</div>
+</div>
+<div class="bg-surface-container p-4 rounded-xl border-b border-outline/10">
+<p class="font-label text-[0.6rem] uppercase tracking-widest text-on-surface-variant mb-1">Moderators Online</p>
+<p class="font-headline text-2xl font-bold text-on-surface">24</p>
+<div class="h-1 w-full bg-surface-container-highest mt-2 overflow-hidden">
+<div class="h-full bg-outline w-[100%]"></div>
+</div>
+</div>
+</div>
+<!-- Main Panel Left: User List -->
+<section class="col-span-12 xl:col-span-7 space-y-4">
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant/5">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-headline text-xl font-black tracking-tight flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">group</span>
+                            SUSPECTED ENTITIES
+                        </h2>
+<div class="flex gap-2">
+<button class="bg-surface-container-high px-3 py-1 text-[0.65rem] font-headline tracking-widest rounded border border-outline-variant text-on-surface-variant hover:text-primary transition-colors">FILTER BY: REPORTS</button>
+<button class="bg-surface-container-high px-3 py-1 text-[0.65rem] font-headline tracking-widest rounded border border-outline-variant text-on-surface-variant">EXPORT DATA</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="text-[0.65rem] font-headline uppercase tracking-widest text-on-surface-variant border-b border-outline-variant/20">
+<th class="pb-4 font-medium">User Profile</th>
+<th class="pb-4 font-medium">Lvl</th>
+<th class="pb-4 font-medium">Last Sync</th>
+<th class="pb-4 font-medium">Reports</th>
+<th class="pb-4 font-medium">Status</th>
+<th class="pb-4 font-medium">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<!-- User Row 1 -->
+<tr class="hover:bg-surface-container-high transition-all group cursor-pointer">
+<td class="py-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded bg-surface-container-highest flex items-center justify-center border border-outline-variant/50 relative">
+<img alt="User 1" class="w-7 h-7" data-alt="Cyberpunk style digital avatar of a male user with glowing blue accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDd8oclz-qPqfzkyHEpCtIsPo_ktVlhea6gH-cL53Jk8yfXMxNB_jQijSShM1A08eWLcGzwnlC9cnIL4bIUK6rAacReYy6BF-vz1mU1Fe0pVnG24qbX3MDWNirlAw5FEscZmdwSFbj443vovNkOycBUu8sjBBKIRkoMO9bD6tCDxUzav9beBIyFz4ojwvArCwRUyaP-U2tWV09u7RZqF6yTEEPTREyCgKzIwHn2D2atvekkyOphwbzJ3pYICgKuQFXTDwuU5ngRw9Rx"/>
+<div class="absolute -bottom-1 -right-1 w-3 h-3 bg-primary rounded-full border-2 border-surface"></div>
+</div>
+<div>
+<p class="text-sm font-bold font-headline">Xenon_Hunter</p>
+<p class="text-[0.65rem] text-on-surface-variant">UID: 882190</p>
+</div>
+</div>
+</td>
+<td class="py-4 text-xs font-headline font-bold">54</td>
+<td class="py-4 text-xs text-on-surface-variant">2m ago</td>
+<td class="py-4">
+<span class="px-2 py-0.5 bg-error/10 text-error text-[0.65rem] font-bold rounded border border-error/20">12 REPORTS</span>
+</td>
+<td class="py-4">
+<span class="text-[0.65rem] font-headline tracking-widest text-primary flex items-center gap-1">
+<span class="w-1 h-1 bg-primary rounded-full"></span> ACTIVE
+                                        </span>
+</td>
+<td class="py-4">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">chevron_right</span>
+</td>
+</tr>
+<!-- User Row 2 -->
+<tr class="hover:bg-surface-container-high transition-all group bg-primary/5 border-l-2 border-primary">
+<td class="py-4 pl-2">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded bg-surface-container-highest flex items-center justify-center border border-primary/50 relative">
+<img alt="User 2" class="w-7 h-7" data-alt="Holographic profile icon of a female avatar with sleek purple digital hair" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuLHzoyVU3ogp077qvdIZ8tf8o2R68eXjcJsz_n0sts25QBHI4862U14b1GG0YxlmE-kWYs8d-PpqMHD8zxIu0nvzIpoA66Vt-Yc0NZj4ceRR557I-pGuQk0T2wxW00vCPOrWpA3UcUjaP8Jbs-9bO2VT_LA6LUemuevtebiCBHW3rlEhlhg9huXHDQZKy2ezmhreBL5GHv44b2pQMRTPM4oqV8Cvw4VCAWjEw5KTuLYcdaFWS-_g3UPYNnBAN5Gql29Rkv6kseftv"/>
+<div class="absolute -bottom-1 -right-1 w-3 h-3 bg-secondary rounded-full border-2 border-surface"></div>
+</div>
+<div>
+<p class="text-sm font-bold font-headline text-primary">V0id_Walker</p>
+<p class="text-[0.65rem] text-on-surface-variant">UID: 911042</p>
+</div>
+</div>
+</td>
+<td class="py-4 text-xs font-headline font-bold">42</td>
+<td class="py-4 text-xs text-on-surface-variant">14h ago</td>
+<td class="py-4">
+<span class="px-2 py-0.5 bg-error/20 text-error text-[0.65rem] font-black rounded border border-error/40">28 REPORTS</span>
+</td>
+<td class="py-4">
+<span class="text-[0.65rem] font-headline tracking-widest text-secondary flex items-center gap-1">
+<span class="w-1 h-1 bg-secondary rounded-full"></span> MUTE (2H)
+                                        </span>
+</td>
+<td class="py-4">
+<span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">chevron_right</span>
+</td>
+</tr>
+<!-- User Row 3 -->
+<tr class="hover:bg-surface-container-high transition-all group">
+<td class="py-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded bg-surface-container-highest flex items-center justify-center border border-outline-variant/50 relative">
+<img alt="User 3" class="w-7 h-7" data-alt="Digital skull-themed avatar for a high-risk player account" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHAV8y634oti_CHhnGoeWLT4NRuMzKHAhkqTp5R0-5em3mGU2SnilqO6S0FY-ymf_aBlnL3ZgrJiFHMRcaxBaLN8rmlt7adDlXqehUbpRXGZgD2De_PQmI3yfd17aKk4LBoP6ltK4i3S2QW9XPepY3qIbOzXbC8dfQLGwp9VResd8lL4wRUd52-w4fkirDOzD6hw3Y0A6ZrklQbzAb-C6ohhXCZmQraYRO_xDfObAXbBFz23IhbaowfpPPvIEb7UKTebeWmGHp6-JO"/>
+<div class="absolute -bottom-1 -right-1 w-3 h-3 bg-outline rounded-full border-2 border-surface"></div>
+</div>
+<div>
+<p class="text-sm font-bold font-headline">B4n_Evader_00</p>
+<p class="text-[0.65rem] text-on-surface-variant">UID: 771223</p>
+</div>
+</div>
+</td>
+<td class="py-4 text-xs font-headline font-bold">12</td>
+<td class="py-4 text-xs text-on-surface-variant">1d ago</td>
+<td class="py-4">
+<span class="px-2 py-0.5 bg-tertiary/10 text-tertiary text-[0.65rem] font-bold rounded border border-tertiary/20">8 REPORTS</span>
+</td>
+<td class="py-4">
+<span class="text-[0.65rem] font-headline tracking-widest text-error flex items-center gap-1">
+<span class="w-1 h-1 bg-error rounded-full"></span> BANNED
+                                        </span>
+</td>
+<td class="py-4">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">chevron_right</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Transaction Micro-Panel -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-surface-container p-5 rounded-xl border border-outline-variant/5">
+<p class="font-label text-[0.65rem] tracking-widest text-on-surface-variant mb-4 uppercase">Neural Link Activity</p>
+<div class="space-y-3">
+<div class="flex items-center justify-between text-xs">
+<span class="text-on-surface-variant font-headline">Spam Detection Rate</span>
+<span class="text-primary font-bold">12% Peak</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest rounded-full">
+<div class="h-full bg-primary w-[40%] rounded-full shadow-[0_0_8px_#8ff5ff]"></div>
+</div>
+<div class="flex items-center justify-between text-xs pt-2">
+<span class="text-on-surface-variant font-headline">Automated Mutes</span>
+<span class="text-secondary font-bold">84 / 24h</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container p-5 rounded-xl border border-outline-variant/5 relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<p class="font-label text-[0.65rem] tracking-widest text-on-surface-variant mb-4 uppercase">Asset Fabricator Health</p>
+<div class="flex items-end gap-2">
+<div class="h-8 w-2 bg-primary/20 rounded-t"></div>
+<div class="h-12 w-2 bg-primary/40 rounded-t"></div>
+<div class="h-16 w-2 bg-primary/60 rounded-t"></div>
+<div class="h-10 w-2 bg-primary/30 rounded-t"></div>
+<div class="h-14 w-2 bg-primary/80 rounded-t"></div>
+<div class="h-6 w-2 bg-primary/20 rounded-t"></div>
+<div class="flex-1 text-right">
+<p class="text-2xl font-bold font-headline text-on-surface">99.2%</p>
+<p class="text-[0.6rem] text-primary uppercase font-bold">Operational</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Panel Right: Details & Action -->
+<section class="col-span-12 xl:col-span-5 space-y-6">
+<!-- User Detail Card -->
+<div class="bg-surface-container rounded-xl border border-primary/20 overflow-hidden relative">
+<div class="bg-gradient-to-r from-surface-container-high to-surface-container-low p-6 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-lg border-2 border-primary/40 p-1 bg-surface relative overflow-hidden">
+<img alt="Detail View User" class="w-full h-full" data-alt="Close-up of a high-resolution holographic gaming avatar with violet glowing circuitry and tactical headwear" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNbcZIALXP9kCK7BAX9G2t-d06UnkBbp8KdZMzDbnYqzhOVf3itB_qVRqfRn4gSRETLXaKQGTTT78JAras0oKHIf5DQcANidErW2sM4BvSVc8chlMxGYeK87ZVeZ40e1lAmV8YVZPmjjx2cQhZRN9mhRabTt8iIrjv81n6fPu0OWqg8yUXvRSPRlWJM0HZOAuC9_KeAVU3L79ahsZEQRCtn01XiK8VrTkejmIrV0f7y1lu0gneISDJf3-PXkuhputnWG6OJEIkOGhp"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent"></div>
+</div>
+<div>
+<h3 class="font-headline text-xl font-black text-on-surface tracking-tighter uppercase">V0id_Walker</h3>
+<p class="text-[0.7rem] font-headline tracking-[0.2em] text-secondary font-bold">SUSPECTED SCRIPTING</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-[0.6rem] font-label text-on-surface-variant uppercase">Threat Level</p>
+<div class="flex gap-1 mt-1 justify-end">
+<div class="w-3 h-1 bg-primary"></div>
+<div class="w-3 h-1 bg-primary"></div>
+<div class="w-3 h-1 bg-secondary"></div>
+<div class="w-3 h-1 bg-outline-variant"></div>
+<div class="w-3 h-1 bg-outline-variant"></div>
+</div>
+</div>
+</div>
+<div class="p-6 space-y-6">
+<!-- Multi-Account Check -->
+<div>
+<p class="font-label text-[0.6rem] tracking-widest text-on-surface-variant mb-3 uppercase flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">link</span>
+                                NEURAL FINGERPRINT OVERLAP
+                            </p>
+<div class="bg-surface-container-low p-3 rounded-lg border border-outline-variant/10 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">alternate_email</span>
+<span class="text-xs font-headline text-on-surface">walker_alt_01 (UID: 11200)</span>
+</div>
+<span class="text-[0.6rem] font-bold text-secondary-fixed-dim bg-secondary/10 px-2 py-0.5 rounded">94% MATCH</span>
+</div>
+</div>
+<!-- Chat Logs -->
+<div>
+<p class="font-label text-[0.6rem] tracking-widest text-on-surface-variant mb-3 uppercase flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">chat_bubble</span>
+                                RECENT TRANSMISSIONS
+                            </p>
+<div class="space-y-2 max-h-32 overflow-y-auto pr-2">
+<div class="bg-surface-container-high p-2 rounded-lg text-[0.7rem]">
+<span class="text-primary font-bold mr-1">[14:02:11]</span>
+<span class="text-on-surface-variant italic">"Anyone want to trade glitched cores for crypto?"</span>
+</div>
+<div class="bg-surface-container-high p-2 rounded-lg text-[0.7rem]">
+<span class="text-primary font-bold mr-1">[14:02:25]</span>
+<span class="text-on-surface-variant italic">"I have a script that bypasses the cooldown."</span>
+</div>
+<div class="bg-surface-container-high p-2 rounded-lg text-[0.7rem] border-l-2 border-error">
+<span class="text-error font-bold mr-1">[14:03:01]</span>
+<span class="text-on-surface">"Check my DM for the link to the exploit tool."</span>
+</div>
+</div>
+</div>
+<!-- Transaction History -->
+<div>
+<p class="font-label text-[0.6rem] tracking-widest text-on-surface-variant mb-3 uppercase flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">payments</span>
+                                ASSET EXCHANGES
+                            </p>
+<div class="flex gap-4">
+<div class="flex-1 bg-surface-container-low p-3 rounded-lg border border-outline-variant/10">
+<p class="text-[0.6rem] text-on-surface-variant uppercase">Total Credits</p>
+<p class="text-sm font-bold font-headline text-on-surface">4.2M <span class="text-primary">CR</span></p>
+</div>
+<div class="flex-1 bg-surface-container-low p-3 rounded-lg border border-outline-variant/10">
+<p class="text-[0.6rem] text-on-surface-variant uppercase">Suspicious Tx</p>
+<p class="text-sm font-bold font-headline text-secondary">08 / 30D</p>
+</div>
+</div>
+</div>
+<!-- Quick Action Buttons -->
+<div class="pt-4 grid grid-cols-3 gap-3">
+<button class="flex flex-col items-center justify-center p-3 rounded-lg border border-outline-variant hover:border-primary hover:bg-primary/5 transition-all gap-1 group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">warning</span>
+<span class="text-[0.6rem] font-bold font-headline tracking-tighter">WARN</span>
+</button>
+<button class="flex flex-col items-center justify-center p-3 rounded-lg border border-outline-variant hover:border-secondary hover:bg-secondary/5 transition-all gap-1 group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-secondary">volume_off</span>
+<span class="text-[0.6rem] font-bold font-headline tracking-tighter uppercase">Mute (Chat)</span>
+</button>
+<button class="flex flex-col items-center justify-center p-3 rounded-lg border border-outline-variant hover:border-tertiary hover:bg-tertiary/5 transition-all gap-1 group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-tertiary">key</span>
+<span class="text-[0.6rem] font-bold font-headline tracking-tighter uppercase">Reset Password</span>
+</button>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<button class="bg-surface-container-highest text-on-surface py-3 rounded-lg font-headline font-bold text-xs tracking-[0.1em] border border-outline-variant hover:bg-surface-bright transition-colors uppercase">Temp Ban</button>
+<button class="bg-error-container text-on-surface py-3 rounded-lg font-headline font-bold text-xs tracking-[0.1em] shadow-[0_4px_12px_rgba(159,5,25,0.4)] hover:brightness-110 transition-all uppercase">Permanent Ban</button>
+</div>
+</div>
+</div>
+<!-- Admin Log -->
+<div class="bg-surface-container p-5 rounded-xl border border-outline-variant/5">
+<h4 class="font-headline text-xs font-bold tracking-widest text-on-surface-variant uppercase mb-4">Audit Trail</h4>
+<div class="space-y-3">
+<div class="flex gap-3 text-[0.65rem]">
+<div class="w-1.5 h-1.5 bg-primary rounded-full mt-1.5"></div>
+<div>
+<p class="text-on-surface">Admin KALE warned user Xenon_Hunter</p>
+<p class="text-on-surface-variant font-medium">Reason: Excessive profanity in global hub.</p>
+<p class="text-outline text-[0.6rem] mt-0.5">14:22:01 UTC</p>
+</div>
+</div>
+<div class="flex gap-3 text-[0.65rem]">
+<div class="w-1.5 h-1.5 bg-secondary rounded-full mt-1.5"></div>
+<div>
+<p class="text-on-surface">Auto-System muted V0id_Walker</p>
+<p class="text-on-surface-variant font-medium">Trigger: Spam pattern detected (Type: Commercial)</p>
+<p class="text-outline text-[0.6rem] mt-0.5">14:15:44 UTC</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Navigation Mobile -->
+<footer class="md:hidden fixed bottom-0 w-full h-16 bg-[#0e0e0f]/90 backdrop-blur-2xl border-t border-outline-variant/10 z-50 flex justify-around items-center px-4">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="text-[0.6rem] font-headline font-bold">CMD</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">forum</span>
+<span class="text-[0.6rem] font-headline font-bold">LINK</span>
+</button>
+<div class="relative -top-6">
+<button class="w-14 h-14 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-[0_0_20px_rgba(143,245,255,0.4)] border-4 border-surface">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">terminal</span>
+</button>
+</div>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="text-[0.6rem] font-headline font-bold">VAULT</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[0.6rem] font-headline font-bold">SET</span>
+</button>
+</footer>
+</body></html>

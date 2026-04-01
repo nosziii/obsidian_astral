@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import type { NotificationSnapshot } from "@obsidian-astral/shared";
+import type { CommunicationFeedEntry } from "../../lib/communication-hub";
 
 defineProps<{
-  items: NotificationSnapshot[];
+  emptyLabel: string;
+  items: CommunicationFeedEntry[];
   selectedId: string | null;
+  title: string;
 }>();
 
 defineEmits<{
@@ -12,21 +14,52 @@ defineEmits<{
 </script>
 
 <template>
-  <div class="communication-feed-list">
-    <button
-      v-for="item in items"
-      :key="item.id"
-      class="communication-feed-item"
-      :class="{ 'is-active': selectedId === item.id, 'is-read': Boolean(item.readAt) }"
-      type="button"
-      @click="$emit('select', item.id)"
-    >
-      <div class="detail-row">
-        <span class="compact-label">{{ new Intl.DateTimeFormat("hu-HU", { month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" }).format(new Date(item.createdAt)) }}</span>
-        <span class="chip">{{ item.actionLabel }}</span>
+  <section class="communication-feed panel">
+    <header class="communication-feed__header">
+      <div>
+        <p class="eyebrow">Comm-links</p>
+        <h2 class="communication-feed__title">{{ title }}</h2>
       </div>
-      <strong>{{ item.title }}</strong>
-      <p>{{ item.body }}</p>
-    </button>
-  </div>
+
+      <div class="communication-feed__actions">
+        <button class="communication-feed__action" type="button">
+          <span class="material-symbols-outlined">filter_list</span>
+        </button>
+        <button class="communication-feed__compose" type="button">
+          <span class="material-symbols-outlined">add</span>
+          Új kapcsolat
+        </button>
+      </div>
+    </header>
+
+    <div v-if="items.length" class="communication-feed__list">
+      <button
+        v-for="item in items"
+        :key="item.id"
+        class="communication-feed-item"
+        :class="[
+          { 'is-active': selectedId === item.id, 'is-read': !item.unread },
+          `tone-${item.tone}`,
+        ]"
+        type="button"
+        @click="$emit('select', item.id)"
+      >
+        <div class="communication-feed-item__avatar-wrap">
+          <img :alt="item.title" :src="item.avatarUrl" class="communication-feed-item__avatar" />
+          <span v-if="item.unread" class="communication-feed-item__pulse"></span>
+        </div>
+
+        <div class="communication-feed-item__copy">
+          <div class="communication-feed-item__meta">
+            <strong>{{ item.subtitle }}</strong>
+            <span>{{ item.stamp }}</span>
+          </div>
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.preview }}</p>
+        </div>
+      </button>
+    </div>
+
+    <p v-else class="communication-feed__empty">{{ emptyLabel }}</p>
+  </section>
 </template>

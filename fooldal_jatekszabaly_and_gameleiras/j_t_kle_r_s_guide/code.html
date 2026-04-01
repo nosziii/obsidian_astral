@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="hu"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #0e0e0f;
+            color: #ffffff;
+            font-family: 'Manrope', sans-serif;
+        }
+        .glass-panel {
+            background: rgba(38, 38, 39, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .scanline {
+            background: linear-gradient(to bottom, transparent 50%, rgba(143, 245, 255, 0.02) 50%);
+            background-size: 100% 4px;
+        }
+        .glow-cyan {
+            text-shadow: 0 0 8px rgba(143, 245, 255, 0.6);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary-container": "#7000ff",
+                        "error-container": "#9f0519",
+                        "tertiary-fixed": "#ff85e4",
+                        "tertiary-container": "#ff05e5",
+                        "surface-container-low": "#131314",
+                        "surface-container-highest": "#262627",
+                        "on-error-container": "#ffa8a3",
+                        "tertiary-fixed-dim": "#ff68e3",
+                        "on-surface": "#ffffff",
+                        "surface-container-high": "#201f21",
+                        "primary-dim": "#00deec",
+                        "primary": "#8ff5ff",
+                        "outline": "#767576",
+                        "secondary": "#ac89ff",
+                        "on-secondary-fixed": "#41009a",
+                        "on-primary": "#005d63",
+                        "primary-container": "#00eefc",
+                        "on-tertiary-fixed": "#33002d",
+                        "tertiary": "#ff59e3",
+                        "primary-fixed-dim": "#00deec",
+                        "surface-variant": "#262627",
+                        "on-background": "#ffffff",
+                        "on-primary-fixed": "#003f43",
+                        "on-secondary-container": "#f8f1ff",
+                        "secondary-dim": "#874cff",
+                        "surface-bright": "#2c2c2d",
+                        "on-secondary": "#290067",
+                        "background": "#0e0e0f",
+                        "on-secondary-fixed-variant": "#6300e2",
+                        "inverse-surface": "#fcf8f9",
+                        "inverse-on-surface": "#565556",
+                        "primary-fixed": "#00eefc",
+                        "error": "#ff716c",
+                        "surface-tint": "#8ff5ff",
+                        "surface-container": "#1a191b",
+                        "secondary-fixed-dim": "#ceb9ff",
+                        "on-surface-variant": "#adaaab",
+                        "error-dim": "#d7383b",
+                        "on-primary-container": "#005359",
+                        "inverse-primary": "#006a71",
+                        "on-error": "#490006",
+                        "outline-variant": "#484849",
+                        "on-tertiary-fixed-variant": "#6d0061",
+                        "tertiary-dim": "#ff59e3",
+                        "secondary-fixed": "#dac9ff",
+                        "on-tertiary-container": "#1b0017",
+                        "on-tertiary": "#42003a",
+                        "surface-container-lowest": "#000000",
+                        "surface-dim": "#0e0e0f",
+                        "surface": "#0e0e0f",
+                        "on-primary-fixed-variant": "#005e64"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Manrope"],
+                        "label": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background selection:bg-primary selection:text-on-primary">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-black/40 backdrop-blur-xl border-b border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
+<div class="flex justify-between items-center w-full px-8 py-4 max-w-full">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-bold tracking-tighter text-cyan-400 drop-shadow-[0_0_8px_rgba(143,245,255,0.6)] font-headline">Obsidian Astral</span>
+<div class="hidden md:flex gap-6">
+<a class="text-slate-400 font-medium font-label uppercase tracking-widest text-[11px] hover:text-white transition-all" href="#">Features</a>
+<a class="text-slate-400 font-medium font-label uppercase tracking-widest text-[11px] hover:text-white transition-all" href="#">Clans</a>
+<a class="text-cyan-400 border-b-2 border-cyan-400 pb-1 font-label uppercase tracking-widest text-[11px]" href="#">Manual</a>
+<a class="text-slate-400 font-medium font-label uppercase tracking-widest text-[11px] hover:text-white transition-all" href="#">Guide</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-5 py-2 text-[11px] font-label uppercase tracking-widest text-slate-400 hover:text-white transition-all active:scale-95">Login</button>
+<button class="px-5 py-2 text-[11px] font-label uppercase tracking-widest bg-cyan-400 text-on-primary-container font-bold rounded-lg shadow-[0_0_15px_rgba(143,245,255,0.3)] hover:bg-white transition-all active:scale-95">Register</button>
+</div>
+</div>
+</nav>
+<div class="pt-24 min-h-screen max-w-[1600px] mx-auto px-6 lg:px-12 flex gap-8">
+<!-- Sidebar Navigation -->
+<aside class="hidden lg:block w-72 shrink-0 space-y-8 sticky top-24 h-[calc(100vh-120px)] overflow-y-auto pr-4 scrollbar-hide">
+<div class="space-y-4">
+<p class="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant font-bold">Manual Segments</p>
+<nav class="flex flex-col gap-1">
+<a class="group flex items-center gap-3 px-4 py-3 bg-primary/10 text-primary border-l-2 border-primary rounded-r-lg transition-all" href="#world">
+<span class="material-symbols-outlined text-[18px]">public</span>
+<span class="font-label text-sm uppercase tracking-wider">The World</span>
+</a>
+<a class="group flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-r-lg transition-all" href="#resources">
+<span class="material-symbols-outlined text-[18px]">diamond</span>
+<span class="font-label text-sm uppercase tracking-wider">Resources</span>
+</a>
+<a class="group flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-r-lg transition-all" href="#combat">
+<span class="material-symbols-outlined text-[18px]">swords</span>
+<span class="font-label text-sm uppercase tracking-wider">Combat</span>
+</a>
+<a class="group flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-r-lg transition-all" href="#progression">
+<span class="material-symbols-outlined text-[18px]">trending_up</span>
+<span class="font-label text-sm uppercase tracking-wider">Progression</span>
+</a>
+<a class="group flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-r-lg transition-all" href="#clans">
+<span class="material-symbols-outlined text-[18px]">groups</span>
+<span class="font-label text-sm uppercase tracking-wider">Clans</span>
+</a>
+</nav>
+</div>
+<div class="p-4 rounded-xl border border-primary/20 bg-primary/5">
+<p class="font-label text-[10px] uppercase tracking-widest text-primary mb-2">Terminal Status</p>
+<div class="flex items-center gap-2 mb-3">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<span class="text-[11px] font-mono text-primary/80">CORE_SYNC_ACTIVE</span>
+</div>
+<div class="h-1 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full w-2/3 bg-primary shadow-[0_0_8px_#8ff5ff]"></div>
+</div>
+<p class="text-[10px] text-on-surface-variant mt-2 font-mono">DB Ver: 2.14.4-A</p>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 space-y-24 pb-24">
+<!-- Hero / Title -->
+<section class="space-y-4">
+<h1 class="text-6xl font-headline font-bold tracking-tighter text-on-surface glow-cyan leading-none">Játékleírás &amp; Archívum</h1>
+<p class="text-on-surface-variant max-w-2xl text-lg font-body leading-relaxed">
+                    Üdvözöljük az Obsidian Astral hivatalos kézikönyvében. Itt megtalálhat minden taktikai és ökológiai adatot, ami a túléléshez szükséges a Peremvidéken.
+                </p>
+</section>
+<!-- 1. The World -->
+<section class="space-y-8 scroll-mt-32" id="world">
+<div class="flex items-end justify-between border-b border-outline-variant pb-4">
+<h2 class="text-3xl font-headline font-bold tracking-tight uppercase flex items-center gap-3">
+<span class="text-primary material-symbols-outlined text-4xl">public</span>
+                        The World: Zone Protocols
+                    </h2>
+<span class="font-mono text-xs text-primary/40">GEO_DATA_01</span>
+</div>
+<div class="relative rounded-2xl overflow-hidden border border-white/5 aspect-video md:aspect-[21/9] group">
+<img alt="Astral Landscape" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Cinematic wide shot of a dark crystalline alien planet with floating obsidian islands and cyan glowing energy rifts under a purple nebula sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCt8WuSSJH44s9mlAvPqinloz6NaWYg9rUIq6qR_jJ1LIB1dBfkqIHEoDzk_K9VOaMSTW_8UMab2loY9LZGKi-tBVoDt6TaJQzuDSE0btE5V1TuaaEwBRYaXxkXC5EEAoKK-x5kJBtRexqNOOISrSlgB5wHcaiZpM1FcWDBj0fLVuut59shmDuCnZm3R8ZBGSoGxdCF-s8GwC1gvcDnAUCR3vVpCJtkMz0G8dkXMkqcbL4GUJWPFPetFZzsWD32e9InftkguLvsQ27L"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+<div class="absolute bottom-8 left-8 right-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="glass-panel p-4 rounded-xl border border-white/10 backdrop-blur-md">
+<h4 class="font-label text-primary text-xs tracking-widest uppercase mb-1">Zone A: Glass Peaks</h4>
+<p class="text-xs text-on-surface-variant">Magas kockázatú kristálybányák. Extrém sugárzás.</p>
+</div>
+<div class="glass-panel p-4 rounded-xl border border-white/10 backdrop-blur-md">
+<h4 class="font-label text-secondary text-xs tracking-widest uppercase mb-1">Zone B: Void Marsh</h4>
+<p class="text-xs text-on-surface-variant">Lassú mozgás, magas erőforrás-sűrűség.</p>
+</div>
+<div class="glass-panel p-4 rounded-xl border border-white/10 backdrop-blur-md">
+<h4 class="font-label text-tertiary text-xs tracking-widest uppercase mb-1">Zone C: Astral Core</h4>
+<p class="text-xs text-on-surface-variant">Klán-háborús övezet. Belépés csak engedéllyel.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 2. Resource Mastery -->
+<section class="space-y-8 scroll-mt-32" id="resources">
+<div class="flex items-end justify-between border-b border-outline-variant pb-4">
+<h2 class="text-3xl font-headline font-bold tracking-tight uppercase flex items-center gap-3">
+<span class="text-secondary material-symbols-outlined text-4xl">diamond</span>
+                        Resource Mastery
+                    </h2>
+<span class="font-mono text-xs text-secondary/40">CRAFT_LOG_02</span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+<div class="space-y-6">
+<p class="text-on-surface-variant font-body">Az Obsidian Astral gazdasága a ritka asztrális anyagok finomítására épül. Minden elem más finomítási eljárást igényel a maximális hozam eléréséhez.</p>
+<div class="space-y-4">
+<div class="flex items-center gap-4 p-4 rounded-xl bg-surface-container-low border-l-4 border-primary">
+<div class="w-12 h-12 flex items-center justify-center bg-primary/20 rounded-lg">
+<span class="material-symbols-outlined text-primary" data-weight="fill">token</span>
+</div>
+<div class="flex-1">
+<h4 class="font-label text-sm uppercase tracking-wide">Obsidian Shards</h4>
+<div class="w-full h-1 bg-surface-container-highest mt-2 rounded-full">
+<div class="h-full w-[85%] bg-primary"></div>
+</div>
+</div>
+<span class="text-xs font-mono text-primary">RARITY: C</span>
+</div>
+<div class="flex items-center gap-4 p-4 rounded-xl bg-surface-container-low border-l-4 border-secondary">
+<div class="w-12 h-12 flex items-center justify-center bg-secondary/20 rounded-lg">
+<span class="material-symbols-outlined text-secondary" data-weight="fill">flare</span>
+</div>
+<div class="flex-1">
+<h4 class="font-label text-sm uppercase tracking-wide">Astral Essence</h4>
+<div class="w-full h-1 bg-surface-container-highest mt-2 rounded-full">
+<div class="h-full w-[40%] bg-secondary"></div>
+</div>
+</div>
+<span class="text-xs font-mono text-secondary">RARITY: R</span>
+</div>
+<div class="flex items-center gap-4 p-4 rounded-xl bg-surface-container-low border-l-4 border-tertiary">
+<div class="w-12 h-12 flex items-center justify-center bg-tertiary/20 rounded-lg">
+<span class="material-symbols-outlined text-tertiary" data-weight="fill">category</span>
+</div>
+<div class="flex-1">
+<h4 class="font-label text-sm uppercase tracking-wide">Void Matter</h4>
+<div class="w-full h-1 bg-surface-container-highest mt-2 rounded-full">
+<div class="h-full w-[15%] bg-tertiary"></div>
+</div>
+</div>
+<span class="text-xs font-mono text-tertiary">RARITY: L</span>
+</div>
+</div>
+</div>
+<div class="relative group">
+<div class="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-2xl opacity-20 group-hover:opacity-40 transition-opacity blur"></div>
+<div class="relative bg-surface-container-high rounded-2xl overflow-hidden border border-white/5">
+<img alt="Tech Workshop" class="w-full h-64 object-cover opacity-80 group-hover:opacity-100 transition-opacity" data-alt="High-tech laboratory equipment with purple neon lighting, glowing crystalline substances in containers, and holographic data screens in a dark setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsuKnNZWQ7ikoedaZeSteyU4iMfAlMFhg0sB8xxmHH5fXeNRvOeWS_0agt35-q8QF5H0z79ofKIGkfJrLOXgkNyPEn7B8Eor6TzSV1UPm_2rDz1leuvfCtRsD7qUlYCkF4WZ1Gbk-ciDuZoFKWZUX-uxH9JLkxfm4OTwyno1DXrb7FEpGqoJ1yOw4G2nMWjVTt6tg9fZ0-KiPNbBEqwc-Q3DCO8mqqAgUJipCXlySpeR6OJvrPeiA6NAnN2iatCcAt7PSwawebBvRG"/>
+<div class="p-6">
+<div class="flex justify-between items-center mb-4">
+<span class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant">Refining Process</span>
+<span class="material-symbols-outlined text-secondary">settings_suggest</span>
+</div>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+                                    A finomítás során az alapanyagokat asztrális hevítőben kell kezelni. A folyamat időtartama függ a választott technológiától.
+                                </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. Tactical Combat -->
+<section class="space-y-8 scroll-mt-32" id="combat">
+<div class="flex items-end justify-between border-b border-outline-variant pb-4">
+<h2 class="text-3xl font-headline font-bold tracking-tight uppercase flex items-center gap-3">
+<span class="text-primary material-symbols-outlined text-4xl">swords</span>
+                        Tactical Combat
+                    </h2>
+<span class="font-mono text-xs text-primary/40">COMBAT_SYS_03</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- HP Card -->
+<div class="p-8 rounded-2xl bg-surface-container-low border border-outline-variant/30 flex flex-col items-center text-center space-y-4 hover:border-error/50 transition-colors">
+<div class="w-16 h-16 rounded-full bg-error-container/20 flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-error text-4xl" data-weight="fill">favorite</span>
+</div>
+<h3 class="font-headline text-xl font-bold uppercase tracking-widest text-error">Health Points</h3>
+<p class="text-sm text-on-surface-variant">A karakter fizikai épsége. Ha eléri a nullát, a neuron-transzfer megszakad.</p>
+<div class="text-3xl font-headline text-on-surface font-bold">120 <span class="text-xs text-on-surface-variant">BASE</span></div>
+</div>
+<!-- Attack Card -->
+<div class="p-8 rounded-2xl bg-surface-container-low border border-outline-variant/30 flex flex-col items-center text-center space-y-4 hover:border-primary/50 transition-colors">
+<div class="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-primary text-4xl" data-weight="fill">bolt</span>
+</div>
+<h3 class="font-headline text-xl font-bold uppercase tracking-widest text-primary">Attack Power</h3>
+<p class="text-sm text-on-surface-variant">A sebzés mértéke, amit fegyverekkel és képességekkel okozhatsz az ellenfeleknek.</p>
+<div class="text-3xl font-headline text-on-surface font-bold">85 <span class="text-xs text-on-surface-variant">DPS</span></div>
+</div>
+<!-- Energy Card -->
+<div class="p-8 rounded-2xl bg-surface-container-low border border-outline-variant/30 flex flex-col items-center text-center space-y-4 hover:border-secondary/50 transition-colors">
+<div class="w-16 h-16 rounded-full bg-secondary/20 flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-secondary text-4xl" data-weight="fill">battery_charging_full</span>
+</div>
+<h3 class="font-headline text-xl font-bold uppercase tracking-widest text-secondary">Aura Energy</h3>
+<p class="text-sm text-on-surface-variant">A speciális képességek és asztrális pajzsok működtetéséhez szükséges üzemanyag.</p>
+<div class="text-3xl font-headline text-on-surface font-bold">250 <span class="text-xs text-on-surface-variant">MAX</span></div>
+</div>
+</div>
+</section>
+<!-- 4. Character Progression -->
+<section class="space-y-8 scroll-mt-32" id="progression">
+<div class="flex items-end justify-between border-b border-outline-variant pb-4">
+<h2 class="text-3xl font-headline font-bold tracking-tight uppercase flex items-center gap-3">
+<span class="text-tertiary material-symbols-outlined text-4xl">trending_up</span>
+                        Character Progression
+                    </h2>
+<span class="font-mono text-xs text-tertiary/40">EVOLVE_V3</span>
+</div>
+<div class="relative bg-surface-container-high p-8 rounded-2xl overflow-hidden">
+<div class="absolute top-0 right-0 p-4 font-mono text-[10px] text-on-surface-variant/20 uppercase vertical-text select-none">Progression Matrix v4.2</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+<!-- Milestone 1 -->
+<div class="space-y-4 relative">
+<div class="flex items-center gap-2">
+<span class="text-2xl font-headline font-bold text-on-surface">Lv. 10</span>
+<span class="h-px flex-1 bg-outline-variant"></span>
+</div>
+<div class="font-label text-[10px] text-primary tracking-widest uppercase">Novice Explorer</div>
+<ul class="text-xs text-on-surface-variant space-y-2 font-mono">
+<li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span> Tier 1 Crafting</li>
+<li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span> Local Warp Access</li>
+</ul>
+</div>
+<!-- Milestone 2 -->
+<div class="space-y-4 relative">
+<div class="flex items-center gap-2">
+<span class="text-2xl font-headline font-bold text-on-surface">Lv. 25</span>
+<span class="h-px flex-1 bg-outline-variant"></span>
+</div>
+<div class="font-label text-[10px] text-secondary tracking-widest uppercase">Void Walker</div>
+<ul class="text-xs text-on-surface-variant space-y-2 font-mono">
+<li class="flex items-center gap-2"><span class="w-1 h-1 bg-secondary rounded-full"></span> Clan Founder Rights</li>
+<li class="flex items-center gap-2"><span class="w-1 h-1 bg-secondary rounded-full"></span> Elite Gear Slots</li>
+</ul>
+</div>
+<!-- Milestone 3 -->
+<div class="space-y-4 relative">
+<div class="flex items-center gap-2">
+<span class="text-2xl font-headline font-bold text-on-surface">Lv. 50</span>
+<span class="h-px flex-1 bg-outline-variant"></span>
+</div>
+<div class="font-label text-[10px] text-tertiary tracking-widest uppercase">Astral Sovereign</div>
+<ul class="text-xs text-on-surface-variant space-y-2 font-mono">
+<li class="flex items-center gap-2"><span class="w-1 h-1 bg-tertiary rounded-full"></span> Relic Manifestation</li>
+<li class="flex items-center gap-2"><span class="w-1 h-1 bg-tertiary rounded-full"></span> Zone Governance</li>
+</ul>
+</div>
+<!-- Milestone 4 -->
+<div class="space-y-4 relative opacity-50">
+<div class="flex items-center gap-2">
+<span class="text-2xl font-headline font-bold text-on-surface">Lv. 100</span>
+<span class="h-px flex-1 bg-outline-variant"></span>
+</div>
+<div class="font-label text-[10px] text-on-surface-variant tracking-widest uppercase">Ascended Entity</div>
+<ul class="text-xs text-on-surface-variant space-y-2 font-mono italic">
+<li>DATA REDACTED BY HEGEMONY</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- Footer -->
+<footer class="bg-black border-t border-zinc-900 w-full py-12 px-8">
+<div class="flex flex-col md:flex-row justify-between items-center gap-6 max-w-7xl mx-auto">
+<div class="flex flex-col items-center md:items-start gap-2">
+<span class="text-lg font-bold text-slate-200 font-headline tracking-tighter">Obsidian Astral</span>
+<p class="font-label text-[10px] text-slate-500 uppercase tracking-widest">© 2144 Obsidian Astral. All rights reserved. Galactic Hegemony Protocol.</p>
+</div>
+<div class="flex gap-8">
+<a class="font-label text-xs tracking-wide text-slate-500 hover:text-cyan-400 underline decoration-cyan-400/30 transition-all" href="#">Terms of Service</a>
+<a class="font-label text-xs tracking-wide text-slate-500 hover:text-cyan-400 underline decoration-cyan-400/30 transition-all" href="#">Privacy Policy</a>
+<a class="font-label text-xs tracking-wide text-slate-500 hover:text-cyan-400 underline decoration-cyan-400/30 transition-all" href="#">Game Manual</a>
+<a class="font-label text-xs tracking-wide text-slate-500 hover:text-cyan-400 underline decoration-cyan-400/30 transition-all" href="#">System Status</a>
+</div>
+</div>
+</footer>
+<!-- Fixed Action Button (Suppressed on this manual page according to protocol but kept as a small return to top for better UX in long documents) -->
+<a class="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-secondary text-white flex items-center justify-center shadow-[0_0_20px_rgba(172,137,255,0.4)] hover:scale-110 active:scale-95 transition-all z-[60]" href="#">
+<span class="material-symbols-outlined">arrow_upward</span>
+</a>
+</body></html>

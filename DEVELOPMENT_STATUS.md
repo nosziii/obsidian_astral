@@ -25,9 +25,10 @@ Utolsó frissítés: 2026-04-01
 - profil nézet redesign parancsnoki hero blokkal és külön identitás-szinkron panellel
 - új világtérkép nézet zónacsomópontokkal és expedíciós intel oldalsávval
 - külön Communication hub oldal neural üzenet, chat és riasztási kezeléssel
+- Communication oldal tervhűbb inbox-thread-roster szerkezettel a belső levelezési tervhez igazítva
 - sidebar almenük a Communication és Admin főpontok alatt
 - admin nézet szekciózott működéssel: áttekintés, moderáció, épületek, audit
-- admin alapok: overview, rendszerimpulzus, segélycsomag, játékos inspect
+- külön piactér oldal a marketplace terv alapján, vásárlás és eladás nézettel
 - központi időzített eseményrendszer gyűjtéshez, craftoláshoz és építéshez
 - élő progress megjelenítés a dashboard, műhely és expedíció nézetekben
 - alap chat rendszer globál és műhely csatornával
@@ -44,12 +45,14 @@ Utolsó frissítés: 2026-04-01
 - admin készletmódosítás és alap játékosérték-szerkesztés
 - env és docker alapú konfiguráció rendezése
 - külön production Docker Compose stack nginx alapú web kiszolgálással
+- shared tartalmi réteg UTF-8 tisztítása a hibás ékezetek megszüntetéséhez
 
 ## Folyamatban
 
 - további design alapú nézetek pontos átültetése a megadott HTML és képi tervek alapján
 - expedíciós és zónarendszer mélyítése
 - equipment tárgyforrások előkészítése drop és craft irányba
+- admin és communication nézetek további pixelpontos finomhangolása a tervrészletekhez
 
 ## Még hiányzik
 
@@ -59,5 +62,6 @@ Utolsó frissítés: 2026-04-01
 - zónaesemények és random encounter rendszer
 - equipment tárgyforrások: drop, craft, jutalomlánc
 - napi küldetések és achievement rendszer
-- notification center további interactionök célzott navigációval
+- notification center további interakciók célzott navigációval
 - részletes admin account moderation export és szűrhető audit nézet
+- klánháborús szoba és belső levelezési további funkcionális mélyítése

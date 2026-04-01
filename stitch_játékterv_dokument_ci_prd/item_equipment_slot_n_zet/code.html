@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-bright": "#2c2c2d",
+              "primary-container": "#00eefc",
+              "surface-container-high": "#201f21",
+              "inverse-primary": "#006a71",
+              "inverse-surface": "#fcf8f9",
+              "surface-container": "#1a191b",
+              "secondary-fixed-dim": "#ceb9ff",
+              "error": "#ff716c",
+              "primary-fixed": "#00eefc",
+              "tertiary-fixed-dim": "#ff68e3",
+              "tertiary": "#ff59e3",
+              "surface-dim": "#0e0e0f",
+              "tertiary-dim": "#ff59e3",
+              "secondary-container": "#7000ff",
+              "on-surface": "#ffffff",
+              "surface-tint": "#8ff5ff",
+              "secondary-dim": "#874cff",
+              "on-secondary-fixed": "#41009a",
+              "on-primary-fixed": "#003f43",
+              "tertiary-fixed": "#ff85e4",
+              "on-background": "#ffffff",
+              "tertiary-container": "#ff05e5",
+              "secondary-fixed": "#dac9ff",
+              "outline": "#767576",
+              "surface": "#0e0e0f",
+              "on-primary": "#005d63",
+              "on-tertiary-fixed-variant": "#6d0061",
+              "on-surface-variant": "#adaaab",
+              "on-primary-container": "#005359",
+              "surface-container-highest": "#262627",
+              "secondary": "#ac89ff",
+              "surface-container-lowest": "#000000",
+              "on-secondary": "#290067",
+              "on-tertiary": "#42003a",
+              "surface-variant": "#262627",
+              "primary-fixed-dim": "#00deec",
+              "background": "#0e0e0f",
+              "on-error-container": "#ffa8a3",
+              "on-error": "#490006",
+              "on-tertiary-container": "#1b0017",
+              "surface-container-low": "#131314",
+              "primary": "#8ff5ff",
+              "inverse-on-surface": "#565556",
+              "on-secondary-fixed-variant": "#6300e2",
+              "on-primary-fixed-variant": "#005e64",
+              "error-container": "#9f0519",
+              "error-dim": "#d7383b",
+              "primary-dim": "#00deec",
+              "on-secondary-container": "#f8f1ff",
+              "on-tertiary-fixed": "#33002d",
+              "outline-variant": "#484849"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Manrope"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(38, 38, 39, 0.4);
+            backdrop-filter: blur(12px);
+        }
+        .item-glow {
+            box-shadow: 0 0 60px -15px rgba(143, 245, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 h-16 bg-[#0e0e0f]/80 backdrop-blur-xl flex justify-between items-center px-6 shadow-[0_0_32px_rgba(143,245,255,0.08)] bg-gradient-to-b from-[#131314] to-transparent">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-black text-[#8ff5ff] tracking-tighter font-headline">OBSIDIAN ASTRAL</span>
+<nav class="hidden md:flex gap-6">
+<a class="font-headline uppercase tracking-[0.1em] text-[0.6875rem] text-[#adaaab] hover:text-[#8ff5ff] transition-colors" href="#">Command</a>
+<a class="font-headline uppercase tracking-[0.1em] text-[0.6875rem] text-[#8ff5ff] border-b-2 border-[#8ff5ff] pb-1" href="#">Equipment Specialist</a>
+<a class="font-headline uppercase tracking-[0.1em] text-[0.6875rem] text-[#adaaab] hover:text-[#8ff5ff] transition-colors" href="#">Data Vault</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex gap-2">
+<button class="p-2 hover:bg-[#8ff5ff]/10 rounded-lg text-[#8ff5ff] transition-all active:scale-95">
+<span class="material-symbols-outlined">mail</span>
+</button>
+<button class="p-2 hover:bg-[#8ff5ff]/10 rounded-lg text-[#8ff5ff] transition-all active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 hover:bg-[#8ff5ff]/10 rounded-lg text-[#8ff5ff] transition-all active:scale-95">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<img alt="Player holographic avatar" class="w-8 h-8 rounded-full border border-primary/30" data-alt="Close-up portrait of a futuristic soldier with glowing blue cybernetic ocular implants and sleek obsidian carbon fiber armor." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAd28z-XqcJRx-Yo-TgF3KCXgyBzJCXeb8bWmZRTgzsEMtaXQyiR_3lI9Oi3SayRx96n6dB6galPkZt0GnVsYRY82Vg1LOVd1mC3c87gXFREeclUMNkrWP9BXAHgOvwMwKMMVFi5rxFhg_S44LkuzALVQzx7IP_AI2smje0PQcESMzC-tgizgHrd-k6qsjxihQy5Uhzw1wTLM-HRWR7KvgGrT8pYr604vaWZ4qzIJyWQ0am4uSe2DyINXK_c9aXP6k4sE7exugIM9jt"/>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-64 z-40 bg-[#0e0e0f]/90 backdrop-blur-2xl flex flex-col border-r border-[#201f21]/30 hidden md:flex pt-20">
+<div class="px-6 py-8 border-b border-outline-variant/10">
+<p class="font-headline text-xs text-primary tracking-widest uppercase mb-1">Commander Identity</p>
+<h2 class="font-headline text-xl font-bold text-on-surface">ADM. KALE</h2>
+<p class="text-[0.6875rem] text-on-surface-variant uppercase tracking-tighter">Level 48 Fleet Lead</p>
+</div>
+<nav class="flex-1 py-4">
+<div class="space-y-1">
+<a class="flex items-center gap-4 text-[#adaaab] px-4 py-3 hover:text-white transition-all hover:bg-[#201f21] group" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-headline font-medium">Command</span>
+</a>
+<a class="flex items-center gap-4 text-[#adaaab] px-4 py-3 hover:text-white transition-all hover:bg-[#201f21] group" href="#">
+<span class="material-symbols-outlined">forum</span>
+<span class="font-headline font-medium">Neural Link</span>
+</a>
+<a class="flex items-center gap-4 bg-gradient-to-r from-[#8ff5ff]/20 to-transparent text-[#8ff5ff] border-l-4 border-[#8ff5ff] px-4 py-3" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-headline font-medium">Data Vault</span>
+</a>
+<a class="flex items-center gap-4 text-[#adaaab] px-4 py-3 hover:text-white transition-all hover:bg-[#201f21] group" href="#">
+<span class="material-symbols-outlined">build</span>
+<span class="font-headline font-medium">Fabricator</span>
+</a>
+<a class="flex items-center gap-4 text-[#adaaab] px-4 py-3 hover:text-white transition-all hover:bg-[#201f21] group" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-headline font-medium">Overseer</span>
+</a>
+</div>
+</nav>
+<div class="p-6">
+<button class="w-full bg-primary text-on-primary py-3 rounded-md font-headline font-bold text-sm tracking-widest uppercase shadow-[0_0_20px_rgba(143,245,255,0.2)] hover:shadow-[0_0_30px_rgba(143,245,255,0.4)] transition-all">
+                DEPLOY MISSION
+            </button>
+</div>
+<div class="mt-auto border-t border-outline-variant/10">
+<a class="flex items-center gap-4 text-[#adaaab] px-4 py-3 hover:text-white transition-all hover:bg-[#201f21]" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-headline font-medium">Support</span>
+</a>
+<a class="flex items-center gap-4 text-[#adaaab] px-4 py-3 hover:text-white transition-all hover:bg-[#201f21]" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-headline font-medium">Log Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="md:pl-64 pt-24 pb-12 min-h-screen">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid grid-cols-12 gap-8 items-start">
+<!-- Left Column: Core Stats & Lore -->
+<div class="col-span-12 lg:col-span-3 space-y-6">
+<!-- Core Stats Section -->
+<section class="glass-panel p-6 border-l-2 border-primary/40 rounded-r-xl">
+<header class="mb-4">
+<span class="font-label text-[0.625rem] text-primary tracking-[0.2em] uppercase">Tactical Readout</span>
+<h3 class="font-headline text-lg font-bold">CORE STATS</h3>
+</header>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between text-[0.6875rem] font-label uppercase tracking-widest mb-1 text-on-surface-variant">
+<span>Defense</span>
+<span class="text-primary">1,240</span>
+</div>
+<div class="h-1 bg-surface-container-highest w-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-primary-dim" style="width: 75%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-[0.6875rem] font-label uppercase tracking-widest mb-1 text-on-surface-variant">
+<span>Shield Integrity</span>
+<span class="text-secondary">850</span>
+</div>
+<div class="h-1 bg-surface-container-highest w-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-secondary to-secondary-dim" style="width: 45%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-[0.6875rem] font-label uppercase tracking-widest mb-1 text-on-surface-variant">
+<span>Kinetic Damping</span>
+<span class="text-primary">12%</span>
+</div>
+<div class="h-1 bg-surface-container-highest w-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-primary-dim" style="width: 12%;"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Lore/Description Section -->
+<section class="glass-panel p-6 border-l-2 border-secondary/40 rounded-r-xl">
+<header class="mb-4">
+<span class="font-label text-[0.625rem] text-secondary tracking-[0.2em] uppercase">Archives</span>
+<h3 class="font-headline text-lg font-bold text-on-surface">VANGUARD ORIGINS</h3>
+</header>
+<p class="text-sm text-on-surface-variant leading-relaxed font-body italic">
+                            "Forged in the heart of the Asteria Nebula, the Vanguard Chestplate was standard issue for the 14th Dreadnought Division during the Siege of Sol. Its adaptive plating reacts to incoming plasma fire by hardening at the point of impact."
+                        </p>
+<div class="mt-4 pt-4 border-t border-outline-variant/10 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-lg" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-label text-[0.625rem] text-on-surface uppercase tracking-widest">LEGENDARY ARTIFACT</span>
+</div>
+</section>
+</div>
+<!-- Center Column: Visual Preview -->
+<div class="col-span-12 lg:col-span-6 flex flex-col items-center">
+<div class="relative w-full aspect-square max-w-lg group">
+<!-- Holographic Background Elements -->
+<div class="absolute inset-0 bg-primary/5 rounded-full blur-3xl"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] opacity-20 pointer-events-none">
+<div class="w-full h-full border border-primary/20 rounded-full animate-pulse"></div>
+</div>
+<!-- Main Preview Image -->
+<div class="relative z-10 w-full h-full flex items-center justify-center item-glow transition-transform duration-500 hover:scale-105">
+<img alt="Vanguard Chestplate Preview" class="w-[85%] h-[85%] object-contain drop-shadow-[0_0_20px_rgba(143,245,255,0.4)]" data-alt="A highly detailed sci-fi futuristic chestplate armor piece, obsidian black carbon fiber with neon cyan glowing internal circuits and glowing geometric panels." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjQhS5CXTNp2edA6bY75nyIXeCiU6EGAQZ327bDa4O6RO-7hWZ6lruJiHDB-i2hUvSU-XUf-99GRUhKZ8nU5of4VOfeHBSH6OxTJ5OZbdITGpIl0mLuyhzc0Btuy3sbrEDYWZe_wmb_o1S_gKLVH_HDRAvDevEO8Yxw3sjvqpPNEjY3UOMGkvjaXThPKLbFuwJjmyYBfEacetlh8pVDtBe8GpHmdJVky4nV6epGBEb9I9SaMOwB23WOF_L0TjwnUQA1UJ61U63EUeS"/>
+</div>
+<!-- Labels Overlay -->
+<div class="absolute bottom-4 left-1/2 -translate-x-1/2 text-center w-full">
+<h1 class="font-headline text-4xl font-black text-white tracking-tighter mb-1">VANGUARD CHESTPLATE</h1>
+<div class="flex justify-center gap-4">
+<span class="text-xs font-label text-primary uppercase tracking-[0.3em]">Item #VA-4092</span>
+<span class="text-xs font-label text-secondary uppercase tracking-[0.3em]">MK. IV SERIES</span>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex gap-4 mt-12 w-full max-w-md">
+<button class="flex-1 bg-surface-container-high border border-outline-variant/30 text-on-surface py-4 rounded-lg font-headline font-bold text-xs tracking-widest uppercase hover:bg-surface-bright transition-all active:scale-95">
+                            DISMANTLE
+                        </button>
+<button class="flex-1 bg-primary text-on-primary py-4 rounded-lg font-headline font-bold text-xs tracking-widest uppercase shadow-[0_0_25px_rgba(143,245,255,0.25)] hover:shadow-[0_0_40px_rgba(143,245,255,0.5)] transition-all active:scale-95">
+                            EQUIP ITEM
+                        </button>
+</div>
+</div>
+<!-- Right Column: Modifiers & Comparison -->
+<div class="col-span-12 lg:col-span-3 space-y-6">
+<!-- Modifier Slots -->
+<section class="glass-panel p-6 border-r-2 border-primary/40 rounded-l-xl">
+<header class="mb-4">
+<span class="font-label text-[0.625rem] text-primary tracking-[0.2em] uppercase">Augmentations</span>
+<h3 class="font-headline text-lg font-bold">MODIFIER SLOTS</h3>
+</header>
+<div class="grid grid-cols-2 gap-3">
+<div class="aspect-square bg-surface-container-low border border-primary/20 rounded flex items-center justify-center group cursor-pointer hover:border-primary/60 transition-colors">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1;">shield</span>
+</div>
+<div class="aspect-square bg-surface-container-low border border-secondary/20 rounded flex items-center justify-center group cursor-pointer hover:border-secondary/60 transition-colors">
+<span class="material-symbols-outlined text-secondary group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+<div class="aspect-square bg-surface-container-low border border-outline-variant/20 rounded flex items-center justify-center group cursor-pointer hover:border-primary/40 transition-colors">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">add</span>
+</div>
+<div class="aspect-square bg-surface-container-low border border-outline-variant/20 rounded flex items-center justify-center opacity-40 cursor-not-allowed">
+<span class="material-symbols-outlined text-outline">lock</span>
+</div>
+</div>
+</section>
+<!-- Comparison Panel -->
+<section class="glass-panel p-6 border-r-2 border-secondary/40 rounded-l-xl">
+<header class="mb-4">
+<span class="font-label text-[0.625rem] text-secondary tracking-[0.2em] uppercase">Upgrade Path</span>
+<h3 class="font-headline text-lg font-bold">UPGRADE PREVIEW</h3>
+</header>
+<div class="space-y-4">
+<div class="flex items-center justify-between text-xs">
+<span class="text-on-surface-variant font-label uppercase">Defense</span>
+<div class="flex items-center gap-2">
+<span class="line-through opacity-50">1,240</span>
+<span class="material-symbols-outlined text-primary text-sm">trending_up</span>
+<span class="text-primary font-bold">1,410</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-xs">
+<span class="text-on-surface-variant font-label uppercase">Integrity</span>
+<div class="flex items-center gap-2">
+<span class="line-through opacity-50">850</span>
+<span class="material-symbols-outlined text-primary text-sm">trending_up</span>
+<span class="text-primary font-bold">920</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-xs">
+<span class="text-on-surface-variant font-label uppercase">Power Req</span>
+<div class="flex items-center gap-2">
+<span class="opacity-50">40</span>
+<span class="material-symbols-outlined text-error text-sm">priority_high</span>
+<span class="text-error font-bold">55</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 py-3 border border-secondary/40 text-secondary hover:bg-secondary/10 rounded font-headline font-bold text-[0.6875rem] tracking-[0.2em] uppercase transition-all">
+                            PROCESS UPGRADE
+                        </button>
+</section>
+</div>
+</div>
+<!-- Bottom Floating Info Bar -->
+<div class="mt-12 glass-panel py-4 px-8 rounded-full border border-outline-variant/20 flex items-center justify-between max-w-4xl mx-auto">
+<div class="flex gap-8">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">monetization_on</span>
+<div>
+<p class="text-[0.625rem] text-on-surface-variant font-label uppercase tracking-widest">Dismantle Yield</p>
+<p class="font-headline font-bold text-sm">4,500 Cr</p>
+</div>
+</div>
+<div class="flex items-center gap-3 border-l border-outline-variant/30 pl-8">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">token</span>
+<div>
+<p class="text-[0.625rem] text-on-surface-variant font-label uppercase tracking-widest">Nano-Alloy Cost</p>
+<p class="font-headline font-bold text-sm">12 Units</p>
+</div>
+</div>
+</div>
+<div class="flex gap-2">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<p class="text-[0.625rem] font-label text-primary uppercase tracking-[0.2em]">Equipment Synced</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Mobile Navigation (BottomNavBar) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full glass-panel h-16 border-t border-outline-variant/10 z-50 flex justify-around items-center px-4">
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="text-[0.625rem] font-label uppercase tracking-tighter">Command</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span class="text-[0.625rem] font-label uppercase tracking-tighter">Vault</span>
+</button>
+<div class="relative -top-8">
+<button class="w-14 h-14 bg-secondary rounded-full flex items-center justify-center text-on-secondary shadow-[0_0_20px_rgba(172,137,255,0.4)]">
+<span class="material-symbols-outlined text-3xl">build</span>
+</button>
+</div>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">terminal</span>
+<span class="text-[0.625rem] font-label uppercase tracking-tighter">Overseer</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">forum</span>
+<span class="text-[0.625rem] font-label uppercase tracking-tighter">Link</span>
+</button>
+</nav>
+</body></html>

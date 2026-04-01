@@ -2,6 +2,7 @@
 import type { CommunicationMenuItem, CommunicationSection } from "../../lib/communication-hub";
 
 defineProps<{
+  actionLabel: string;
   activeSection: CommunicationSection;
   menuItems: CommunicationMenuItem[];
 }>();
@@ -19,7 +20,7 @@ defineEmits<{
         <div class="communication-nav__title">Neural_Link_01</div>
         <div class="communication-nav__status">
           <span class="communication-nav__status-dot"></span>
-          Connected
+          Csatlakozva
         </div>
       </div>
     </div>
@@ -43,7 +44,18 @@ defineEmits<{
 
     <button class="secondary-button communication-nav__cta" type="button">
       <span class="material-symbols-outlined">add_comment</span>
-      Új átadás
+      {{ actionLabel }}
     </button>
+
+    <div class="communication-nav__footer">
+      <button class="communication-nav__footer-link" type="button">
+        <span class="material-symbols-outlined">settings</span>
+        Beállítások
+      </button>
+      <button class="communication-nav__footer-link danger" type="button">
+        <span class="material-symbols-outlined">power_settings_new</span>
+        Leválasztás
+      </button>
+    </div>
   </aside>
 </template>

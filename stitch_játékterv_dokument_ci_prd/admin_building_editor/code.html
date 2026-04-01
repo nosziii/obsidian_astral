@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Structural Override - Obsidian Astral</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-bright": "#2c2c2d",
+              "primary-container": "#00eefc",
+              "surface-container-high": "#201f21",
+              "inverse-primary": "#006a71",
+              "inverse-surface": "#fcf8f9",
+              "surface-container": "#1a191b",
+              "secondary-fixed-dim": "#ceb9ff",
+              "error": "#ff716c",
+              "primary-fixed": "#00eefc",
+              "tertiary-fixed-dim": "#ff68e3",
+              "tertiary": "#ff59e3",
+              "surface-dim": "#0e0e0f",
+              "tertiary-dim": "#ff59e3",
+              "secondary-container": "#7000ff",
+              "on-surface": "#ffffff",
+              "surface-tint": "#8ff5ff",
+              "secondary-dim": "#874cff",
+              "on-secondary-fixed": "#41009a",
+              "on-primary-fixed": "#003f43",
+              "tertiary-fixed": "#ff85e4",
+              "on-background": "#ffffff",
+              "tertiary-container": "#ff05e5",
+              "secondary-fixed": "#dac9ff",
+              "outline": "#767576",
+              "surface": "#0e0e0f",
+              "on-primary": "#005d63",
+              "on-tertiary-fixed-variant": "#6d0061",
+              "on-surface-variant": "#adaaab",
+              "on-primary-container": "#005359",
+              "surface-container-highest": "#262627",
+              "secondary": "#ac89ff",
+              "surface-container-lowest": "#000000",
+              "on-secondary": "#290067",
+              "on-tertiary": "#42003a",
+              "surface-variant": "#262627",
+              "primary-fixed-dim": "#00deec",
+              "background": "#0e0e0f",
+              "on-error-container": "#ffa8a3",
+              "on-error": "#490006",
+              "on-tertiary-container": "#1b0017",
+              "surface-container-low": "#131314",
+              "primary": "#8ff5ff",
+              "inverse-on-surface": "#565556",
+              "on-secondary-fixed-variant": "#6300e2",
+              "on-primary-fixed-variant": "#005e64",
+              "error-container": "#9f0519",
+              "error-dim": "#d7383b",
+              "primary-dim": "#00deec",
+              "on-secondary-container": "#f8f1ff",
+              "on-tertiary-fixed": "#33002d",
+              "outline-variant": "#484849"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Manrope"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #0e0e0f;
+            color: #ffffff;
+            font-family: 'Manrope', sans-serif;
+        }
+        .glass-panel {
+            background: rgba(26, 25, 27, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(72, 72, 73, 0.1);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-surface selection:bg-primary/30">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 h-16 bg-[#0e0e0f]/80 backdrop-blur-xl flex justify-between items-center px-6 h-16 shadow-[0_0_32px_rgba(143,245,255,0.08)]">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-black text-[#8ff5ff] tracking-tighter">OBSIDIAN ASTRAL</span>
+<nav class="hidden md:flex gap-6">
+<a class="font-['Space_Grotesk'] uppercase tracking-[0.1em] text-[0.6875rem] text-[#adaaab] hover:text-[#8ff5ff] transition-colors" href="#">Fleet</a>
+<a class="font-['Space_Grotesk'] uppercase tracking-[0.1em] text-[0.6875rem] text-[#8ff5ff] border-b-2 border-[#8ff5ff] pb-1" href="#">Structural Override</a>
+<a class="font-['Space_Grotesk'] uppercase tracking-[0.1em] text-[0.6875rem] text-[#adaaab] hover:text-[#8ff5ff] transition-colors" href="#">Armory</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative flex items-center bg-surface-container-high rounded-lg px-3 py-1.5">
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-xs w-32 font-label" placeholder="Global Scan..." type="text"/>
+</div>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-[#8ff5ff]/10 rounded-full transition-colors"><span class="material-symbols-outlined text-[#8ff5ff] text-xl" data-icon="mail">mail</span></button>
+<button class="p-2 hover:bg-[#8ff5ff]/10 rounded-full transition-colors"><span class="material-symbols-outlined text-[#8ff5ff] text-xl" data-icon="notifications">notifications</span></button>
+<button class="p-2 hover:bg-[#8ff5ff]/10 rounded-full transition-colors"><span class="material-symbols-outlined text-[#8ff5ff] text-xl" data-icon="settings">settings</span></button>
+</div>
+<div class="w-8 h-8 rounded-full border border-primary/30 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Cyberpunk character avatar with glowing cyan neural implants and high-tech tactical gear, dark cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHCJ76m2cqG9WoRL801Bxi2lV_7qpADfwD9KEdrfq9mO3yiyMBpvqgcxp5hAd640sk3h4OiMoAB7EIZnKrgktE0QT2mQU_zJ5T4CyJOAAqB-dDItEnN3oH9ktxzaNz_Onv3K9erdWPWN2SdLlHkb7iOB80W7wCOqDhHgjUMn5FWPopGUXQDOgAuqsw8zV6K3DTWl5_HS2tbSRf5l68WTgrwgxNapepNT7OoiX0rGpfQ3DNQ2HV1zGBAv9pYfQYlutcNVWLq3FrJtuZ"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-64 z-40 bg-[#0e0e0f]/90 backdrop-blur-2xl flex flex-col border-r border-[#201f21]/30 pt-20">
+<div class="px-6 mb-8 flex items-center gap-4">
+<div class="w-10 h-10 bg-gradient-to-br from-secondary to-primary rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-surface" data-icon="security">security</span>
+</div>
+<div>
+<div class="font-['Space_Grotesk'] font-medium text-white text-sm">ADM. KALE</div>
+<div class="text-[0.625rem] text-on-surface-variant font-label uppercase tracking-wider">Level 48 Fleet Lead</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-4 text-[#adaaab] px-4 py-3 hover:text-white transition-all font-['Space_Grotesk'] font-medium hover:bg-[#201f21]" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span> Command
+            </a>
+<a class="flex items-center gap-4 text-[#adaaab] px-4 py-3 hover:text-white transition-all font-['Space_Grotesk'] font-medium hover:bg-[#201f21]" href="#">
+<span class="material-symbols-outlined" data-icon="forum">forum</span> Neural Link
+            </a>
+<a class="flex items-center gap-4 text-[#adaaab] px-4 py-3 hover:text-white transition-all font-['Space_Grotesk'] font-medium hover:bg-[#201f21]" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span> Data Vault
+            </a>
+<a class="flex items-center gap-4 bg-gradient-to-r from-[#8ff5ff]/20 to-transparent text-[#8ff5ff] border-l-4 border-[#8ff5ff] px-4 py-3 font-['Space_Grotesk'] font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="build">build</span> Fabricator
+            </a>
+<a class="flex items-center gap-4 text-[#adaaab] px-4 py-3 hover:text-white transition-all font-['Space_Grotesk'] font-medium hover:bg-[#201f21]" href="#">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span> Overseer
+            </a>
+</nav>
+<div class="p-4">
+<button class="w-full bg-primary text-on-primary py-3 rounded-md font-label text-xs font-bold tracking-widest uppercase shadow-[0_0_20px_rgba(143,245,255,0.2)] hover:shadow-[0_0_30px_rgba(143,245,255,0.4)] transition-all">
+                DEPLOY MISSION
+            </button>
+</div>
+<div class="border-t border-outline-variant/20 py-4">
+<a class="flex items-center gap-4 text-[#adaaab] px-4 py-2 hover:text-white transition-all font-['Space_Grotesk'] font-medium text-sm" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="help">help</span> Support
+            </a>
+<a class="flex items-center gap-4 text-[#adaaab] px-4 py-2 hover:text-white transition-all font-['Space_Grotesk'] font-medium text-sm" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="logout">logout</span> Log Out
+            </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="pl-64 pt-16 h-screen flex flex-col">
+<!-- Header Section -->
+<section class="p-8 flex items-end justify-between">
+<div>
+<h1 class="font-headline text-5xl font-black text-white tracking-tighter uppercase leading-none">Structural Override</h1>
+<p class="text-on-surface-variant mt-2 font-body text-sm max-w-lg">Core infrastructure parameters manipulation interface. Authorized access only for high-level architects.</p>
+</div>
+<div class="flex gap-4">
+<button class="px-6 py-2 rounded-lg bg-surface-container-highest text-on-surface-variant font-label text-[0.6875rem] font-bold tracking-widest uppercase border border-outline-variant/30 hover:bg-surface-bright transition-all">Discard</button>
+<button class="px-8 py-2 rounded-lg bg-secondary text-on-secondary font-label text-[0.6875rem] font-bold tracking-widest uppercase shadow-[0_0_24px_rgba(172,137,255,0.3)] hover:scale-105 active:scale-95 transition-all">Save Changes</button>
+</div>
+</section>
+<!-- Editor Grid -->
+<section class="flex-1 px-8 pb-8 grid grid-cols-12 gap-6 overflow-hidden">
+<!-- Sidebar: Buildings List -->
+<div class="col-span-3 flex flex-col gap-4 overflow-hidden">
+<div class="text-[0.625rem] font-label font-bold text-primary tracking-[0.2em] uppercase px-2">Registry</div>
+<div class="flex-1 overflow-y-auto no-scrollbar space-y-3">
+<!-- Refinery (Active) -->
+<div class="glass-panel p-4 rounded-xl border-l-4 border-primary bg-primary/5 cursor-pointer group">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline font-bold text-white group-hover:text-primary transition-colors">Refinery</h3>
+<p class="text-[0.625rem] font-label text-on-surface-variant uppercase tracking-tighter mt-1">Industrial / Resource</p>
+</div>
+<span class="material-symbols-outlined text-primary text-xl" data-icon="precision_manufacturing">precision_manufacturing</span>
+</div>
+</div>
+<!-- Barracks -->
+<div class="glass-panel p-4 rounded-xl border-l-4 border-transparent hover:border-outline-variant cursor-pointer group transition-all">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline font-bold text-on-surface-variant group-hover:text-white transition-colors">Barracks</h3>
+<p class="text-[0.625rem] font-label text-on-surface-variant/60 uppercase tracking-tighter mt-1">Military / Unit Spawn</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant/60 group-hover:text-secondary transition-colors text-xl" data-icon="shield">shield</span>
+</div>
+</div>
+<!-- Laboratory -->
+<div class="glass-panel p-4 rounded-xl border-l-4 border-transparent hover:border-outline-variant cursor-pointer group transition-all">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline font-bold text-on-surface-variant group-hover:text-white transition-colors">Laboratory</h3>
+<p class="text-[0.625rem] font-label text-on-surface-variant/60 uppercase tracking-tighter mt-1">Science / Upgrades</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant/60 group-hover:text-tertiary transition-colors text-xl" data-icon="science">science</span>
+</div>
+</div>
+<!-- Communication Array -->
+<div class="glass-panel p-4 rounded-xl border-l-4 border-transparent hover:border-outline-variant cursor-pointer group transition-all opacity-60">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline font-bold text-on-surface-variant">Comm Array</h3>
+<p class="text-[0.625rem] font-label text-on-surface-variant/60 uppercase tracking-tighter mt-1">Tactical / Intel</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant/60 text-xl" data-icon="radar">radar</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Center: Editable Fields -->
+<div class="col-span-5 flex flex-col gap-6">
+<div class="glass-panel p-6 rounded-2xl flex flex-col gap-6">
+<div class="flex items-center gap-2 mb-2">
+<div class="h-1 w-8 bg-primary"></div>
+<h2 class="font-headline text-lg font-bold text-white tracking-tight uppercase">Base Configuration</h2>
+</div>
+<div class="space-y-6">
+<!-- Construction Cost -->
+<div class="group">
+<label class="block font-label text-[0.625rem] font-black text-on-surface-variant uppercase tracking-widest mb-2 group-focus-within:text-primary transition-colors">Construction Cost (Credits)</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-0 border-b border-outline-variant focus:border-primary focus:ring-0 text-white font-headline text-2xl py-2 px-0 transition-all transition-all" type="number" value="12500"/>
+<span class="absolute right-0 top-1/2 -translate-y-1/2 text-primary font-bold text-xs">CRD</span>
+</div>
+</div>
+<!-- Resource Output -->
+<div class="group">
+<label class="block font-label text-[0.625rem] font-black text-on-surface-variant uppercase tracking-widest mb-2 group-focus-within:text-primary transition-colors">Resource Output per Hour</label>
+<div class="flex gap-4 items-end">
+<div class="relative flex-1">
+<input class="w-full bg-surface-container-low border-0 border-b border-outline-variant focus:border-primary focus:ring-0 text-white font-headline text-2xl py-2 px-0 transition-all" type="number" value="450"/>
+</div>
+<div class="bg-surface-container-high px-3 py-1 rounded text-[0.625rem] font-label text-primary-fixed-dim border border-primary/20">+12% Bonus</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-8">
+<!-- Max Level -->
+<div class="group">
+<label class="block font-label text-[0.625rem] font-black text-on-surface-variant uppercase tracking-widest mb-2 group-focus-within:text-primary transition-colors">Max Level</label>
+<input class="w-full bg-surface-container-low border-0 border-b border-outline-variant focus:border-primary focus:ring-0 text-white font-headline text-2xl py-2 px-0 transition-all" type="number" value="15"/>
+</div>
+<!-- Build Time -->
+<div class="group">
+<label class="block font-label text-[0.625rem] font-black text-on-surface-variant uppercase tracking-widest mb-2 group-focus-within:text-primary transition-colors">Build Time (Sec)</label>
+<input class="w-full bg-surface-container-low border-0 border-b border-outline-variant focus:border-primary focus:ring-0 text-white font-headline text-2xl py-2 px-0 transition-all" type="number" value="3600"/>
+</div>
+</div>
+<!-- Prerequisites -->
+<div class="group">
+<label class="block font-label text-[0.625rem] font-black text-on-surface-variant uppercase tracking-widest mb-2 group-focus-within:text-primary transition-colors">Prerequisites</label>
+<div class="flex flex-wrap gap-2 pt-2">
+<div class="flex items-center gap-2 bg-surface-bright border border-outline-variant/30 px-3 py-1.5 rounded-lg">
+<span class="material-symbols-outlined text-xs text-secondary" data-icon="bolt">bolt</span>
+<span class="text-xs text-white font-body">Power Plant Lvl 3</span>
+<button class="text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined text-[14px]" data-icon="close">close</span></button>
+</div>
+<div class="flex items-center gap-2 bg-surface-bright border border-outline-variant/30 px-3 py-1.5 rounded-lg">
+<span class="material-symbols-outlined text-xs text-primary" data-icon="token">token</span>
+<span class="text-xs text-white font-body">Foundry Blueprint</span>
+<button class="text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined text-[14px]" data-icon="close">close</span></button>
+</div>
+<button class="flex items-center gap-2 border border-dashed border-outline-variant px-3 py-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:border-primary transition-all">
+<span class="material-symbols-outlined text-xs" data-icon="add">add</span>
+<span class="text-xs font-label">Add Requirement</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Simulation Preview Metrics -->
+<div class="grid grid-cols-3 gap-4">
+<div class="bg-surface-container p-4 rounded-xl border-t border-primary/20">
+<div class="text-[0.625rem] font-label text-on-surface-variant uppercase">Power Draw</div>
+<div class="text-xl font-headline font-bold text-white mt-1">840 kW</div>
+</div>
+<div class="bg-surface-container p-4 rounded-xl border-t border-secondary/20">
+<div class="text-[0.625rem] font-label text-on-surface-variant uppercase">Durability</div>
+<div class="text-xl font-headline font-bold text-white mt-1">12,500 HP</div>
+</div>
+<div class="bg-surface-container p-4 rounded-xl border-t border-tertiary/20">
+<div class="text-[0.625rem] font-label text-on-surface-variant uppercase">Worker Slots</div>
+<div class="text-xl font-headline font-bold text-white mt-1">24 Units</div>
+</div>
+</div>
+</div>
+<!-- Right: Visual Preview -->
+<div class="col-span-4 flex flex-col gap-6 overflow-hidden">
+<div class="flex-1 glass-panel rounded-2xl relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-secondary/10 pointer-events-none"></div>
+<!-- Viewport Controls -->
+<div class="absolute top-4 right-4 flex flex-col gap-2 z-10">
+<button class="w-8 h-8 rounded-lg bg-surface/80 backdrop-blur-md flex items-center justify-center border border-outline-variant/30 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg" data-icon="zoom_in">zoom_in</span></button>
+<button class="w-8 h-8 rounded-lg bg-surface/80 backdrop-blur-md flex items-center justify-center border border-outline-variant/30 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg" data-icon="3d_rotation">3d_rotation</span></button>
+<button class="w-8 h-8 rounded-lg bg-surface/80 backdrop-blur-md flex items-center justify-center border border-outline-variant/30 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg" data-icon="layers">layers</span></button>
+</div>
+<!-- Building Model Placeholder -->
+<div class="absolute inset-0 flex items-center justify-center p-12">
+<div class="relative w-full h-full">
+<img class="w-full h-full object-cover rounded-xl filter contrast-125 brightness-75" data-alt="Futuristic sci-fi refinery building with glowing blue pipes and metallic scaffolding, isometric architectural rendering on a dark void background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCL0Gb2kcZy6MAzOW_Xnl-SHq6z6AwMypG78vNOFFnjXNOZgka7hqcBM9iEcyJjt_YSzNroO7Q3lN0bzyQAE3Z4eTfkkFDniiMktBB-OEYoDegLbTRggvmsh6MySvnXfZupvn7NzWzJoaJnkrLJxzUM1_T60lN-ZKEkVCJqc1OgaFv_A8H3DFtVLEURse2EDcdogFnMXoyqz_BwnDXEb-JODdBeZrF3mhdlcRwxEzZlQjuWeNvYuOh-lM71S0WmB5X8ARq8Lasaoq7y"/>
+<div class="absolute inset-0 shadow-[inset_0_0_80px_rgba(0,0,0,0.8)]"></div>
+</div>
+</div>
+<!-- Overlay Labels -->
+<div class="absolute bottom-6 left-6">
+<div class="flex items-center gap-3">
+<div class="px-2 py-0.5 rounded bg-primary/20 border border-primary text-[0.625rem] font-label font-bold text-primary uppercase">Active Render</div>
+<div class="text-[0.625rem] font-label text-on-surface-variant uppercase">Mesh: RFN_PRIME_08.OBJ</div>
+</div>
+</div>
+</div>
+<!-- Asset Properties -->
+<div class="glass-panel p-6 rounded-2xl">
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-label uppercase tracking-widest text-on-surface-variant font-bold">Material Shader</span>
+<span class="text-xs font-label text-primary">Edit Graph <span class="material-symbols-outlined text-[10px]" data-icon="open_in_new">open_in_new</span></span>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<span class="text-xs text-white">Metallic Weight</span>
+<div class="w-32 h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 85%;"></div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-xs text-white">Emission Intensity</span>
+<div class="w-32 h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary" style="width: 40%;"></div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-xs text-white">Structural Decay</span>
+<div class="w-32 h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-error" style="width: 12%;"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Contextual FAB (Only for main list view, here we suppress it as per instruction for details/editor screens, but adding as decorative element if needed for global context) -->
+<!-- Suppressed for this specific screen focus -->
+</body></html>

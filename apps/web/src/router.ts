@@ -11,6 +11,7 @@ import DashboardView from "./views/DashboardView.vue";
 import ExpeditionsView from "./views/ExpeditionsView.vue";
 import LoginView from "./views/LoginView.vue";
 import MapView from "./views/MapView.vue";
+import MarketplaceView from "./views/MarketplaceView.vue";
 import ProfileView from "./views/ProfileView.vue";
 import RegisterView from "./views/RegisterView.vue";
 import WorkshopView from "./views/WorkshopView.vue";
@@ -49,6 +50,7 @@ export const protectedRoutes: ProtectedRouteRecord[] = [
       ],
     },
   },
+  { path: "marketplace", component: MarketplaceView, meta: { label: "Piactér", icon: "storefront" } },
   { path: "map", component: MapView, meta: { label: "Térkép", icon: "public" } },
   { path: "workshop", component: WorkshopView, meta: { label: "Műhely", icon: "handyman" } },
   { path: "expeditions", component: ExpeditionsView, meta: { label: "Expedíciók", icon: "map" } },
