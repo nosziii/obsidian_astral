@@ -22,7 +22,7 @@ defineProps<{
       <div class="loot-secured-list">
         <article v-for="reward in rewards" :key="reward.key" class="loot-secured-item">
           <div class="loot-secured-item__icon">
-            <span class="material-symbols-outlined">deployed_code</span>
+            <span class="material-symbols-outlined micro-float">deployed_code</span>
           </div>
           <div class="loot-secured-item__copy">
             <h4 class="card-title">{{ reward.label }}</h4>

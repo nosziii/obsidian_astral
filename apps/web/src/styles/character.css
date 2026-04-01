@@ -13,12 +13,12 @@
   position: relative;
   min-height: 470px;
   padding: 28px;
-  border-radius: 24px;
+  border-radius: var(--radius-xl);
   background:
     radial-gradient(circle at center, rgba(255, 245, 189, 0.24), transparent 18%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent),
     rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--ghost-border);
   overflow: hidden;
 }
 
@@ -39,7 +39,7 @@
   margin: 52px auto 0;
   padding: 36px 24px;
   text-align: center;
-  border-radius: 22px;
+  border-radius: var(--radius-xl);
   background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0.42));
 }
 
@@ -55,7 +55,7 @@
   height: 68px;
   display: grid;
   place-items: center;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   border: 2px solid rgba(121, 238, 248, 0.9);
   background: rgba(12, 14, 18, 0.9);
   color: var(--primary);
@@ -136,7 +136,7 @@
 
 .inventory-tile {
   aspect-ratio: 1;
-  border-radius: 14px;
+  border-radius: var(--radius-md);
   border: 2px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.02);
   display: grid;

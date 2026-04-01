@@ -52,9 +52,12 @@
 .expedition-radar__card,
 .expedition-sidebar-card,
 .expedition-history-card {
-  border-radius: 20px;
-  background: rgba(16, 17, 21, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(180deg, rgba(38, 38, 39, 0.54), rgba(16, 17, 21, 0.92)),
+    rgba(16, 17, 21, 0.92);
+  border: 1px solid var(--ghost-border);
+  backdrop-filter: blur(calc(var(--glass-blur) - 2px));
 }
 
 .team-status-card {
@@ -82,8 +85,11 @@
   height: 42px;
   display: grid;
   place-items: center;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-md);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01)),
+    rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--ghost-border);
   color: var(--primary);
 }
 
@@ -131,12 +137,14 @@
   align-content: center;
   gap: 18px;
   padding: 32px 20px;
-  border-radius: 30px;
+  border-radius: var(--radius-xl);
   overflow: hidden;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0)),
+    radial-gradient(circle at center, rgba(143, 245, 255, 0.08), transparent 58%),
     rgba(14, 15, 18, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--ghost-border);
+  box-shadow: var(--ambient-glow-primary);
 }
 
 .mission-map-shell::before {
@@ -200,7 +208,7 @@
   width: 14px;
   height: 14px;
   background: rgba(13, 15, 20, 0.96);
-  border: 2px solid rgba(255, 255, 255, 0.16);
+  border: 2px solid rgba(255, 255, 255, 0.12);
 }
 
 .mission-map-shell__node.is-complete {
@@ -216,7 +224,7 @@
   height: 34px;
   display: grid;
   place-items: center;
-  border: 2px solid rgba(121, 238, 248, 0.78);
+  border: 1px solid rgba(121, 238, 248, 0.78);
   background: rgba(13, 15, 20, 0.96);
   color: var(--primary);
   box-shadow: 0 0 20px rgba(121, 238, 248, 0.48);
@@ -268,9 +276,9 @@
 
 .mission-metric-card {
   padding: 18px;
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   background: rgba(11, 12, 16, 0.86);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--ghost-border);
   display: grid;
   gap: 10px;
 }
@@ -301,7 +309,7 @@
 }
 
 .loot-secured-panel__header {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid var(--ghost-border);
   background: rgba(255, 255, 255, 0.02);
 }
 
@@ -322,9 +330,11 @@
   height: 48px;
   display: grid;
   place-items: center;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01)),
+    rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--ghost-border);
   color: var(--primary);
 }
 
@@ -334,7 +344,7 @@
 
 .loot-secured-panel__footer {
   background: rgba(167, 132, 255, 0.08);
-  border-top: 1px solid rgba(167, 132, 255, 0.18);
+  border-top: 1px solid rgba(167, 132, 255, 0.12);
 }
 
 .comms-panel {
@@ -422,8 +432,18 @@
   height: 52px;
   display: grid;
   place-items: center;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-md);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01)),
+    rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--ghost-border);
+}
+
+.expedition-section-heading .material-symbols-outlined,
+.team-status-card__avatar .material-symbols-outlined,
+.loot-secured-item__icon .material-symbols-outlined,
+.expedition-radar__icon .material-symbols-outlined {
+  animation: micro-float 4.2s ease-in-out infinite;
 }
 
 .expedition-radar__icon.primary {

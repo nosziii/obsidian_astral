@@ -16,7 +16,7 @@ defineProps<{
     <article v-for="member in members" :key="member.key" class="team-status-card" :class="member.tone">
       <div class="team-status-card__header">
         <div class="team-status-card__avatar" :class="member.tone">
-          <span class="material-symbols-outlined">deployed_code</span>
+          <span class="material-symbols-outlined micro-float">deployed_code</span>
         </div>
         <div>
           <h4 class="card-title">{{ member.name }}</h4>

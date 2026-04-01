@@ -19,6 +19,7 @@ Utolsó frissítés: 2026-04-01
 - expedíciós nézet redesign a `r_szletes_exped_ci_run` terv háromoszlopos kompozíciója alapján
 - külön csapatstátusz, loot secured, mission comms és threat radar blokkok expedícióhoz
 - központi mission panel idővonallal, pulzáló kurzorral és taktikai metrikákkal
+- design system finomhangolás kisebb rádiuszokkal, tonális üvegfelületekkel és közös mikromozgás utilitykkel
 - admin alapok: overview, rendszerimpulzus, segélycsomag, játékos inspect
 - központi időzített eseményrendszer gyűjtéshez, craftoláshoz és építéshez
 - élő progress megjelenítés a dashboard, műhely és expedíció nézetekben

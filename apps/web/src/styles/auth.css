@@ -10,6 +10,13 @@
     "opsz" 24;
 }
 
+.auth-brandmark__icon,
+.auth-panel-field__icon,
+.auth-panel-field__toggle .material-symbols-outlined,
+.auth-panel-submit .material-symbols-outlined {
+  animation: micro-float 4.4s ease-in-out infinite;
+}
+
 .auth-scene {
   position: relative;
   min-height: 100vh;
@@ -149,12 +156,15 @@
   position: relative;
   width: 100%;
   padding: 40px;
-  border: 1px solid rgba(72, 72, 73, 0.24);
-  border-radius: 16px;
-  background: rgba(26, 25, 27, 0.42);
-  box-shadow: 0 0 64px rgba(143, 245, 255, 0.05);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  overflow: hidden;
+  border: 1px solid var(--ghost-border);
+  border-radius: var(--radius-xl);
+  background:
+    linear-gradient(180deg, rgba(38, 38, 39, 0.48), rgba(19, 19, 20, 0.7)),
+    rgba(26, 25, 27, 0.42);
+  box-shadow: var(--ambient-glow-primary);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 .auth-panel-card__line {
@@ -247,7 +257,7 @@
   padding: 14px 16px 14px 46px;
   border: 0;
   border-bottom: 1px solid rgba(72, 72, 73, 0.42);
-  background: rgba(0, 0, 0, 0.28);
+  background: rgba(0, 0, 0, 0.22);
   color: var(--text-main);
   font-size: 0.96rem;
   transition:
@@ -263,8 +273,8 @@
 .auth-panel-field__input:focus {
   outline: none;
   border-color: rgba(143, 245, 255, 0.88);
-  background: rgba(0, 0, 0, 0.34);
-  box-shadow: 0 0 0 1px rgba(143, 245, 255, 0.14);
+  background: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 0 rgba(143, 245, 255, 0.22);
 }
 
 .auth-panel-field__input--password {
@@ -307,13 +317,13 @@
   gap: 8px;
   min-height: 58px;
   border: 0;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   background: var(--primary);
   color: #005d63;
   font-family: "Space Grotesk", system-ui, sans-serif;
   font-size: 1rem;
   font-weight: 700;
-  box-shadow: 0 0 24px rgba(143, 245, 255, 0.2);
+  box-shadow: 0 0 24px rgba(143, 245, 255, 0.18);
   cursor: pointer;
   transition:
     transform 140ms ease,
@@ -375,7 +385,7 @@
   gap: 8px;
   padding: 10px 22px;
   border: 1px solid rgba(172, 137, 255, 0.2);
-  border-radius: 999px;
+  border-radius: var(--radius-lg);
   color: var(--secondary);
   font-family: "Space Grotesk", system-ui, sans-serif;
   font-size: 0.92rem;
@@ -553,7 +563,7 @@
 .profile-hero-avatar {
   width: 96px;
   height: 96px;
-  border-radius: 24px;
+  border-radius: var(--radius-xl);
   display: grid;
   place-items: center;
   background: linear-gradient(135deg, rgba(121, 238, 248, 0.2), rgba(167, 132, 255, 0.22));

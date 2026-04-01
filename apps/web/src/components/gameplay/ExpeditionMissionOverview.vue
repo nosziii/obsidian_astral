@@ -61,7 +61,7 @@ const missionProgress = calculateMissionProgress(props.run, props.expedition, pr
           <div class="mission-map-shell__node is-complete"></div>
           <div class="mission-map-shell__node" :class="{ 'is-complete': missionProgress.progressPercent >= 40 }"></div>
           <div class="mission-map-shell__cursor" :style="{ left: `${Math.max(10, missionProgress.progressPercent)}%` }">
-            <span class="material-symbols-outlined">navigation</span>
+            <span class="material-symbols-outlined micro-pulse">navigation</span>
           </div>
           <div class="mission-map-shell__node" :class="{ 'is-complete': missionProgress.progressPercent >= 100 }"></div>
         </div>

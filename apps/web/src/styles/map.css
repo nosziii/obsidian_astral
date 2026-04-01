@@ -83,7 +83,7 @@
   display: grid;
   place-items: center;
   transform: rotate(45deg);
-  border-radius: 18px;
+  border-radius: var(--radius-lg);
   border: 1px solid rgba(121, 238, 248, 0.38);
   background: rgba(121, 238, 248, 0.14);
   color: var(--primary);
@@ -127,11 +127,11 @@
 .control-button {
   width: 40px;
   height: 40px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   display: grid;
   place-items: center;
   background: rgba(12, 13, 17, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--ghost-border);
   cursor: pointer;
 }
 
