@@ -1,106 +1,263 @@
-.operations-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(320px, 0.8fr);
-  gap: 24px;
-}
-
-.mission-hero {
+.expedition-view {
   display: grid;
   gap: 24px;
 }
 
-.mission-hero-copy {
+.expedition-command-grid {
   display: grid;
-  gap: 18px;
+  grid-template-columns: minmax(250px, 0.72fr) minmax(0, 1.45fr) minmax(280px, 0.82fr);
+  gap: 24px;
+}
+
+.expedition-support-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.78fr);
+  gap: 24px;
+}
+
+.expedition-column {
+  display: grid;
+  gap: 16px;
+}
+
+.expedition-column--stack {
+  align-content: start;
+}
+
+.expedition-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.expedition-section-heading h2 {
+  margin: 0;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.expedition-section-heading .material-symbols-outlined {
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.team-status-card,
+.loot-secured-panel,
+.comms-panel,
+.expedition-radar__card,
+.expedition-sidebar-card,
+.expedition-history-card {
+  border-radius: 20px;
+  background: rgba(16, 17, 21, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.team-status-card {
+  padding: 16px;
+  border-left: 2px solid rgba(121, 238, 248, 0.42);
+}
+
+.team-status-card.secondary {
+  border-left-color: rgba(172, 137, 255, 0.42);
+}
+
+.team-status-card.danger {
+  border-left-color: rgba(244, 93, 221, 0.42);
+}
+
+.team-status-card__header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.team-status-card__avatar {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--primary);
+}
+
+.team-status-card__avatar.secondary {
+  color: var(--secondary);
+}
+
+.team-status-card__avatar.danger {
+  color: var(--tertiary);
+}
+
+.team-status-card__metric {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.mission-command-board {
+  display: grid;
+  gap: 24px;
+}
+
+.mission-command-board__header {
+  display: grid;
+  gap: 16px;
+}
+
+.mission-command-board__meta {
+  display: grid;
+  gap: 10px;
 }
 
 .mission-hero-title {
   margin: 0;
   font-family: "Space Grotesk", system-ui, sans-serif;
-  font-size: clamp(2rem, 5vw, 3.8rem);
+  font-size: clamp(2.2rem, 5vw, 4rem);
   line-height: 0.95;
   letter-spacing: -0.05em;
 }
 
-.mission-track-shell {
+.mission-map-shell {
+  position: relative;
+  min-height: 360px;
   display: grid;
-  gap: 10px;
-  padding: 20px 22px;
-  border-radius: 22px;
+  align-content: center;
+  gap: 18px;
+  padding: 32px 20px;
+  border-radius: 30px;
+  overflow: hidden;
   background:
-    radial-gradient(circle at center, rgba(121, 238, 248, 0.12), transparent 56%),
-    rgba(7, 8, 12, 0.88);
-  border: 1px solid rgba(121, 238, 248, 0.16);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0)),
+    rgba(14, 15, 18, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.mission-track-labels {
+.mission-map-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent 50%, rgba(143, 245, 255, 0.05) 50%);
+  background-size: 100% 4px;
+}
+
+.mission-map-shell__labels {
   display: flex;
   justify-content: space-between;
+  gap: 16px;
   color: var(--text-muted);
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
-.mission-track {
+.mission-map-shell__timeline {
   position: relative;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  height: 18px;
+  align-items: center;
+  min-height: 160px;
 }
 
-.mission-track::before {
-  content: "";
+.mission-map-shell__track,
+.mission-map-shell__progress {
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 10%;
+  right: 10%;
   top: 50%;
-  height: 1px;
-  background: rgba(121, 238, 248, 0.2);
   transform: translateY(-50%);
 }
 
-.mission-track-progress {
-  position: absolute;
-  left: 0;
-  top: 50%;
+.mission-map-shell__track {
+  height: 1px;
+  background: rgba(121, 238, 248, 0.22);
+}
+
+.mission-map-shell__progress {
+  right: auto;
   height: 3px;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--primary), var(--secondary));
-  transform: translateY(-50%);
-  box-shadow: 0 0 24px rgba(121, 238, 248, 0.34);
+  background: linear-gradient(90deg, rgba(143, 245, 255, 0), var(--primary), var(--secondary));
+  box-shadow: 0 0 16px rgba(121, 238, 248, 0.4);
 }
 
-.mission-track-node,
-.mission-track-cursor {
+.mission-map-shell__node,
+.mission-map-shell__cursor {
   position: relative;
   z-index: 1;
   border-radius: 999px;
 }
 
-.mission-track-node {
-  width: 12px;
-  height: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
+.mission-map-shell__node {
+  width: 14px;
+  height: 14px;
   background: rgba(13, 15, 20, 0.96);
+  border: 2px solid rgba(255, 255, 255, 0.16);
 }
 
-.mission-track-node.is-complete {
-  border-color: rgba(121, 238, 248, 0.45);
+.mission-map-shell__node.is-complete {
   background: var(--primary);
-  box-shadow: 0 0 18px rgba(121, 238, 248, 0.38);
+  border-color: rgba(121, 238, 248, 0.5);
+  box-shadow: 0 0 18px rgba(121, 238, 248, 0.42);
 }
 
-.mission-track-cursor {
+.mission-map-shell__cursor {
   position: absolute;
   top: 50%;
-  width: 20px;
-  height: 20px;
-  border: 2px solid rgba(121, 238, 248, 0.74);
-  background: rgba(10, 11, 14, 0.96);
-  box-shadow: 0 0 26px rgba(121, 238, 248, 0.34);
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 2px solid rgba(121, 238, 248, 0.78);
+  background: rgba(13, 15, 20, 0.96);
+  color: var(--primary);
+  box-shadow: 0 0 20px rgba(121, 238, 248, 0.48);
   transform: translate(-50%, -50%);
+}
+
+.mission-map-shell__cursor::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 999px;
+  border: 1px solid rgba(121, 238, 248, 0.18);
+  animation: expedition-pulse 2.8s ease-in-out infinite;
+}
+
+.mission-map-shell__rings {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  opacity: 0.14;
+}
+
+.mission-map-shell__rings div {
+  position: absolute;
+  border-radius: 999px;
+  border: 1px solid rgba(121, 238, 248, 0.42);
+}
+
+.mission-map-shell__rings div:first-child {
+  width: 420px;
+  height: 220px;
+  transform: rotate(18deg);
+}
+
+.mission-map-shell__rings div:last-child {
+  width: 520px;
+  height: 150px;
+  transform: rotate(-12deg);
+  border-color: rgba(172, 137, 255, 0.32);
 }
 
 .mission-metric-grid {
@@ -130,91 +287,204 @@
   border-color: rgba(255, 107, 120, 0.24);
 }
 
-.mission-sidebar-grid,
-.loot-list,
-.threat-grid,
-.comm-log {
-  display: grid;
-  gap: 16px;
+.loot-secured-panel {
+  overflow: hidden;
 }
 
-.loot-card,
-.signal-card,
-.comm-entry {
-  padding: 16px 18px;
-  border-radius: 18px;
-  background: rgba(10, 12, 17, 0.78);
-}
-
-.loot-card {
+.loot-secured-panel__header,
+.loot-secured-panel__footer {
   display: flex;
-  justify-content: space-between;
-  gap: 16px;
   align-items: center;
-  border: 1px solid rgba(121, 238, 248, 0.12);
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
 }
 
-.signal-card {
+.loot-secured-panel__header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.loot-secured-list {
   display: grid;
-  gap: 10px;
-  border-left: 2px solid rgba(121, 238, 248, 0.28);
-}
-
-.signal-card.secondary {
-  border-left-color: rgba(167, 132, 255, 0.42);
-}
-
-.signal-card.danger {
-  border-left-color: rgba(255, 107, 120, 0.42);
-}
-
-.comm-entry {
-  display: grid;
-  grid-template-columns: 72px minmax(0, 1fr);
   gap: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 16px;
 }
 
-.comm-timestamp,
-.comm-source {
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  font-family: "Space Grotesk", system-ui, sans-serif;
+.loot-secured-item {
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
 
-.comm-timestamp {
-  color: var(--text-muted);
-}
-
-.comm-source {
-  margin: 0 0 6px;
-}
-
-.comm-source.primary {
+.loot-secured-item__icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   color: var(--primary);
 }
 
-.comm-source.secondary {
+.loot-secured-item__copy {
+  flex: 1;
+}
+
+.loot-secured-panel__footer {
+  background: rgba(167, 132, 255, 0.08);
+  border-top: 1px solid rgba(167, 132, 255, 0.18);
+}
+
+.comms-panel {
+  padding: 16px;
+}
+
+.comms-panel__log {
+  display: grid;
+  gap: 12px;
+  max-height: 260px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.comms-panel__entry {
+  display: grid;
+  grid-template-columns: 50px minmax(0, 1fr);
+  gap: 10px;
+}
+
+.comms-panel__timestamp {
+  color: var(--text-muted);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.comms-panel__message {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 0.74rem;
+  line-height: 1.6;
+}
+
+.comms-panel__source {
+  font-weight: 700;
+}
+
+.comms-panel__source.primary {
+  color: var(--primary);
+}
+
+.comms-panel__source.secondary {
   color: var(--secondary);
 }
 
-.comm-source.danger {
+.comms-panel__source.danger {
+  color: var(--tertiary);
+}
+
+.expedition-radar {
+  display: grid;
+  gap: 14px;
+}
+
+.expedition-radar__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.expedition-radar__card {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 16px;
+}
+
+.expedition-radar__card.primary {
+  border-color: rgba(121, 238, 248, 0.18);
+}
+
+.expedition-radar__card.secondary {
+  border-color: rgba(172, 137, 255, 0.18);
+  background: rgba(167, 132, 255, 0.05);
+}
+
+.expedition-radar__card.danger {
+  border-color: rgba(255, 107, 120, 0.2);
+  background: rgba(255, 107, 120, 0.06);
+}
+
+.expedition-radar__icon {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.expedition-radar__icon.primary {
+  color: var(--primary);
+}
+
+.expedition-radar__icon.secondary {
+  color: var(--secondary);
+}
+
+.expedition-radar__icon.danger {
   color: var(--danger);
 }
 
-@media (max-width: 1280px) {
-  .operations-layout {
+.expedition-sidebar-list,
+.expedition-history-list {
+  display: grid;
+  gap: 14px;
+}
+
+.expedition-sidebar-card,
+.expedition-history-card {
+  padding: 16px;
+}
+
+.expedition-sidebar-card {
+  display: grid;
+  gap: 12px;
+}
+
+.expedition-sidebar-card--active {
+  border-color: rgba(121, 238, 248, 0.18);
+}
+
+@keyframes expedition-pulse {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.7;
+    transform: scale(1.12);
+  }
+}
+
+@media (max-width: 1380px) {
+  .expedition-command-grid,
+  .expedition-support-grid {
     grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 760px) {
-  .mission-metric-grid {
+@media (max-width: 900px) {
+  .mission-metric-grid,
+  .expedition-radar__grid {
     grid-template-columns: 1fr;
   }
 
-  .comm-entry {
-    grid-template-columns: 1fr;
+  .mission-map-shell {
+    min-height: 280px;
   }
 }

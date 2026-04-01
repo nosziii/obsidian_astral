@@ -35,6 +35,15 @@ export interface RewardPreviewItem {
   category: string;
 }
 
+export interface TeamStatusMember {
+  key: string;
+  name: string;
+  role: string;
+  integrity: number;
+  energy: number;
+  tone: Tone;
+}
+
 export function calculateMissionProgress(run: ExpeditionSnapshot | null, expedition: ExpeditionDefinition, now: number) {
   if (!run) {
     return {
@@ -69,9 +78,9 @@ export function buildMissionMetrics(
   const currentSpeed = Math.max(0.42, 1.08 - expedition.energyCost / 100);
 
   return [
-    { label: "Hátralévő út", value: `${distanceLy.toFixed(2)} LY`, tone: "primary" },
+    { label: "Távolság a célpontig", value: `${distanceLy.toFixed(2)} LY`, tone: "primary" },
     { label: "Aktuális sebesség", value: `${currentSpeed.toFixed(2)} c`, tone: "secondary" },
-    { label: "Érkezés", value: missionProgress.arrivalLabel, tone: "danger" },
+    { label: "Becsült érkezés", value: missionProgress.arrivalLabel, tone: "danger" },
   ];
 }
 
@@ -108,45 +117,39 @@ export function buildRewardPreview(
 }
 
 export function buildThreatSignals(expedition: ExpeditionDefinition, zone: ZoneSnapshot | null): ThreatSignal[] {
-  const common: ThreatSignal[] = [
-    {
-      title: "Zóna stabilitás",
-      detail: zone ? `${zone.label} térsége ${zone.status} állapotban van.` : "Nincs kiválasztott zóna.",
-      level: zone?.risk ?? "alacsony",
-      tone: zone?.risk === "magas" ? "danger" : zone?.risk === "kozepes" ? "secondary" : "primary",
-    },
-    {
-      title: "Energiaigény",
-      detail: `${expedition.energyCost} energia szükséges a teljes futamhoz.`,
-      level: expedition.energyCost > 20 ? "magas" : expedition.energyCost > 12 ? "közepes" : "alacsony",
-      tone: expedition.energyCost > 20 ? "danger" : expedition.energyCost > 12 ? "secondary" : "primary",
-    },
-  ];
+  const signals: ThreatSignal[] = [];
 
   if (expedition.risk === "magas") {
-    common.push({
-      title: "Fenyegetési radar",
-      detail: "Az érzékelők elit kontaktot és instabil környezeti zónákat jeleznek.",
-      level: "kritikus",
+    signals.push({
+      title: "Void Wraith raj",
+      detail: "Elit kontakt a futam végszakaszában. Rejtett közelítés és agresszív becsapódás várható.",
+      level: "ELIT",
       tone: "danger",
-    });
-  } else if (expedition.risk === "kozepes") {
-    common.push({
-      title: "Fenyegetési radar",
-      detail: "Mozgó kontaktok és közepes intenzitású zavarás várható.",
-      level: "emelt",
-      tone: "secondary",
-    });
-  } else {
-    common.push({
-      title: "Fenyegetési radar",
-      detail: "Alacsony fenyegetettségű pálya, gyors kitermelési ablakokkal.",
-      level: "stabil",
-      tone: "primary",
     });
   }
 
-  return common;
+  signals.push(
+    {
+      title: "Ionvihar",
+      detail: `A(z) ${zone?.label ?? "szektor"} területén nagy intenzitású zavarás észlelhető.`,
+      level: expedition.risk === "magas" ? "Magas" : "Közepes",
+      tone: expedition.risk === "magas" ? "danger" : "primary",
+    },
+    {
+      title: "Semleges hajó",
+      detail: "Passzív jel közelíti a kijelölt útvonalat. Jelenleg nincs közvetlen fenyegetés.",
+      level: "Nincs fenyegetés",
+      tone: "secondary",
+    },
+    {
+      title: "Vészjelzés",
+      detail: "Ismeretlen forrásból érkező jel, lehetséges bónuszjutalommal vagy csapdával.",
+      level: "2k Cr",
+      tone: "secondary",
+    },
+  );
+
+  return signals;
 }
 
 export function buildCommEntries(
@@ -161,8 +164,8 @@ export function buildCommEntries(
   return [
     {
       timestamp: startTime.toLocaleTimeString("hu-HU", { hour: "2-digit", minute: "2-digit" }),
-      source: "Parancs",
-      message: `${expedition.label} indításra kijelölve a(z) ${zone?.label ?? "ismeretlen"} zónába.`,
+      source: "VANGUARD-01",
+      message: `Perem biztosítva. Belépés a(z) ${zone?.label ?? "ismeretlen"} szektor irányába.`,
       tone: "primary",
     },
     {
@@ -170,15 +173,48 @@ export function buildCommEntries(
         hour: "2-digit",
         minute: "2-digit",
       }),
-      source: "Szenzorháló",
+      source: "Rendszer",
       message: `Kockázati szint: ${expedition.risk}. Jutalomszorzó: x${(zone?.rewardMultiplier ?? 1).toFixed(2)}.`,
       tone: "secondary",
     },
     {
       timestamp: new Date(now).toLocaleTimeString("hu-HU", { hour: "2-digit", minute: "2-digit" }),
-      source: "Taktikai mag",
+      source: "WRAITH-09",
       message: `${missionProgress.statusLabel}. Előrehaladás: ${missionProgress.progressPercent}%.`,
       tone: run?.status === "befejezve" ? "primary" : expedition.risk === "magas" ? "danger" : "secondary",
+    },
+  ];
+}
+
+export function buildTeamStatus(expedition: ExpeditionDefinition, run: ExpeditionSnapshot | null): TeamStatusMember[] {
+  const progress = calculateMissionProgress(run, expedition, Date.now()).progressPercent;
+  const wearBase = Math.max(8, Math.round(progress * 0.32));
+  const energyBase = Math.max(10, 100 - Math.round(progress * 0.78));
+
+  return [
+    {
+      key: "vanguard-01",
+      name: "VANGUARD-01",
+      role: "Assault Specialist",
+      integrity: Math.max(52, 96 - wearBase),
+      energy: Math.max(18, energyBase - 12),
+      tone: "primary",
+    },
+    {
+      key: "kinetic-04",
+      name: "KINETIC-04",
+      role: "Data Breacher",
+      integrity: Math.max(48, 84 - Math.round(wearBase * 1.2)),
+      energy: Math.min(98, energyBase + 18),
+      tone: "secondary",
+    },
+    {
+      key: "wraith-09",
+      name: "WRAITH-09",
+      role: "Recon Sniper",
+      integrity: Math.max(60, 100 - Math.round(wearBase * 0.6)),
+      energy: Math.max(12, energyBase - 36),
+      tone: "danger",
     },
   ];
 }

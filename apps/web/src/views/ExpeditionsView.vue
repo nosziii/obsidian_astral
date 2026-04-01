@@ -1,15 +1,22 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
 
+import ExpeditionCommsPanel from "../components/gameplay/ExpeditionCommsPanel.vue";
 import ExpeditionHistoryPanel from "../components/gameplay/ExpeditionHistoryPanel.vue";
-import ExpeditionIntelPanel from "../components/gameplay/ExpeditionIntelPanel.vue";
+import ExpeditionLootPanel from "../components/gameplay/ExpeditionLootPanel.vue";
 import ExpeditionMissionOverview from "../components/gameplay/ExpeditionMissionOverview.vue";
 import ExpeditionPanel from "../components/gameplay/ExpeditionPanel.vue";
-import BasePanel from "../components/ui/BasePanel.vue";
+import ExpeditionTeamStatus from "../components/gameplay/ExpeditionTeamStatus.vue";
+import ExpeditionThreatRadar from "../components/gameplay/ExpeditionThreatRadar.vue";
 import { useExpeditionHistory } from "../composables/use-expedition-history";
 import { useGameState } from "../composables/use-game-state";
-import { buildCommEntries, buildMissionMetrics, buildRewardPreview, buildThreatSignals } from "../lib/expedition-overview";
-import { formatCategoryLabel } from "../lib/formatters";
+import {
+  buildCommEntries,
+  buildMissionMetrics,
+  buildRewardPreview,
+  buildTeamStatus,
+  buildThreatSignals,
+} from "../lib/expedition-overview";
 
 const { activityNow, claimExpedition, gameState, pendingAction, startExpedition } = useGameState();
 const { historyEntries, historyError, loadHistory } = useExpeditionHistory();
@@ -53,6 +60,7 @@ const threatSignals = computed(() => (selectedExpedition.value ? buildThreatSign
 const commEntries = computed(() =>
   selectedExpedition.value ? buildCommEntries(selectedExpedition.value, selectedZone.value, selectedRun.value, activityNow.value) : [],
 );
+const teamStatus = computed(() => (selectedExpedition.value ? buildTeamStatus(selectedExpedition.value, selectedRun.value) : []));
 
 async function claimRun(expeditionId: string) {
   await claimExpedition(expeditionId);
@@ -61,8 +69,10 @@ async function claimRun(expeditionId: string) {
 </script>
 
 <template>
-  <div v-if="gameState && selectedExpedition" class="operations-layout">
-    <div class="view-stack">
+  <div v-if="gameState && selectedExpedition" class="expedition-view">
+    <div class="expedition-command-grid">
+      <ExpeditionTeamStatus :members="teamStatus" />
+
       <ExpeditionMissionOverview
         :expedition="selectedExpedition"
         :metrics="missionMetrics"
@@ -71,36 +81,15 @@ async function claimRun(expeditionId: string) {
         :zone="selectedZone"
       />
 
-      <div class="view-grid">
-        <ExpeditionIntelPanel :comms="commEntries" :rewards="rewardPreview" :threats="threatSignals" />
-
-        <BasePanel title="Zónajelentés" subtitle="Taktikai kivonat">
-          <div class="detail-list">
-            <div class="detail-row">
-              <span class="compact-label">Kijelölt zóna</span>
-              <strong>{{ selectedZone?.label ?? "Nincs kijelölve" }}</strong>
-            </div>
-            <div class="detail-row">
-              <span class="compact-label">Zónaállapot</span>
-              <strong>{{ selectedZone ? formatCategoryLabel(selectedZone.status) : "Ismeretlen" }}</strong>
-            </div>
-            <div class="detail-row">
-              <span class="compact-label">Jutalomszorzó</span>
-              <strong>x{{ selectedZone?.rewardMultiplier.toFixed(2) ?? "1.00" }}</strong>
-            </div>
-            <div class="detail-row">
-              <span class="compact-label">Ajánlott szint</span>
-              <strong>{{ selectedZone?.recommendedLevel ?? selectedExpedition.requiredLevel }}</strong>
-            </div>
-          </div>
-          <p class="muted">
-            {{ selectedZone?.description ?? "Válassz expedíciót a kapcsolódó zónarészletekhez." }}
-          </p>
-        </BasePanel>
+      <div class="expedition-column expedition-column--stack">
+        <ExpeditionLootPanel :rewards="rewardPreview" />
+        <ExpeditionCommsPanel :comms="commEntries" />
       </div>
     </div>
 
-    <div class="expedition-sidebar">
+    <ExpeditionThreatRadar :threats="threatSignals" />
+
+    <div class="expedition-support-grid">
       <ExpeditionPanel
         :activities="gameState.activities"
         :catalog="catalog"

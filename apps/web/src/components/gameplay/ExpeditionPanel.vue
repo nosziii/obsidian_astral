@@ -38,12 +38,12 @@ function activityForRun(expeditionId: string) {
 </script>
 
 <template>
-  <BasePanel title="Expedíciók" subtitle="Aktív műveletek">
-    <div class="expedition-sidebar">
+  <BasePanel title="Mission queue" subtitle="Expedíciós lista">
+    <div class="expedition-sidebar-list">
       <article
         v-for="expedition in catalog"
         :key="expedition.key"
-        class="action-card expedition-card"
+        class="expedition-sidebar-card"
         role="button"
         tabindex="0"
         @click="emit('select', expedition.key)"
@@ -53,22 +53,21 @@ function activityForRun(expeditionId: string) {
           <span class="compact-label">Célpont</span>
           <span class="tag-pill" :class="riskTone(expedition.risk)">{{ formatCategoryLabel(expedition.risk) }}</span>
         </div>
-        <div>
-          <h4 class="card-title">{{ expedition.label }}</h4>
-          <p class="muted">{{ expedition.description }}</p>
+
+        <h4 class="card-title">{{ expedition.label }}</h4>
+        <p class="muted">{{ expedition.description }}</p>
+
+        <div class="detail-list">
+          <div class="detail-row">
+            <span class="compact-label">Időtartam</span>
+            <strong>{{ expedition.durationMinutes }} perc</strong>
+          </div>
+          <div class="detail-row">
+            <span class="compact-label">Energia</span>
+            <strong>{{ expedition.energyCost }}</strong>
+          </div>
         </div>
-        <div class="detail-row">
-          <span class="compact-label">Időtartam</span>
-          <strong>{{ expedition.durationMinutes }} perc</strong>
-        </div>
-        <div class="detail-row">
-          <span class="compact-label">Energia</span>
-          <strong>{{ expedition.energyCost }}</strong>
-        </div>
-        <div class="detail-row">
-          <span class="compact-label">Feloldás</span>
-          <strong>{{ expedition.requiredLevel }}. szint</strong>
-        </div>
+
         <button
           class="primary-button"
           type="button"
@@ -80,17 +79,15 @@ function activityForRun(expeditionId: string) {
               ? `${expedition.requiredLevel}. szint kell`
               : pendingAction === `expedition:${expedition.key}`
                 ? "Indítás..."
-                : "Expedíció küldése"
+                : "Mission indítása"
           }}
         </button>
       </article>
 
-      <div class="divider" />
-
       <article
         v-for="run in activeRuns"
         :key="run.id"
-        class="action-card expedition-card"
+        class="expedition-sidebar-card expedition-sidebar-card--active"
         role="button"
         tabindex="0"
         @click="emit('select', run.key)"
@@ -98,15 +95,14 @@ function activityForRun(expeditionId: string) {
       >
         <div class="tag-row">
           <span class="compact-label">{{ run.label }}</span>
-          <span class="tag-pill" :class="run.status === 'befejezve' ? 'success' : ''">{{ run.status }}</span>
+          <span class="tag-pill" :class="run.status === 'befejezve' ? 'success' : 'secondary'">{{ run.status }}</span>
         </div>
-        <div>
-          <h4 class="card-title">
-            {{ run.status === "befejezve" ? "Jutalom átvehető" : "Művelet folyamatban" }}
-          </h4>
-          <p class="muted">Kezdés: {{ new Date(run.startedAt).toLocaleString("hu-HU") }}</p>
-        </div>
+
+        <h4 class="card-title">{{ run.status === "befejezve" ? "Jutalom átvehető" : "Futó expedíció" }}</h4>
+        <p class="muted">Kezdés: {{ new Date(run.startedAt).toLocaleString("hu-HU") }}</p>
+
         <ActivityTimeline :activity="activityForRun(run.id)" :now="now" idle-text="Lezárva" />
+
         <button
           class="secondary-button"
           type="button"

@@ -13,8 +13,8 @@ defineProps<{
   <BasePanel title="Expedíciós napló" subtitle="Előzmények">
     <p v-if="errorMessage" class="status-banner error">{{ errorMessage }}</p>
 
-    <div v-if="entries.length" class="card-list">
-      <article v-for="entry in entries" :key="entry.id" class="action-card">
+    <div v-if="entries.length" class="expedition-history-list">
+      <article v-for="entry in entries" :key="entry.id" class="expedition-history-card">
         <div class="tag-row">
           <span class="tag-pill" :class="entry.claimedAt ? 'success' : 'secondary'">
             {{ entry.claimedAt ? "Átvéve" : "Lezárt" }}

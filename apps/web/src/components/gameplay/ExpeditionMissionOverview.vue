@@ -17,20 +17,20 @@ const missionProgress = calculateMissionProgress(props.run, props.expedition, pr
 </script>
 
 <template>
-  <BasePanel :title="expedition.label" subtitle="Részletes expedíciós run">
-    <section class="mission-hero">
-      <div class="mission-hero-copy">
+  <BasePanel :title="expedition.label" subtitle="Részletes expedíciós futam">
+    <section class="mission-command-board">
+      <header class="mission-command-board__header">
         <div class="tag-row">
           <span class="tag-pill" :class="expedition.risk === 'magas' ? 'danger' : expedition.risk === 'kozepes' ? 'secondary' : 'success'">
             {{ formatCategoryLabel(expedition.risk) }}
           </span>
-          <span class="compact-label">{{ zone?.label ?? "Nincs zóna" }}</span>
+          <span class="compact-label">{{ zone?.label ?? "Ismeretlen zóna" }}</span>
         </div>
 
         <h2 class="mission-hero-title">{{ expedition.label }}</h2>
         <p class="muted">{{ expedition.description }}</p>
 
-        <div class="detail-list">
+        <div class="mission-command-board__meta">
           <div class="detail-row">
             <span class="compact-label">Állapot</span>
             <strong>{{ missionProgress.statusLabel }}</strong>
@@ -44,20 +44,31 @@ const missionProgress = calculateMissionProgress(props.run, props.expedition, pr
             <strong>{{ expedition.durationMinutes }} perc</strong>
           </div>
         </div>
-      </div>
+      </header>
 
-      <div class="mission-track-shell">
-        <div class="mission-track-labels">
+      <div class="mission-map-shell">
+        <div class="mission-map-shell__labels">
           <span>Belépés</span>
-          <span>Futás</span>
-          <span>Kiemelés</span>
+          <span>Vault A</span>
+          <span>Station Delta</span>
+          <span>Kinyerés</span>
         </div>
-        <div class="mission-track">
-          <div class="mission-track-progress" :style="{ width: `${missionProgress.progressPercent}%` }" />
-          <div class="mission-track-node is-complete" />
-          <div class="mission-track-node" :class="{ 'is-complete': missionProgress.progressPercent >= 50 }" />
-          <div class="mission-track-node" :class="{ 'is-complete': missionProgress.progressPercent >= 100 }" />
-          <div class="mission-track-cursor" :style="{ left: `${missionProgress.progressPercent}%` }" />
+
+        <div class="mission-map-shell__timeline">
+          <div class="mission-map-shell__track"></div>
+          <div class="mission-map-shell__progress" :style="{ width: `${missionProgress.progressPercent}%` }"></div>
+
+          <div class="mission-map-shell__node is-complete"></div>
+          <div class="mission-map-shell__node" :class="{ 'is-complete': missionProgress.progressPercent >= 40 }"></div>
+          <div class="mission-map-shell__cursor" :style="{ left: `${Math.max(10, missionProgress.progressPercent)}%` }">
+            <span class="material-symbols-outlined">navigation</span>
+          </div>
+          <div class="mission-map-shell__node" :class="{ 'is-complete': missionProgress.progressPercent >= 100 }"></div>
+        </div>
+
+        <div class="mission-map-shell__rings" aria-hidden="true">
+          <div></div>
+          <div></div>
         </div>
       </div>
     </section>

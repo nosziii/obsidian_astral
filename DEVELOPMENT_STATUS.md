@@ -1,6 +1,6 @@
 # Fejlesztési állapot
 
-Utolsó frissítés: 2026-03-31
+Utolsó frissítés: 2026-04-01
 
 ## Elkészült
 
@@ -16,6 +16,9 @@ Utolsó frissítés: 2026-03-31
 - műhely nézet redesign a `nyersanyagok_gy_jt_s` terv vizuális irányára építve
 - műhely hero fejléc, szűrősáv és kiemelt séma panel
 - receptkártyák és épületfejlesztési kártyák új, tervhűbb vizuális struktúrával
+- expedíciós nézet redesign a `r_szletes_exped_ci_run` terv háromoszlopos kompozíciója alapján
+- külön csapatstátusz, loot secured, mission comms és threat radar blokkok expedícióhoz
+- központi mission panel idővonallal, pulzáló kurzorral és taktikai metrikákkal
 - admin alapok: overview, rendszerimpulzus, segélycsomag, játékos inspect
 - központi időzített eseményrendszer gyűjtéshez, craftoláshoz és építéshez
 - élő progress megjelenítés a dashboard, műhely és expedíció nézetekben
@@ -44,6 +47,7 @@ Utolsó frissítés: 2026-03-31
 
 - további dashboard finomhangolás a következő képi visszajelzések alapján
 - további műhely finomhangolás, ha a tervhez külön craft/building részletező képernyő is érkezik
+- expedíciós utóképernyő és jutalom-claim animáció tervhű külön panellel
 - zónaesemények és random encounter rendszer
 - equipment tárgyforrások: drop, craft, jutalomlánc
 - napi küldetések és achievement rendszer
