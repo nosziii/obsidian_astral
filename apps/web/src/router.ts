@@ -102,7 +102,7 @@ export const router = createRouter({
       path: "/",
       component: AppShell,
       meta: { requiresAuth: true },
-      children: [{ path: "dashboard", redirect: "/dashboard" }, ...protectedRoutes],
+      children: protectedRoutes,
     },
   ],
 });
