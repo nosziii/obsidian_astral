@@ -4,18 +4,18 @@ import { RouterLink, useRoute } from "vue-router";
 
 const route = useRoute();
 
-const isLanding = computed(() => route.path === "/");
+const isLanding = computed(() => route.path === "/" || route.path === "/landing");
 const isRules = computed(() => route.path === "/rules");
 const isGuide = computed(() => route.path === "/guide");
 </script>
 
 <template>
   <nav class="public-topnav">
-    <RouterLink class="public-topnav__brand" to="/">Obsidian Astral</RouterLink>
+    <RouterLink class="public-topnav__brand" to="/landing">Obsidian Astral</RouterLink>
 
     <div class="public-topnav__links">
-      <a class="public-topnav__link" :class="{ 'is-active': isLanding }" href="/#features">Funkciók</a>
-      <a class="public-topnav__link" :class="{ 'is-active': isLanding }" href="/#clans">Klánok</a>
+      <a class="public-topnav__link" :class="{ 'is-active': isLanding }" href="/landing#features">Funkciók</a>
+      <a class="public-topnav__link" :class="{ 'is-active': isLanding }" href="/landing#clans">Klánok</a>
       <RouterLink class="public-topnav__link" :class="{ 'is-active': isRules }" to="/rules">Szabályzat</RouterLink>
       <RouterLink class="public-topnav__link" :class="{ 'is-active': isGuide }" to="/guide">Leírás</RouterLink>
     </div>

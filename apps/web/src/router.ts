@@ -85,6 +85,7 @@ export const router = createRouter({
       component: PublicLayout,
       children: [
         { path: "", component: LandingView, meta: { publicLanding: true } },
+        { path: "landing", component: LandingView, meta: { publicDocs: true } },
         { path: "rules", component: RulesView, meta: { publicDocs: true } },
         { path: "guide", component: GuideView, meta: { publicDocs: true } },
       ],
@@ -119,7 +120,7 @@ router.beforeEach(async (to) => {
   const { session } = useAuth();
   const currentSession = session.value;
 
-  if (to.meta.publicLanding && currentSession) {
+  if (to.path === "/" && currentSession) {
     return "/dashboard";
   }
 
