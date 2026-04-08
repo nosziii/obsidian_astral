@@ -2,7 +2,8 @@
   display: grid;
   grid-template-columns: 280px minmax(0, 1fr) 320px;
   gap: 20px;
-  min-height: calc(100vh - 188px);
+  min-height: 0;
+  align-items: start;
 }
 
 .communication-nav,
@@ -20,6 +21,8 @@
   gap: 18px;
   padding: 20px;
   align-content: start;
+  min-height: 0;
+  max-height: calc(100vh - 160px);
 }
 
 .communication-nav__profile {
@@ -86,6 +89,10 @@
   display: grid;
   gap: 6px;
   align-content: start;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 6px;
+  scrollbar-gutter: stable;
 }
 
 .communication-nav__item {
@@ -176,6 +183,7 @@
 .communication-main {
   display: grid;
   gap: 18px;
+  min-width: 0;
 }
 
 .communication-topbar {
@@ -184,6 +192,7 @@
   justify-content: space-between;
   gap: 20px;
   padding: 18px 20px;
+  flex-wrap: wrap;
 }
 
 .communication-topbar__title {
@@ -194,7 +203,9 @@
 }
 
 .communication-topbar__search {
-  min-width: 320px;
+  flex: 1 1 320px;
+  min-width: 220px;
+  max-width: 420px;
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -218,21 +229,25 @@
 
 .communication-stage {
   display: grid;
-  grid-template-columns: minmax(320px, 0.88fr) minmax(0, 1.3fr);
+  grid-template-columns: minmax(280px, 0.82fr) minmax(0, 1.18fr);
   gap: 20px;
   min-height: 0;
+  align-items: start;
 }
 
 .communication-stage__thread {
   display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
   gap: 18px;
   min-width: 0;
+  min-height: 0;
 }
 
 .communication-feed {
   display: grid;
   grid-template-rows: auto 1fr;
   min-height: 0;
+  max-height: calc(100vh - 240px);
 }
 
 .communication-feed__header {
@@ -240,6 +255,7 @@
   align-items: start;
   justify-content: space-between;
   gap: 16px;
+  flex-wrap: wrap;
   padding: 20px;
   border-bottom: 1px solid rgba(72, 72, 73, 0.2);
 }
@@ -253,6 +269,7 @@
   display: inline-flex;
   gap: 10px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .communication-feed__action,
@@ -288,6 +305,9 @@
   display: grid;
   align-content: start;
   overflow-y: auto;
+  min-height: 0;
+  padding-right: 6px;
+  scrollbar-gutter: stable;
 }
 
 .communication-feed__empty {
@@ -407,7 +427,10 @@
 
 .communication-thread {
   display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
   gap: 0;
+  min-height: 0;
+  max-height: calc(100vh - 240px);
 }
 
 .communication-thread__crumbs {
@@ -432,6 +455,7 @@
   display: grid;
   gap: 22px;
   padding: 24px;
+  min-height: 0;
 }
 
 .communication-mail__header,
@@ -440,6 +464,7 @@
   align-items: start;
   justify-content: space-between;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 .communication-mail__identity {
@@ -495,6 +520,7 @@
   display: grid;
   gap: 20px;
   padding: 32px;
+  overflow: auto;
   background:
     linear-gradient(180deg, rgba(19, 19, 20, 0.92), rgba(14, 14, 15, 0.98)),
     rgba(19, 19, 20, 0.92);
@@ -569,8 +595,11 @@
 .communication-chat__messages {
   display: grid;
   gap: 12px;
-  max-height: 580px;
+  min-height: 0;
+  max-height: none;
   overflow-y: auto;
+  padding-right: 6px;
+  scrollbar-gutter: stable;
 }
 
 .communication-chat__line {
@@ -637,6 +666,8 @@
   grid-template-rows: auto 1fr auto;
   gap: 16px;
   padding: 20px;
+  min-height: 0;
+  max-height: calc(100vh - 160px);
 }
 
 .communication-roster__header {
@@ -656,6 +687,10 @@
   display: grid;
   gap: 10px;
   align-content: start;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 6px;
+  scrollbar-gutter: stable;
 }
 
 .communication-roster__entry {
@@ -804,19 +839,25 @@
   }
 }
 
-@media (max-width: 1360px) {
+@media (max-width: 1480px) {
   .communication-layout {
     grid-template-columns: 260px minmax(0, 1fr);
   }
 
   .communication-roster {
     grid-column: span 2;
+    max-height: none;
   }
 }
 
-@media (max-width: 1120px) {
+@media (max-width: 1280px) {
   .communication-stage {
     grid-template-columns: 1fr;
+  }
+
+  .communication-feed,
+  .communication-thread {
+    max-height: none;
   }
 }
 
@@ -836,6 +877,11 @@
 
   .communication-roster {
     grid-column: auto;
+    max-height: none;
+  }
+
+  .communication-nav {
+    max-height: none;
   }
 }
 
@@ -853,5 +899,10 @@
   .communication-feed__actions {
     flex-wrap: wrap;
     justify-content: flex-end;
+  }
+
+  .communication-nav,
+  .communication-roster {
+    padding: 16px;
   }
 }
